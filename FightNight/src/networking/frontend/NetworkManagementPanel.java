@@ -24,8 +24,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.text.DefaultCaret;
 
 import networking.backend.PeerDiscovery;
-import networking.backend.SchoolClient;
-import networking.backend.SchoolServer;
+import networking.backend.GameClient;
+import networking.backend.GameServer;
 
 public class NetworkManagementPanel extends JPanel
 {
@@ -48,8 +48,8 @@ public class NetworkManagementPanel extends JPanel
 
 	private InetAddress myIP;
 	private PeerDiscovery discover;
-	private SchoolServer ss;
-	private SchoolClient sc;
+	private GameServer ss;
+	private GameClient sc;
 	
 	private String programID;
 	private NetworkListener clientProgram;
@@ -204,7 +204,7 @@ public class NetworkManagementPanel extends JPanel
 	private void connect(InetAddress host) {
 		if (host != null) {
 			disconnect();
-			sc = new SchoolClient(programID, myIP);
+			sc = new GameClient(programID, myIP);
 			boolean success = sc.connect(host,TCP_PORT);
 			if (!success) {
 				statusText.append("\nCould not connect to "+host+" on " + TCP_PORT);
@@ -272,7 +272,7 @@ public class NetworkManagementPanel extends JPanel
 
 				}
 			} else if (source == serverButton) {
-				ss = new SchoolServer(programID, myIP);
+				ss = new GameServer(programID, myIP);
 				ss.setMaxConnections(maxPerServer);
 				ss.waitForConnections(TCP_PORT);
 				statusText.append("\nTCP server running on " + TCP_PORT);

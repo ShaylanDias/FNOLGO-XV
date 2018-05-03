@@ -1,12 +1,17 @@
 package gui;
 
 import gameplay.GameState;
+import networking.frontend.NetworkDataObject;
+import networking.frontend.NetworkListener;
 import networking.frontend.NetworkMessenger;
 import processing.core.PApplet;
 
-public class GamePanel extends PApplet implements NetworkMessenger{
+public class GamePanel extends PApplet implements NetworkListener{
 
-	GameState currentState = null;
+	private NetworkMessenger nm;
+
+	
+	private GameState currentState = null;
 	
 	
 	public void draw() {
@@ -36,15 +41,33 @@ public class GamePanel extends PApplet implements NetworkMessenger{
 			
 		}
 		if(key == 'a') {
-			
+
 		}
 			
 	}
 
 	@Override
-	public void sendMessage(String messageType, Object... message) {
-		// TODO Auto-generated method stub
-		
+	public void connectedToServer(NetworkMessenger nm) {
+		this.nm = nm;		
+	}
+
+	@Override
+	public void networkMessageReceived(NetworkDataObject ndo) {
+		if (ndo.messageType.equals(NetworkDataObject.MESSAGE)) {
+			if(ndo.message[0] != null && ndo.message[0] instanceof GameState)
+				currentState = (GameState) ndo.message[0];
+		}
+		else if (ndo.messageType.equals(NetworkDataObject.HANDSHAKE)) {
+			System.out.println("\n" + ndo.dataSource + " connected. ");
+		}
+		else if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
+			if (ndo.dataSource.equals(ndo.serverHost)) {
+				System.out.println("Disconnected from server " + ndo.serverHost);
+			}
+			else {
+				System.out.println("Disconected from server");
+			}
+		}		
 	}
 	
 }

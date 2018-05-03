@@ -11,7 +11,7 @@ import networking.frontend.NetworkDataObject;
 import networking.frontend.NetworkListener;
 import networking.frontend.NetworkMessenger;
 
-public class SchoolClient implements NetworkMessenger {
+public class GameClient implements NetworkMessenger {
 
 	private InetAddress server;
 	private InetAddress myIP;
@@ -25,7 +25,7 @@ public class SchoolClient implements NetworkMessenger {
 	
 	
 
-	public SchoolClient(String programID, InetAddress myIP) {
+	public GameClient(String programID, InetAddress myIP) {
 		this.myIP = myIP;
 		this.programID = programID;
 		listeners = new ArrayList<NetworkListener>();
@@ -38,7 +38,7 @@ public class SchoolClient implements NetworkMessenger {
 					@Override
 					public void run() {
 
-						synchronized(SchoolClient.this) {
+						synchronized(GameClient.this) {
 
 							if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
 
