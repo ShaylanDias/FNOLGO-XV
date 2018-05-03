@@ -41,7 +41,9 @@ public class GamePanel extends PApplet implements NetworkListener{
 			
 		}
 		if(key == 'a') {
-
+			/*
+			 * Create an object in here or set a boolean to be sent to the server and send it
+			 */
 		}
 			
 	}

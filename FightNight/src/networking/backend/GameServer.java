@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import gameplay.GameManager;
 import networking.frontend.NetworkDataObject;
 import networking.frontend.NetworkListener;
 import networking.frontend.NetworkMessenger;
@@ -36,6 +37,8 @@ public class GameServer implements NetworkMessenger {
     private InetAddress myIP;
     private ServerSocket serverSocket;
     
+    private GameManager manager;
+    
     private int maxConnections;
     
 
@@ -43,6 +46,7 @@ public class GameServer implements NetworkMessenger {
     	
     	this.programID = programID;
     	this.myIP = myIP;
+    	manager = new GameManager();
     	
         listening = false;
         this.writers = new ArrayList<ClientWriter>();
