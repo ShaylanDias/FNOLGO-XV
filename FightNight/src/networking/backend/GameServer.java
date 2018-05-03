@@ -79,6 +79,8 @@ public class GameServer implements NetworkMessenger {
 
         						sendClientList();
         					}
+        				} else { //I'm hoping this line is gonna make it process the stuff that needs to happen when receiving an action
+        					manager.act(ndo);
         				}
 
         			}

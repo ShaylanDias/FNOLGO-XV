@@ -11,26 +11,28 @@ import processing.core.PApplet;
  * @author shaylandias
  *
  */
-public abstract class Character{
+public abstract class Avatar{
 
+	public enum AttackType{P, DIRECTION, ATTACK};
+	
 	private int playerNum;
 	private double x, y;
 	//Angle from vertical that Character is facing, 0-360 going right
 	private double angle;
 	private double damage;
-	private long timeStarted;
+	private long timeActionStarted;
 	private boolean stunned, midAction, superArmor, shielded;
 	private ArrayList<MovingImage> hitboxes;
 
 	/**
 	 * Initializes a Character with default values
 	 */
-	public Character() {
+	public Avatar() {
 		hitboxes = new ArrayList<MovingImage>();
 		x = 100;
 		y = 100;
 		angle = 0;
-		timeStarted = System.currentTimeMillis();
+		timeActionStarted = System.currentTimeMillis();
 		shielded = false;
 		superArmor = false;
 		midAction = false;
@@ -46,7 +48,7 @@ public abstract class Character{
 	 * @param y Y-coordinate
 	 * @param angle The angle from vertical the Character is facing
 	 */
-	public Character(double x, double y, double angle) {
+	public Avatar(double x, double y, double angle) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -67,6 +69,14 @@ public abstract class Character{
 	public void moveTo(double x, double y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	public void turn(double angle) {
+		this.angle = angle;
+	}
+	
+	public int getPlayer() {
+		return playerNum;
 	}
 	
 	public void draw(PApplet surface) {
