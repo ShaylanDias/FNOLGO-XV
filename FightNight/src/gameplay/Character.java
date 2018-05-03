@@ -1,7 +1,8 @@
 package gameplay;
 
 import java.util.ArrayList;
-import java.util.Timer;
+
+import processing.core.PApplet;
 
 /**
  * 
@@ -14,6 +15,8 @@ public abstract class Character{
 
 	private int playerNum;
 	private double x, y;
+	//Angle from vertical that Character is facing, 0-360 going right
+	private double angle;
 	private double damage;
 	private long timeStarted;
 	private boolean stunned, midAction, superArmor, shielded;
@@ -26,6 +29,7 @@ public abstract class Character{
 		hitboxes = new ArrayList<MovingImage>();
 		x = 100;
 		y = 100;
+		angle = 0;
 		timeStarted = System.currentTimeMillis();
 		shielded = false;
 		superArmor = false;
@@ -40,11 +44,13 @@ public abstract class Character{
 	 * 
 	 * @param x X-coordinate
 	 * @param y Y-coordinate
+	 * @param angle The angle from vertical the Character is facing
 	 */
-	public Character(double x, double y) {
+	public Character(double x, double y, double angle) {
 		super();
 		this.x = x;
 		this.y = y;
+		this.angle = angle;
 	}
 
 	public void takeHit(Attack attack) {
@@ -61,6 +67,10 @@ public abstract class Character{
 	public void moveTo(double x, double y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	public void draw(PApplet surface) {
+		
 	}
 
 }

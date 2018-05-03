@@ -1,11 +1,10 @@
 package gameplay;
 
-public class GameManager implements Runnable{
+import java.util.ArrayList;
 
-	@Override
-	public void run() {
-		
-	}
+public class GameManager {
 
+	private ArrayList<Character> characters;
+	private ArrayList<Projectile> projectiles;
 	
 }
