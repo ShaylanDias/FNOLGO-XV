@@ -63,7 +63,7 @@ public class GameServer implements NetworkMessenger {
 
         				InetAddress address = ndo.dataSource;
 
-        				repeatMessage(ndo);
+//        				repeatMessage(ndo);
 
         				if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
         					synchronized(GameServer.this) {
@@ -79,7 +79,7 @@ public class GameServer implements NetworkMessenger {
 
         						sendClientList();
         					}
-        				} else { //I'm hoping this line is gonna make it process the stuff that needs to happen when receiving an action
+        				} else if(ndo.messageType.equals(NetworkDataObject.MESSAGE)){ //I'm hoping this line is gonna make it process the stuff that needs to happen when receiving an action
         					manager.act(ndo);
         				}
 

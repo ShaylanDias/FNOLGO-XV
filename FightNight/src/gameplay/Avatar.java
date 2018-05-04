@@ -79,6 +79,14 @@ public abstract class Avatar{
 		return playerNum;
 	}
 	
+	public double getX() {
+		return x;
+	}
+	
+	public double getY() {
+		return y;
+	}
+	
 	public void draw(PApplet surface) {
 		
 	}

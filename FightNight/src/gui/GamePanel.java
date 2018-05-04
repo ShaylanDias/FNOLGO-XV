@@ -1,5 +1,8 @@
 package gui;
 
+import clientside.ControlType;
+import clientside.Player;
+import gameplay.Avatar;
 import gameplay.GameState;
 import networking.frontend.NetworkDataObject;
 import networking.frontend.NetworkListener;
@@ -8,6 +11,7 @@ import processing.core.PApplet;
 
 public class GamePanel extends PApplet implements NetworkListener{
 
+	private Player player;
 	private NetworkMessenger nm;
 
 	
@@ -33,7 +37,20 @@ public class GamePanel extends PApplet implements NetworkListener{
 	}
 
 	public void mouseMoved() {
+		double angle = 0;
+		Avatar av = null;
+		for(Avatar x : currentState.getAvatars()) {
+			if(x.getPlayer() == player.getNum()) {
+				av = x;
+				break;
+			}
+		}
 		
+		if(av != null) {
+			angle = Math.atan((mouseY-av.getY())/(mouseX-av.getX()));
+		}
+		
+		nm.sendMessage(NetworkDataObject.MESSAGE, new Object[] {ControlType.DIRECTION, angle});
 	}
 
 	public void keyPressed(){
