@@ -1,4 +1,4 @@
-package gui;
+package clientside.gui;
 
 public class Main {
 

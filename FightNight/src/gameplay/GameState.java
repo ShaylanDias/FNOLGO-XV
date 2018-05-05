@@ -3,6 +3,10 @@ package gameplay;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import gameplay.attacks.Projectile;
+import gameplay.avatars.Avatar;
+import gameplay.maps.Map;
+import gameplay.maps.StandardMap;
 import processing.core.PApplet;
 
 /**

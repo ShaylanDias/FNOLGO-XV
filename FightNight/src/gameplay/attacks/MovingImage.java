@@ -1,4 +1,4 @@
-package gameplay;
+package gameplay.attacks;
 
 import java.awt.geom.Rectangle2D;
 import processing.core.PApplet;

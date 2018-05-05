@@ -3,6 +3,8 @@ package gameplay;
 import java.util.ArrayList;
 
 import clientside.ControlType;
+import gameplay.attacks.Projectile;
+import gameplay.avatars.Avatar;
 import networking.frontend.NetworkDataObject;
 
 /**

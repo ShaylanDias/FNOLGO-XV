@@ -1,7 +1,9 @@
-package clientside;
+package clientside.gui;
 
-import gameplay.Avatar;
+import clientside.ControlType;
+import clientside.Player;
 import gameplay.GameState;
+import gameplay.avatars.Avatar;
 import networking.frontend.NetworkDataObject;
 import networking.frontend.NetworkListener;
 import networking.frontend.NetworkMessenger;

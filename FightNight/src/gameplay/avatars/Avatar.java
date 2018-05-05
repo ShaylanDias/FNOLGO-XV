@@ -1,7 +1,10 @@
-package gameplay;
+package gameplay.avatars;
 
 import java.util.ArrayList;
 
+import gameplay.attacks.Attack;
+import gameplay.attacks.AttackResult;
+import gameplay.attacks.MovingImage;
 import processing.core.PApplet;
 import processing.core.PImage;
 
