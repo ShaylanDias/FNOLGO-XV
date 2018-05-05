@@ -1,7 +1,5 @@
-package gui;
+package clientside;
 
-import clientside.ControlType;
-import clientside.Player;
 import gameplay.Avatar;
 import gameplay.GameState;
 import networking.frontend.NetworkDataObject;

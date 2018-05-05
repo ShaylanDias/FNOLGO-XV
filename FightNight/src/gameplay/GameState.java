@@ -5,6 +5,13 @@ import java.util.ArrayList;
 
 import processing.core.PApplet;
 
+/**
+ * 
+ * Stores the gamedata to send from the server to the GamePanel to be drawn
+ * 
+ * @author shaylandias
+ *
+ */
 public class GameState implements Serializable {
 
 	private static final long serialVersionUID = 2671962781505513505L;
@@ -16,7 +23,7 @@ public class GameState implements Serializable {
 	public GameState() {
 		avatars = new ArrayList<Avatar>();
 		projectiles = new ArrayList<Projectile>();
-		map = new Map();
+		map = new StandardMap();
 
 	}
 	

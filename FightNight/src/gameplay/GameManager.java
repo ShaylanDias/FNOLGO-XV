@@ -5,6 +5,13 @@ import java.util.ArrayList;
 import clientside.ControlType;
 import networking.frontend.NetworkDataObject;
 
+/**
+ * 
+ * Runs the game mechanics from the server side
+ * 
+ * @author shaylandias
+ *
+ */
 public class GameManager {
 
 	private boolean runningGame;

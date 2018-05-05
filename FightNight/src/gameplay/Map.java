@@ -1,5 +1,12 @@
 package gameplay;
 
-public class Map {
+/**
+ * 
+ * Stores information for the game map
+ * 
+ * @author shaylandias
+ *
+ */
+public abstract class Map {
 
 }

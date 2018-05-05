@@ -1,8 +1,14 @@
 package gameplay;
 
-import processing.core.PApplet;
 import processing.core.PImage;
 
+/**
+ * 
+ * A moving Attack that moves on its own and does something on impact with an Avatar
+ * 
+ * @author shaylandias
+ *
+ */
 public class Projectile extends Attack{
 
 	private double range;
