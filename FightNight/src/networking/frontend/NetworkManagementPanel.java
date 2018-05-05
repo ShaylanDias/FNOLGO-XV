@@ -27,6 +27,13 @@ import networking.backend.PeerDiscovery;
 import networking.backend.GameClient;
 import networking.backend.GameServer;
 
+/**
+ * 
+ * Window for creating and connecting to servers
+ * 
+ * @author shaylandias
+ *
+ */
 public class NetworkManagementPanel extends JPanel
 {
 

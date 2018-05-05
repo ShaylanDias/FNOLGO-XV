@@ -11,6 +11,13 @@ import processing.core.PImage;
  * on: 5/3/13
  */
  
+/**
+ * 
+ * Shelby's MovingImage class for our convenience
+ * 
+ * @author shaylandias
+ *
+ */
 public class MovingImage extends Rectangle2D.Double {
 	
 	// FIELDS

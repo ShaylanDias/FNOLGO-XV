@@ -3,6 +3,13 @@ package gameplay;
 import processing.core.PApplet;
 import processing.core.PImage;
 
+/**
+ * 
+ * A damaging or status-causing effect that an Avatar can create
+ * 
+ * @author shaylandias
+ *
+ */
 public abstract class Attack extends MovingImage{
 
 	private int player;
