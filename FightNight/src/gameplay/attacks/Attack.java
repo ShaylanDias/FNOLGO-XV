@@ -12,6 +12,8 @@ import processing.core.PImage;
  */
 public abstract class Attack extends MovingImage{
 
+	public enum AttackResult {SUCCESS, BLOCKED, MISSED, SAME_AVATAR}
+	
 	private int player;
 	private StatusEffect effect;
 	public double damage;
