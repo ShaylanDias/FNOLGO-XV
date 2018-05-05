@@ -27,6 +27,12 @@ public abstract class Attack extends MovingImage{
 		active = true;
 	}
 		
+	/**
+	 * 
+	 * Gets the number of the Player who used this Attack
+	 * 
+	 * @return Player number
+	 */
 	public int getPlayer() {
 		return player;
 	}
@@ -38,6 +44,12 @@ public abstract class Attack extends MovingImage{
 			return 0;
 	}
 	
+	/**
+	 * 
+	 * Tells if this projectile is active
+	 * 
+	 * @return
+	 */
 	public boolean isActive() {
 		return active;
 	}

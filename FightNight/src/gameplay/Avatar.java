@@ -3,6 +3,7 @@ package gameplay;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 /**
  * 
@@ -14,6 +15,12 @@ import processing.core.PApplet;
 public abstract class Avatar{
 
 	public enum AttackType{P, DIRECTION, ATTACK};
+	
+	/**
+	 * Contains the sprites for this Avatar, in subclasses define which spot in the
+	 * array corresponds to what image.
+	 */
+	protected PImage[] sprites;
 	
 	private int playerNum;
 	private double x, y;
@@ -55,34 +62,92 @@ public abstract class Avatar{
 		this.angle = angle;
 	}
 
-	public void takeHit(Attack attack) {
+	/**
+	 * 
+	 * Hits a player with an Attack
+	 * 
+	 * @param attack The attack that hits
+	 * @return The result of the attack
+	 */
+	public AttackResult takeHit(Attack attack) {
 		if(playerNum != attack.getPlayer()) {
 			damage += attack.getDamage();
+			return AttackResult.SUCCESS;
+		} else {
+			return AttackResult.MISSED;
 		}
 	}
 
+	/**
+	 * 
+	 * Moves the Avatar by the input x and y values
+	 * 
+	 * @param x X to move
+	 * @param y Y to move
+	 */
 	public void moveBy(double x, double y) {
 		this.x += x;
 		this.y += y;
 	}
 
+	/**
+	 * 
+	 * Moves Avatar to an x,y coordinate
+	 * 
+	 * @param x X-Coordinate
+	 * @param y Y-Coordinate
+	 */
 	public void moveTo(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}
 	
+	/**
+	 * 
+	 * Turns by input angle;
+	 * 
+	 * @param angle Angle to turn by
+	 */
 	public void turn(double angle) {
+		this.angle += angle;
+	}
+	
+	/**
+	 * 
+	 * Turns to this angle, vertical is 0
+	 * 
+	 * @param angle Angle to turn to
+	 */
+	public void turnTo(double angle) {
 		this.angle = angle;
 	}
 	
+	/**
+	 * 
+	 * Gets the number of the Player that owns this Avatar
+	 * 
+	 * @return
+	 */
 	public int getPlayer() {
 		return playerNum;
 	}
 	
+	/**
+	 * 
+	 * Gets the X-Coordinate of the Avatar
+	 * 
+	 * @return The X-Coordinate of the Avatar
+	 */
 	public double getX() {
 		return x;
 	}
 	
+	/**
+	 * 
+	 * Gets the Y-Coordinate of the Avatar
+	 * 
+	 * @return The Y-Coordinate of the Avatar
+	 */
 	public double getY() {
 		return y;
 	}
