@@ -15,8 +15,8 @@ public class Projectile extends Attack{
 	private double speed;
 	private double distTraveled;
 	
-	public Projectile(PImage img, int x, int y, int w, int h, int player, double damage, double knockback, double dir, double range, double speed) {
-		super(img, x, y, w, h, player, damage, knockback, dir);
+	public Projectile(PImage img, int x, int y, int w, int h, int player, double damage, double knockback, StatusEffect effect, double dir, double range, double speed) {
+		super(img, x, y, w, h, player, damage, knockback, effect, dir);
 		this.range = range;
 		this.speed = speed;
 		distTraveled = 0;

@@ -13,6 +13,7 @@ import processing.core.PImage;
 public abstract class Attack extends MovingImage{
 
 	private int player;
+	private StatusEffect effect;
 	public double damage;
 	public double knockback;
 	protected double dir;
@@ -32,13 +33,14 @@ public abstract class Attack extends MovingImage{
 	 * @param knockback The Knockback caused by this Attack
 	 * @param dir The angle of this Attack
 	 */
-	public Attack(PImage img, int x, int y, int w, int h, int player, double damage, double knockback, double dir) {
+	public Attack(PImage img, int x, int y, int w, int h, int player, double damage, double knockback, StatusEffect effect, double dir) {
 		super(img, x, y, w, h);
 		this.damage = damage;
 		this.player = player;
 		this.dir = dir;
 		this.knockback = knockback;
 		active = true;
+		this.effect = effect;
 	}
 		
 	/**
