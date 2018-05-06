@@ -42,12 +42,21 @@ public class StatusEffect implements Serializable{
 		return effect;
 	}
 	
+	/**
+	 * Starts the timer on the status effect
+	 */
 	public void startEffect() {
 		startTime = System.currentTimeMillis();
 	}
 	
+	/**
+	 * 
+	 * Returns true if the status effect has been started and has completed
+	 * 
+	 * @return True if finished
+	 */
 	public boolean isFinished() {
-		if(startTime == 0)
+		if(startTime <= 0.001)
 			return false;
 		else if(System.currentTimeMillis() > startTime + effectTime * 1000)
 			return true;

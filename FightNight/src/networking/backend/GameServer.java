@@ -54,7 +54,7 @@ public class GameServer implements NetworkMessenger {
 		this.writers = new ArrayList<ClientWriter>();
 		this.readers = new ArrayList<ClientReader>();
 		listeners = new ArrayList<NetworkListener>();
-		listeners.add(manager);
+		listeners.add(manager); //Manager is a listener so now it gets updates from each client
 
 		
 		addNetworkListener(new NetworkListener() {
@@ -98,6 +98,10 @@ public class GameServer implements NetworkMessenger {
 			}
 		});
 		
+		/*
+		 * This Thread runs the server by supdating the manager and sending out the game state to the clients
+		 * 
+		 */
 		new Thread(new Runnable() {
 
 			@Override

@@ -12,7 +12,7 @@ import networking.frontend.NetworkMessenger;
 
 /**
  * 
- * Runs the game mechanics from the server side
+ * Runs the game mechanics from the server side, Listens to the network from the server
  * 
  * @author shaylandias
  *
@@ -29,6 +29,12 @@ public class GameManager implements NetworkListener{
 		commands = new ArrayList<NetworkDataObject>();
 	}
 
+	/**
+	 * 
+	 * Returns the state of the game to be drawn
+	 * 
+	 * @return The Game State
+	 */
 	public GameState getState() {
 		return state;
 	}
@@ -43,6 +49,9 @@ public class GameManager implements NetworkListener{
 		}
 	}
 
+	/**
+	 * Runs one step of the game mechanics
+	 */
 	public void run() {
 
 		synchronized(state) {
@@ -72,7 +81,6 @@ public class GameManager implements NetworkListener{
 						if(action == ControlType.DIRECTION) {
 //							avatar.turn((double)ndo.message[2]);
 						} else if(action == ControlType.MOVEMENT) {
-							System.out.println("move: " + ndo.message[2] + " " + ndo.message[3]);
 							avatar.moveBy((double)ndo.message[2], (double)ndo.message[3]);
 						} else if(action == ControlType.ATTACK) {
 
@@ -90,6 +98,9 @@ public class GameManager implements NetworkListener{
 
 	}
 
+	/**
+	 * Adds a NetworkDataObject to the list of commands to be run if it contains a ControlType
+	 */
 	@Override
 	public void networkMessageReceived(NetworkDataObject ndo) {
 		if(ndo.message.length > 0 && ndo.message[0] instanceof ControlType)

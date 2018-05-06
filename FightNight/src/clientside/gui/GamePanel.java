@@ -66,7 +66,6 @@ public class GamePanel extends PApplet implements NetworkListener {
 		
 		if(currentState != null) {
 			currentState.draw(this);
-			System.out.println(currentState.getAvatars().get(0).getX());
 		}
 //		System.out.println(currentState);
 		//Starting Setup
@@ -82,6 +81,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		
 	}
 
+	//Should change this so it sends the angle when it sends an attack command, because constant sending creates lag
 	public void mouseMoved() {
 //		double angle = 0;
 //		Avatar av = null;
@@ -102,15 +102,21 @@ public class GamePanel extends PApplet implements NetworkListener {
 	}
 
 	public void keyPressed(){
+		/*
+		 * Send a "Message" NetworkDataObject to the server with message array in format:
+		 * [ControlType, arg, arg, ...]
+		 */
 		if(key == CODED) {
 			
 		}
 		if(key == 'a') {
-			/*
-			 * Send a "Message" NetworkDataObject to the server with message array in format:
-			 * [ControlType, arg, arg, ...]
-			 */
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 0, 10., 10.);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 0, -10., 0.);
+		} else if(key == 'w') {
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 0, 0., -10.);
+		} else if (key == 's') {
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 0, 0., 10.);
+		} else if (key == 'd') {
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 0, 10., 0.);
 		}
 			
 	}
