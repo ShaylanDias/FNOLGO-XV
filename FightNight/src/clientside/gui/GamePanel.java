@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 import clientside.ControlType;
 import clientside.Player;
+import clientside.Resources;
 import gameplay.GameState;
 import gameplay.avatars.Avatar;
 import networking.frontend.NetworkDataObject;
@@ -16,6 +17,8 @@ import processing.core.PApplet;
 
 public class GamePanel extends PApplet implements NetworkListener {
 
+	public static Resources resources = new Resources();
+	
 	//JPanel stuff
 	private JFrame window;
 	
@@ -43,6 +46,9 @@ public class GamePanel extends PApplet implements NetworkListener {
 		window.setVisible(true);
 		
 		player = new Player();
+		
+		//We are gonna dynamically load images before doing anything else on the clientside
+		resources.loadImages(this);
 	}
 	
 	public void draw() {
@@ -91,6 +97,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 			 * Send a "Message" NetworkDataObject to the server with message array in format:
 			 * [ControlType, arg, arg, ...]
 			 */
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 1, 5, 5);
 		}
 			
 	}

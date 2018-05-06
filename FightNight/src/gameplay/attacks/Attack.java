@@ -36,8 +36,8 @@ public abstract class Attack extends MovingSprite{
 	 * @param knockback The Knockback caused by this Attack
 	 * @param dir The angle of this Attack
 	 */
-	public Attack(PImage[] images, int x, int y, int w, int h, int player, double damage, boolean shieldBreaker, StatusEffect effect, double dir) {
-		super(images, x, y, w, h);
+	public Attack(String imageKey, int x, int y, int w, int h, int player, double damage, boolean shieldBreaker, StatusEffect effect, double dir) {
+		super(imageKey, x, y, w, h);
 		this.damage = damage;
 		this.player = player;
 		this.dir = dir;

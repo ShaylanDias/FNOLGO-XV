@@ -1,5 +1,9 @@
 package gameplay.avatars;
 
-public class Brute {
+public class Brute extends Avatar{
 
+	public Brute() {
+		super();
+	}
+	
 }

@@ -3,8 +3,9 @@ package gameplay;
 import java.util.ArrayList;
 
 import clientside.ControlType;
-import gameplay.attacks.Projectile;
+import gameplay.attacks.Attack;
 import gameplay.avatars.Avatar;
+import gameplay.avatars.Brute;
 import networking.frontend.NetworkDataObject;
 
 /**
@@ -28,18 +29,22 @@ public class GameManager {
 		}.start();
 	}
 
+	public void addPlayer() {
+		state.addAvatar(new Brute()); //This is a placeholder for testing
+	}
+	
 	public void addCommand(NetworkDataObject ndo) {
 		commands.add(ndo);
 	}
 
 	public void run() {
 
-		for(int i = 0; i < state.getProjectiles().size(); i++) {
-			Projectile p = state.getProjectiles().get(i);
+		for(int i = 0; i < state.getAttacks().size(); i++) {
+			Attack p = state.getAttacks().get(i);
 			if(p.isActive())
 				p.act();
 			else {
-				state.getProjectiles().remove(i);
+				state.getAttacks().remove(i);
 				i--;
 			}
 		}

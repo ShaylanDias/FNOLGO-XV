@@ -1,7 +1,10 @@
 package gameplay.avatars;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import clientside.Resources;
+import clientside.gui.GamePanel;
 import gameplay.Drawable;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Attack.AttackResult;
@@ -26,11 +29,13 @@ public abstract class Avatar implements Drawable {
 	 * Contains the sprites for this Avatar, in subclasses define which spot in the
 	 * array corresponds to what image.
 	 */
-	protected PImage[] sprites;
-	private int spriteInd;
+	protected String spriteSheetKey;
+	protected Rectangle[] sprites;
+	protected int spriteInd;
 	
 	private int playerNum;
 	private double x, y;
+	private double w, h;
 	//Angle from right horizontal that Character is facing, 0-360 going left
 	private double angle;
 	private double health;
@@ -42,7 +47,7 @@ public abstract class Avatar implements Drawable {
 	protected double dashSpeed = 8, dashDistance = 24;
 	private double dashTraveled, dashAngle;
 	
-	private ArrayList<MovingSprite> hitboxes;
+	protected ArrayList<MovingSprite> hitboxes;
 
 	/**
 	 * Initializes a Character with default values
@@ -51,6 +56,8 @@ public abstract class Avatar implements Drawable {
 		hitboxes = new ArrayList<MovingSprite>();
 		x = 100;
 		y = 100;
+		w = 30;
+		h = 40;
 		angle = 90;
 		timeActionStarted = System.currentTimeMillis();
 		shielded = false;
@@ -222,9 +229,9 @@ public abstract class Avatar implements Drawable {
 	public boolean movementControlled() {
 		return movementControlled;
 	}
-		
+	
 	private void dashAct() {
-		moveDistance(dashSpeed);
+		moveBy(Math.cos(Math.toRadians(dashAngle))*dashSpeed, Math.sin(Math.toRadians(dashAngle))*dashSpeed);
 		dashTraveled += dashSpeed;
 		if(dashDistance >= dashTraveled) {
 			dashing = false;
@@ -242,7 +249,13 @@ public abstract class Avatar implements Drawable {
 			//Add on effect
 		}
 		
-		surface.image(sprites[spriteInd], (float)x, (float)y);
+		int sx, sy, sw, sh;
+		sx = (int)sprites[spriteInd].getX();
+		sy = (int)sprites[spriteInd].getY();
+		sw = (int)sprites[spriteInd].getWidth();
+		sh = (int)sprites[spriteInd].getHeight();
+		
+		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float)x, (float)y, (float)w, (float)h, sx, sy, sw, sh);
 	}
 
 }

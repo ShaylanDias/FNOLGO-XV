@@ -1,5 +1,5 @@
 package gameplay.avatars;
 
-public class Ranger {
+public class Ranger extends Avatar{
 
 }

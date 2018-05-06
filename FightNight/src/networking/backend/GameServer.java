@@ -67,6 +67,10 @@ public class GameServer implements NetworkMessenger {
 
 //        				repeatMessage(ndo);
 
+        				if(ndo.messageType.equals(NetworkDataObject.HANDSHAKE)) {
+        					manager.addPlayer(); //This is a placeholder rn for testing
+        				}
+        				
         				if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
         					synchronized(GameServer.this) {
 

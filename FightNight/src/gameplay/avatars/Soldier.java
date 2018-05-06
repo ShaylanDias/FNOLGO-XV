@@ -1,5 +1,5 @@
 package gameplay.avatars;
 
-public class Soldier {
+public class Soldier extends Avatar{
 
 }
