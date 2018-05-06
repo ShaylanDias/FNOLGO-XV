@@ -22,6 +22,7 @@ public class Resources {
 	 */
 	public Resources() {
 		//Add all of the necessary images to HashMap
+		images.put("Fireball", new ImageWrapper("Fireball.png"));
 	}
 	
 	/**

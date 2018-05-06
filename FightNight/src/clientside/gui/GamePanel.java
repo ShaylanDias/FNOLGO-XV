@@ -1,5 +1,6 @@
 package clientside.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
@@ -25,12 +26,14 @@ public class GamePanel extends PApplet implements NetworkListener {
 	private Player player;
 	private NetworkMessenger nm;
 	
+	private boolean isHost;
+	
 	private GameState currentState = null;
 	
 	/**
 	 * Initializes the GamePanel window
 	 */
-	public GamePanel() {
+	public GamePanel(boolean isHost) {
 		//Setting up the window
 		PApplet.runSketch(new String[]{""}, this);
 		PSurfaceAWT surf = (PSurfaceAWT) this.getSurface();
@@ -47,15 +50,25 @@ public class GamePanel extends PApplet implements NetworkListener {
 		
 		player = new Player();
 		
-		//We are gonna dynamically load images before doing anything else on the clientside
+	}
+	
+	public void setup() {
+		//We are gonna load images before doing anything else on the clientside
 		resources.loadImages(this);
 	}
 	
 	public void draw() {
 		clear();
+		background(Color.WHITE.getRGB());
 
-		if(currentState != null)
+		color(Color.BLACK.getRGB());
+//		image(resources.getImage("Fireball"), 10f, 10f);
+		
+		if(currentState != null) {
 			currentState.draw(this);
+			System.out.println(currentState.getAvatars().get(0).getX());
+		}
+//		System.out.println(currentState);
 		//Starting Setup
 		stroke(0, 0, 0);
 
@@ -70,21 +83,21 @@ public class GamePanel extends PApplet implements NetworkListener {
 	}
 
 	public void mouseMoved() {
-		double angle = 0;
-		Avatar av = null;
-		if(currentState != null) {
-			for(Avatar x : currentState.getAvatars()) {
-				if(x.getPlayer() == player.getNum()) {
-					av = x;
-					break;
-				}
-			}
-			if(av != null) {
-				angle = Math.atan((mouseY-av.getY())/(mouseX-av.getX()));
-				if(nm != null )
-					nm.sendMessage(NetworkDataObject.MESSAGE, new Object[] {ControlType.DIRECTION, angle});
-			}
-		}
+//		double angle = 0;
+//		Avatar av = null;
+//		if(currentState != null) {
+//			for(Avatar x : currentState.getAvatars()) {
+//				if(x.getPlayer() == player.getNum()) {
+//					av = x;
+//					break;
+//				}
+//			}
+//			if(av != null) {
+//				angle = Math.atan((mouseY-av.getY())/(mouseX-av.getX()));
+//				if(nm != null )
+//					nm.sendMessage(NetworkDataObject.MESSAGE, new Object[] {ControlType.DIRECTION, player.getNum(), angle});
+//			}
+//		}
 		
 	}
 
@@ -97,7 +110,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 			 * Send a "Message" NetworkDataObject to the server with message array in format:
 			 * [ControlType, arg, arg, ...]
 			 */
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 1, 5, 5);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 0, 10., 10.);
 		}
 			
 	}
@@ -110,8 +123,13 @@ public class GamePanel extends PApplet implements NetworkListener {
 	@Override
 	public void networkMessageReceived(NetworkDataObject ndo) {
 		if (ndo.messageType.equals(NetworkDataObject.MESSAGE)) {
-			if(ndo.message[0] != null && ndo.message[0] instanceof GameState)
+			if(ndo.message[0] != null && ndo.message[0] instanceof GameState) {
 				currentState = (GameState) ndo.message[0];
+			}
+			if(ndo.message[0] instanceof String) {
+				System.out.println(ndo.message[0]);
+			}
+			
 		}
 		else if (ndo.messageType.equals(NetworkDataObject.HANDSHAKE)) {
 			System.out.println("\n" + ndo.dataSource + " connected. ");
@@ -126,5 +144,13 @@ public class GamePanel extends PApplet implements NetworkListener {
 		}		
 	}
 
+	public boolean isHost() {
+		return isHost;
+	}
+	
+	public void setHost(boolean isHost) {
+		this.isHost = isHost;
+	}
+	
 	
 }

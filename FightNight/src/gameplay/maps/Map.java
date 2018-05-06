@@ -1,5 +1,7 @@
 package gameplay.maps;
 
+import java.io.Serializable;
+
 /**
  * 
  * Stores information for the game map
@@ -7,6 +9,6 @@ package gameplay.maps;
  * @author shaylandias
  *
  */
-public abstract class Map {
+public abstract class Map implements Serializable{
 
 }

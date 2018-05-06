@@ -1,5 +1,7 @@
 package gameplay.attacks;
 
+import java.io.Serializable;
+
 /**
  * 
  * Represents a possible StatusEffect for an Attack to apply to an Avatar
@@ -7,7 +9,7 @@ package gameplay.attacks;
  * @author shaylandias
  *
  */
-public class StatusEffect {
+public class StatusEffect implements Serializable{
 
 	public enum Effect {NONE, STUNNED, KNOCKBACK, SLOWED, POISONED};
 	

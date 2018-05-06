@@ -4,6 +4,7 @@ public class Brute extends Avatar{
 
 	public Brute() {
 		super();
+		spriteSheetKey = "Fireball";
 	}
 	
 }

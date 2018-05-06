@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import gameplay.attacks.Attack;
 import gameplay.avatars.Avatar;
+import gameplay.avatars.Brute;
 import gameplay.maps.Map;
 import gameplay.maps.StandardMap;
 import processing.core.PApplet;
@@ -28,6 +29,7 @@ public class GameState implements Serializable {
 		avatars = new ArrayList<Avatar>();
 		attacks = new ArrayList<Attack>();
 		map = new StandardMap();
+		avatars.add(new Brute());
 
 	}
 	
@@ -56,6 +58,10 @@ public class GameState implements Serializable {
 	
 	public Map map() {
 		return map;
+	}
+	
+	public String toString() {
+		return avatars.get(0).getX() + "";
 	}
 	
 }

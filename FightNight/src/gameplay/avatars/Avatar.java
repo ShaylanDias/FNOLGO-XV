@@ -1,9 +1,9 @@
 package gameplay.avatars;
 
 import java.awt.Rectangle;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-import clientside.Resources;
 import clientside.gui.GamePanel;
 import gameplay.Drawable;
 import gameplay.attacks.Attack;
@@ -12,7 +12,6 @@ import gameplay.attacks.MovingSprite;
 import gameplay.attacks.StatusEffect;
 import gameplay.attacks.StatusEffect.Effect;
 import processing.core.PApplet;
-import processing.core.PImage;
 
 /**
  * 
@@ -21,7 +20,7 @@ import processing.core.PImage;
  * @author shaylandias
  *
  */
-public abstract class Avatar implements Drawable {
+public abstract class Avatar implements Drawable, Serializable {
 
 	public enum AttackType{P, DIRECTION, ATTACK};
 
@@ -33,7 +32,7 @@ public abstract class Avatar implements Drawable {
 	protected Rectangle[] sprites;
 	protected int spriteInd;
 	
-	private int playerNum;
+	private int playerNum = 0;
 	private double x, y;
 	private double w, h;
 	//Angle from right horizontal that Character is facing, 0-360 going left
@@ -53,11 +52,12 @@ public abstract class Avatar implements Drawable {
 	 * Initializes a Character with default values
 	 */
 	public Avatar() {
+		sprites = new Rectangle[]{new Rectangle(0, 0, 50, 50)};
 		hitboxes = new ArrayList<MovingSprite>();
 		x = 100;
 		y = 100;
-		w = 30;
-		h = 40;
+		w = 800;
+		h = 800;
 		angle = 90;
 		timeActionStarted = System.currentTimeMillis();
 		shielded = false;
@@ -116,7 +116,7 @@ public abstract class Avatar implements Drawable {
 	 * @param y Y to move
 	 */
 	public void moveBy(double x, double y) {
-		if(!status.getEffect().equals(Effect.NONE) && status.isFinished()) {
+		if(status.getEffect().equals(Effect.NONE) || status.isFinished()) {
 			this.x += x;
 			this.y += y;
 		}
