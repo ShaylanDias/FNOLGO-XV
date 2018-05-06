@@ -1,5 +1,7 @@
 package clientside.gui;
 
+import networking.frontend.NetworkManagementPanel;
+
 public class Main {
 
 	/* 
@@ -9,7 +11,9 @@ public class Main {
 	 * the host's side
 	 */
 	public static void main(String[] args) {
-		
+		GamePanel game = new GamePanel();
+		NetworkManagementPanel nmp = new NetworkManagementPanel("Chat", 16, game);  
+
 	}
 
 }
