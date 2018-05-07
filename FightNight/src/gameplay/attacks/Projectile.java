@@ -22,6 +22,7 @@ public class Projectile extends Attack{
 
 	@Override
 	public void act() {
+		super.act();
 		if(super.isActive()) {
 			x += Math.cos(Math.toRadians(super.dir)) * speed;
 			y += Math.sin(Math.toRadians(dir)) * speed;

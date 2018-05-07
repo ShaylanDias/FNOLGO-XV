@@ -22,13 +22,23 @@ import processing.core.PApplet;
  */
 public abstract class Avatar implements Drawable, Serializable {
 
+	/*
+	 * Movement, boolean keys, act method- gets called for each character when GameManager run is called 
+	 */
+	
 	public enum AttackType{P, DIRECTION, ATTACK};
-
+	
 	/**
 	 * Contains the sprites for this Avatar, in subclasses define which spot in the
 	 * array corresponds to what image.
+	 * - Needs to create attacks
+	 * - Needs to not be able to move while standing attacking or dashing or shielding (movementControlled)- also works with the StatusEffect
+	 * - Make GamePanel run the movement
 	 */
 	protected String spriteSheetKey;
+	/*
+	 * 
+	 */
 	protected Rectangle[] sprites;
 	protected int spriteInd;
 	
@@ -52,7 +62,7 @@ public abstract class Avatar implements Drawable, Serializable {
 	 * Initializes a Character with default values
 	 */
 	public Avatar() {
-		sprites = new Rectangle[]{new Rectangle(0, 0, 50, 50)};
+		sprites = new Rectangle[]{new Rectangle(100, 100, 200, 200)};
 		hitboxes = new ArrayList<MovingSprite>();
 		x = 100;
 		y = 100;

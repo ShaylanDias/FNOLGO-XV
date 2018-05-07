@@ -54,17 +54,6 @@ public class GameManager implements NetworkListener{
 	 */
 	public void run() {
 
-		synchronized(state) {
-			for(int i = 0; i < state.getAttacks().size(); i++) {
-				Attack p = state.getAttacks().get(i);
-				if(p.isActive())
-					p.act();
-				else {
-					state.getAttacks().remove(i);
-					i--;
-				}
-			}
-		}
 		synchronized(commands) {
 			for(NetworkDataObject ndo : commands) {
 				if(ndo.message[0] instanceof ControlType) {
@@ -91,6 +80,20 @@ public class GameManager implements NetworkListener{
 			}
 			commands.clear();
 		}
+		
+		
+		synchronized(state) {
+			for(int i = 0; i < state.getAttacks().size(); i++) {
+				Attack p = state.getAttacks().get(i);
+				if(p.isActive())
+					p.act();
+				else {
+					state.getAttacks().remove(i);
+					i--;
+				}
+			}
+		}
+
 	}
 
 	@Override

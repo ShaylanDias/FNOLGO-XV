@@ -99,8 +99,7 @@ public class GameServer implements NetworkMessenger {
 		});
 		
 		/*
-		 * This Thread runs the server by supdating the manager and sending out the game state to the clients
-		 * 
+		 * This Thread runs the server by updating the manager and sending out the game state to the clients 
 		 */
 		new Thread(new Runnable() {
 
@@ -113,6 +112,7 @@ public class GameServer implements NetworkMessenger {
 					manager.run();
 					sendMessage(NetworkDataObject.MESSAGE, new Object[] {manager.getState()});
 					try {
+						//How often the game is being updated
 						Thread.sleep(50);
 					} catch (InterruptedException e) {
 						e.printStackTrace();

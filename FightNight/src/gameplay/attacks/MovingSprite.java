@@ -24,6 +24,10 @@ import processing.core.PImage;
  */
 public class MovingSprite extends Rectangle2D.Double implements Drawable{
 	
+	/*
+	 * Make this work with a sprite sheet instead of a single image
+	 */
+	
 	// FIELDS
 	/**
 	 * The Sprites

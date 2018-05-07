@@ -109,7 +109,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		if(key == CODED) {
 			
 		}
-		if(key == 'a') {
+		if(key == 'a') { //Set boolean in character to true
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 0, -10., 0.);
 		} else if(key == 'w') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 0, 0., -10.);

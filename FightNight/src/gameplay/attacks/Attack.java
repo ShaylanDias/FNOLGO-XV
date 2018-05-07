@@ -10,8 +10,12 @@ import processing.core.PImage;
  * @author shaylandias
  *
  */
-public abstract class Attack extends MovingSprite{
+public class Attack extends MovingSprite{
 
+	/*
+	 * Act method, something to decide when it is over, GameManager remoces inactive attacks
+	 */
+	
 	public enum AttackResult {SUCCESS, BLOCKED, MISSED, SAME_AVATAR}
 	
 	private int player;
@@ -87,7 +91,9 @@ public abstract class Attack extends MovingSprite{
 	 * What this Attack should do each time the game loop moves forward
 	 * 
 	 */
-	public abstract void act();
+	public void act() {
+		
+	}
 		
 	/**
 	 * Draws this Attack
