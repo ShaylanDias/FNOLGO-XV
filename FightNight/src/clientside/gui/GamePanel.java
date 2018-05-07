@@ -61,7 +61,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		clear();
 		background(Color.WHITE.getRGB());
 
-		image(resources.getImage("Fighter"), 100f, 100f, 79f, 94f);
+//		image(resources.getImage("Fighter1"), 100f, 100f, 62, 98);
 		
 		color(Color.BLACK.getRGB());
 //		image(resources.getImage("Fireball"), 10f, 10f);

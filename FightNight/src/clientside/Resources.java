@@ -24,6 +24,7 @@ public class Resources {
 		//Add all of the necessary images to HashMap
 		images.put("Fireball", new ImageWrapper("Fireball.png"));
 		images.put("Fighter", new ImageWrapper("Fighter.png"));
+		images.put("Fighter1", new ImageWrapper("fighter1.png"));
 	}
 	
 	/**
@@ -37,6 +38,10 @@ public class Resources {
 		for(ImageWrapper p : c) {
 			p.setPImage(applet.loadImage(p.getFilename()));
 		}
+		
+		System.out.println(images.get("Fighter1").getPImage().width);
+		System.out.println(images.get("Fighter1").getPImage().height);
+
 	}
 	
 	/**
