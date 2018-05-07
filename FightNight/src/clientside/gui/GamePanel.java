@@ -123,7 +123,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 			else if (mouseX == centerX && mouseY > centerY) {
 				angle = 270;
 			}
-			System.out.println(angle);
+			//System.out.println(angle);
 			// if(nm != null )
 			// nm.sendMessage(NetworkDataObject.MESSAGE, new Object[]
 			// {ControlType.DIRECTION, player.getNum(), angle});
