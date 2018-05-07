@@ -1,10 +1,10 @@
 package gameplay.attacks;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import gameplay.avatars.Avatar;
 import processing.core.PApplet;
-import processing.core.PImage;
 
 /**
  * 
@@ -30,7 +30,8 @@ public class Attack extends MovingSprite{
 	protected double duration;
 	//Angle with zero facing right
 	protected double dir;
-	protected boolean active;
+	private boolean active;
+	private Rectangle hitbox;
 	
 	/**
 	 * 
@@ -48,6 +49,7 @@ public class Attack extends MovingSprite{
 	 */
 	public Attack(String imageKey, int x, int y, int w, int h, int player, double damage, boolean shieldBreaker, StatusEffect effect, double dir) {
 		super(imageKey, x, y, w, h);
+		hitbox = new Rectangle(x, y, w, h);
 		this.damage = damage;
 		this.player = player;
 		this.dir = dir;
@@ -94,9 +96,11 @@ public class Attack extends MovingSprite{
 	 * 
 	 * Checks if the Attack's end condition has been reached and sets it to inactive if it has
 	 * 
-	 * @return True if it ended
+	 * @return True if ended
 	 */
 	protected boolean checkEnd() {
+		if(!active)
+			return true;
 		if(System.currentTimeMillis() > startTime + duration * 1000) {
 			end();
 			return true;
@@ -121,7 +125,12 @@ public class Attack extends MovingSprite{
 		}
 		
 		for(Avatar a : avatars) {
-			
+			if(a.getHitbox().intersects(hitbox)) {
+				AttackResult res = a.takeHit(this);
+				if(res.equals(AttackResult.BLOCKED) || res.equals(AttackResult.SUCCESS)) {
+					end();
+				}
+			}
 		}
 		
 		return true;
@@ -137,7 +146,7 @@ public class Attack extends MovingSprite{
 		surface.popMatrix();
 	}
 	
-	private void end() {
+	protected void end() {
 		active = false;
 	}
 }

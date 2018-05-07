@@ -1,5 +1,9 @@
 package gameplay.attacks;
 
+import java.util.ArrayList;
+
+import gameplay.avatars.Avatar;
+
 /**
  * 
  * A moving Attack that moves on its own and does something on impact with an Avatar
@@ -21,15 +25,17 @@ public class Projectile extends Attack{
 	}
 
 	protected boolean checkEnd() {
+		if(!super.isActive())
+			return true;
 		if(distTraveled >= range) {
 			return true;
 		}
 		else
 			return false;
 	}
-	
+
 	@Override
-	public boolean act() {
+	public boolean act(ArrayList<Avatar> avatars) {
 		boolean ended = checkEnd();
 		if(ended)
 			return false;
@@ -39,8 +45,14 @@ public class Projectile extends Attack{
 				y += Math.sin(Math.toRadians(dir)) * speed;
 				distTraveled += speed;
 			}
+
+			for(Avatar a : avatars) {
+				AttackResult res = a.takeHit(this);
+				if(res.equals(AttackResult.BLOCKED) || res.equals(AttackResult.SUCCESS)) {
+					end();
+				}
+			}
 			return true;
 		}
 	}
-
 }

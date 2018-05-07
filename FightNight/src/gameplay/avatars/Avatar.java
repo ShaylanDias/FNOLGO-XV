@@ -1,7 +1,6 @@
 package gameplay.avatars;
 
 import java.awt.Rectangle;
-import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -9,7 +8,6 @@ import clientside.gui.GamePanel;
 import gameplay.Drawable;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Attack.AttackResult;
-import gameplay.attacks.MovingSprite;
 import gameplay.attacks.StatusEffect;
 import gameplay.attacks.StatusEffect.Effect;
 import processing.core.PApplet;
@@ -304,6 +302,10 @@ public abstract class Avatar implements Drawable, Serializable {
 
 	public void setRight(boolean right) {
 		this.right = right;
+	}
+	
+	public Rectangle getHitbox() {
+		return hitbox;
 	}
 
 }
