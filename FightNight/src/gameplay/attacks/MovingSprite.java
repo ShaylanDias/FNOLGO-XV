@@ -81,7 +81,7 @@ public class MovingSprite extends Rectangle2D.Double implements Drawable {
 	public void draw(PApplet g) {
 		g.pushStyle();
 		g.image(GamePanel.resources.getImage(imageKey), (int) x, (int) y, (int) width, (int) height);
-		g.noFill();
+//		g.noFill();
 //		g.rect((float)x, (float)y, (float)width, (float)height);
 		g.popStyle();
 	}

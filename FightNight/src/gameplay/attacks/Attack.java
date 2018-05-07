@@ -1,8 +1,10 @@
 package gameplay.attacks;
 
 import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
+import clientside.gui.GamePanel;
 import gameplay.avatars.Avatar;
 import processing.core.PApplet;
 
@@ -148,16 +150,28 @@ public class Attack extends MovingSprite {
 		return true;
 	}
 
+	private Rectangle getHitbox() {
+		return new Rectangle((int)(x + width/4), (int)(y + height/4), (int)width, (int)height);
+	}
+	
+	public boolean intersects(Rectangle2D other) {
+		return other.intersects(getHitbox());
+	}
+	
 	
 	/**
 	 * Draws this Attack
 	 */
 	public void draw(PApplet surface) {
 		surface.pushMatrix();
-		surface.imageMode(PApplet.CORNER);
-//		surface.rotate((float) Math.toRadians(dir));
+		surface.imageMode(PApplet.CENTER);
+		surface.rectMode(PApplet.CENTER);
+		surface.noFill();
+		surface.rect((float)(getHitbox().x), (float)(getHitbox().y), (float)getHitbox().width, (float)getHitbox().height);
+		surface.translate((float)x, (float)y);
+		surface.rotate((PApplet.radians((float)(dir))));
+		surface.image(GamePanel.resources.getImage(imageKey), 0, 0, (int) width, (int) height);
 		surface.popMatrix();
-		super.draw(surface);
 	}
 
 	public void end() {

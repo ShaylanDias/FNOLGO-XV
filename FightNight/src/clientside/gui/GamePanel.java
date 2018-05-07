@@ -2,7 +2,6 @@ package clientside.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 
@@ -98,6 +97,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 		}
 		if (key == 'a') { // Set boolean in character to true
+			System.out.println("a");
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'a', true);
 		}
 		if (key == 'w') {

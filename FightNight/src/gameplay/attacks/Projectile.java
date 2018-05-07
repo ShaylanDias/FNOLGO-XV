@@ -2,9 +2,7 @@ package gameplay.attacks;
 
 import java.util.ArrayList;
 
-import clientside.gui.GamePanel;
 import gameplay.avatars.Avatar;
-import processing.core.PApplet;
 
 /**
  * 
@@ -20,7 +18,7 @@ public class Projectile extends Attack{
 	private double distTraveled;
 
 	public Projectile(String imageKey, int x, int y, int w, int h, int player, double damage, boolean shieldBreaker, StatusEffect effect, double dir, double range, double speed) {
-		super(imageKey, x-w/2, y-h/2, w, h, player, damage, shieldBreaker, effect, 360-dir);
+		super(imageKey, x+w/2, y+h/2, w, h, player, damage, shieldBreaker, effect, 360-dir);
 		this.range = range;
 		this.speed = speed;
 		distTraveled = 0;
@@ -36,14 +34,14 @@ public class Projectile extends Attack{
 			return false;
 	}
 
-	public void draw(PApplet surface) {
-		surface.pushMatrix();
-		
-		surface.translate((float)x, (float)y);
-		surface.rotate((float)Math.toRadians(dir));
-		surface.image(GamePanel.resources.getImage(imageKey), (int) x, (int) y, (int) width, (int) height);
-		surface.popMatrix();
-	}
+//	public void draw(PApplet surface) {
+////		surface.pushMatrix();
+////		
+////		surface.translate((float)x, (float)y);
+////		surface.rotate((float)Math.toRadians(dir));
+////		surface.image(GamePanel.resources.getImage(imageKey), (int) x, (int) y, (int) width, (int) height);
+////		surface.popMatrix();
+//	}
 	
 	@Override
 	public boolean act(ArrayList<Avatar> avatars) {
