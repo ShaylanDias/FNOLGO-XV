@@ -138,7 +138,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 				currentState = (GameState) ndo.message[0];
 			}
 			if (ndo.message[0] instanceof String) {
-				System.out.println(ndo.message[0]);
+				//System.out.println(ndo.message[0]);
 			}
 
 		} else if (ndo.messageType.equals(NetworkDataObject.HANDSHAKE)) {

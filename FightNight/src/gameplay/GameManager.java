@@ -75,7 +75,7 @@ public class GameManager implements NetworkListener {
 								boolean dir1 = (boolean) ndo.message[3];
 								if (dir == 'w') {
 									avatar.setUp(dir1);
-									System.out.println('w');
+									//System.out.println('w');
 								}
 								else if (dir == 'a')
 									avatar.setLeft(dir1);

@@ -16,44 +16,46 @@ import processing.core.PImage;
 public class Resources {
 
 	public static HashMap<String, ImageWrapper> images = new HashMap<String, ImageWrapper>();
-	
+
 	/**
 	 * Initializes a resource object with all of the images in the game
 	 */
 	public Resources() {
-		//Add all of the necessary images to HashMap
+		// Add all of the necessary images to HashMap
 		images.put("Fireball", new ImageWrapper("Fireball.png"));
 		images.put("Fighter", new ImageWrapper("Fighter.png"));
 		images.put("Fighter1", new ImageWrapper("fighter1.png"));
 		images.put("Fireball1", new ImageWrapper("Fireball1.png"));
 	}
-	
+
 	/**
 	 * 
 	 * Loads all of the images into this object
 	 * 
-	 * @param applet The drawing surface
+	 * @param applet
+	 *            The drawing surface
 	 */
 	public void loadImages(PApplet applet) {
 		Collection<ImageWrapper> c = images.values();
-		for(ImageWrapper p : c) {
+		for (ImageWrapper p : c) {
 			p.setPImage(applet.loadImage(p.getFilename()));
 		}
-		
-		System.out.println(images.get("Fighter1").getPImage().width);
-		System.out.println(images.get("Fighter1").getPImage().height);
+
+		// System.out.println(images.get("Fighter1").getPImage().width);
+		// System.out.println(images.get("Fighter1").getPImage().height);
 
 	}
-	
+
 	/**
 	 * 
 	 * Returns a PImage based on the given key
 	 * 
-	 * @param key The String that represents the PImage
+	 * @param key
+	 *            The String that represents the PImage
 	 * @return The PImage
 	 */
 	public PImage getImage(String key) {
 		return images.get(key).getPImage();
 	}
-	
+
 }
