@@ -172,8 +172,8 @@ public class GamePanel extends PApplet implements NetworkListener {
 			}
 		}
 		if (av != null) {
-			double centerX = av.getX() + av.getWidth() / 2;
-			double centerY = av.getY() + av.getHeight() / 2;
+			double centerX = av.getX();
+			double centerY = av.getY();
 
 		    angle =  (float) Math.toDegrees(Math.atan2(centerY - mouseY, mouseX-centerX));
 		    if(angle < 0) {
