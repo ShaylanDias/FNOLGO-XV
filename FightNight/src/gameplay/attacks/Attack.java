@@ -1,5 +1,8 @@
 package gameplay.attacks;
 
+import java.util.ArrayList;
+
+import gameplay.avatars.Avatar;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -13,7 +16,7 @@ import processing.core.PImage;
 public class Attack extends MovingSprite{
 
 	/*
-	 * Act method, something to decide when it is over, GameManager remoces inactive attacks
+	 * Act method, something to decide when it is over, GameManager removes inactive attacks
 	 */
 	
 	public enum AttackResult {SUCCESS, BLOCKED, MISSED, SAME_AVATAR}
@@ -22,6 +25,9 @@ public class Attack extends MovingSprite{
 	private StatusEffect effect;
 	private boolean shieldBreaker;
 	private double damage;
+	private long startTime;
+	//Time it lasts in seconds
+	protected double duration;
 	//Angle with zero facing right
 	protected double dir;
 	protected boolean active;
@@ -47,6 +53,8 @@ public class Attack extends MovingSprite{
 		this.dir = dir;
 		active = true;
 		this.effect = effect;
+		this.shieldBreaker = shieldBreaker;
+		startTime = System.currentTimeMillis();
 	}
 		
 	/**
@@ -82,6 +90,21 @@ public class Attack extends MovingSprite{
 			return 0;
 	}
 	
+	/**
+	 * 
+	 * Checks if the Attack's end condition has been reached and sets it to inactive if it has
+	 * 
+	 * @return True if it ended
+	 */
+	protected boolean checkEnd() {
+		if(System.currentTimeMillis() > startTime + duration * 1000) {
+			end();
+			return true;
+		}
+		else
+			return false;
+	}
+	
 	public StatusEffect getEffect() {
 		return effect;
 	}
@@ -90,9 +113,18 @@ public class Attack extends MovingSprite{
 	 * 
 	 * What this Attack should do each time the game loop moves forward
 	 * 
+	 * @return Returns true if was successful, false if the projectile is now inactive
 	 */
-	public void act() {
+	public boolean act(ArrayList<Avatar> avatars) {
+		if(checkEnd()) {
+			return false;
+		}
 		
+		for(Avatar a : avatars) {
+			
+		}
+		
+		return true;
 	}
 		
 	/**
@@ -105,10 +137,7 @@ public class Attack extends MovingSprite{
 		surface.popMatrix();
 	}
 	
-	/**
-	 * Makes this Attack inactive
-	 */
-	public void end() {
+	private void end() {
 		active = false;
 	}
 }

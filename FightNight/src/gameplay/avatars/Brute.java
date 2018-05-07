@@ -6,8 +6,8 @@ public class Brute extends Avatar{
 
 	public Brute() {
 		super();
-		spriteSheetKey = "Fighter";
-		sprites = new Rectangle[] {new Rectangle(37, 24, 56, 98)};
+		spriteSheetKey = "Fighter1";
+		sprites = new Rectangle[] {new Rectangle(62, 94, 62, 98)};
 	}
 
 }

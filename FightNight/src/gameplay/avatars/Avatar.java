@@ -1,6 +1,7 @@
 package gameplay.avatars;
 
 import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -58,14 +59,14 @@ public abstract class Avatar implements Drawable, Serializable {
 	protected double dashSpeed = 8, dashDistance = 24;
 	private double dashTraveled, dashAngle;
 	
-	protected ArrayList<MovingSprite> hitboxes;
+	protected Rectangle hitbox;
 
 	/**
 	 * Initializes a Character with default values
 	 */
 	public Avatar() {
 		sprites = new Rectangle[]{new Rectangle(100, 100, 200, 200)};
-		hitboxes = new ArrayList<MovingSprite>();
+		hitbox = sprites[0];
 		x = 100;
 		y = 100;
 		w = 90;
@@ -268,9 +269,8 @@ public abstract class Avatar implements Drawable, Serializable {
 		sw = (int)sprites[spriteInd].getWidth();
 		sh = (int)sprites[spriteInd].getHeight();
 		
-		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float)0, (float)0, (float)sw, (float)sh, sy, sx, 2 * sw, sh);
-		surface.noFill();
-		surface.rect((float)sx, (float)sy, (float)sw, (float)sh);
+		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float)x, (float)y, sw, sh);
+		
 		surface.popMatrix();
 	}
 
