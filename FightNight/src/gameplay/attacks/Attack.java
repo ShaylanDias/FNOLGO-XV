@@ -34,7 +34,6 @@ public class Attack extends MovingSprite {
 	// Angle with zero facing right
 	protected double dir;
 	private boolean active;
-	private Rectangle hitbox;
 
 	/**
 	 * 
@@ -62,7 +61,6 @@ public class Attack extends MovingSprite {
 	public Attack(String imageKey, int x, int y, int w, int h, int player, double damage, boolean shieldBreaker,
 			StatusEffect effect, double dir) {
 		super(imageKey, x, y, w, h);
-		hitbox = new Rectangle(x, y, w, h);
 		this.damage = damage;
 		this.player = player;
 		this.dir = dir;
@@ -139,7 +137,7 @@ public class Attack extends MovingSprite {
 		}
 
 		for (Avatar a : avatars) {
-			if (a.getHitbox().intersects(hitbox)) {
+			if (a.getHitbox().intersects(this)) {
 				AttackResult res = a.takeHit(this);
 				if (res.equals(AttackResult.BLOCKED) || res.equals(AttackResult.SUCCESS)) {
 					end();
@@ -150,6 +148,7 @@ public class Attack extends MovingSprite {
 		return true;
 	}
 
+	
 	/**
 	 * Draws this Attack
 	 */

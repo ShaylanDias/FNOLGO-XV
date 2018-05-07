@@ -60,22 +60,17 @@ public class GamePanel extends PApplet implements NetworkListener {
 	public void draw() {
 		clear();
 		background(Color.WHITE.getRGB());
-
-		// image(resources.getImage("Fighter1"), 100f, 100f, 62, 98);
-
+		
 		color(Color.BLACK.getRGB());
-		// image(resources.getImage("Fireball"), 10f, 10f);
 
 		if (currentState != null) {
 			currentState.draw(this);
 		}
-		// System.out.println(currentState);
+
 		// Starting Setup
 		stroke(0, 0, 0);
 
 		mousePressed();
-
-		// Calls to draw
 
 	}
 

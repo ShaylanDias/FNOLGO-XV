@@ -2,11 +2,9 @@ package gameplay.attacks;
 
 import java.awt.geom.Rectangle2D;
 
-import clientside.Resources;
 import clientside.gui.GamePanel;
 import gameplay.Drawable;
 import processing.core.PApplet;
-import processing.core.PImage;
 
 /*
  * Represents a moving image.
