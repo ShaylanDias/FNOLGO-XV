@@ -2,6 +2,8 @@ package gameplay.avatars;
 
 import java.awt.Rectangle;
 
+import gameplay.attacks.Attack;
+
 public class Brute extends Avatar{
 
 	public Brute() {
@@ -11,17 +13,30 @@ public class Brute extends Avatar{
 		h = sprites[0].height;
 		w = sprites[0].width;
 	}
-	//AOE with X radius that would temporarily stun enemies within that radius
-	public void groundSmash() {
-	}
 	
-	//Eats something and heals
-	public void eatMutton() {
+	//Punch, slow but does a lot of dmg 
+	public Attack basicAttack() {
+		return null;
 		
 	}
 	
-	//
-	public void upperCut() {
+	//Throws a slow moving projectile (Rock)
+	public Attack rangedAttack() {
+		return null;
+		
+	}
+	//UpperCut - dashes forwards and stuns someone
+	public Attack abilityOne() {
+		return null;
+	}
+	//GroundSmash, and aoe stun that does dmg
+	public Attack abilityTwo() {
+		return null;
+		
+	}
+	//EatMutton - heals the dude
+	public Attack abilityThree() {
+		return null;
 		
 	}
 }
