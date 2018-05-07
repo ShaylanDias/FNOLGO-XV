@@ -154,9 +154,10 @@ public class Attack extends MovingSprite {
 	 */
 	public void draw(PApplet surface) {
 		surface.pushMatrix();
-		surface.rotate((float) Math.toRadians(dir));
-		super.draw(surface);
+		surface.imageMode(PApplet.CENTER);
+//		surface.rotate((float) Math.toRadians(dir));
 		surface.popMatrix();
+		super.draw(surface);
 	}
 
 	protected void end() {

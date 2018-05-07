@@ -18,9 +18,7 @@ public class Brute extends Avatar{
 	
 	//Punch, slow but does a lot of dmg 
 	public Attack basicAttack(int player, double angle) {
-		Point p = getCenter();
-		System.out.println(p);
-		return new Fireball(p.x, p.y , player, angle);
+		return new Fireball(hitbox.x, hitbox.y , player, angle);
 		
 	}
 	

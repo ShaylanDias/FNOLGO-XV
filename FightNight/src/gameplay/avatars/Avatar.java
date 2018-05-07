@@ -311,10 +311,12 @@ public abstract class Avatar implements Drawable, Serializable {
 
 		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
 
+		surface.rectMode(PApplet.CENTER);
 		surface.noFill();
 		surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
 		surface.fill(Color.RED.getRGB());
-		surface.ellipse((float)(hitbox.x + sw/2), (float)(hitbox.y + sh/2), 5f, 5f);
+		surface.ellipseMode(PApplet.CENTER);
+		surface.ellipse((float)(hitbox.x), (float)(hitbox.y), 5f, 5f);
 		
 		surface.popMatrix();
 	}
