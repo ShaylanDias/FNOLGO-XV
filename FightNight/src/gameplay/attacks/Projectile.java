@@ -42,7 +42,7 @@ public class Projectile extends Attack{
 		else {
 			if(super.isActive()) {
 				x += Math.cos(Math.toRadians(dir)) * speed;
-				y -= Math.sin(Math.toRadians(dir-180)) * speed;
+				y -= Math.sin(Math.toRadians(dir)) * speed;
 				System.out.println(Math.sin(Math.toRadians(dir)) * speed);
 				distTraveled += speed;
 			}			
