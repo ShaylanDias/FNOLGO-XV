@@ -48,8 +48,8 @@ public abstract class Avatar implements Drawable, Serializable {
 	private boolean up, down, left, right;
 
 	private int playerNum = 0;
-	protected double x, y;
-	protected double w, h;
+	private double x, y;
+	private double w, h;
 	// Angle from right horizontal that Character is facing, 0-360 going left
 	private double angle;
 	private double health;
@@ -104,6 +104,22 @@ public abstract class Avatar implements Drawable, Serializable {
 		this.angle = angle;
 	}
 
+	//Bound to left click
+	public abstract void basicAttack();
+	
+	//Bound to right click
+	public abstract void rangedAttack();
+	
+	//Bound to e
+	public abstract void abilityOne();
+	
+	//Bound to r
+	public abstract void abilityTwo();
+	
+	//Bound to f
+	public abstract void abilityThree();
+	
+	
 	/**
 	 * 
 	 * Hits a player with an Attack
