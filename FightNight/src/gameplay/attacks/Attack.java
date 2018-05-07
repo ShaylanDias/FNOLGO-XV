@@ -132,7 +132,7 @@ public class Attack extends MovingSprite {
 	 *         inactive
 	 */
 	public boolean act(ArrayList<Avatar> avatars) {
-		if (checkEnd()) {
+		if (!active || checkEnd()) {
 			return false;
 		}
 
@@ -160,7 +160,7 @@ public class Attack extends MovingSprite {
 		super.draw(surface);
 	}
 
-	protected void end() {
+	public void end() {
 		active = false;
 	}
 }
