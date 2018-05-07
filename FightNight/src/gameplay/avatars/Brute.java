@@ -1,6 +1,5 @@
 package gameplay.avatars;
 
-import java.awt.Point;
 import java.awt.Rectangle;
 
 import gameplay.attacks.Attack;
@@ -10,6 +9,7 @@ public class Brute extends Avatar{
 
 	public Brute() {
 		super();
+		super.basicCD = 0.8;
 		spriteSheetKey = "Fighter1";
 		sprites = new Rectangle[] {new Rectangle(62, 94, 62, 98)};
 		hitbox.height = sprites[0].height;
@@ -18,7 +18,15 @@ public class Brute extends Avatar{
 	
 	//Punch, slow but does a lot of dmg 
 	public Attack basicAttack(int player, double angle) {
-		return new Fireball(hitbox.x, hitbox.y , player, angle);
+		if(System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000) {
+			System.out.println("yes");
+			super.basicCDStart = System.currentTimeMillis();
+			return new Fireball(hitbox.x, hitbox.y , player, angle);
+		} else {
+			Fireball f = new Fireball(0, 0, 0, 0);
+			f.end();
+			return f;
+		}
 		
 	}
 	

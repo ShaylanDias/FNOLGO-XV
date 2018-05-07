@@ -56,6 +56,7 @@ public abstract class Avatar implements Drawable, Serializable {
 	protected double moveSpeed = 10; //This Avatar's movement speed
 	
 	protected double basicCD, rangedCD, a1CD, a2CD, a3CD; //Cooldowns on abilities to be set by subclasses
+	protected long basicCDStart, rangedCDStart, a1CDStart, a2CDStart, a3CDStart; //Time started
 		
 	private StatusEffect status; //Current StatusEffect applied to this Avatar
 	

@@ -77,9 +77,10 @@ public class GamePanel extends PApplet implements NetworkListener {
 	}
 
 	public void mousePressed() {
-		if(nm != null)
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, player.getNum(), AttackType.BASIC, getAngleToMouse());
-
+		if(nm != null) {
+			if(mouseButton == LEFT)
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, player.getNum(), AttackType.BASIC, getAngleToMouse());
+		}
 	}
 
 	// Should change this so it sends the angle when it sends an attack command,
