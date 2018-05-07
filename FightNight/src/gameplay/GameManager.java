@@ -81,7 +81,6 @@ public class GameManager implements NetworkListener {
 								else if (dir == 'd')
 									avatar.setRight(dir1);
 							
-							avatar.moveBy((double) ndo.message[2], (double) ndo.message[3]);
 						} else if (action == ControlType.ATTACK) {
 
 						}

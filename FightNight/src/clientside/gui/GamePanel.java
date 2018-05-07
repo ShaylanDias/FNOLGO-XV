@@ -60,7 +60,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 	public void draw() {
 		clear();
 		background(Color.WHITE.getRGB());
-		
+
 		color(Color.BLACK.getRGB());
 
 		if (currentState != null) {
@@ -75,7 +75,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 	}
 
 	public void mousePressed() {
-		
+
 	}
 
 	// Should change this so it sends the angle when it sends an attack command,
@@ -110,11 +110,14 @@ public class GamePanel extends PApplet implements NetworkListener {
 		}
 		if (key == 'a') { // Set boolean in character to true
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'a', true);
-		} else if (key == 'w') {
+		}
+		if (key == 'w') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'w', true);
-		} else if (key == 's') {
+		}
+		if (key == 's') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 's', true);
-		} else if (key == 'd') {
+		}
+		if (key == 'd') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'd', true);
 		}
 
@@ -123,11 +126,14 @@ public class GamePanel extends PApplet implements NetworkListener {
 	public void keyReleased() {
 		if (key == 'a') { // Set boolean in character to true
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'a', false);
-		} else if (key == 'w') {
+		}
+		if (key == 'w') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'w', false);
-		} else if (key == 's') {
+		}
+		if (key == 's') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 's', false);
-		} else if (key == 'd') {
+		}
+		if (key == 'd') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'd', false);
 		}
 	}
