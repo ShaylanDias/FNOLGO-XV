@@ -10,12 +10,15 @@ import processing.core.PImage;
  * @author shaylandias
  *
  */
-public abstract class Attack extends MovingImage{
+public abstract class Attack extends MovingSprite{
 
+	public enum AttackResult {SUCCESS, BLOCKED, MISSED, SAME_AVATAR}
+	
 	private int player;
 	private StatusEffect effect;
-	public double damage;
-	public double knockback;
+	private boolean shieldBreaker;
+	private double damage;
+	//Angle with zero facing right
 	protected double dir;
 	protected boolean active;
 	
@@ -23,7 +26,7 @@ public abstract class Attack extends MovingImage{
 	 * 
 	 * Creates an Attack object
 	 * 
-	 * @param img Image to use for Attack
+	 * @param images Image to use for Attack
 	 * @param x Starting X-Coordinate
 	 * @param y Starting Y-Coordinate
 	 * @param w Width of Attack
@@ -33,12 +36,11 @@ public abstract class Attack extends MovingImage{
 	 * @param knockback The Knockback caused by this Attack
 	 * @param dir The angle of this Attack
 	 */
-	public Attack(PImage img, int x, int y, int w, int h, int player, double damage, double knockback, StatusEffect effect, double dir) {
-		super(img, x, y, w, h);
+	public Attack(String imageKey, int x, int y, int w, int h, int player, double damage, boolean shieldBreaker, StatusEffect effect, double dir) {
+		super(imageKey, x, y, w, h);
 		this.damage = damage;
 		this.player = player;
 		this.dir = dir;
-		this.knockback = knockback;
 		active = true;
 		this.effect = effect;
 	}
@@ -51,19 +53,6 @@ public abstract class Attack extends MovingImage{
 	 */
 	public int getPlayer() {
 		return player;
-	}
-	
-	/**
-	 * 
-	 * Gets the Knockback of this Attack
-	 * 
-	 * @return The knockback, 0 if it is inactive
-	 */
-	public double getKnockback() {
-		if(active)
-			return knockback;
-		else
-			return 0;
 	}
 	
 	/**
@@ -87,6 +76,10 @@ public abstract class Attack extends MovingImage{
 			return damage;
 		else
 			return 0;
+	}
+	
+	public StatusEffect getEffect() {
+		return effect;
 	}
 	
 	/**

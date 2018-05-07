@@ -1,12 +1,17 @@
 package gameplay.avatars;
 
+import java.awt.Rectangle;
+import java.io.Serializable;
 import java.util.ArrayList;
 
+import clientside.gui.GamePanel;
+import gameplay.Drawable;
 import gameplay.attacks.Attack;
-import gameplay.attacks.AttackResult;
-import gameplay.attacks.MovingImage;
+import gameplay.attacks.Attack.AttackResult;
+import gameplay.attacks.MovingSprite;
+import gameplay.attacks.StatusEffect;
+import gameplay.attacks.StatusEffect.Effect;
 import processing.core.PApplet;
-import processing.core.PImage;
 
 /**
  * 
@@ -15,41 +20,54 @@ import processing.core.PImage;
  * @author shaylandias
  *
  */
-public abstract class Avatar{
+public abstract class Avatar implements Drawable, Serializable {
 
 	public enum AttackType{P, DIRECTION, ATTACK};
-	
+
 	/**
 	 * Contains the sprites for this Avatar, in subclasses define which spot in the
 	 * array corresponds to what image.
 	 */
-	protected PImage[] sprites;
+	protected String spriteSheetKey;
+	protected Rectangle[] sprites;
+	protected int spriteInd;
 	
-	private int playerNum;
+	private int playerNum = 0;
 	private double x, y;
-	//Angle from vertical that Character is facing, 0-360 going right
+	private double w, h;
+	//Angle from right horizontal that Character is facing, 0-360 going left
 	private double angle;
-	private double damage;
+	private double health;
 	private long timeActionStarted;
-	private boolean stunned, midAction, superArmor, shielded;
-	private ArrayList<MovingImage> hitboxes;
+	private StatusEffect status;
+	protected boolean shielded, superArmor, dashing;
+	//If the player can currently control movement (no if blocking, dashing, attack windup)
+	private boolean movementControlled;
+	protected double dashSpeed = 8, dashDistance = 24;
+	private double dashTraveled, dashAngle;
+	
+	protected ArrayList<MovingSprite> hitboxes;
 
 	/**
 	 * Initializes a Character with default values
 	 */
 	public Avatar() {
-		hitboxes = new ArrayList<MovingImage>();
+		sprites = new Rectangle[]{new Rectangle(0, 0, 50, 50)};
+		hitboxes = new ArrayList<MovingSprite>();
 		x = 100;
 		y = 100;
-		angle = 0;
+		w = 800;
+		h = 800;
+		angle = 90;
 		timeActionStarted = System.currentTimeMillis();
 		shielded = false;
 		superArmor = false;
-		midAction = false;
-		stunned = false;
-		damage = 0;
+		dashing = false;
+		status = new StatusEffect(StatusEffect.Effect.NONE, 0, 0);
+		health = 0;
+		spriteInd = 0;
 	}
-	
+
 	/**
 	 * 
 	 * Initializes a Character at the given x and y
@@ -73,10 +91,19 @@ public abstract class Avatar{
 	 * @return The result of the attack
 	 */
 	public AttackResult takeHit(Attack attack) {
-		if(playerNum != attack.getPlayer()) {
-			damage += attack.getDamage();
+		if(playerNum != attack.getPlayer() && attack.isActive()) {
+			if(shielded)
+				return AttackResult.BLOCKED;
+			if(!superArmor) {
+				status = attack.getEffect();
+			}
+			health += attack.getDamage();
 			return AttackResult.SUCCESS;
-		} else {
+		} 
+		else if(playerNum == attack.getPlayer()) {
+			return AttackResult.SAME_AVATAR;
+		}
+		else {
 			return AttackResult.MISSED;
 		}
 	}
@@ -89,10 +116,22 @@ public abstract class Avatar{
 	 * @param y Y to move
 	 */
 	public void moveBy(double x, double y) {
-		this.x += x;
-		this.y += y;
+		if(status.getEffect().equals(Effect.NONE) || status.isFinished()) {
+			this.x += x;
+			this.y += y;
+		}
 	}
 
+	/**
+	 * 
+	 * Moves Avatar this distance along the direction it is facing
+	 * 
+	 * @param dist The distance to travel
+	 */
+	public void moveDistance(double dist) {
+		moveBy(Math.cos(Math.toRadians(angle))*dist, Math.sin(Math.toRadians(angle))*dist);
+	}
+	
 	/**
 	 * 
 	 * Moves Avatar to an x,y coordinate
@@ -104,7 +143,7 @@ public abstract class Avatar{
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	/**
 	 * 
 	 * Turns by input angle;
@@ -114,7 +153,7 @@ public abstract class Avatar{
 	public void turn(double angle) {
 		this.angle += angle;
 	}
-	
+
 	/**
 	 * 
 	 * Turns to this angle, vertical is 0
@@ -124,15 +163,41 @@ public abstract class Avatar{
 	public void turnTo(double angle) {
 		this.angle = angle;
 	}
-	
+
 	/**
 	 * 
 	 * Gets the number of the Player that owns this Avatar
 	 * 
-	 * @return
+	 * @return The player that owns this Avatar's number
 	 */
 	public int getPlayer() {
 		return playerNum;
+	}
+
+	/**
+	 * Starts the Character in a dash, enables superArmor
+	 */
+	public void dash() {
+		movementControlled = false;
+		dashing = true;
+		dashTraveled = 0;
+		superArmor = true;
+		dashAngle = angle;
+	}
+	
+	public void block() {
+		
+	}
+	
+	/**
+	 * This should be called every round of the game loop
+	 */
+	public void act() {
+		if(dashing)
+			dashAct();
+		else if(shielded) {
+			return;
+		}
 	}
 	
 	/**
@@ -144,7 +209,7 @@ public abstract class Avatar{
 	public double getX() {
 		return x;
 	}
-	
+
 	/**
 	 * 
 	 * Gets the Y-Coordinate of the Avatar
@@ -154,9 +219,43 @@ public abstract class Avatar{
 	public double getY() {
 		return y;
 	}
+
+	/**
+	 * 
+	 * Gets if the player can control movement right now, no if dashing, blocking, attack windup
+	 * 
+	 * @return
+	 */
+	public boolean movementControlled() {
+		return movementControlled;
+	}
+	
+	private void dashAct() {
+		moveBy(Math.cos(Math.toRadians(dashAngle))*dashSpeed, Math.sin(Math.toRadians(dashAngle))*dashSpeed);
+		dashTraveled += dashSpeed;
+		if(dashDistance >= dashTraveled) {
+			dashing = false;
+			movementControlled = true;
+			dashTraveled = 0;
+			superArmor = false;
+		}
+	}
 	
 	public void draw(PApplet surface) {
+		if(shielded) {
+			//Add on block thing
+		}
+		if(!status.getEffect().equals(Effect.NONE)) {
+			//Add on effect
+		}
 		
+		int sx, sy, sw, sh;
+		sx = (int)sprites[spriteInd].getX();
+		sy = (int)sprites[spriteInd].getY();
+		sw = (int)sprites[spriteInd].getWidth();
+		sh = (int)sprites[spriteInd].getHeight();
+		
+		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float)x, (float)y, (float)w, (float)h, sx, sy, sw, sh);
 	}
 
 }

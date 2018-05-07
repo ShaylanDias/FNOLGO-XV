@@ -79,4 +79,8 @@ public class NetworkDataObject implements Serializable {
 		return dataSource.getHostName();
 	}
 	
+	public String toString() {
+		return messageType + " " + message;
+	}
+	
 }

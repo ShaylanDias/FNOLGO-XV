@@ -23,9 +23,10 @@ import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 import javax.swing.text.DefaultCaret;
 
-import networking.backend.PeerDiscovery;
+import clientside.gui.GamePanel;
 import networking.backend.GameClient;
 import networking.backend.GameServer;
+import networking.backend.PeerDiscovery;
 
 /**
  * 
@@ -55,8 +56,8 @@ public class NetworkManagementPanel extends JPanel
 
 	private InetAddress myIP;
 	private PeerDiscovery discover;
-	private GameServer ss;
-	private GameClient sc;
+	private GameServer gs;
+	private GameClient gc;
 	
 	private String programID;
 	private NetworkListener clientProgram;
@@ -192,9 +193,9 @@ public class NetworkManagementPanel extends JPanel
 	}
 	
 	private void disconnect() {
-		if (sc != null) {
-			sc.disconnect();
-			sc = null;
+		if (gc != null) {
+			gc.disconnect();
+			gc = null;
 		}
 		setButtons(true);
 	}
@@ -211,17 +212,17 @@ public class NetworkManagementPanel extends JPanel
 	private void connect(InetAddress host) {
 		if (host != null) {
 			disconnect();
-			sc = new GameClient(programID, myIP);
-			boolean success = sc.connect(host,TCP_PORT);
+			gc = new GameClient(programID, myIP);
+			boolean success = gc.connect(host,TCP_PORT);
 			if (!success) {
 				statusText.append("\nCould not connect to "+host+" on " + TCP_PORT);
-				sc.disconnect();
-				sc = null;
+				gc.disconnect();
+				gc = null;
 			} else {
 				statusText.append("\nConnected to "+host+" on " + TCP_PORT);
-				sc.addNetworkListener(clientProgram);
-				sc.addNetworkListener(new NetworkMessageHandler());
-				clientProgram.connectedToServer(sc);
+				gc.addNetworkListener(clientProgram);
+				gc.addNetworkListener(new NetworkMessageHandler());
+				clientProgram.connectedToServer(gc);
 				setButtons(false);
 			}
 		}
@@ -272,19 +273,21 @@ public class NetworkManagementPanel extends JPanel
 				connect(host);
 			} else if (source == disconnectButton) {
 				disconnect();
-				if (ss != null) {
-					ss.disconnectFromAllClients();
-					ss.shutdownServer();
-					ss = null;
+				if (gs != null) {
+					gs.disconnectFromAllClients();
+					gs.shutdownServer();
+					gs = null;
 
 				}
+				((GamePanel)clientProgram).setHost(false);
 			} else if (source == serverButton) {
-				ss = new GameServer(programID, myIP);
-				ss.setMaxConnections(maxPerServer);
-				ss.waitForConnections(TCP_PORT);
+				gs = new GameServer(programID, myIP);
+				gs.setMaxConnections(maxPerServer);
+				gs.waitForConnections(TCP_PORT);
 				statusText.append("\nTCP server running on " + TCP_PORT);
 				if (discover != null)
 					discover.setDiscoverable(true);
+				((GamePanel)clientProgram).setHost(true);
 				connect(myIP);
 			} else if (source == refreshTimer) {
 				timeOut--;

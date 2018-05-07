@@ -1,6 +1,10 @@
 package gameplay.attacks;
 
 import java.awt.geom.Rectangle2D;
+
+import clientside.Resources;
+import clientside.gui.GamePanel;
+import gameplay.Drawable;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -18,23 +22,28 @@ import processing.core.PImage;
  * @author shaylandias
  *
  */
-public class MovingImage extends Rectangle2D.Double {
+public class MovingSprite extends Rectangle2D.Double implements Drawable{
 	
 	// FIELDS
-	private PImage image;
+	/**
+	 * The Sprites
+	 */
+	protected String imageKey;
+	private int imageIndex = 0;
 	
 	/**
 	 * 
 	 * Creates a MovingImage with the given image and dimensions x, y, w, h
 	 * 
+	 * @param imageKey The Resources key for the image for this MovingSprite
 	 * @param x The X-Coordinate of the upper left corner
 	 * @param y The Y-Coordinate of the upper left corner
 	 * @param w The width of the image
 	 * @param h The height of the image
 	 */
-	public MovingImage(PImage img, int x, int y, int w, int h) {
+	public MovingSprite(String imageKey, int x, int y, int w, int h) {
 		super(x,y,w,h);
-		image = img;
+		this.imageKey = imageKey;
 	}
 	
 	
@@ -63,7 +72,7 @@ public class MovingImage extends Rectangle2D.Double {
 	 * @param g The surface to draw to
 	 */
 	public void draw(PApplet g) {
-		g.image(image,(int)x,(int)y,(int)width,(int)height);
+		g.image(GamePanel.resources.getImage(imageKey),(int)x,(int)y,(int)width,(int)height);
 	}
 	
 }
