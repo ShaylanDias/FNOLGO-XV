@@ -48,8 +48,8 @@ public abstract class Avatar implements Drawable, Serializable {
 	private boolean up, down, left, right;
 
 	private int playerNum = 0;
-	protected double x, y;
-	protected double w, h;
+	private double x, y;
+	private double w, h;
 	// Angle from right horizontal that Character is facing, 0-360 going left
 	private double angle;
 	private double health;
