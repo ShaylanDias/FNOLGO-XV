@@ -80,6 +80,7 @@ public class MovingSprite extends Rectangle2D.Double implements Drawable {
 	 */
 	public void draw(PApplet g) {
 		g.image(GamePanel.resources.getImage(imageKey), (int) x, (int) y, (int) width, (int) height);
+		g.rect((float)x, (float)y, (float)width, (float)height);
 	}
 
 }
