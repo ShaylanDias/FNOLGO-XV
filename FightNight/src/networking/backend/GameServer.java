@@ -24,7 +24,7 @@ import networking.frontend.NetworkMessenger;
  *
  *Takes in information from connected GamePanels to pass on to GameManager and sends back GameState to be drawn
  *
- * @author john_shelby, modified by shaylandias
+ * @author john_shelby, edited by shaylandias
  */
 public class GameServer implements NetworkMessenger {
 
