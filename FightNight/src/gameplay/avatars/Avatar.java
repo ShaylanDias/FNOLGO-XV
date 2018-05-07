@@ -1,5 +1,6 @@
 package gameplay.avatars;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -47,8 +48,8 @@ public abstract class Avatar implements Drawable, Serializable {
 	private boolean up, down, left, right;
 
 	private int playerNum = 0;
-	private double x, y;
-	private double w, h;
+	protected double x, y;
+	protected double w, h;
 	// Angle from right horizontal that Character is facing, 0-360 going left
 	private double angle;
 	private double health;
@@ -295,6 +296,11 @@ public abstract class Avatar implements Drawable, Serializable {
 
 		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) x, (float) y, sw, sh);
 
+		surface.noFill();
+		surface.rect((float)x, (float)y, (float)sw, (float)sh);
+		surface.fill(Color.RED.getRGB());
+		surface.ellipse((float)(x + sw/2), (float)(y + sh/2), 5f, 5f);
+		
 		surface.popMatrix();
 	}
 
@@ -328,6 +334,14 @@ public abstract class Avatar implements Drawable, Serializable {
 
 	public void setRight(boolean right) {
 		this.right = right;
+	}
+	
+	public double getWidth() {
+		return w;
+	}
+	
+	public double getHeight() {
+		return h;
 	}
 	
 	public Rectangle getHitbox() {

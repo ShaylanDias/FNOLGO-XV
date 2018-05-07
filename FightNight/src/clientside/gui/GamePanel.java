@@ -81,24 +81,27 @@ public class GamePanel extends PApplet implements NetworkListener {
 	// Should change this so it sends the angle when it sends an attack command,
 	// because constant sending creates lag
 	public void mouseMoved() {
-		// double angle = 0;
-		// Avatar av = null;
-		// if(currentState != null) {
-		// for(Avatar x : currentState.getAvatars()) {
-		// if(x.getPlayer() == player.getNum()) {
-		// av = x;
-		// break;
-		// }
-		// }
-		// if(av != null) {
-		// angle = Math.atan((mouseY-av.getY())/(mouseX-av.getX()));
-		// if(nm != null )
-		// nm.sendMessage(NetworkDataObject.MESSAGE, new Object[]
-		// {ControlType.DIRECTION, player.getNum(), angle});
-		// }
-		// }
-
+		double angle = 0;
+		Avatar av = null;
+		if(currentState != null) {
+			for(Avatar x : currentState.getAvatars()) {
+				if(x.getPlayer() == player.getNum()) {
+					av = x;
+					break;
+				}
+			}
+		}
+		if(av != null) {
+			double centerX = av.getX()+av.getWidth()/2;
+			double centerY = av.getY()+av.getHeight()/2;
+			angle = Math.toDegrees(Math.atan((mouseY-centerY)/(mouseX-centerX)));
+			System.out.println(angle);
+//			if(nm != null )
+//				nm.sendMessage(NetworkDataObject.MESSAGE, new Object[]
+//						{ControlType.DIRECTION, player.getNum(), angle});
+		}
 	}
+
 
 	public void keyPressed() {
 		/*
