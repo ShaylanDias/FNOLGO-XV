@@ -26,7 +26,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 	private Player player;
 	private NetworkMessenger nm;
 	
-	private boolean isHost;
+	private boolean isConnected;
 	
 	private GameState currentState = null;
 	
@@ -150,12 +150,12 @@ public class GamePanel extends PApplet implements NetworkListener {
 		}		
 	}
 
-	public boolean isHost() {
-		return isHost;
+	public boolean isConnected() {
+		return isConnected;
 	}
 	
-	public void setHost(boolean isHost) {
-		this.isHost = isHost;
+	public void setConnected(boolean isConnected) {
+		this.isConnected = isConnected;
 	}
 	
 	

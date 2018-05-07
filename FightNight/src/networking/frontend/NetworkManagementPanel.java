@@ -279,7 +279,7 @@ public class NetworkManagementPanel extends JPanel
 					gs = null;
 
 				}
-				((GamePanel)clientProgram).setHost(false);
+				((GamePanel)clientProgram).setConnected(false);
 			} else if (source == serverButton) {
 				gs = new GameServer(programID, myIP);
 				gs.setMaxConnections(maxPerServer);
@@ -287,7 +287,7 @@ public class NetworkManagementPanel extends JPanel
 				statusText.append("\nTCP server running on " + TCP_PORT);
 				if (discover != null)
 					discover.setDiscoverable(true);
-				((GamePanel)clientProgram).setHost(true);
+				((GamePanel)clientProgram).setConnected(true);
 				connect(myIP);
 			} else if (source == refreshTimer) {
 				timeOut--;
