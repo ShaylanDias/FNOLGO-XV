@@ -4,8 +4,9 @@ import gameplay.attacks.Attack;
 
 public class Ranger extends Avatar{
 
-	@Override
-	
+	public Ranger() {
+		super();
+	}
 	//Knife, shank some fool
 	public Attack basicAttack() {
 		return null;

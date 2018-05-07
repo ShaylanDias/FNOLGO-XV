@@ -3,8 +3,12 @@ package gameplay.avatars;
 import gameplay.attacks.Attack;
 
 public class Mage extends Avatar{
-
-	@Override
+	
+	
+	public Mage() {
+		super();
+	}
+	
 	//Staff wack, it pushes them back
 	public Attack basicAttack() {
 		return null;
