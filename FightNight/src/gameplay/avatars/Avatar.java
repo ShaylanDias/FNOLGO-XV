@@ -104,6 +104,22 @@ public abstract class Avatar implements Drawable, Serializable {
 		this.angle = angle;
 	}
 
+	//Bound to left click
+	public abstract void basicAttack();
+	
+	//Bound to right click
+	public abstract void rangedAttack();
+	
+	//Bound to e
+	public abstract void abilityOne();
+	
+	//Bound to r
+	public abstract void abilityTwo();
+	
+	//Bound to f
+	public abstract void abilityThree();
+	
+	
 	/**
 	 * 
 	 * Hits a player with an Attack
