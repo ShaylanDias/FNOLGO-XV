@@ -2,7 +2,9 @@ package gameplay.attacks;
 
 import java.util.ArrayList;
 
+import clientside.gui.GamePanel;
 import gameplay.avatars.Avatar;
+import processing.core.PApplet;
 
 /**
  * 
@@ -34,6 +36,15 @@ public class Projectile extends Attack{
 			return false;
 	}
 
+	public void draw(PApplet surface) {
+		surface.pushMatrix();
+		
+		surface.translate((float)x, (float)y);
+		surface.rotate((float)Math.toRadians(dir));
+		surface.image(GamePanel.resources.getImage(imageKey), (int) x, (int) y, (int) width, (int) height);
+		surface.popMatrix();
+	}
+	
 	@Override
 	public boolean act(ArrayList<Avatar> avatars) {
 		boolean ended = checkEnd();
