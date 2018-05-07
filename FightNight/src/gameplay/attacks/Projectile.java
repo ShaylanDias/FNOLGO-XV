@@ -20,15 +20,26 @@ public class Projectile extends Attack{
 		distTraveled = 0;
 	}
 
+	protected boolean checkEnd() {
+		if(distTraveled >= range) {
+			return true;
+		}
+		else
+			return false;
+	}
+	
 	@Override
-	public void act() {
-		super.act();
-		if(super.isActive()) {
-			x += Math.cos(Math.toRadians(super.dir)) * speed;
-			y += Math.sin(Math.toRadians(dir)) * speed;
-			distTraveled += speed;
-			if(distTraveled > range)
-				super.end();
+	public boolean act() {
+		boolean ended = checkEnd();
+		if(ended)
+			return false;
+		else {
+			if(super.isActive()) {
+				x += Math.cos(Math.toRadians(super.dir)) * speed;
+				y += Math.sin(Math.toRadians(dir)) * speed;
+				distTraveled += speed;
+			}
+			return true;
 		}
 	}
 
