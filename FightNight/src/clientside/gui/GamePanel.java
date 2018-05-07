@@ -2,6 +2,7 @@ package clientside.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 
@@ -10,6 +11,7 @@ import clientside.Player;
 import clientside.Resources;
 import gameplay.GameState;
 import gameplay.avatars.Avatar;
+import gameplay.avatars.Avatar.AttackType;
 import networking.frontend.NetworkDataObject;
 import networking.frontend.NetworkListener;
 import networking.frontend.NetworkMessenger;
@@ -75,59 +77,15 @@ public class GamePanel extends PApplet implements NetworkListener {
 	}
 
 	public void mousePressed() {
+		if(nm != null)
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, player.getNum(), AttackType.BASIC, getAngleToMouse());
 
 	}
 
 	// Should change this so it sends the angle when it sends an attack command,
 	// because constant sending creates lag
 	public void mouseMoved() {
-		double angle = 0;
-		Avatar av = null;
-		if (currentState != null) {
-			for (Avatar x : currentState.getAvatars()) {
-				if (x.getPlayer() == player.getNum()) {
-					av = x;
-					break;
-				}
-			}
-		}
-		if (av != null) {
-			double centerX = av.getX() + av.getWidth() / 2;
-			double centerY = av.getY() + av.getHeight() / 2;
 
-			// Quadrant 1
-			if (mouseX > centerX && mouseY < centerY) {
-				angle = Math.toDegrees(Math.atan((centerY - mouseY) / (mouseX - centerX)));
-			}
-			// Quadrant 2 & 3
-			else if (mouseX < centerX && (mouseY < centerY || mouseY > centerY)) {
-				angle = Math.toDegrees(Math.atan((mouseY - centerY) / (centerX - mouseX))) + 180;
-			}
-			// Quadrant 4
-			else if (mouseX > centerX && mouseY > centerY) {
-				angle = Math.toDegrees(Math.atan((centerX - mouseX) / (centerY - mouseY))) + 270;
-			}
-			// Angle 0
-			else if (mouseX > centerX && mouseY == centerY) {
-				angle = 0;
-			}
-			// Angle 90
-			else if (mouseX == centerX && mouseY < centerY) {
-				angle = 90;
-			}
-			// Angle 180
-			else if (mouseX < centerX && mouseY == centerY) {
-				angle = 180;
-			}
-			// Angle 270
-			else if (mouseX == centerX && mouseY > centerY) {
-				angle = 270;
-			}
-			System.out.println(angle);
-			// if(nm != null )
-			// nm.sendMessage(NetworkDataObject.MESSAGE, new Object[]
-			// {ControlType.DIRECTION, player.getNum(), angle});
-		}
 	}
 
 	public void keyPressed() {
@@ -200,6 +158,53 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 	public void setConnected(boolean isConnected) {
 		this.isConnected = isConnected;
+	}
+
+	private double getAngleToMouse() {
+		double angle = 0;
+		Avatar av = null;
+		if (currentState != null) {
+			for (Avatar x : currentState.getAvatars()) {
+				if (x.getPlayer() == player.getNum()) {
+					av = x;
+					break;
+				}
+			}
+		}
+		if (av != null) {
+			double centerX = av.getX() + av.getWidth() / 2;
+			double centerY = av.getY() + av.getHeight() / 2;
+
+			// Quadrant 1
+			if (mouseX > centerX && mouseY < centerY) {
+				angle = Math.toDegrees(Math.atan((centerY - mouseY) / (mouseX - centerX)));
+			}
+			// Quadrant 2 & 3
+			else if (mouseX < centerX && (mouseY < centerY || mouseY > centerY)) {
+				angle = Math.toDegrees(Math.atan((mouseY - centerY) / (centerX - mouseX))) + 180;
+			}
+			// Quadrant 4
+			else if (mouseX > centerX && mouseY > centerY) {
+				angle = Math.toDegrees(Math.atan((centerX - mouseX) / (centerY - mouseY))) + 270;
+			}
+			// Angle 0
+			else if (mouseX > centerX && mouseY == centerY) {
+				angle = 0;
+			}
+			// Angle 90
+			else if (mouseX == centerX && mouseY < centerY) {
+				angle = 90;
+			}
+			// Angle 180
+			else if (mouseX < centerX && mouseY == centerY) {
+				angle = 180;
+			}
+			// Angle 270
+			else if (mouseX == centerX && mouseY > centerY) {
+				angle = 270;
+			}
+		}
+		return angle;
 	}
 
 }

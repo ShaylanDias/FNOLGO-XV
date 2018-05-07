@@ -6,6 +6,7 @@ import clientside.ControlType;
 import gameplay.attacks.Attack;
 import gameplay.avatars.Avatar;
 import gameplay.avatars.Brute;
+import gameplay.avatars.Avatar.AttackType;
 import networking.frontend.NetworkDataObject;
 import networking.frontend.NetworkListener;
 import networking.frontend.NetworkMessenger;
@@ -84,7 +85,10 @@ public class GameManager implements NetworkListener {
 									avatar.setRight(dir1);
 							
 						} else if (action == ControlType.ATTACK) {
-
+							if(ndo.message[2] == AttackType.BASIC) {
+								state.addAttack(avatar.basicAttack(playerNum, (double)ndo.message[3]));
+							}
+							
 						}
 
 					}

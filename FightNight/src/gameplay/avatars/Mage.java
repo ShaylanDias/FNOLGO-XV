@@ -6,7 +6,7 @@ public class Mage extends Avatar{
 
 	@Override
 	//Staff wack, it pushes them back
-	public Attack basicAttack() {
+	public Attack basicAttack(int player, double angle) {
 		return null;
 	}
 	//Fireball, slow moving, and does a bunch of dmg, goes until it hits a wall. 

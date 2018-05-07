@@ -7,7 +7,7 @@ public class Ranger extends Avatar{
 	@Override
 	
 	//Knife, shank some fool
-	public Attack basicAttack() {
+	public Attack basicAttack(int player, double angle) {
 		return null;
 		
 	}

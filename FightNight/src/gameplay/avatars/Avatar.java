@@ -28,7 +28,7 @@ public abstract class Avatar implements Drawable, Serializable {
 	 */
 
 	public enum AttackType {
-		P, DIRECTION, ATTACK
+		BASIC
 	};
 
 	/**
@@ -104,7 +104,7 @@ public abstract class Avatar implements Drawable, Serializable {
 	}
 
 	//Bound to left click
-	public abstract Attack basicAttack();
+	public abstract Attack basicAttack(int player, double angle);
 	
 	//Bound to right click
 	public abstract Attack rangedAttack();

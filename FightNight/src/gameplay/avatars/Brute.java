@@ -3,6 +3,7 @@ package gameplay.avatars;
 import java.awt.Rectangle;
 
 import gameplay.attacks.Attack;
+import gameplay.attacks.Fireball;
 
 public class Brute extends Avatar{
 
@@ -15,8 +16,8 @@ public class Brute extends Avatar{
 	}
 	
 	//Punch, slow but does a lot of dmg 
-	public Attack basicAttack() {
-		return null;
+	public Attack basicAttack(int player, double angle) {
+		return new Fireball(hitbox.x, hitbox.y, player, angle);
 		
 	}
 	
