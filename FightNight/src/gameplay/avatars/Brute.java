@@ -11,5 +11,17 @@ public class Brute extends Avatar{
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
 	}
-
+	//AOE with X radius that would temporarily stun enemies within that radius
+	public void groundSmash() {
+	}
+	
+	//Eats something and heals
+	public void eatMutton() {
+		
+	}
+	
+	//
+	public void upperCut() {
+		
+	}
 }
