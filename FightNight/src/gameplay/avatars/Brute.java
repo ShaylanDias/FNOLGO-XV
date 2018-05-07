@@ -10,8 +10,8 @@ public class Brute extends Avatar{
 		super();
 		spriteSheetKey = "Fighter1";
 		sprites = new Rectangle[] {new Rectangle(62, 94, 62, 98)};
-		h = sprites[0].height;
-		w = sprites[0].width;
+		hitbox.height = sprites[0].height;
+		hitbox.width = sprites[0].width;
 	}
 	
 	//Punch, slow but does a lot of dmg 

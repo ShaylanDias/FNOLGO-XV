@@ -48,37 +48,36 @@ public abstract class Avatar implements Drawable, Serializable {
 	private boolean up, down, left, right;
 
 	private int playerNum = 0;
-	private double x, y;
-	protected double w, h;
-	// Angle from right horizontal that Character is facing, 0-360 going left
-	private double angle;
-	private double health;
-	private long timeActionStarted;
-	private StatusEffect status;
-	protected boolean shielded, superArmor, dashing;
-	// If the player can currently control movement (no if blocking, dashing, attack
-	// windup)
-	private boolean movementControlled;
-	protected double dashSpeed = 8, dashDistance = 24;
-	private double dashTraveled, dashAngle;
-
-	protected double moveSpeed = 10;
 	
-	protected Rectangle hitbox;
+	protected Rectangle hitbox; //The hitbox around this Avatar
+	
+	private double angle; //Angle from right horizontal that Avatar is facing, 0-360 going left from 0
+	private double health;
+	protected double moveSpeed = 10; //This Avatar's movement speed
+	
+	protected double basicCD, rangedCD, a1CD, a2CD, a3CD; //Cooldowns on abilities to be set by subclasses
+		
+	private StatusEffect status; //Current StatusEffect applied to this Avatar
+	
+	protected boolean blocking, superArmor, dashing;
 
+	private boolean movementControlled; //Can currently control movement (currently blocking or dashing)
+
+	protected double dashSpeed = 8, dashDistance = 50; //Modifiable distance and speed of dash
+	private double dashTraveled, dashAngle; //Distance traveled so far and angle to dash
+
+	protected boolean currentlyAttacking; //Means cannot move, dash, or block while executing this attack
+	protected long timeActionStarted; //Time is the time that the attack it is executing was started
+	
 	/**
 	 * Initializes a Character with default values
 	 */
 	public Avatar() {
 		sprites = new Rectangle[] { new Rectangle(100, 100, 200, 200) };
 		hitbox = sprites[0];
-		x = 100;
-		y = 100;
-		w = 90;
-		h = 100;
 		angle = 90;
 		timeActionStarted = System.currentTimeMillis();
-		shielded = false;
+		blocking = false;
 		superArmor = false;
 		dashing = false;
 		status = new StatusEffect(StatusEffect.Effect.NONE, 0, 0);
@@ -99,8 +98,8 @@ public abstract class Avatar implements Drawable, Serializable {
 	 */
 	public Avatar(double x, double y, double angle) {
 		super();
-		this.x = x;
-		this.y = y;
+		hitbox.x = (int)x;
+		hitbox.y = (int)y;
 		this.angle = angle;
 	}
 
@@ -130,7 +129,7 @@ public abstract class Avatar implements Drawable, Serializable {
 	 */
 	public AttackResult takeHit(Attack attack) {
 		if (playerNum != attack.getPlayer() && attack.isActive()) {
-			if (shielded)
+			if (blocking)
 				return AttackResult.BLOCKED;
 			if (!superArmor) {
 				status = attack.getEffect();
@@ -155,8 +154,8 @@ public abstract class Avatar implements Drawable, Serializable {
 	 */
 	public void moveBy(double x, double y) {
 		if (status.getEffect().equals(Effect.NONE) || status.isFinished()) {
-			this.x += x;
-			this.y += y;
+			hitbox.x += x;
+			hitbox.y += y;
 		}
 	}
 
@@ -181,8 +180,8 @@ public abstract class Avatar implements Drawable, Serializable {
 	 *            Y-Coordinate
 	 */
 	public void moveTo(double x, double y) {
-		this.x = x;
-		this.y = y;
+		hitbox.x = (int)x;
+		hitbox.y = (int)y;
 	}
 
 	/**
@@ -248,7 +247,7 @@ public abstract class Avatar implements Drawable, Serializable {
 		
 		if (dashing)
 			dashAct();
-		else if (shielded) {
+		else if (blocking) {
 			return;
 		}
 	}
@@ -260,7 +259,7 @@ public abstract class Avatar implements Drawable, Serializable {
 	 * @return The X-Coordinate of the Avatar
 	 */
 	public double getX() {
-		return x;
+		return hitbox.x;
 	}
 
 	/**
@@ -270,7 +269,7 @@ public abstract class Avatar implements Drawable, Serializable {
 	 * @return The Y-Coordinate of the Avatar
 	 */
 	public double getY() {
-		return y;
+		return hitbox.y;
 	}
 
 	/**
@@ -297,7 +296,7 @@ public abstract class Avatar implements Drawable, Serializable {
 
 	public void draw(PApplet surface) {
 		surface.pushMatrix();
-		if (shielded) {
+		if (blocking) {
 			// Add on block thing
 		}
 		if (!status.getEffect().equals(Effect.NONE)) {
@@ -310,12 +309,12 @@ public abstract class Avatar implements Drawable, Serializable {
 		sw = (int) sprites[spriteInd].getWidth();
 		sh = (int) sprites[spriteInd].getHeight();
 
-		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) x, (float) y, sw, sh);
+		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
 
 		surface.noFill();
-		surface.rect((float)x, (float)y, (float)sw, (float)sh);
+		surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
 		surface.fill(Color.RED.getRGB());
-		surface.ellipse((float)(x + sw/2), (float)(y + sh/2), 5f, 5f);
+		surface.ellipse((float)(hitbox.x + sw/2), (float)(hitbox.y + sh/2), 5f, 5f);
 		
 		surface.popMatrix();
 	}
@@ -353,11 +352,11 @@ public abstract class Avatar implements Drawable, Serializable {
 	}
 	
 	public double getWidth() {
-		return w;
+		return hitbox.width;
 	}
 	
 	public double getHeight() {
-		return h;
+		return hitbox.height;
 	}
 	
 	public Rectangle getHitbox() {
