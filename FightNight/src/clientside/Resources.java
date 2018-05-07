@@ -25,6 +25,7 @@ public class Resources {
 		images.put("Fireball", new ImageWrapper("Fireball.png"));
 		images.put("Fighter", new ImageWrapper("Fighter.png"));
 		images.put("Fighter1", new ImageWrapper("fighter1.png"));
+		images.put("Fireball1", new ImageWrapper("Fireball1.png"));
 	}
 	
 	/**

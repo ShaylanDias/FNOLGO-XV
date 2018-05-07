@@ -44,12 +44,14 @@ public class Projectile extends Attack{
 				x += Math.cos(Math.toRadians(super.dir)) * speed;
 				y += Math.sin(Math.toRadians(dir)) * speed;
 				distTraveled += speed;
-			}
-
+			}			
 			for(Avatar a : avatars) {
-				AttackResult res = a.takeHit(this);
-				if(res.equals(AttackResult.BLOCKED) || res.equals(AttackResult.SUCCESS)) {
-					end();
+				
+				if(a.getHitbox().intersects(this)) {
+					AttackResult res = a.takeHit(this);
+					if(res.equals(AttackResult.BLOCKED) || res.equals(AttackResult.SUCCESS)) {
+						end();
+					}
 				}
 			}
 			return true;
