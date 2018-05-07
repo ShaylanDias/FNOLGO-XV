@@ -12,7 +12,6 @@ public class Fireball extends Projectile{
 	
 	public Fireball(int x, int y, int player, double dir) {
 		super(imageKey, x, y, W, H, player, DMG, SHIELD_BREAKER, EFFECT, dir, RANGE, SPEED);
-		System.out.println(dir);
 	}
 
 	

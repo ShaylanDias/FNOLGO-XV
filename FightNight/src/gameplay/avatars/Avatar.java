@@ -296,6 +296,7 @@ public abstract class Avatar implements Drawable, Serializable {
 
 	public void draw(PApplet surface) {
 		surface.pushMatrix();
+		surface.pushStyle();
 		if (blocking) {
 			// Add on block thing
 		}
@@ -309,6 +310,7 @@ public abstract class Avatar implements Drawable, Serializable {
 		sw = (int) sprites[spriteInd].getWidth();
 		sh = (int) sprites[spriteInd].getHeight();
 
+		surface.imageMode(PApplet.CENTER);
 		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
 
 		surface.rectMode(PApplet.CENTER);
@@ -319,6 +321,7 @@ public abstract class Avatar implements Drawable, Serializable {
 		surface.ellipse((float)(hitbox.x), (float)(hitbox.y), 5f, 5f);
 		
 		surface.popMatrix();
+		surface.popStyle();
 	}
 
 	public boolean isUp() {
