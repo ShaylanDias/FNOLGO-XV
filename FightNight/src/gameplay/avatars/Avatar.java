@@ -66,8 +66,8 @@ public abstract class Avatar implements Drawable, Serializable {
 		hitboxes = new ArrayList<MovingSprite>();
 		x = 100;
 		y = 100;
-		w = 800;
-		h = 800;
+		w = 90;
+		h = 100;
 		angle = 90;
 		timeActionStarted = System.currentTimeMillis();
 		shielded = false;
@@ -252,6 +252,7 @@ public abstract class Avatar implements Drawable, Serializable {
 	}
 	
 	public void draw(PApplet surface) {
+		surface.pushMatrix();
 		if(shielded) {
 			//Add on block thing
 		}
@@ -265,7 +266,10 @@ public abstract class Avatar implements Drawable, Serializable {
 		sw = (int)sprites[spriteInd].getWidth();
 		sh = (int)sprites[spriteInd].getHeight();
 		
-		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float)x, (float)y, (float)w, (float)h, sx, sy, sw, sh);
+		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float)x, (float)y, (float)sw, (float)sh, sx, sy, sw, sh);
+		surface.noFill();
+		surface.rect((float)x, (float)y, (float)sw, (float)sh);
+		surface.popMatrix();
 	}
 
 }
