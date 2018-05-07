@@ -12,12 +12,13 @@ import networking.frontend.NetworkMessenger;
 
 /**
  * 
- * Runs the game mechanics from the server side, Listens to the network from the server
+ * Runs the game mechanics from the server side, Listens to the network from the
+ * server
  * 
  * @author shaylandias
  *
  */
-public class GameManager implements NetworkListener{
+public class GameManager implements NetworkListener {
 
 	private boolean runningGame;
 	private GameState state;
@@ -40,11 +41,11 @@ public class GameManager implements NetworkListener{
 	}
 
 	public void addPlayer() {
-		state.addAvatar(new Brute()); //This is a placeholder for testing
+		state.addAvatar(new Brute()); // This is a placeholder for testing
 	}
 
 	public void addCommand(NetworkDataObject ndo) {
-		synchronized(commands) {
+		synchronized (commands) {
 			commands.add(ndo);
 		}
 	}
@@ -54,24 +55,24 @@ public class GameManager implements NetworkListener{
 	 */
 	public void run() {
 
-		synchronized(commands) {
-			for(NetworkDataObject ndo : commands) {
-				if(ndo.message[0] instanceof ControlType) {
-					ControlType action = (ControlType)ndo.message[0];
+		synchronized (commands) {
+			for (NetworkDataObject ndo : commands) {
+				if (ndo.message[0] instanceof ControlType) {
+					ControlType action = (ControlType) ndo.message[0];
 					Avatar avatar = null;
-					int playerNum = (int)ndo.message[1];
-					for(Avatar x : state.getAvatars()) {
-						if(x.getPlayer() == playerNum) {
+					int playerNum = (int) ndo.message[1];
+					for (Avatar x : state.getAvatars()) {
+						if (x.getPlayer() == playerNum) {
 							avatar = x;
 							break;
 						}
 					}
-					if(avatar != null) {
-						if(action == ControlType.DIRECTION) {
-//							avatar.turn((double)ndo.message[2]);
-						} else if(action == ControlType.MOVEMENT) {
-							avatar.moveBy((double)ndo.message[2], (double)ndo.message[3]);
-						} else if(action == ControlType.ATTACK) {
+					if (avatar != null) {
+						if (action == ControlType.DIRECTION) {
+							// avatar.turn((double)ndo.message[2]);
+						} else if (action == ControlType.MOVEMENT) {
+							avatar.moveBy((double) ndo.message[2], (double) ndo.message[3]);
+						} else if (action == ControlType.ATTACK) {
 
 						}
 
@@ -80,22 +81,20 @@ public class GameManager implements NetworkListener{
 			}
 			commands.clear();
 		}
-		
-		
-		synchronized(state) {
-			for(int i = 0; i < state.getAttacks().size(); i++) {
+
+		synchronized (state) {
+			for (int i = 0; i < state.getAttacks().size(); i++) {
 				Attack p = state.getAttacks().get(i);
-				if(!p.act(state.getAvatars())) {
+				if (!p.act(state.getAvatars())) {
 					state.getAttacks().remove(i);
 					i--;
 				}
-					
-				
+
 			}
-			for(Avatar x : state.getAvatars()) {
+			for (Avatar x : state.getAvatars()) {
 				x.act();
 			}
-			
+
 		}
 
 	}
@@ -106,13 +105,13 @@ public class GameManager implements NetworkListener{
 	}
 
 	/**
-	 * Adds a NetworkDataObject to the list of commands to be run if it contains a ControlType
+	 * Adds a NetworkDataObject to the list of commands to be run if it contains a
+	 * ControlType
 	 */
 	@Override
 	public void networkMessageReceived(NetworkDataObject ndo) {
-		if(ndo.message.length > 0 && ndo.message[0] instanceof ControlType)
+		if (ndo.message.length > 0 && ndo.message[0] instanceof ControlType)
 			addCommand(ndo);
 	}
-
 
 }

@@ -20,11 +20,11 @@ import processing.core.PApplet;
 public class GameState implements Serializable {
 
 	private static final long serialVersionUID = 2671962781505513505L;
-	
+
 	private ArrayList<Avatar> avatars;
 	private ArrayList<Attack> attacks;
 	private Map map;
-	
+
 	public GameState() {
 		avatars = new ArrayList<Avatar>();
 		attacks = new ArrayList<Attack>();
@@ -32,36 +32,36 @@ public class GameState implements Serializable {
 		avatars.add(new Brute());
 
 	}
-	
+
 	public void draw(PApplet surface) {
-		for(Avatar c : avatars)
+		for (Avatar c : avatars)
 			c.draw(surface);
-		for(Attack a : attacks)
+		for (Attack a : attacks)
 			a.draw(surface);
 	}
 
-	public ArrayList<Avatar> getAvatars(){
+	public ArrayList<Avatar> getAvatars() {
 		return avatars;
 	}
-	
+
 	public void addAvatar(Avatar a) {
 		avatars.add(a);
 	}
-	
+
 	public void addAttack(Attack a) {
 		attacks.add(a);
 	}
-	
-	public ArrayList<Attack> getAttacks(){
+
+	public ArrayList<Attack> getAttacks() {
 		return attacks;
 	}
-	
+
 	public Map map() {
 		return map;
 	}
-	
+
 	public String toString() {
 		return avatars.get(0).getX() + "";
 	}
-	
+
 }

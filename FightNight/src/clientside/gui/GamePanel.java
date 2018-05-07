@@ -19,63 +19,63 @@ import processing.core.PApplet;
 public class GamePanel extends PApplet implements NetworkListener {
 
 	public static Resources resources = new Resources();
-	
-	//JPanel stuff
+
+	// JPanel stuff
 	private JFrame window;
-	
+
 	private Player player;
 	private NetworkMessenger nm;
-	
+
 	private boolean isConnected;
-	
+
 	private GameState currentState = null;
-	
+
 	/**
 	 * Initializes the GamePanel window
 	 */
 	public GamePanel(boolean isHost) {
-		//Setting up the window
-		PApplet.runSketch(new String[]{""}, this);
+		// Setting up the window
+		PApplet.runSketch(new String[] { "" }, this);
 		PSurfaceAWT surf = (PSurfaceAWT) this.getSurface();
 		PSurfaceAWT.SmoothCanvas canvas = (PSurfaceAWT.SmoothCanvas) surf.getNative();
-				
-		JFrame window = (JFrame)canvas.getFrame();
+
+		JFrame window = (JFrame) canvas.getFrame();
 		window.setSize(1200, 800);
 		window.setLocation(100, 50);
-		window.setMinimumSize(new Dimension(600,400));
+		window.setMinimumSize(new Dimension(600, 400));
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(true);
 
 		window.setVisible(true);
-		
+
 		player = new Player();
-		
+
 	}
-	
+
 	public void setup() {
-		//We are gonna load images before doing anything else on the clientside
+		// We are gonna load images before doing anything else on the clientside
 		resources.loadImages(this);
 	}
-	
+
 	public void draw() {
 		clear();
 		background(Color.WHITE.getRGB());
 
-//		image(resources.getImage("Fighter1"), 100f, 100f, 62, 98);
-		
+		// image(resources.getImage("Fighter1"), 100f, 100f, 62, 98);
+
 		color(Color.BLACK.getRGB());
-//		image(resources.getImage("Fireball"), 10f, 10f);
-		
-		if(currentState != null) {
+		// image(resources.getImage("Fireball"), 10f, 10f);
+
+		if (currentState != null) {
 			currentState.draw(this);
 		}
-//		System.out.println(currentState);
-		//Starting Setup
+		// System.out.println(currentState);
+		// Starting Setup
 		stroke(0, 0, 0);
 
 		mousePressed();
 
-		//Calls to draw
+		// Calls to draw
 
 	}
 
@@ -83,82 +83,85 @@ public class GamePanel extends PApplet implements NetworkListener {
 		
 	}
 
-	//Should change this so it sends the angle when it sends an attack command, because constant sending creates lag
+	// Should change this so it sends the angle when it sends an attack command,
+	// because constant sending creates lag
 	public void mouseMoved() {
-//		double angle = 0;
-//		Avatar av = null;
-//		if(currentState != null) {
-//			for(Avatar x : currentState.getAvatars()) {
-//				if(x.getPlayer() == player.getNum()) {
-//					av = x;
-//					break;
-//				}
-//			}
-//			if(av != null) {
-//				angle = Math.atan((mouseY-av.getY())/(mouseX-av.getX()));
-//				if(nm != null )
-//					nm.sendMessage(NetworkDataObject.MESSAGE, new Object[] {ControlType.DIRECTION, player.getNum(), angle});
-//			}
-//		}
-		
+		// double angle = 0;
+		// Avatar av = null;
+		// if(currentState != null) {
+		// for(Avatar x : currentState.getAvatars()) {
+		// if(x.getPlayer() == player.getNum()) {
+		// av = x;
+		// break;
+		// }
+		// }
+		// if(av != null) {
+		// angle = Math.atan((mouseY-av.getY())/(mouseX-av.getX()));
+		// if(nm != null )
+		// nm.sendMessage(NetworkDataObject.MESSAGE, new Object[]
+		// {ControlType.DIRECTION, player.getNum(), angle});
+		// }
+		// }
+
 	}
 
-	public void keyPressed(){
+	public void keyPressed() {
 		/*
-		 * Send a "Message" NetworkDataObject to the server with message array in format:
-		 * [ControlType, arg, arg, ...]
+		 * Send a "Message" NetworkDataObject to the server with message array in
+		 * format: [ControlType, arg, arg, ...]
 		 */
-		if(key == CODED) {
-			
+		if (key == CODED) {
+
 		}
-		if(key == 'a') { //Set boolean in character to true
+		if (key == 'a') { // Set boolean in character to true
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 0, -10., 0.);
-		} else if(key == 'w') {
+
+		} else if (key == 'w') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 0, 0., -10.);
 		} else if (key == 's') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 0, 0., 10.);
 		} else if (key == 'd') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 0, 10., 0.);
 		}
-			
+
+	}
+
+	public void keyReleased() {
+
 	}
 
 	@Override
 	public void connectedToServer(NetworkMessenger nm) {
-		this.nm = nm;		
+		this.nm = nm;
 	}
 
 	@Override
 	public void networkMessageReceived(NetworkDataObject ndo) {
 		if (ndo.messageType.equals(NetworkDataObject.MESSAGE)) {
-			if(ndo.message[0] != null && ndo.message[0] instanceof GameState) {
+			if (ndo.message[0] != null && ndo.message[0] instanceof GameState) {
 				currentState = (GameState) ndo.message[0];
 			}
-			if(ndo.message[0] instanceof String) {
+			if (ndo.message[0] instanceof String) {
 				System.out.println(ndo.message[0]);
 			}
-			
-		}
-		else if (ndo.messageType.equals(NetworkDataObject.HANDSHAKE)) {
+
+		} else if (ndo.messageType.equals(NetworkDataObject.HANDSHAKE)) {
 			System.out.println("\n" + ndo.dataSource + " connected. ");
-		}
-		else if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
+		} else if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
 			if (ndo.dataSource.equals(ndo.serverHost)) {
 				System.out.println("Disconnected from server " + ndo.serverHost);
-			}
-			else {
+			} else {
 				System.out.println("Disconected from server");
 			}
-		}		
+		}
 	}
 
 	public boolean isConnected() {
 		return isConnected;
 	}
-	
+
 	public void setConnected(boolean isConnected) {
 		this.isConnected = isConnected;
 	}
-	
-	
+
 }

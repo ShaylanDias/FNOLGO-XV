@@ -24,17 +24,20 @@ import processing.core.PApplet;
 public abstract class Avatar implements Drawable, Serializable {
 
 	/*
-	 * Movement, boolean keys, act method- gets called for each character when GameManager run is called 
+	 * Movement, boolean keys, act method- gets called for each character when
+	 * GameManager run is called
 	 */
-	
-	public enum AttackType{P, DIRECTION, ATTACK};
-	
+
+	public enum AttackType {
+		P, DIRECTION, ATTACK
+	};
+
 	/**
 	 * Contains the sprites for this Avatar, in subclasses define which spot in the
-	 * array corresponds to what image.
-	 * - Needs to create attacks
-	 * - Needs to not be able to move while standing attacking or dashing or shielding (movementControlled)- also works with the StatusEffect
-	 * - Make GamePanel run the movement
+	 * array corresponds to what image. - Needs to create attacks - Needs to not be
+	 * able to move while standing attacking or dashing or shielding
+	 * (movementControlled)- also works with the StatusEffect - Make GamePanel run
+	 * the movement
 	 */
 	protected String spriteSheetKey;
 	/*
@@ -42,30 +45,31 @@ public abstract class Avatar implements Drawable, Serializable {
 	 */
 	protected Rectangle[] sprites;
 	protected int spriteInd;
-	
+
 	private boolean up, down, left, right;
-	
+
 	private int playerNum = 0;
 	private double x, y;
 	private double w, h;
-	//Angle from right horizontal that Character is facing, 0-360 going left
+	// Angle from right horizontal that Character is facing, 0-360 going left
 	private double angle;
 	private double health;
 	private long timeActionStarted;
 	private StatusEffect status;
 	protected boolean shielded, superArmor, dashing;
-	//If the player can currently control movement (no if blocking, dashing, attack windup)
+	// If the player can currently control movement (no if blocking, dashing, attack
+	// windup)
 	private boolean movementControlled;
 	protected double dashSpeed = 8, dashDistance = 24;
 	private double dashTraveled, dashAngle;
-	
+
 	protected Rectangle hitbox;
 
 	/**
 	 * Initializes a Character with default values
 	 */
 	public Avatar() {
-		sprites = new Rectangle[]{new Rectangle(100, 100, 200, 200)};
+		sprites = new Rectangle[] { new Rectangle(100, 100, 200, 200) };
 		hitbox = sprites[0];
 		x = 100;
 		y = 100;
@@ -85,9 +89,12 @@ public abstract class Avatar implements Drawable, Serializable {
 	 * 
 	 * Initializes a Character at the given x and y
 	 * 
-	 * @param x X-coordinate
-	 * @param y Y-coordinate
-	 * @param angle The angle from vertical the Character is facing
+	 * @param x
+	 *            X-coordinate
+	 * @param y
+	 *            Y-coordinate
+	 * @param angle
+	 *            The angle from vertical the Character is facing
 	 */
 	public Avatar(double x, double y, double angle) {
 		super();
@@ -100,23 +107,22 @@ public abstract class Avatar implements Drawable, Serializable {
 	 * 
 	 * Hits a player with an Attack
 	 * 
-	 * @param attack The attack that hits
+	 * @param attack
+	 *            The attack that hits
 	 * @return The result of the attack
 	 */
 	public AttackResult takeHit(Attack attack) {
-		if(playerNum != attack.getPlayer() && attack.isActive()) {
-			if(shielded)
+		if (playerNum != attack.getPlayer() && attack.isActive()) {
+			if (shielded)
 				return AttackResult.BLOCKED;
-			if(!superArmor) {
+			if (!superArmor) {
 				status = attack.getEffect();
 			}
 			health += attack.getDamage();
 			return AttackResult.SUCCESS;
-		} 
-		else if(playerNum == attack.getPlayer()) {
+		} else if (playerNum == attack.getPlayer()) {
 			return AttackResult.SAME_AVATAR;
-		}
-		else {
+		} else {
 			return AttackResult.MISSED;
 		}
 	}
@@ -125,11 +131,13 @@ public abstract class Avatar implements Drawable, Serializable {
 	 * 
 	 * Moves the Avatar by the input x and y values
 	 * 
-	 * @param x X to move
-	 * @param y Y to move
+	 * @param x
+	 *            X to move
+	 * @param y
+	 *            Y to move
 	 */
 	public void moveBy(double x, double y) {
-		if(status.getEffect().equals(Effect.NONE) || status.isFinished()) {
+		if (status.getEffect().equals(Effect.NONE) || status.isFinished()) {
 			this.x += x;
 			this.y += y;
 		}
@@ -139,18 +147,21 @@ public abstract class Avatar implements Drawable, Serializable {
 	 * 
 	 * Moves Avatar this distance along the direction it is facing
 	 * 
-	 * @param dist The distance to travel
+	 * @param dist
+	 *            The distance to travel
 	 */
 	public void moveDistance(double dist) {
-		moveBy(Math.cos(Math.toRadians(angle))*dist, Math.sin(Math.toRadians(angle))*dist);
+		moveBy(Math.cos(Math.toRadians(angle)) * dist, Math.sin(Math.toRadians(angle)) * dist);
 	}
-	
+
 	/**
 	 * 
 	 * Moves Avatar to an x,y coordinate
 	 * 
-	 * @param x X-Coordinate
-	 * @param y Y-Coordinate
+	 * @param x
+	 *            X-Coordinate
+	 * @param y
+	 *            Y-Coordinate
 	 */
 	public void moveTo(double x, double y) {
 		this.x = x;
@@ -161,7 +172,8 @@ public abstract class Avatar implements Drawable, Serializable {
 	 * 
 	 * Turns by input angle;
 	 * 
-	 * @param angle Angle to turn by
+	 * @param angle
+	 *            Angle to turn by
 	 */
 	public void turn(double angle) {
 		this.angle += angle;
@@ -171,7 +183,8 @@ public abstract class Avatar implements Drawable, Serializable {
 	 * 
 	 * Turns to this angle, vertical is 0
 	 * 
-	 * @param angle Angle to turn to
+	 * @param angle
+	 *            Angle to turn to
 	 */
 	public void turnTo(double angle) {
 		this.angle = angle;
@@ -197,22 +210,32 @@ public abstract class Avatar implements Drawable, Serializable {
 		superArmor = true;
 		dashAngle = angle;
 	}
-	
+
 	public void block() {
-		
+
 	}
-	
+
 	/**
 	 * This should be called every round of the game loop
 	 */
 	public void act() {
-		if(dashing)
+
+		if (up)
+			moveBy(0, -5);
+		if (right)
+			moveBy(5, 0);
+		if (left)
+			moveBy(-5, 0);
+		if (down)
+			moveBy(0, 5);
+
+		if (dashing)
 			dashAct();
-		else if(shielded) {
+		else if (shielded) {
 			return;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * Gets the X-Coordinate of the Avatar
@@ -235,42 +258,43 @@ public abstract class Avatar implements Drawable, Serializable {
 
 	/**
 	 * 
-	 * Gets if the player can control movement right now, no if dashing, blocking, attack windup
+	 * Gets if the player can control movement right now, no if dashing, blocking,
+	 * attack windup
 	 * 
 	 * @return
 	 */
 	public boolean movementControlled() {
 		return movementControlled;
 	}
-	
+
 	private void dashAct() {
-		moveBy(Math.cos(Math.toRadians(dashAngle))*dashSpeed, Math.sin(Math.toRadians(dashAngle))*dashSpeed);
+		moveBy(Math.cos(Math.toRadians(dashAngle)) * dashSpeed, Math.sin(Math.toRadians(dashAngle)) * dashSpeed);
 		dashTraveled += dashSpeed;
-		if(dashDistance >= dashTraveled) {
+		if (dashDistance >= dashTraveled) {
 			dashing = false;
 			movementControlled = true;
 			dashTraveled = 0;
 			superArmor = false;
 		}
 	}
-	
+
 	public void draw(PApplet surface) {
 		surface.pushMatrix();
-		if(shielded) {
-			//Add on block thing
+		if (shielded) {
+			// Add on block thing
 		}
-		if(!status.getEffect().equals(Effect.NONE)) {
-			//Add on effect
+		if (!status.getEffect().equals(Effect.NONE)) {
+			// Add on effect
 		}
-		
+
 		int sx, sy, sw, sh;
-		sx = (int)sprites[spriteInd].getX();
-		sy = (int)sprites[spriteInd].getY();
-		sw = (int)sprites[spriteInd].getWidth();
-		sh = (int)sprites[spriteInd].getHeight();
-		
-		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float)x, (float)y, sw, sh);
-		
+		sx = (int) sprites[spriteInd].getX();
+		sy = (int) sprites[spriteInd].getY();
+		sw = (int) sprites[spriteInd].getWidth();
+		sh = (int) sprites[spriteInd].getHeight();
+
+		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) x, (float) y, sw, sh);
+
 		surface.popMatrix();
 	}
 
