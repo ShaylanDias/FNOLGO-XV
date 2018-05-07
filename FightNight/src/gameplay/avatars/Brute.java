@@ -1,5 +1,6 @@
 package gameplay.avatars;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 
 import gameplay.attacks.Attack;
@@ -17,7 +18,9 @@ public class Brute extends Avatar{
 	
 	//Punch, slow but does a lot of dmg 
 	public Attack basicAttack(int player, double angle) {
-		return new Fireball(hitbox.x, hitbox.y, player, angle);
+		Point p = getCenter();
+		System.out.println(p);
+		return new Fireball(p.x, p.y , player, angle);
 		
 	}
 	

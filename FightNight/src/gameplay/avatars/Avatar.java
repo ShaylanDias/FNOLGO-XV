@@ -1,9 +1,9 @@
 package gameplay.avatars;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import clientside.gui.GamePanel;
 import gameplay.Drawable;
@@ -357,6 +357,10 @@ public abstract class Avatar implements Drawable, Serializable {
 	
 	public double getHeight() {
 		return hitbox.height;
+	}
+	
+	public Point getCenter() {
+		return new Point(hitbox.x + hitbox.width/2, hitbox.y + hitbox.height/2);
 	}
 	
 	public Rectangle getHitbox() {
