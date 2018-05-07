@@ -114,20 +114,27 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 		}
 		if (key == 'a') { // Set boolean in character to true
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 0, -10., 0.);
-
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'a', true);
 		} else if (key == 'w') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 0, 0., -10.);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'w', true);
 		} else if (key == 's') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 0, 0., 10.);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 's', true);
 		} else if (key == 'd') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 0, 10., 0.);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'd', true);
 		}
 
 	}
 
 	public void keyReleased() {
-
+		if (key == 'a') { // Set boolean in character to true
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'a', false);
+		} else if (key == 'w') {
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'w', false);
+		} else if (key == 's') {
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 's', false);
+		} else if (key == 'd') {
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'd', false);
+		}
 	}
 
 	@Override

@@ -9,7 +9,7 @@ package clientside;
  */
 public class Player {
 
-	private int playerNum;
+	private int playerNum = 0;
 
 	public int getNum() {
 		return playerNum;

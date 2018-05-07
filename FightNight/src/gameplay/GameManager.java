@@ -68,9 +68,19 @@ public class GameManager implements NetworkListener {
 						}
 					}
 					if (avatar != null) {
-						if (action == ControlType.DIRECTION) {
-							// avatar.turn((double)ndo.message[2]);
-						} else if (action == ControlType.MOVEMENT) {
+						if (action == ControlType.MOVEMENT) { 
+							
+								char dir = (char) ndo.message[2];
+								boolean dir1 = (boolean) ndo.message[3];
+								if (dir == 'w')
+									avatar.setUp(dir1);
+								else if (dir == 'a')
+									avatar.setLeft(dir1);
+								else if (dir == 's')
+									avatar.setDown(dir1);
+								else if (dir == 'd')
+									avatar.setRight(dir1);
+							
 							avatar.moveBy((double) ndo.message[2], (double) ndo.message[3]);
 						} else if (action == ControlType.ATTACK) {
 

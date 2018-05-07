@@ -61,6 +61,8 @@ public abstract class Avatar implements Drawable, Serializable {
 	protected double dashSpeed = 8, dashDistance = 24;
 	private double dashTraveled, dashAngle;
 
+	protected double moveSpeed = 10;
+	
 	protected Rectangle hitbox;
 
 	/**
@@ -219,14 +221,14 @@ public abstract class Avatar implements Drawable, Serializable {
 	public void act() {
 
 		if (up)
-			moveBy(0, -5);
+			moveBy(0, -moveSpeed);
 		if (right)
-			moveBy(5, 0);
+			moveBy(moveSpeed, 0);
 		if (left)
-			moveBy(-5, 0);
+			moveBy(-moveSpeed, 0);
 		if (down)
-			moveBy(0, 5);
-
+			moveBy(0, moveSpeed);
+		
 		if (dashing)
 			dashAct();
 		else if (shielded) {
