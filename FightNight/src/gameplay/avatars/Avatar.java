@@ -48,7 +48,7 @@ public abstract class Avatar implements Serializable {
 
 	private boolean up, down, left, right;
 
-	private int playerNum = 0;
+	private String playerAddress = "";
 	
 	protected Rectangle2D.Double hitbox; //The hitbox around this Avatar
 	
@@ -106,7 +106,7 @@ public abstract class Avatar implements Serializable {
 	}
 
 	//Bound to left click
-	public abstract Attack basicAttack(int player, double angle);
+	public abstract Attack basicAttack(String player, double angle);
 	
 	//Bound to right click
 	public abstract Attack rangedAttack();
@@ -130,7 +130,7 @@ public abstract class Avatar implements Serializable {
 	 * @return The result of the attack
 	 */
 	public AttackResult takeHit(Attack attack) {
-		if (playerNum != attack.getPlayer() && attack.isActive()) {
+		if (!playerAddress.equals(attack.getPlayer()) && attack.isActive()) {
 			if (blocking)
 				return AttackResult.BLOCKED;
 			if (!superArmor) {
@@ -138,7 +138,7 @@ public abstract class Avatar implements Serializable {
 			}
 			health += attack.getDamage();
 			return AttackResult.SUCCESS;
-		} else if (playerNum == attack.getPlayer()) {
+		} else if (playerAddress.equals(attack.getPlayer())) {
 			return AttackResult.SAME_AVATAR;
 		} else {
 			return AttackResult.MISSED;
@@ -210,16 +210,16 @@ public abstract class Avatar implements Serializable {
 
 	/**
 	 * 
-	 * Gets the number of the Player that owns this Avatar
+	 * Gets the IP address of the Player that owns this Avatar
 	 * 
-	 * @return The player that owns this Avatar's number
+	 * @return The player that owns this Avatar's IP address
 	 */
-	public int getPlayer() {
-		return playerNum;
+	public String getPlayer() {
+		return playerAddress;
 	}
 	
-	public void setPlayer(int num) {
-		playerNum = num;
+	public void setPlayer(String address) {
+		playerAddress = address;
 	}
 
 	/**

@@ -8,7 +8,7 @@ public class Ranger extends Avatar{
 		super();
 	}
 	//Knife, shank some fool
-	public Attack basicAttack(int player, double angle) {
+	public Attack basicAttack(String player, double angle) {
 		return null;
 		
 	}

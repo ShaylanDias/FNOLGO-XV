@@ -26,12 +26,12 @@ public class Brute extends Avatar{
 	}
 	
 	//Punch, slow but does a lot of dmg 
-	public Attack basicAttack(int player, double angle) {
+	public Attack basicAttack(String player, double angle) {
 		if(System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000) {
 			super.basicCDStart = System.currentTimeMillis();
 			return new Fireball((int)hitbox.x, (int)hitbox.y , player, angle);
 		} else {
-			Fireball f = new Fireball(0, 0, 0, 0);
+			Fireball f = new Fireball(0, 0, "", 0);
 			f.end();
 			return f;
 		}
@@ -57,4 +57,5 @@ public class Brute extends Avatar{
 		return null;
 		
 	}
+
 }

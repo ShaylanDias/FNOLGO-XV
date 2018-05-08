@@ -10,7 +10,7 @@ public class Mage extends Avatar{
 	}
 	
 	//Staff wack, it pushes them back
-	public Attack basicAttack(int player, double angle) {
+	public Attack basicAttack(String player, double angle) {
 		return null;
 	}
 	//Fireball, slow moving, and does a bunch of dmg, goes until it hits a wall. 

@@ -62,10 +62,10 @@ public class GamePanel extends PApplet implements NetworkListener {
 		clear();
 		background(Color.WHITE.getRGB());
 
-		if(!isConnected) {
+		if (!isConnected) {
 			sendConnectInit();
 		}
-		
+
 		color(Color.BLACK.getRGB());
 
 		if (currentState != null) {
@@ -80,9 +80,9 @@ public class GamePanel extends PApplet implements NetworkListener {
 	}
 
 	public void mousePressed() {
-		if(nm != null) {
-			if(mouseButton == LEFT)
-				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, player.getNum(), AttackType.BASIC, getAngleToMouse());
+		if (nm != null) {
+			if (mouseButton == LEFT)
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.BASIC, getAngleToMouse());
 		}
 	}
 
@@ -101,54 +101,51 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 		}
 		if (key == 'a') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'a', true);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'a', true);
 		}
 		if (key == 'w') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'w', true);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'w', true);
 		}
 		if (key == 's') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 's', true);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 's', true);
 		}
 		if (key == 'd') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'd', true);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', true);
 		}
 
 	}
 
 	public void keyReleased() {
 		if (key == 'a') { // Set boolean in character to true
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'a', false);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'a', false);
 		}
 		if (key == 'w') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'w', false);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'w', false);
 		}
 		if (key == 's') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 's', false);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 's', false);
 		}
 		if (key == 'd') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'd', false);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', false);
 		}
 	}
 
 	@Override
 	public void connectedToServer(NetworkMessenger nm) {
 		this.nm = nm;
+		player.setPlayerAddress(nm.getHost().toString());
 	}
 
 	@Override
 	public void networkMessageReceived(NetworkDataObject ndo) {
 		if (ndo.messageType.equals(NetworkDataObject.MESSAGE)) {
-			if(ndo.message[0] != null) {
+			if (ndo.message[0] != null) {
 				if (ndo.message[0] instanceof GameState) {
 					currentState = (GameState) ndo.message[0];
 				}
-				if (ndo.message[0] instanceof String) {
-					if(ndo.message[0].equals("CONNECTION_MADE")) {
-						if(ndo.message[1].equals(nm.getHost().toString())) {
-							player.setPlayerNum((int)ndo.message[2]);
-						}
-					}
-				}
+				// if (ndo.message[0] instanceof String) {
+				//
+				// }
 			}
 
 		} else if (ndo.messageType.equals(NetworkDataObject.HANDSHAKE)) {
@@ -166,11 +163,12 @@ public class GamePanel extends PApplet implements NetworkListener {
 	public boolean isConnected() {
 		return isConnected;
 	}
-	
+
 	public void sendConnectInit() {
-		if(nm!= null)
+		if (nm != null) {
 			nm.sendMessage(NetworkDataObject.MESSAGE, "INITIALIZATION", player.getAvatar());
-		System.out.println("sent init");
+			System.out.println("sent init");
+		}
 	}
 
 	public void setConnected(boolean isConnected) {
@@ -182,7 +180,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		Avatar av = null;
 		if (currentState != null) {
 			for (Avatar x : currentState.getAvatars()) {
-				if (x.getPlayer() == player.getNum()) {
+				if (x.getPlayer().equals(player.getPlayerAddress())) {
 					av = x;
 					break;
 				}
@@ -192,10 +190,10 @@ public class GamePanel extends PApplet implements NetworkListener {
 			double centerX = av.getX();
 			double centerY = av.getY();
 
-		    angle =  (float) Math.toDegrees(Math.atan2(centerY - mouseY, mouseX-centerX));
-		    if(angle < 0) {
-		    		angle += 360;
-		    }
+			angle = (float) Math.toDegrees(Math.atan2(centerY - mouseY, mouseX - centerX));
+			if (angle < 0) {
+				angle += 360;
+			}
 		}
 		return angle;
 	}

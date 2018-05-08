@@ -10,8 +10,8 @@ public class Fireball extends Projectile{
 	private static StatusEffect EFFECT = new StatusEffect(Effect.NONE, 0, 0);
 	private static final String imageKey = "Fireball1";
 	
-	public Fireball(int x, int y, int player, double dir) {
-		super(imageKey, x, y, W, H, player, DMG, SHIELD_BREAKER, EFFECT, dir, RANGE, SPEED);
+	public Fireball(int x, int y, String playerAddress, double dir) {
+		super(imageKey, x, y, W, H, playerAddress, DMG, SHIELD_BREAKER, EFFECT, dir, RANGE, SPEED);
 	}
 
 	

@@ -12,17 +12,19 @@ import gameplay.avatars.Brute;
  */
 public class Player {
 
-	private int playerNum;
+	private String playerAddress;
 	private Avatar avatar;
 	
 	public Player() {
-		playerNum = 0;
+		playerAddress = "";
 		avatar = new Brute();
 	}
 	
-	public Player(int playerNum, Avatar av) {
-		this.playerNum = playerNum;
-		avatar = av;
+	public Player(String playerAddress, Avatar av) {
+		super();
+		this.playerAddress = playerAddress;
+		if(avatar!= null)
+			avatar = av;
 	}
 	
 	public void setAvatar(Avatar av) {
@@ -33,12 +35,12 @@ public class Player {
 		return avatar;
 	}
 
-	public void setPlayerNum(int num) {
-		playerNum = num;
+	public void setPlayerAddress(String address) {
+		playerAddress = address;
 	}
 	
-	public int getNum() {
-		return playerNum;
+	public String getPlayerAddress() {
+		return playerAddress;
 	}
 
 }

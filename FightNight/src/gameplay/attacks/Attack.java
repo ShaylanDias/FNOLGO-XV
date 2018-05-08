@@ -26,7 +26,7 @@ public class Attack extends MovingSprite {
 		SUCCESS, BLOCKED, MISSED, SAME_AVATAR
 	}
 
-	private int player;
+	private String playerAddress;
 	private StatusEffect effect;
 	private boolean shieldBreaker;
 	private double damage;
@@ -60,11 +60,11 @@ public class Attack extends MovingSprite {
 	 * @param dir
 	 *            The angle of this Attack
 	 */
-	public Attack(String imageKey, int x, int y, int w, int h, int player, double damage, boolean shieldBreaker,
+	public Attack(String imageKey, int x, int y, int w, int h, String playerAddress, double damage, boolean shieldBreaker,
 			StatusEffect effect, double dir) {
 		super(imageKey, x, y, w, h);
 		this.damage = damage;
-		this.player = player;
+		this.playerAddress = playerAddress;
 		this.dir = dir;
 		active = true;
 		this.effect = effect;
@@ -78,8 +78,8 @@ public class Attack extends MovingSprite {
 	 * 
 	 * @return Player number
 	 */
-	public int getPlayer() {
-		return player;
+	public String getPlayer() {
+		return playerAddress;
 	}
 
 	/**

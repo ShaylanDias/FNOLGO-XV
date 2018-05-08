@@ -44,9 +44,9 @@ public class GameManager implements NetworkListener {
 		return state;
 	}
 
-//	public void addPlayer() {
-//		state.addAvatar(new Brute()); // This is a placeholder for testing
-//	}
+	// public void addPlayer() {
+	// state.addAvatar(new Brute()); // This is a placeholder for testing
+	// }
 
 	public void addCommand(NetworkDataObject ndo) {
 		synchronized (commands) {
@@ -64,32 +64,32 @@ public class GameManager implements NetworkListener {
 				if (ndo.message[0] instanceof ControlType) {
 					ControlType action = (ControlType) ndo.message[0];
 					Avatar avatar = null;
-					int playerNum = (int) ndo.message[1];
+					String playerNum = ndo.getSourceIP();
 					for (Avatar x : state.getAvatars()) {
-						if (x.getPlayer() == playerNum) {
+						if (x.getPlayer().equals(playerNum)) {
 							avatar = x;
 							break;
 						}
 					}
 					if (avatar != null) {
-						if (action == ControlType.MOVEMENT) { 
-							
-								char dir = (char) ndo.message[2];
-								boolean dir1 = (boolean) ndo.message[3];
-								if (dir == 'w') 
-									avatar.setUp(dir1);
-								else if (dir == 'a')
-									avatar.setLeft(dir1);
-								else if (dir == 's')
-									avatar.setDown(dir1);
-								else if (dir == 'd')
-									avatar.setRight(dir1);
-							
+						if (action == ControlType.MOVEMENT) {
+
+							char dir = (char) ndo.message[2];
+							boolean dir1 = (boolean) ndo.message[3];
+							if (dir == 'w')
+								avatar.setUp(dir1);
+							else if (dir == 'a')
+								avatar.setLeft(dir1);
+							else if (dir == 's')
+								avatar.setDown(dir1);
+							else if (dir == 'd')
+								avatar.setRight(dir1);
+
 						} else if (action == ControlType.ATTACK) {
-							if(ndo.message[2] == AttackType.BASIC) {
-								state.addAttack(avatar.basicAttack(playerNum, (double)ndo.message[3]));
+							if (ndo.message[2] == AttackType.BASIC) {
+								state.addAttack(avatar.basicAttack(playerNum, (double) ndo.message[3]));
 							}
-							
+
 						}
 
 					}
@@ -114,8 +114,8 @@ public class GameManager implements NetworkListener {
 		}
 
 	}
-	
-	public ArrayList<NetworkDataObject> getConnections(){
+
+	public ArrayList<NetworkDataObject> getConnections() {
 		return connections;
 	}
 
@@ -130,16 +130,15 @@ public class GameManager implements NetworkListener {
 	 */
 	@Override
 	public void networkMessageReceived(NetworkDataObject ndo) {
-		if(ndo.message.length > 0) {
+
+		if (ndo.message.length > 0) {
 			if (ndo.message[0] instanceof ControlType) {
 				addCommand(ndo);
-			} else if(ndo.message[0] instanceof String && ndo.message[0].equals("INTIALIZATION")) {
-				System.out.println("received init");
-				int x = state.getAvatars().size();
-				((Avatar)ndo.message[1]).setPlayer(x);
-				state.addAvatar((Avatar)ndo.message[1]);
-				ndo.message = new Object[] {"CONNECTION_MADE", ndo.dataSource.toString(), x};
-				connections.add(ndo);
+			}
+		}
+		if (ndo.message[0] instanceof String) {
+			if (((String) ndo.message[0]).equals("INTIALIZATION")) {
+				state.addAvatar((Avatar) ndo.message[1]);
 			}
 		}
 	}

@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import gameplay.GameManager;
+import gameplay.avatars.Avatar;
 import networking.frontend.NetworkDataObject;
 import networking.frontend.NetworkListener;
 import networking.frontend.NetworkMessenger;
@@ -284,6 +285,9 @@ public class GameServer implements NetworkMessenger {
 										cr.setListeners(listeners);
 										writers.add(cw);
 										readers.add(cr);
+										if(ndo.message.length > 0) {
+											manager.getState().addAvatar(((Avatar)ndo.message[0]));
+										}
 									}
 									repeatMessage(ndo);
 									sendClientList();
