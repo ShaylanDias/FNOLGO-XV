@@ -225,12 +225,12 @@ public abstract class Avatar implements Serializable {
 	/**
 	 * Starts the Character in a dash, enables superArmor
 	 */
-	public void dash() {
+	public void dash(Double mouseAngle) {
 		movementControlled = false;
 		dashing = true;
 		dashTraveled = 0;
 		superArmor = true;
-		dashAngle = angle;
+		dashAngle = mouseAngle;
 	}
 
 	public void block() {
@@ -289,7 +289,7 @@ public abstract class Avatar implements Serializable {
 		return movementControlled;
 	}
 
-	private void dashAct() {
+	private void dashAct() { //Where the actual Dash action occurs 
 		moveBy(Math.cos(Math.toRadians(dashAngle)) * dashSpeed, Math.sin(Math.toRadians(dashAngle)) * dashSpeed);
 		dashTraveled += dashSpeed;
 		if (dashDistance >= dashTraveled) {
