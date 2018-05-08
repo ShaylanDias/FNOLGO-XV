@@ -24,11 +24,14 @@ public class GameManager implements NetworkListener {
 	private boolean runningGame;
 	private GameState state;
 	private ArrayList<NetworkDataObject> commands;
+	private ArrayList<NetworkDataObject> connections;
+	private NetworkMessenger nm;
 
 	public GameManager() {
 		state = new GameState();
 		runningGame = true;
 		commands = new ArrayList<NetworkDataObject>();
+		connections = new ArrayList<NetworkDataObject>();
 	}
 
 	/**
@@ -41,9 +44,9 @@ public class GameManager implements NetworkListener {
 		return state;
 	}
 
-	public void addPlayer() {
-		state.addAvatar(new Brute()); // This is a placeholder for testing
-	}
+//	public void addPlayer() {
+//		state.addAvatar(new Brute()); // This is a placeholder for testing
+//	}
 
 	public void addCommand(NetworkDataObject ndo) {
 		synchronized (commands) {
@@ -111,10 +114,14 @@ public class GameManager implements NetworkListener {
 		}
 
 	}
+	
+	public ArrayList<NetworkDataObject> getConnections(){
+		return connections;
+	}
 
 	@Override
 	public void connectedToServer(NetworkMessenger nm) {
-
+		this.nm = nm;
 	}
 
 	/**
@@ -123,8 +130,18 @@ public class GameManager implements NetworkListener {
 	 */
 	@Override
 	public void networkMessageReceived(NetworkDataObject ndo) {
-		if (ndo.message.length > 0 && ndo.message[0] instanceof ControlType)
-			addCommand(ndo);
+		if(ndo.message.length > 0) {
+			if (ndo.message[0] instanceof ControlType) {
+				addCommand(ndo);
+			} else if(ndo.message[0] instanceof String && ndo.message[0].equals("INTIALIZATION")) {
+				System.out.println("received init");
+				int x = state.getAvatars().size();
+				((Avatar)ndo.message[1]).setPlayer(x);
+				state.addAvatar((Avatar)ndo.message[1]);
+				ndo.message = new Object[] {"CONNECTION_MADE", ndo.dataSource.toString(), x};
+				connections.add(ndo);
+			}
+		}
 	}
 
 }

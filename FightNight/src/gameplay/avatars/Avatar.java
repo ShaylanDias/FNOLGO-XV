@@ -3,6 +3,8 @@ package gameplay.avatars;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
 import clientside.gui.GamePanel;
@@ -27,7 +29,7 @@ public abstract class Avatar implements Serializable {
 	 */
 
 	public enum AttackType {
-		BASIC
+		BASIC, RANGED, A1, A2, A3
 	};
 
 	/**
@@ -48,7 +50,7 @@ public abstract class Avatar implements Serializable {
 
 	private int playerNum = 0;
 	
-	protected Rectangle hitbox; //The hitbox around this Avatar
+	protected Rectangle2D.Double hitbox; //The hitbox around this Avatar
 	
 	private double angle; //Angle from right horizontal that Avatar is facing, 0-360 going left from 0
 	private double health;
@@ -74,7 +76,7 @@ public abstract class Avatar implements Serializable {
 	 */
 	public Avatar() {
 		sprites = new Rectangle[] { new Rectangle(100, 100, 200, 200) };
-		hitbox = sprites[0];
+		hitbox = new Rectangle2D.Double(100, 100, 200, 200);
 		angle = 90;
 		timeActionStarted = System.currentTimeMillis();
 		blocking = false;
@@ -214,6 +216,10 @@ public abstract class Avatar implements Serializable {
 	 */
 	public int getPlayer() {
 		return playerNum;
+	}
+	
+	public void setPlayer(int num) {
+		playerNum = num;
 	}
 
 	/**
@@ -364,11 +370,11 @@ public abstract class Avatar implements Serializable {
 		return hitbox.height;
 	}
 	
-	public Point getCenter() {
-		return new Point(hitbox.x + hitbox.width/2, hitbox.y + hitbox.height/2);
+	public Point2D.Double getCenter() {
+		return new Point2D.Double(hitbox.x + hitbox.width/2, hitbox.y + hitbox.height/2);
 	}
 	
-	public Rectangle getHitbox() {
+	public Rectangle2D.Double getHitbox() {
 		return hitbox;
 	}
 

@@ -62,6 +62,10 @@ public class GamePanel extends PApplet implements NetworkListener {
 		clear();
 		background(Color.WHITE.getRGB());
 
+		if(!isConnected) {
+			sendConnectInit();
+		}
+		
 		color(Color.BLACK.getRGB());
 
 		if (currentState != null) {
@@ -96,8 +100,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		if (key == CODED) {
 
 		}
-		if (key == 'a') { // Set boolean in character to true
-			System.out.println("a");
+		if (key == 'a') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, player.getNum(), 'a', true);
 		}
 		if (key == 'w') {
@@ -135,16 +138,23 @@ public class GamePanel extends PApplet implements NetworkListener {
 	@Override
 	public void networkMessageReceived(NetworkDataObject ndo) {
 		if (ndo.messageType.equals(NetworkDataObject.MESSAGE)) {
-			if (ndo.message[0] != null && ndo.message[0] instanceof GameState) {
-				currentState = (GameState) ndo.message[0];
-			}
-			if (ndo.message[0] instanceof String) {
-				//System.out.println(ndo.message[0]);
+			if(ndo.message[0] != null) {
+				if (ndo.message[0] instanceof GameState) {
+					currentState = (GameState) ndo.message[0];
+				}
+				if (ndo.message[0] instanceof String) {
+					if(ndo.message[0].equals("CONNECTION_MADE")) {
+						if(ndo.message[1].equals(nm.getHost().toString())) {
+							player.setPlayerNum((int)ndo.message[2]);
+						}
+					}
+				}
 			}
 
 		} else if (ndo.messageType.equals(NetworkDataObject.HANDSHAKE)) {
 			System.out.println("\n" + ndo.dataSource + " connected. ");
 		} else if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
+			setConnected(false);
 			if (ndo.dataSource.equals(ndo.serverHost)) {
 				System.out.println("Disconnected from server " + ndo.serverHost);
 			} else {
@@ -155,6 +165,12 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 	public boolean isConnected() {
 		return isConnected;
+	}
+	
+	public void sendConnectInit() {
+		if(nm!= null)
+			nm.sendMessage(NetworkDataObject.MESSAGE, "INITIALIZATION", player.getAvatar());
+		System.out.println("sent init");
 	}
 
 	public void setConnected(boolean isConnected) {

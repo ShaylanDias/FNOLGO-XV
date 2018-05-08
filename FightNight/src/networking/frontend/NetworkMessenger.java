@@ -1,5 +1,7 @@
 package networking.frontend;
 
+import java.net.InetAddress;
+
 public interface NetworkMessenger {
 
 	/**
@@ -9,5 +11,13 @@ public interface NetworkMessenger {
 	 * @param message Any number of objects containing data to be sent.
 	 */
 	public void sendMessage(String messageType, Object... message);
+	
+	/**
+	 * 
+	 * Gets the InetAddress of this NetworkMessenger
+	 * 
+	 * @return The InetAddress of this NetworkMessenger
+	 */
+	public InetAddress getHost();
 	
 }

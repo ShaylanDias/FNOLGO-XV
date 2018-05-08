@@ -122,6 +122,12 @@ public class Attack extends MovingSprite {
 			return false;
 	}
 
+	/**
+	 * 
+	 * Gets the status effect caused by this Attack
+	 * 
+	 * @return The StatusEffect inflicted by this Attack
+	 */
 	public StatusEffect getEffect() {
 		return effect;
 	}
@@ -154,6 +160,9 @@ public class Attack extends MovingSprite {
 		return new Rectangle((int)(x + width/4), (int)(y + height/4), (int)width, (int)height);
 	}
 	
+	/**
+	 * Finds if this Attack intersects a Rectangle
+	 */
 	public boolean intersects(Rectangle2D other) {
 		return other.intersects(getHitbox());
 	}
@@ -174,6 +183,9 @@ public class Attack extends MovingSprite {
 		surface.popMatrix();
 	}
 
+	/**
+	 * Ends the Attack, makes it not a thing
+	 */
 	public void end() {
 		active = false;
 	}

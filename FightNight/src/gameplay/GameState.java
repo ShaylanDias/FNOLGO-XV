@@ -29,7 +29,7 @@ public class GameState implements Serializable {
 		avatars = new ArrayList<Avatar>();
 		attacks = new ArrayList<Attack>();
 		map = new StandardMap();
-		avatars.add(new Brute());
+//		avatars.add(new Brute());
 
 	}
 

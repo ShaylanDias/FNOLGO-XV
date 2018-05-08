@@ -150,5 +150,11 @@ public class GameClient implements NetworkMessenger {
 	}
 
 
+	@Override
+	public InetAddress getHost() {
+		return myIP;
+	}
+
+
 
 }

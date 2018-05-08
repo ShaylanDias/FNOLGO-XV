@@ -7,6 +7,9 @@ import gameplay.attacks.Fireball;
 
 public class Brute extends Avatar{
 
+	/**
+	 * Instantiates a Brute
+	 */
 	public Brute() {
 		super();
 		super.basicCD = 0.8;
@@ -16,11 +19,17 @@ public class Brute extends Avatar{
 		hitbox.width = sprites[0].width;
 	}
 	
+	public Brute(double x, double y) {
+		this();
+		this.hitbox.x = x;
+		
+	}
+	
 	//Punch, slow but does a lot of dmg 
 	public Attack basicAttack(int player, double angle) {
 		if(System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000) {
 			super.basicCDStart = System.currentTimeMillis();
-			return new Fireball(hitbox.x, hitbox.y , player, angle);
+			return new Fireball((int)hitbox.x, (int)hitbox.y , player, angle);
 		} else {
 			Fireball f = new Fireball(0, 0, 0, 0);
 			f.end();
