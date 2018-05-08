@@ -23,7 +23,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 	 * Contains the images to be preloaded and available
 	 */
 	public static Resources resources = new Resources();
-
+	
 	private Player player;
 	private NetworkMessenger nm;
 
