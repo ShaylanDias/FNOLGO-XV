@@ -66,16 +66,18 @@ public class GameManager implements NetworkListener {
 					Avatar avatar = null;
 					String playerNum = ndo.getSourceIP();
 					for (Avatar x : state.getAvatars()) {
+						System.out.println(x.getPlayer());
 						if (x.getPlayer().equals(playerNum)) {
 							avatar = x;
 							break;
 						}
 					}
 					if (avatar != null) {
+						System.out.println("received control");
 						if (action == ControlType.MOVEMENT) {
 
-							char dir = (char) ndo.message[2];
-							boolean dir1 = (boolean) ndo.message[3];
+							char dir = (char) ndo.message[1];
+							boolean dir1 = (boolean) ndo.message[2];
 							if (dir == 'w')
 								avatar.setUp(dir1);
 							else if (dir == 'a')
@@ -86,8 +88,8 @@ public class GameManager implements NetworkListener {
 								avatar.setRight(dir1);
 
 						} else if (action == ControlType.ATTACK) {
-							if (ndo.message[2] == AttackType.BASIC) {
-								state.addAttack(avatar.basicAttack(playerNum, (double) ndo.message[3]));
+							if (ndo.message[1] == AttackType.BASIC) {
+								state.addAttack(avatar.basicAttack(playerNum, (double) ndo.message[2]));
 							}
 
 						}

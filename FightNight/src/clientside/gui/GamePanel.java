@@ -62,9 +62,9 @@ public class GamePanel extends PApplet implements NetworkListener {
 		clear();
 		background(Color.WHITE.getRGB());
 
-		if (!isConnected) {
-			sendConnectInit();
-		}
+//		if (!isConnected) {
+//			sendConnectInit();
+//		}
 
 		color(Color.BLACK.getRGB());
 
@@ -166,8 +166,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 	public void sendConnectInit() {
 		if (nm != null) {
-			nm.sendMessage(NetworkDataObject.MESSAGE, "INITIALIZATION", player.getAvatar());
-			System.out.println("sent init");
+			nm.sendMessage(NetworkDataObject.MESSAGE, "INTIALIZATION", player.getAvatar());
 		}
 	}
 
