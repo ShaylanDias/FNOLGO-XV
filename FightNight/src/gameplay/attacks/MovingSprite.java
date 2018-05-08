@@ -3,7 +3,6 @@ package gameplay.attacks;
 import java.awt.geom.Rectangle2D;
 
 import clientside.gui.GamePanel;
-import gameplay.Drawable;
 import processing.core.PApplet;
 
 /*
@@ -20,7 +19,7 @@ import processing.core.PApplet;
  * @author shaylandias
  *
  */
-public class MovingSprite extends Rectangle2D.Double implements Drawable {
+public class MovingSprite extends Rectangle2D.Double {
 
 	/*
 	 * Make this work with a sprite sheet instead of a single image

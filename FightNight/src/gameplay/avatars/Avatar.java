@@ -6,7 +6,6 @@ import java.awt.Rectangle;
 import java.io.Serializable;
 
 import clientside.gui.GamePanel;
-import gameplay.Drawable;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Attack.AttackResult;
 import gameplay.attacks.StatusEffect;
@@ -20,7 +19,7 @@ import processing.core.PApplet;
  * @author shaylandias
  *
  */
-public abstract class Avatar implements Drawable, Serializable {
+public abstract class Avatar implements Serializable {
 
 	/*
 	 * Movement, boolean keys, act method- gets called for each character when
