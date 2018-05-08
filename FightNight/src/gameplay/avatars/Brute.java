@@ -17,6 +17,7 @@ public class Brute extends Avatar {
 		sprites = new Rectangle[] { new Rectangle(62, 94, 62, 98) };
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
+		dashCD = 1.0;
 	}
 
 	/**
@@ -47,8 +48,8 @@ public class Brute extends Avatar {
 	}
 	@Override
 	public void dash(Double mouseAngle) {
-		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000) {
-			super.basicCDStart = System.currentTimeMillis();
+		if (System.currentTimeMillis() > super.dashCDStart + super.dashCD * 1000) {
+			super.dashCDStart = System.currentTimeMillis();
 			super.dash(mouseAngle);
 		} 
 	}
