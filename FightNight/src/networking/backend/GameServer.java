@@ -111,13 +111,6 @@ public class GameServer implements NetworkMessenger {
 
 				while(looping) {
 					
-					ArrayList<NetworkDataObject> connections = manager.getConnections();
-					if(connections.size() > 0) {
-						for(NetworkDataObject ndo : connections) {
-							sendMessage(NetworkDataObject.MESSAGE, ndo.message);
-						}
-					}
-					
 					manager.run();
 					sendMessage(NetworkDataObject.MESSAGE, new Object[] {manager.getState()});
 					try {

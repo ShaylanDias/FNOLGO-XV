@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import clientside.ControlType;
 import gameplay.attacks.Attack;
 import gameplay.avatars.Avatar;
-import gameplay.avatars.Brute;
 import gameplay.avatars.Avatar.AttackType;
 import networking.frontend.NetworkDataObject;
 import networking.frontend.NetworkListener;
@@ -21,17 +20,15 @@ import networking.frontend.NetworkMessenger;
  */
 public class GameManager implements NetworkListener {
 
-	private boolean runningGame;
 	private GameState state;
 	private ArrayList<NetworkDataObject> commands;
-	private ArrayList<NetworkDataObject> connections;
-	private NetworkMessenger nm;
 
+	/**
+	 * Initializes a GameManager
+	 */
 	public GameManager() {
 		state = new GameState();
-		runningGame = true;
 		commands = new ArrayList<NetworkDataObject>();
-		connections = new ArrayList<NetworkDataObject>();
 	}
 
 	/**
@@ -48,12 +45,7 @@ public class GameManager implements NetworkListener {
 	// state.addAvatar(new Brute()); // This is a placeholder for testing
 	// }
 
-	public void addCommand(NetworkDataObject ndo) {
-		synchronized (commands) {
-			commands.add(ndo);
-		}
-	}
-
+	
 	/**
 	 * Runs one step of the game mechanics
 	 */
@@ -73,7 +65,6 @@ public class GameManager implements NetworkListener {
 						}
 					}
 					if (avatar != null) {
-						System.out.println("received control");
 						if (action == ControlType.MOVEMENT) {
 
 							char dir = (char) ndo.message[1];
@@ -117,13 +108,9 @@ public class GameManager implements NetworkListener {
 
 	}
 
-	public ArrayList<NetworkDataObject> getConnections() {
-		return connections;
-	}
-
 	@Override
 	public void connectedToServer(NetworkMessenger nm) {
-		this.nm = nm;
+
 	}
 
 	/**
@@ -142,6 +129,17 @@ public class GameManager implements NetworkListener {
 			if (((String) ndo.message[0]).equals("INTIALIZATION")) {
 				state.addAvatar((Avatar) ndo.message[1]);
 			}
+		}
+	}
+
+	// public void addPlayer() {
+	// state.addAvatar(new Brute()); // This is a placeholder for testing
+	// }
+	
+	
+	private void addCommand(NetworkDataObject ndo) {
+		synchronized (commands) {
+			commands.add(ndo);
 		}
 	}
 
