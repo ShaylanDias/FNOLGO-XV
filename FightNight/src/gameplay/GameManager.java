@@ -58,7 +58,6 @@ public class GameManager implements NetworkListener {
 					Avatar avatar = null;
 					String playerNum = ndo.getSourceIP();
 					for (Avatar x : state.getAvatars()) {
-						System.out.println(x.getPlayer());
 						if (x.getPlayer().equals(playerNum)) {
 							avatar = x;
 							break;

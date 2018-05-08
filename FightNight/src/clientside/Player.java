@@ -42,7 +42,6 @@ public class Player {
 				i--;
 			} else
 				break;
-			System.out.println(address);
 		}
 		playerAddress = address;
 		avatar.setPlayer(address);
