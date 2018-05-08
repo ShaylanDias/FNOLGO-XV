@@ -79,6 +79,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 					break;
 				}
 			}
+			//Translating to center the Avatar
 			translate((float)(-av.getX() + width/2), (float)-av.getY() + height/2);
 			currentState.draw(this);
 			popMatrix();
@@ -201,6 +202,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		}
 		if (av != null) {
 			
+			//Untranslating coords
 			double x = mouseX + av.getX() - width/2;
 			double y = mouseY + av.getY() - height/2;
 			
