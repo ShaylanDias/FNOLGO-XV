@@ -276,8 +276,8 @@ public abstract class Avatar implements Serializable {
 	/**
 	 * Starts an Avatar's block
 	 */
-	public void block() {
-
+	public void block(boolean block) {
+		blocking = block;
 	}
 
 	/**
@@ -285,6 +285,9 @@ public abstract class Avatar implements Serializable {
 	 */
 	public void act() {
 
+		if(blocking)
+			return;
+		
 		if (up)
 			moveBy(0, -moveSpeed);
 		if (right)
@@ -354,7 +357,7 @@ public abstract class Avatar implements Serializable {
 		surface.pushMatrix();
 		surface.pushStyle();
 		if (blocking) {
-			// Add on block thing
+			//Draw block
 		}
 		if (!status.getEffect().equals(Effect.NONE)) {
 			// Add on effect
