@@ -65,7 +65,7 @@ public abstract class Avatar implements Serializable {
 
 	private boolean movementControlled; //Can currently control movement (currently blocking or dashing)
 
-	protected double dashSpeed = 8, dashDistance = 50; //Modifiable distance and speed of dash
+	protected double dashSpeed = 20, dashDistance = 100; //Modifiable distance and speed of dash
 	private double dashTraveled, dashAngle; //Distance traveled so far and angle to dash
 
 	protected boolean currentlyAttacking; //Means cannot move, dash, or block while executing this attack
@@ -290,9 +290,9 @@ public abstract class Avatar implements Serializable {
 	}
 
 	private void dashAct() { //Where the actual Dash action occurs 
-		moveBy(Math.cos(Math.toRadians(dashAngle)) * dashSpeed, Math.sin(Math.toRadians(dashAngle)) * dashSpeed);
+		moveBy(Math.cos(Math.toRadians(dashAngle)) * dashSpeed, -Math.sin(Math.toRadians(dashAngle)) * dashSpeed);
 		dashTraveled += dashSpeed;
-		if (dashDistance >= dashTraveled) {
+		if (dashTraveled >= dashDistance) {
 			dashing = false;
 			movementControlled = true;
 			dashTraveled = 0;
