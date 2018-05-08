@@ -36,7 +36,16 @@ public class Player {
 	}
 
 	public void setPlayerAddress(String address) {
+		for(int i = 0; i < address.length(); i++) {
+			if(!Character.isDigit(address.charAt(i))) {
+				address = address.substring(i+1);
+				i--;
+			} else
+				break;
+			System.out.println(address);
+		}
 		playerAddress = address;
+		avatar.setPlayer(address);
 	}
 	
 	public String getPlayerAddress() {

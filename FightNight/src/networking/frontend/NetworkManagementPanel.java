@@ -247,6 +247,7 @@ public class NetworkManagementPanel extends JPanel
 		@Override
 		public void connectedToServer(NetworkMessenger nm) {
 			// TODO Auto-generated method stub
+//			((GamePanel)clientProgram).sendConnectInit();
 		}
 	}
 	
@@ -288,8 +289,8 @@ public class NetworkManagementPanel extends JPanel
 				statusText.append("\nTCP server running on " + TCP_PORT);
 				if (discover != null)
 					discover.setDiscoverable(true);
-				((GamePanel)clientProgram).setConnected(true);
 				connect(myIP);
+//				((GamePanel)clientProgram).sendConnectInit();
 			} else if (source == refreshTimer) {
 				timeOut--;
 				discoveryProcess.setValue((int)((double)(DISCOVERY_TIMEOUT-timeOut)/DISCOVERY_TIMEOUT*100));

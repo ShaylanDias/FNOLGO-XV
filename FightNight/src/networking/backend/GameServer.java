@@ -285,9 +285,6 @@ public class GameServer implements NetworkMessenger {
 										cr.setListeners(listeners);
 										writers.add(cw);
 										readers.add(cr);
-										if(ndo.message.length > 0) {
-											manager.getState().addAvatar(((Avatar)ndo.message[0]));
-										}
 									}
 									repeatMessage(ndo);
 									sendClientList();
