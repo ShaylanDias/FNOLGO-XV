@@ -53,7 +53,7 @@ public class Brute extends Avatar {
 			super.dash(mouseAngle);
 		} 
 	}
-
+	
 	// Throws a slow moving projectile (Rock)
 	@Override
 	public Attack rangedAttack() {
