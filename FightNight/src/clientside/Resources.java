@@ -15,7 +15,7 @@ import processing.core.PImage;
  */
 public class Resources {
 
-	public static HashMap<String, ImageWrapper> images = new HashMap<String, ImageWrapper>();
+	private HashMap<String, ImageWrapper> images = new HashMap<String, ImageWrapper>();
 
 	/**
 	 * Initializes a resource object with all of the images in the game

@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Fireball;
 
-public class Brute extends Avatar{
+public class Brute extends Avatar {
 
 	/**
 	 * Instantiates a Brute
@@ -14,48 +14,63 @@ public class Brute extends Avatar{
 		super();
 		super.basicCD = 0.8;
 		spriteSheetKey = "Fighter1";
-		sprites = new Rectangle[] {new Rectangle(62, 94, 62, 98)};
+		sprites = new Rectangle[] { new Rectangle(62, 94, 62, 98) };
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
 	}
-	
+
+	/**
+	 * 
+	 * Creates a Brute at this x,y
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	public Brute(double x, double y) {
 		this();
 		this.hitbox.x = x;
-		
+
 	}
-	
-	//Punch, slow but does a lot of dmg 
+
+	// Punch, slow but does a lot of dmg
+	@Override
 	public Attack basicAttack(String player, double angle) {
-		if(System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000) {
+		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000) {
 			super.basicCDStart = System.currentTimeMillis();
-			return new Fireball((int)hitbox.x, (int)hitbox.y , player, angle);
+			return new Fireball((int) hitbox.x, (int) hitbox.y, player, angle);
 		} else {
 			Fireball f = new Fireball(0, 0, "", 0);
 			f.end();
 			return f;
 		}
-		
+
 	}
-	
-	//Throws a slow moving projectile (Rock)
+
+	// Throws a slow moving projectile (Rock)
+	@Override
 	public Attack rangedAttack() {
 		return null;
-		
+
 	}
-	//UpperCut - dashes forwards and stuns someone
+
+	// UpperCut - dashes forwards and stuns someone
+	@Override
 	public Attack abilityOne() {
 		return null;
 	}
-	//GroundSmash, and aoe stun that does dmg
+
+	// GroundSmash, and aoe stun that does dmg
+	@Override
 	public Attack abilityTwo() {
 		return null;
-		
+
 	}
-	//EatMutton - heals the dude
+
+	// EatMutton - heals the dude
+	@Override
 	public Attack abilityThree() {
 		return null;
-		
+
 	}
 
 }

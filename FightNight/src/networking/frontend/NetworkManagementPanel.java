@@ -281,7 +281,6 @@ public class NetworkManagementPanel extends JPanel
 					gs = null;
 
 				}
-				((GamePanel)clientProgram).setConnected(false);
 			} else if (source == serverButton) {
 				gs = new GameServer(programID, myIP);
 				gs.setMaxConnections(maxPerServer);

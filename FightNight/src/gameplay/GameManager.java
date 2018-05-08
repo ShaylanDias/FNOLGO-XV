@@ -45,7 +45,6 @@ public class GameManager implements NetworkListener {
 	// state.addAvatar(new Brute()); // This is a placeholder for testing
 	// }
 
-	
 	/**
 	 * Runs one step of the game mechanics
 	 */
@@ -82,10 +81,9 @@ public class GameManager implements NetworkListener {
 								state.addAttack(avatar.basicAttack(playerNum, (double) ndo.message[2]));
 							}
 
-						}
-						else if(action == ControlType.DASH) {
-							avatar.dash((double)ndo.message[1]);
-							
+						} else if (action == ControlType.DASH) {
+							avatar.dash((double) ndo.message[1]);
+
 						}
 
 					}
@@ -138,8 +136,7 @@ public class GameManager implements NetworkListener {
 	// public void addPlayer() {
 	// state.addAvatar(new Brute()); // This is a placeholder for testing
 	// }
-	
-	
+
 	private void addCommand(NetworkDataObject ndo) {
 		synchronized (commands) {
 			commands.add(ndo);

@@ -25,14 +25,24 @@ public class GameState implements Serializable {
 	private ArrayList<Attack> attacks;
 	private Map map;
 
+	/**
+	 * Instantiates the ArrayLists in the GameState
+	 */
 	public GameState() {
 		avatars = new ArrayList<Avatar>();
 		attacks = new ArrayList<Attack>();
 		map = new StandardMap();
-//		avatars.add(new Brute());
+		// avatars.add(new Brute());
 
 	}
 
+	/**
+	 * 
+	 * Draws the GameState to a PApplet
+	 * 
+	 * @param surface
+	 *            The PApplet to draw to
+	 */
 	public void draw(PApplet surface) {
 		for (Avatar c : avatars)
 			c.draw(surface);
@@ -40,22 +50,54 @@ public class GameState implements Serializable {
 			a.draw(surface);
 	}
 
+	/**
+	 * 
+	 * Gets the Avatars in the Game
+	 * 
+	 * @return ArrayList of Avatars
+	 */
 	public ArrayList<Avatar> getAvatars() {
 		return avatars;
 	}
 
+	/**
+	 * 
+	 * Adds an Avatar to the Game
+	 * 
+	 * @param a
+	 *            Avatar to add
+	 */
 	public void addAvatar(Avatar a) {
 		avatars.add(a);
 	}
 
+	/**
+	 * 
+	 * Adds an Attack to the Game
+	 * 
+	 * @param a
+	 *            Attack to add
+	 */
 	public void addAttack(Attack a) {
 		attacks.add(a);
 	}
 
+	/**
+	 * 
+	 * Gets the Attacks in the Game
+	 * 
+	 * @return ArrayList of Attacks
+	 */
 	public ArrayList<Attack> getAttacks() {
 		return attacks;
 	}
 
+	/**
+	 * 
+	 * Gets the Map
+	 * 
+	 * @return The Map
+	 */
 	public Map map() {
 		return map;
 	}

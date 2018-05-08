@@ -19,15 +19,13 @@ import processing.core.PApplet;
 
 public class GamePanel extends PApplet implements NetworkListener {
 
+	/**
+	 * Contains the images to be preloaded and available
+	 */
 	public static Resources resources = new Resources();
-
-	// JPanel stuff
-	private JFrame window;
 
 	private Player player;
 	private NetworkMessenger nm;
-
-	private boolean isConnected;
 
 	private GameState currentState = null;
 
@@ -53,18 +51,20 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 	}
 
+	/**
+	 * Loads the images to resources
+	 */
 	public void setup() {
 		// We are gonna load images before doing anything else on the clientside
 		resources.loadImages(this);
 	}
 
+	/**
+	 * Draws the game to the GamePanel
+	 */
 	public void draw() {
 		clear();
 		background(Color.WHITE.getRGB());
-
-//		if (!isConnected) {
-//			sendConnectInit();
-//		}
 
 		color(Color.BLACK.getRGB());
 
@@ -79,6 +79,9 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 	}
 
+	/**
+	 * Detects mouse clicks to trigger abilities
+	 */
 	public void mousePressed() {
 		if (nm != null) {
 			if (mouseButton == LEFT)
@@ -86,12 +89,9 @@ public class GamePanel extends PApplet implements NetworkListener {
 		}
 	}
 
-	// Should change this so it sends the angle when it sends an attack command,
-	// because constant sending creates lag
-	public void mouseMoved() {
-
-	}
-
+	/**
+	 * Detects key presses to control the character, does not work properly on Mac
+	 */
 	public void keyPressed() {
 		/*
 		 * Send a "Message" NetworkDataObject to the server with message array in
@@ -118,6 +118,9 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 	}
 
+	/**
+	 * Detects key releases to trigger character abilities
+	 */
 	public void keyReleased() {
 		if (key == 'a') { // Set boolean in character to true
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'a', false);
@@ -154,7 +157,6 @@ public class GamePanel extends PApplet implements NetworkListener {
 		} else if (ndo.messageType.equals(NetworkDataObject.HANDSHAKE)) {
 			System.out.println("\n" + ndo.dataSource + " connected. ");
 		} else if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
-			setConnected(false);
 			if (ndo.dataSource.equals(ndo.serverHost)) {
 				System.out.println("Disconnected from server " + ndo.serverHost);
 			} else {
@@ -163,18 +165,13 @@ public class GamePanel extends PApplet implements NetworkListener {
 		}
 	}
 
-	public boolean isConnected() {
-		return isConnected;
-	}
-
+	/**
+	 * Sends the connect message to add this player's Avatar to the server
+	 */
 	public void sendConnectInit() {
 		if (nm != null) {
 			nm.sendMessage(NetworkDataObject.MESSAGE, "INTIALIZATION", player.getAvatar());
 		}
-	}
-
-	public void setConnected(boolean isConnected) {
-		this.isConnected = isConnected;
 	}
 
 	private double getAngleToMouse() {

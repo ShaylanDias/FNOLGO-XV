@@ -28,6 +28,13 @@ public abstract class Avatar implements Serializable {
 	 * GameManager run is called
 	 */
 
+	/**
+	 * 
+	 * The Types of Attacks an Avatar can perform
+	 * 
+	 * @author shaylandias
+	 *
+	 */
 	public enum AttackType {
 		BASIC, RANGED, A1, A2, A3
 	};
@@ -49,28 +56,28 @@ public abstract class Avatar implements Serializable {
 	private boolean up, down, left, right;
 
 	private String playerAddress = "";
-	
-	protected Rectangle2D.Double hitbox; //The hitbox around this Avatar
-	
-	private double angle; //Angle from right horizontal that Avatar is facing, 0-360 going left from 0
+
+	protected Rectangle2D.Double hitbox; // The hitbox around this Avatar
+
+	private double angle; // Angle from right horizontal that Avatar is facing, 0-360 going left from 0
 	private double health;
-	protected double moveSpeed = 10; //This Avatar's movement speed
-	
-	protected double basicCD, rangedCD, a1CD, a2CD, a3CD; //Cooldowns on abilities to be set by subclasses
-	protected long basicCDStart, rangedCDStart, a1CDStart, a2CDStart, a3CDStart; //Time started
-		
-	private StatusEffect status; //Current StatusEffect applied to this Avatar
-	
+	protected double moveSpeed = 10; // This Avatar's movement speed
+
+	protected double basicCD, rangedCD, a1CD, a2CD, a3CD; // Cooldowns on abilities to be set by subclasses
+	protected long basicCDStart, rangedCDStart, a1CDStart, a2CDStart, a3CDStart; // Time started
+
+	private StatusEffect status; // Current StatusEffect applied to this Avatar
+
 	protected boolean blocking, superArmor, dashing;
 
-	private boolean movementControlled; //Can currently control movement (currently blocking or dashing)
+	private boolean movementControlled; // Can currently control movement (currently blocking or dashing)
 
-	protected double dashSpeed = 20, dashDistance = 100; //Modifiable distance and speed of dash
-	private double dashTraveled, dashAngle; //Distance traveled so far and angle to dash
+	protected double dashSpeed = 20, dashDistance = 100; // Modifiable distance and speed of dash
+	private double dashTraveled, dashAngle; // Distance traveled so far and angle to dash
 
-	protected boolean currentlyAttacking; //Means cannot move, dash, or block while executing this attack
-	protected long timeActionStarted; //Time is the time that the attack it is executing was started
-	
+	protected boolean currentlyAttacking; // Means cannot move, dash, or block while executing this attack
+	protected long timeActionStarted; // Time is the time that the attack it is executing was started
+
 	/**
 	 * Initializes a Character with default values
 	 */
@@ -100,27 +107,60 @@ public abstract class Avatar implements Serializable {
 	 */
 	public Avatar(double x, double y, double angle) {
 		super();
-		hitbox.x = (int)x;
-		hitbox.y = (int)y;
+		hitbox.x = (int) x;
+		hitbox.y = (int) y;
 		this.angle = angle;
 	}
 
-	//Bound to left click
+	// Bound to left click
+	/**
+	 * 
+	 * Attack bound to left click
+	 * 
+	 * @param player
+	 *            The player's IP address
+	 * @param angle
+	 *            Angle of the attack
+	 * @return The Attack it performs
+	 */
 	public abstract Attack basicAttack(String player, double angle);
-	
-	//Bound to right click
+
+	// Bound to right click
+	/**
+	 * 
+	 * Attack bound to right click
+	 * 
+	 * @return The Attack it performs
+	 */
 	public abstract Attack rangedAttack();
-	
-	//Bound to e
+
+	// Bound to e
+	/**
+	 * 
+	 * Attack bound to e
+	 * 
+	 * @return The Attack it performs
+	 */
 	public abstract Attack abilityOne();
-	
-	//Bound to r
+
+	// Bound to r
+	/**
+	 * 
+	 * Attack bound to r
+	 * 
+	 * @return The Attack it performs
+	 */
 	public abstract Attack abilityTwo();
-	
-	//Bound to f
+
+	// Bound to f
+	/**
+	 * 
+	 * Attack bound to f
+	 * 
+	 * @return The Attack it performs
+	 */
 	public abstract Attack abilityThree();
-	
-	
+
 	/**
 	 * 
 	 * Hits a player with an Attack
@@ -182,8 +222,8 @@ public abstract class Avatar implements Serializable {
 	 *            Y-Coordinate
 	 */
 	public void moveTo(double x, double y) {
-		hitbox.x = (int)x;
-		hitbox.y = (int)y;
+		hitbox.x = (int) x;
+		hitbox.y = (int) y;
 	}
 
 	/**
@@ -217,7 +257,7 @@ public abstract class Avatar implements Serializable {
 	public String getPlayer() {
 		return playerAddress;
 	}
-	
+
 	public void setPlayer(String address) {
 		playerAddress = address;
 	}
@@ -233,6 +273,9 @@ public abstract class Avatar implements Serializable {
 		dashAngle = mouseAngle;
 	}
 
+	/**
+	 * Starts an Avatar's block
+	 */
 	public void block() {
 
 	}
@@ -250,7 +293,7 @@ public abstract class Avatar implements Serializable {
 			moveBy(-moveSpeed, 0);
 		if (down)
 			moveBy(0, moveSpeed);
-		
+
 		if (dashing)
 			dashAct();
 		else if (blocking) {
@@ -289,7 +332,7 @@ public abstract class Avatar implements Serializable {
 		return movementControlled;
 	}
 
-	private void dashAct() { //Where the actual Dash action occurs 
+	private void dashAct() { // Where the actual Dash action occurs
 		moveBy(Math.cos(Math.toRadians(dashAngle)) * dashSpeed, -Math.sin(Math.toRadians(dashAngle)) * dashSpeed);
 		dashTraveled += dashSpeed;
 		if (dashTraveled >= dashDistance) {
@@ -300,6 +343,13 @@ public abstract class Avatar implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * Draws this Avatar to a PApplet
+	 * 
+	 * @param surface
+	 *            PApplet to draw to
+	 */
 	public void draw(PApplet surface) {
 		surface.pushMatrix();
 		surface.pushStyle();
@@ -321,11 +371,11 @@ public abstract class Avatar implements Serializable {
 
 		surface.rectMode(PApplet.CENTER);
 		surface.noFill();
-		surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
-		surface.fill(Color.RED.getRGB());
-		surface.ellipseMode(PApplet.CENTER);
-		surface.ellipse((float)(hitbox.x), (float)(hitbox.y), 5f, 5f);
-		
+		// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
+		// surface.fill(Color.RED.getRGB());
+		// surface.ellipseMode(PApplet.CENTER);
+		// surface.ellipse((float)(hitbox.x), (float)(hitbox.y), 5f, 5f);
+
 		surface.popMatrix();
 		surface.popStyle();
 	}
@@ -361,19 +411,19 @@ public abstract class Avatar implements Serializable {
 	public void setRight(boolean right) {
 		this.right = right;
 	}
-	
+
 	public double getWidth() {
 		return hitbox.width;
 	}
-	
+
 	public double getHeight() {
 		return hitbox.height;
 	}
-	
+
 	public Point2D.Double getCenter() {
-		return new Point2D.Double(hitbox.x + hitbox.width/2, hitbox.y + hitbox.height/2);
+		return new Point2D.Double(hitbox.x + hitbox.width / 2, hitbox.y + hitbox.height / 2);
 	}
-	
+
 	public Rectangle2D.Double getHitbox() {
 		return hitbox;
 	}

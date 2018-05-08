@@ -22,6 +22,13 @@ public class Attack extends MovingSprite {
 	 * attacks
 	 */
 
+	/**
+	 * 
+	 * The possible results of an Attack when it hits an Avatar
+	 * 
+	 * @author shaylandias
+	 *
+	 */
 	public enum AttackResult {
 		SUCCESS, BLOCKED, MISSED, SAME_AVATAR
 	}
@@ -60,8 +67,8 @@ public class Attack extends MovingSprite {
 	 * @param dir
 	 *            The angle of this Attack
 	 */
-	public Attack(String imageKey, int x, int y, int w, int h, String playerAddress, double damage, boolean shieldBreaker,
-			StatusEffect effect, double dir) {
+	public Attack(String imageKey, int x, int y, int w, int h, String playerAddress, double damage,
+			boolean shieldBreaker, StatusEffect effect, double dir) {
 		super(imageKey, x, y, w, h);
 		this.damage = damage;
 		this.playerAddress = playerAddress;
@@ -157,28 +164,28 @@ public class Attack extends MovingSprite {
 	}
 
 	private Rectangle getHitbox() {
-		return new Rectangle((int)(x + width/4), (int)(y + height/4), (int)width, (int)height);
+		return new Rectangle((int) (x + width / 4), (int) (y + height / 4), (int) width, (int) height);
 	}
-	
+
 	/**
 	 * Finds if this Attack intersects a Rectangle
 	 */
 	public boolean intersects(Rectangle2D other) {
 		return other.intersects(getHitbox());
 	}
-	
-	
+
 	/**
 	 * Draws this Attack
 	 */
 	public void draw(PApplet surface) {
 		surface.pushMatrix();
 		surface.imageMode(PApplet.CENTER);
-		surface.rectMode(PApplet.CENTER);
-		surface.noFill();
-		surface.rect((float)(getHitbox().x), (float)(getHitbox().y), (float)getHitbox().width, (float)getHitbox().height);
-		surface.translate((float)x, (float)y);
-		surface.rotate((PApplet.radians((float)(dir))));
+		// surface.rectMode(PApplet.CENTER);
+		// surface.noFill();
+		// surface.rect((float)(getHitbox().x), (float)(getHitbox().y),
+		// (float)getHitbox().width, (float)getHitbox().height);
+		surface.translate((float) x, (float) y);
+		surface.rotate((PApplet.radians((float) (dir))));
 		surface.image(GamePanel.resources.getImage(imageKey), 0, 0, (int) width, (int) height);
 		surface.popMatrix();
 	}
