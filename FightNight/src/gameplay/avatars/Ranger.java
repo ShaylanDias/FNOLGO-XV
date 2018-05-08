@@ -1,5 +1,7 @@
 package gameplay.avatars;
 
+import java.awt.Rectangle;
+
 import gameplay.attacks.Attack;
 
 public class Ranger extends Avatar {
@@ -9,8 +11,26 @@ public class Ranger extends Avatar {
 	 */
 	public Ranger() {
 		super();
+		super.basicCD = 0.5;
+		spriteSheetKey = "Ranger1";
+		sprites = new Rectangle[] { new Rectangle(92, 94, 52, 88) };
+		hitbox.height = sprites[0].height;
+		hitbox.width = sprites[0].width;
+		dashCD = 0.5;	
 	}
-
+	/**
+	 * Creates a Ranger at this x,y
+	 * 
+	 * @param x The x coordinate
+	 * @param y The y coordinate
+	 */
+	public Ranger(double x, double y) {
+		this();
+		this.hitbox.x = x;
+	}
+	
+	
+	
 	// Knife, shank some fool
 	@Override
 	public Attack basicAttack(String player, double angle) {
