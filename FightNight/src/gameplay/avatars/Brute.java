@@ -45,6 +45,13 @@ public class Brute extends Avatar {
 		}
 
 	}
+	@Override
+	public void dash(Double mouseAngle) {
+		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000) {
+			super.basicCDStart = System.currentTimeMillis();
+			super.dash(mouseAngle);
+		} 
+	}
 
 	// Throws a slow moving projectile (Rock)
 	@Override
