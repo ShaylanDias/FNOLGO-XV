@@ -2,6 +2,7 @@ package clientside.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Window;
 
 import javax.swing.JFrame;
 
@@ -64,12 +65,23 @@ public class GamePanel extends PApplet implements NetworkListener {
 	 */
 	public void draw() {
 		clear();
+				
 		background(Color.WHITE.getRGB());
 
 		color(Color.BLACK.getRGB());
 
 		if (currentState != null) {
+			pushMatrix();
+			Avatar av = null;
+			for (Avatar x : currentState.getAvatars()) {
+				if (x.getPlayer().equals(player.getPlayerAddress())) {
+					av = x;
+					break;
+				}
+			}
+			translate((float)(-av.getX() + width/2), (float)-av.getY() + height/2);
 			currentState.draw(this);
+			popMatrix();
 		}
 
 		// Starting Setup
@@ -177,6 +189,8 @@ public class GamePanel extends PApplet implements NetworkListener {
 	private double getAngleToMouse() {
 		double angle = 0;
 		Avatar av = null;
+		
+		
 		if (currentState != null) {
 			for (Avatar x : currentState.getAvatars()) {
 				if (x.getPlayer().equals(player.getPlayerAddress())) {
@@ -186,10 +200,14 @@ public class GamePanel extends PApplet implements NetworkListener {
 			}
 		}
 		if (av != null) {
+			
+			double x = mouseX + av.getX() - width/2;
+			double y = mouseY + av.getY() - height/2;
+			
 			double centerX = av.getX();
 			double centerY = av.getY();
 
-			angle = (float) Math.toDegrees(Math.atan2(centerY - mouseY, mouseX - centerX));
+			angle = (float) Math.toDegrees(Math.atan2(centerY - y, x - centerX));
 			if (angle < 0) {
 				angle += 360;
 			}

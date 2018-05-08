@@ -287,6 +287,10 @@ public abstract class Avatar implements Serializable {
 
 		if(blocking)
 			return;
+		else if (dashing) {
+			dashAct();
+			return;
+		}
 		
 		if (up)
 			moveBy(0, -moveSpeed);
@@ -297,11 +301,6 @@ public abstract class Avatar implements Serializable {
 		if (down)
 			moveBy(0, moveSpeed);
 
-		if (dashing)
-			dashAct();
-		else if (blocking) {
-			return;
-		}
 	}
 
 	/**
