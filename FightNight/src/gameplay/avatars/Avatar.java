@@ -65,7 +65,7 @@ public abstract class Avatar implements Serializable {
 
 	private boolean movementControlled; //Can currently control movement (currently blocking or dashing)
 
-	protected double dashSpeed = 8, dashDistance = 50; //Modifiable distance and speed of dash
+	protected double dashSpeed = 8, dashDistance = 100; //Modifiable distance and speed of dash
 	private double dashTraveled, dashAngle; //Distance traveled so far and angle to dash
 
 	protected boolean currentlyAttacking; //Means cannot move, dash, or block while executing this attack
