@@ -42,6 +42,7 @@ public class Resources {
 		images.put("Fireball1", new ImageWrapper("Fireball1.png"));
 		images.put("Arrow1", new ImageWrapper("arrow-projectile.jpg"));
 		images.put("FNOLGO MAP", new ImageWrapper("FNOLGO MAP v2.png"));
+		images.put("Shield", new ImageWrapper("Shield.png"));
 		
 	}
 

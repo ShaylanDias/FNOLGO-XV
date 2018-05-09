@@ -128,6 +128,9 @@ public class GamePanel extends PApplet implements NetworkListener {
 		if (key == ' ') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.DASH, getAngleToMouse());
 		}
+		if (key == 'q') {
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.BLOCK, true);
+		}
 
 	}
 
@@ -146,6 +149,9 @@ public class GamePanel extends PApplet implements NetworkListener {
 		}
 		if (key == 'd') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', false);
+		}
+		if (key == 'q') {
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.BLOCK, false);
 		}
 	}
 
