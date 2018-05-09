@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import clientside.gui.GamePanel;
 import gameplay.attacks.Attack;
@@ -51,11 +52,14 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 */
 	protected Rectangle[] sprites;
-	protected int spriteInd;
+	protected int spriteInd, numOfSpriteWalk;
+	private ArrayList<String> spriteListWalk, spriteListAttack;
 
 	private boolean up, down, left, right;
 
 	private String playerAddress = "";
+
+	protected static final String blockImageKey = "Shield";
 
 	protected Rectangle2D.Double hitbox; // The hitbox around this Avatar
 
@@ -63,7 +67,7 @@ public abstract class Avatar implements Serializable {
 	private double health;
 	protected double moveSpeed = 10; // This Avatar's movement speed
 
-	protected double basicCD, rangedCD,dashCD, a1CD, a2CD, a3CD; // Cooldowns on abilities to be set by subclasses
+	protected double basicCD, rangedCD, dashCD, a1CD, a2CD, a3CD; // Cooldowns on abilities to be set by subclasses
 	protected long basicCDStart, rangedCDStart, dashCDStart, a1CDStart, a2CDStart, a3CDStart; // Time started
 
 	private StatusEffect status; // Current StatusEffect applied to this Avatar
@@ -92,6 +96,10 @@ public abstract class Avatar implements Serializable {
 		status = new StatusEffect(StatusEffect.Effect.NONE, 0, 0);
 		health = 0;
 		spriteInd = 0;
+
+		spriteListWalk = new ArrayList<String>();
+		spriteListAttack = new ArrayList<String>();
+		numOfSpriteWalk = 0;
 	}
 
 	/**
@@ -285,21 +293,29 @@ public abstract class Avatar implements Serializable {
 	 */
 	public void act() {
 
-		if(blocking)
+		if (blocking)
 			return;
 		else if (dashing) {
 			dashAct();
 			return;
 		}
-		
-		if (up)
+
+		if (up) {
 			moveBy(0, -moveSpeed);
-		if (right)
+		}
+		if (right) {
 			moveBy(moveSpeed, 0);
-		if (left)
+			walk(numOfSpriteWalk, 200);
+		}
+		if (left) {
 			moveBy(-moveSpeed, 0);
-		if (down)
+		}
+		if (down) {
 			moveBy(0, moveSpeed);
+		}
+
+		if (!right)
+			spriteSheetKey = spriteListWalk.get(0);
 
 	}
 
@@ -356,7 +372,7 @@ public abstract class Avatar implements Serializable {
 		surface.pushMatrix();
 		surface.pushStyle();
 		if (blocking) {
-			//Draw block
+			// Draw block
 		}
 		if (!status.getEffect().equals(Effect.NONE)) {
 			// Add on effect
@@ -371,6 +387,20 @@ public abstract class Avatar implements Serializable {
 		surface.imageMode(PApplet.CENTER);
 		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
 
+		if (blocking) {
+			if (System.currentTimeMillis() / 250 % 5 == 0) {
+				surface.tint(140);
+			} else if (System.currentTimeMillis() / 250 % 5 == 1) {
+				surface.tint(170);
+			} else if (System.currentTimeMillis() / 250 % 5 == 2) {
+				surface.tint(200);
+			} else if (System.currentTimeMillis() / 250 % 5 == 3) {
+				surface.tint(240);
+			}
+			surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
+					1.5f * sh);
+		}
+
 		surface.rectMode(PApplet.CENTER);
 		surface.noFill();
 		// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
@@ -380,6 +410,50 @@ public abstract class Avatar implements Serializable {
 
 		surface.popMatrix();
 		surface.popStyle();
+	}
+
+	public void walk(int numOfSpriteWalk, int divideSpeed) {
+
+		if (!dashing && !blocking) {
+			if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 0) {
+				spriteSheetKey = spriteListWalk.get(0);
+				System.out.println("0");
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 1) {
+				spriteSheetKey = spriteListWalk.get(1);
+				System.out.println("1");
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 2) {
+				spriteSheetKey = spriteListWalk.get(2);
+				System.out.println("2");
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 3) {
+				spriteSheetKey = spriteListWalk.get(3);
+				System.out.println("3");
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 4) {
+				spriteSheetKey = spriteListWalk.get(4);
+				System.out.println("4");
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 5) {
+				spriteSheetKey = spriteListWalk.get(5);
+				System.out.println("5");
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 6) {
+				spriteSheetKey = spriteListWalk.get(6);
+				System.out.println("6");
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 7) {
+				spriteSheetKey = spriteListWalk.get(7);
+				System.out.println("7");
+			}
+
+			// else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 8) {
+			// spriteSheetKey = spriteListWalk.get(8);
+			// System.out.println("8");
+			// }
+			// else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 9) {
+			// spriteSheetKey = spriteListWalk.get(9);
+			// System.out.println("9");
+			// } else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 10)
+			// {
+			// spriteSheetKey = spriteListWalk.get(10);
+			// System.out.println("10");
+			// }
+		}
 	}
 
 	public boolean isUp() {
@@ -428,6 +502,22 @@ public abstract class Avatar implements Serializable {
 
 	public Rectangle2D.Double getHitbox() {
 		return hitbox;
+	}
+
+	public ArrayList<String> getSpriteListWalk() {
+		return spriteListWalk;
+	}
+
+	public void setSpriteListWalk(ArrayList<String> spriteListWalk) {
+		this.spriteListWalk = spriteListWalk;
+	}
+
+	public ArrayList<String> getSpriteListAttack() {
+		return spriteListAttack;
+	}
+
+	public void setSpriteListAttack(ArrayList<String> spriteListAttack) {
+		this.spriteListAttack = spriteListAttack;
 	}
 
 }

@@ -14,18 +14,21 @@ faction are YOU a part of? Take control of a champion and fight to take control 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 Instructions:
-Right now this game is simply a test. Press "Start Server" to launch
+Right now this game is simply a test. Press "Start Server" to launch or use Discover Server and/or one of the
+connect server buttons to connect with a friend!
+
+Controls:
 WASD - Movement
 Mouse - Aim
 Left Mouse Button - Basic Attack 1 (Fireball)
 Space - Dash in direction of mouse
+Q- Block
 
 Future Controls:
 Right Mouse Button - Basic Attack 2
 E - Ability 1
 R - Ability 2
 F - Ability 3
-Q - Ultimate Ability (maybe)
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
