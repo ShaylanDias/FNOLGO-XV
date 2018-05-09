@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import clientside.gui.GamePanel;
 import gameplay.attacks.Attack;
@@ -52,6 +53,7 @@ public abstract class Avatar implements Serializable {
 	 */
 	protected Rectangle[] sprites;
 	protected int spriteInd;
+	private ArrayList<String> spriteListWalk, spriteListAttack;
 
 	private boolean up, down, left, right;
 
@@ -63,7 +65,7 @@ public abstract class Avatar implements Serializable {
 	private double health;
 	protected double moveSpeed = 10; // This Avatar's movement speed
 
-	protected double basicCD, rangedCD,dashCD, a1CD, a2CD, a3CD; // Cooldowns on abilities to be set by subclasses
+	protected double basicCD, rangedCD, dashCD, a1CD, a2CD, a3CD; // Cooldowns on abilities to be set by subclasses
 	protected long basicCDStart, rangedCDStart, dashCDStart, a1CDStart, a2CDStart, a3CDStart; // Time started
 
 	private StatusEffect status; // Current StatusEffect applied to this Avatar
@@ -92,6 +94,9 @@ public abstract class Avatar implements Serializable {
 		status = new StatusEffect(StatusEffect.Effect.NONE, 0, 0);
 		health = 0;
 		spriteInd = 0;
+
+		spriteListWalk = new ArrayList<String>();
+		spriteListAttack = new ArrayList<String>();
 	}
 
 	/**
@@ -285,21 +290,26 @@ public abstract class Avatar implements Serializable {
 	 */
 	public void act() {
 
-		if(blocking)
+		if (blocking)
 			return;
 		else if (dashing) {
 			dashAct();
 			return;
 		}
-		
-		if (up)
+
+		if (up) {
 			moveBy(0, -moveSpeed);
-		if (right)
+		}
+		if (right) {
 			moveBy(moveSpeed, 0);
-		if (left)
+			walk();
+		}
+		if (left) {
 			moveBy(-moveSpeed, 0);
-		if (down)
+		}
+		if (down) {
 			moveBy(0, moveSpeed);
+		}
 
 	}
 
@@ -356,7 +366,7 @@ public abstract class Avatar implements Serializable {
 		surface.pushMatrix();
 		surface.pushStyle();
 		if (blocking) {
-			//Draw block
+			// Draw block
 		}
 		if (!status.getEffect().equals(Effect.NONE)) {
 			// Add on effect
@@ -380,6 +390,16 @@ public abstract class Avatar implements Serializable {
 
 		surface.popMatrix();
 		surface.popStyle();
+	}
+
+	public void walk() {
+		if (System.currentTimeMillis() / 250 % 3 == 0 && !dashing && !blocking) {
+			spriteListWalk.get(0);
+		} else if (System.currentTimeMillis() / 250 % 3 == 1 && !dashing && !blocking) {
+			spriteListWalk.get(1);
+		} else if (System.currentTimeMillis() / 250 % 3 == 2 && !dashing && !blocking) {
+			spriteListWalk.get(2);
+		}
 	}
 
 	public boolean isUp() {
@@ -428,6 +448,22 @@ public abstract class Avatar implements Serializable {
 
 	public Rectangle2D.Double getHitbox() {
 		return hitbox;
+	}
+
+	public ArrayList<String> getSpriteListWalk() {
+		return spriteListWalk;
+	}
+
+	public void setSpriteListWalk(ArrayList<String> spriteListWalk) {
+		this.spriteListWalk = spriteListWalk;
+	}
+
+	public ArrayList<String> getSpriteListAttack() {
+		return spriteListAttack;
+	}
+
+	public void setSpriteListAttack(ArrayList<String> spriteListAttack) {
+		this.spriteListAttack = spriteListAttack;
 	}
 
 }
