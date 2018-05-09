@@ -1,11 +1,14 @@
 package gameplay.avatars;
 
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 import gameplay.attacks.Attack;
 import gameplay.attacks.Fireball;
 
 public class Brute extends Avatar {
+
+	private ArrayList<String> spriteListWalk, spriteListAttack;
 
 	/**
 	 * Instantiates a Brute
@@ -36,7 +39,7 @@ public class Brute extends Avatar {
 	// Punch, slow but does a lot of dmg
 	@Override
 	public Attack basicAttack(String player, double angle) {
-		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000) {
+		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000 && !dashing && !blocking) {
 			super.basicCDStart = System.currentTimeMillis();
 			return new Fireball((int) hitbox.x, (int) hitbox.y, player, angle);
 		} else {
@@ -46,14 +49,15 @@ public class Brute extends Avatar {
 		}
 
 	}
+
 	@Override
 	public void dash(Double mouseAngle) {
 		if (System.currentTimeMillis() > super.dashCDStart + super.dashCD * 1000) {
 			super.dashCDStart = System.currentTimeMillis();
 			super.dash(mouseAngle);
-		} 
+		}
 	}
-	
+
 	// Throws a slow moving projectile (Rock)
 	@Override
 	public Attack rangedAttack() {
@@ -79,6 +83,14 @@ public class Brute extends Avatar {
 	public Attack abilityThree() {
 		return null;
 
+	}
+	
+	public String getSpriteSheetKey() {
+		return spriteSheetKey;
+	}
+	
+	public void setSpriteSheetKey(String spriteSheetKey) {
+		this.spriteSheetKey = spriteSheetKey;
 	}
 
 }
