@@ -2,6 +2,13 @@ package networking.frontend;
 
 import java.net.InetAddress;
 
+/**
+ * 
+ * Interface for something that sends a message across the server
+ * 
+ * @author john_shelby
+ *
+ */
 public interface NetworkMessenger {
 
 	/**

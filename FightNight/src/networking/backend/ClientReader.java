@@ -21,6 +21,8 @@ import networking.frontend.NetworkListener;
 
 /**
  *
+ * A class for reading NetworkDataObjects
+ *
  * @author john_shelby
  */
 public class ClientReader implements Runnable{

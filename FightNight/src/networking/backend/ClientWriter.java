@@ -17,6 +17,8 @@ import networking.frontend.NetworkDataObject;
 
 /**
  *
+ * A class for writing NetworkDataObjects
+ *
  * @author john_shelby
  */
 public class ClientWriter implements Runnable{

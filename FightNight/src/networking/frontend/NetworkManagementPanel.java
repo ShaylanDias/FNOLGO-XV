@@ -32,7 +32,7 @@ import networking.backend.PeerDiscovery;
  * 
  * Window for creating and connecting to servers
  * 
- * @author shaylandias
+ * @author john_shelby
  *
  */
 public class NetworkManagementPanel extends JPanel
