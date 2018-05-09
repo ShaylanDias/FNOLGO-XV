@@ -57,6 +57,8 @@ public abstract class Avatar implements Serializable {
 
 	private String playerAddress = "";
 
+	protected static final String blockImageKey = "Shield";
+
 	protected Rectangle2D.Double hitbox; // The hitbox around this Avatar
 
 	private double angle; // Angle from right horizontal that Avatar is facing, 0-360 going left from 0
@@ -291,7 +293,7 @@ public abstract class Avatar implements Serializable {
 			dashAct();
 			return;
 		}
-		
+
 		if (up)
 			moveBy(0, -moveSpeed);
 		if (right)
@@ -370,6 +372,20 @@ public abstract class Avatar implements Serializable {
 
 		surface.imageMode(PApplet.CENTER);
 		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
+
+		if(blocking) {
+			if (System.currentTimeMillis() / 250 % 5 == 0) {
+				surface.tint(140);
+			} else if (System.currentTimeMillis() / 250 % 5 == 1) {
+				surface.tint(170);
+			} else if (System.currentTimeMillis() / 250 % 5 == 2) {
+				surface.tint(200);
+			} else if (System.currentTimeMillis() / 250 % 5 == 3) {
+				surface.tint(240);
+			}
+			surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw, 1.5f * sh);
+		}
+
 
 		surface.rectMode(PApplet.CENTER);
 		surface.noFill();

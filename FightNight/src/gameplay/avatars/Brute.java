@@ -21,6 +21,8 @@ public class Brute extends Avatar {
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
 		dashCD = 1.0;
+		dashDistance = 120;
+		dashSpeed = 40;
 
 		spriteListWalk = new ArrayList<String>();
 		spriteListAttack = new ArrayList<String>();
