@@ -383,7 +383,13 @@ public abstract class Avatar implements Serializable {
 		sh = (int) sprites[spriteInd].getHeight();
 
 		surface.imageMode(PApplet.CENTER);
-		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
+		
+		surface.pushMatrix();
+		if (right) {
+			surface.scale(-1, 1);
+			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
+		}
+		surface.popMatrix();
 
 		if (blocking) {
 			if (System.currentTimeMillis() / 250 % 5 == 0) {
