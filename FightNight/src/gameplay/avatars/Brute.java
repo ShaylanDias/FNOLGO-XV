@@ -6,15 +6,13 @@ import gameplay.attacks.Fireball;
 
 public class Brute extends Avatar {
 
-	
-	
 	/**
 	 * Instantiates a Brute
 	 */
 	public Brute() {
 		super();
 		super.basicCD = 0.8;
-		spriteSheetKey = "BruteWalking1";
+		spriteSheetKey = "WWDefault";
 		sprites = new Rectangle[] { new Rectangle(62, 94, 85, 65) };
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
@@ -22,16 +20,11 @@ public class Brute extends Avatar {
 		dashDistance = 120;
 		dashSpeed = 40;
 
-		getSpriteListWalk().add("BruteWalking0");
-		getSpriteListWalk().add("BruteWalking1");
-		getSpriteListWalk().add("BruteWalking2");
-		getSpriteListWalk().add("BruteWalking3");
-		getSpriteListWalk().add("BruteWalking4");
-		getSpriteListWalk().add("BruteWalking5");
-		getSpriteListWalk().add("BruteWalking6");
-		getSpriteListWalk().add("BruteWalking7");
-
-		numOfSpriteWalk = 8;
+		getSpriteListWalk().add("WWWalk0");
+		getSpriteListWalk().add("WWWalk1");
+		getSpriteListWalk().add("WWWalk2");
+		getSpriteListWalk().add("WWWalk3");
+		numOfSpriteWalk = 4;
 	}
 
 	/**
@@ -102,6 +95,14 @@ public class Brute extends Avatar {
 
 	public void setSpriteSheetKey(String spriteSheetKey) {
 		this.spriteSheetKey = spriteSheetKey;
+	}
+
+	public void act() {
+		super.act();
+
+		if (!super.isLeft()) {
+			spriteSheetKey = "WWDefault";
+		}
 	}
 
 }
