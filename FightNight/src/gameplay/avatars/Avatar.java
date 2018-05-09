@@ -305,7 +305,7 @@ public abstract class Avatar implements Serializable {
 		}
 		if (right) {
 			moveBy(moveSpeed, 0);
-			walk(numOfSpriteWalk, 200);
+			walk(numOfSpriteWalk, 100);
 		}
 		if (left) {
 			moveBy(-moveSpeed, 0);
@@ -371,6 +371,7 @@ public abstract class Avatar implements Serializable {
 	public void draw(PApplet surface) {
 		surface.pushMatrix();
 		surface.pushStyle();
+
 		if (blocking) {
 			// Draw block
 		}
@@ -440,19 +441,6 @@ public abstract class Avatar implements Serializable {
 				spriteSheetKey = spriteListWalk.get(7);
 				System.out.println("7");
 			}
-
-			// else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 8) {
-			// spriteSheetKey = spriteListWalk.get(8);
-			// System.out.println("8");
-			// }
-			// else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 9) {
-			// spriteSheetKey = spriteListWalk.get(9);
-			// System.out.println("9");
-			// } else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 10)
-			// {
-			// spriteSheetKey = spriteListWalk.get(10);
-			// System.out.println("10");
-			// }
 		}
 	}
 

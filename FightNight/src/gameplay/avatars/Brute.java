@@ -6,6 +6,8 @@ import gameplay.attacks.Fireball;
 
 public class Brute extends Avatar {
 
+	
+	
 	/**
 	 * Instantiates a Brute
 	 */
@@ -28,9 +30,6 @@ public class Brute extends Avatar {
 		getSpriteListWalk().add("BruteWalking5");
 		getSpriteListWalk().add("BruteWalking6");
 		getSpriteListWalk().add("BruteWalking7");
-		// getSpriteListWalk().add("BruteWalking8");
-		// getSpriteListWalk().add("BruteWalking9");
-		// getSpriteListWalk().add("BruteWalking10");
 
 		numOfSpriteWalk = 8;
 	}
