@@ -34,33 +34,33 @@ F - Ability 3
 
 Feature List:
 Must Haves
-Server Networking
-Menu
-Select server
-Single map, GUI with basic character models that move
-Basic movement and combat abilities w/ effects
-Block and roll defensive mechanics
-Win/Loss mechanic (battle royale)
-3 classes/characters 
-Brute, soldier, ranger 
-Cooldown System
+	Server Networking
+	Menu
+	Select server
+	Single map, GUI with basic character models that move
+	Basic movement and combat abilities w/ effects
+	Block and roll defensive mechanics
+	Win/Loss mechanic (battle royale)
+	3 classes/characters 
+		Brute, mage, ranger 
+	Cooldown System
 Want to Haves
 Powerups
-Speed-booster, heal (minor, major), no-depletion stamina, shield. 
-Spectator Mode
-Weapons pickups
-Crossbow, Bomb, Mine
-Arena obstacles/Effects
-Multiple classes/types of characters 
-More advanced abilities (Ultimate ability?)
-Some Overwatch style ult build up or something like a Smash Ball 
-The server would be able to handle more than 2 people (Free-for-all)
-6 classes/characters
-Fighter, soldier, ranger, ninja, sumo, mage
+	Speed-booster, heal (minor, major), no-depletion stamina, shield. 
+	Spectator Mode
+	Weapons pickups
+	Crossbow, Bomb, Mine
+	Arena obstacles/Effects
+	Multiple classes/types of characters 
+	More advanced abilities (Ultimate ability?)
+	Some Overwatch style ult build up or something like a Smash Ball 
+	The server would be able to handle more than 2 people (Free-for-all)
+	6 classes/characters
+		Fighter, mage, ranger, ninja, sumo, soldier
 Stretches 
-Multiple Maps
-Team games/Multiple game modes (Deathmatch, Duel, 
-Progression from wins -> Customizable abilities by class (upgrades/perk tree)’
+	Multiple Maps
+	Team games/Multiple game modes (Deathmatch, Duel, 
+	Progression from wins -> Customizable abilities by class (upgrades/perk tree)’
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
