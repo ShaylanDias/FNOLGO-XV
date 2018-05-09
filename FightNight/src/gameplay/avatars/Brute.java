@@ -36,7 +36,7 @@ public class Brute extends Avatar {
 	// Punch, slow but does a lot of dmg
 	@Override
 	public Attack basicAttack(String player, double angle) {
-		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000) {
+		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000 && !dashing && !blocking) {
 			super.basicCDStart = System.currentTimeMillis();
 			return new Fireball((int) hitbox.x, (int) hitbox.y, player, angle);
 		} else {
