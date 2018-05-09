@@ -8,5 +8,5 @@ package clientside;
  *
  */
 public enum ControlType {
-	MOVEMENT, ATTACK, DASH
+	MOVEMENT, ATTACK, DASH, BLOCK
 }
