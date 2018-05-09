@@ -1,7 +1,5 @@
 package gameplay.avatars;
 
-import java.awt.Color;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -96,7 +94,7 @@ public abstract class Avatar implements Serializable {
 		status = new StatusEffect(StatusEffect.Effect.NONE, 0, 0);
 		health = 0;
 		spriteInd = 0;
-
+		health = 200;
 		spriteListWalk = new ArrayList<String>();
 		spriteListAttack = new ArrayList<String>();
 		numOfSpriteWalk = 0;
