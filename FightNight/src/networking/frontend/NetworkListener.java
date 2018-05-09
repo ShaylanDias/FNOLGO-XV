@@ -1,5 +1,12 @@
 package networking.frontend;
 
+/**
+ *
+ * Interface for a class that will receive messages from the server 
+ * 
+ * @author john_shelby
+ *
+ */
 public interface NetworkListener {
 
 	/**

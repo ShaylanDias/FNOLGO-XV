@@ -12,6 +12,13 @@ import networking.frontend.NetworkDataObject;
 import networking.frontend.NetworkListener;
 import networking.frontend.NetworkMessenger;
 
+/**
+ * 
+ * A class for each client connected to the server
+ * 
+ * @author john_shelby
+ *
+ */
 public class GameClient implements NetworkMessenger {
 
 	private InetAddress server;
