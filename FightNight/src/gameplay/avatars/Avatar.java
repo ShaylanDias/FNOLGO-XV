@@ -314,6 +314,9 @@ public abstract class Avatar implements Serializable {
 			moveBy(0, moveSpeed);
 		}
 
+		if (!right)
+			spriteSheetKey = spriteListWalk.get(0);
+
 	}
 
 	/**
@@ -436,10 +439,12 @@ public abstract class Avatar implements Serializable {
 			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 7) {
 				spriteSheetKey = spriteListWalk.get(7);
 				System.out.println("7");
-			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 8) {
-				spriteSheetKey = spriteListWalk.get(8);
-				System.out.println("8");
 			}
+
+			// else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 8) {
+			// spriteSheetKey = spriteListWalk.get(8);
+			// System.out.println("8");
+			// }
 			// else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 9) {
 			// spriteSheetKey = spriteListWalk.get(9);
 			// System.out.println("9");
