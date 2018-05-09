@@ -4,7 +4,11 @@ import java.awt.Rectangle;
 
 import gameplay.attacks.Attack;
 import gameplay.attacks.Fireball;
-
+/**
+ * Creates a mage character
+ * @author hzhu684
+ *
+ */
 public class Mage extends Avatar {
 
 	/**

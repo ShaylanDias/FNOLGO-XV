@@ -4,6 +4,11 @@ import java.awt.Rectangle;
 
 import gameplay.attacks.Attack;
 
+/**
+ * A ranger class character 
+ * @author hzhu684
+ *
+ */
 public class Ranger extends Avatar {
 
 	/**
