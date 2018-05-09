@@ -276,11 +276,35 @@ public abstract class Avatar implements Serializable {
 	 * Starts the Character in a dash, enables superArmor
 	 */
 	public void dash(Double mouseAngle) {
+		
+		if(left) {
+			if(up) {
+				dashAngle = 135;
+			} else if(down) {
+				dashAngle = 225;
+			} else {
+				dashAngle = 180;
+			}
+		} else if(right){
+			if(up) {
+				dashAngle = 45;
+			} else if(down) {
+				dashAngle = 315;
+			} else {
+				dashAngle = 0;
+			}
+		} else if(down) {
+			dashAngle = 270;
+		} else {
+			dashAngle = 90;
+		}
+		
+		
 		movementControlled = false;
 		dashing = true;
 		dashTraveled = 0;
 		superArmor = true;
-		dashAngle = mouseAngle;
+//		dashAngle = mouseAngle;
 	}
 
 	/**

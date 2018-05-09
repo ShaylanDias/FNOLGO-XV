@@ -24,7 +24,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 	 * Contains the images to be preloaded and available
 	 */
 	public static Resources resources = new Resources();
-	
+
 	private Player player;
 	private NetworkMessenger nm;
 
@@ -65,7 +65,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 	 */
 	public void draw() {
 		clear();
-				
+
 		background(Color.WHITE.getRGB());
 
 		color(Color.BLACK.getRGB());
@@ -113,6 +113,14 @@ public class GamePanel extends PApplet implements NetworkListener {
 		if (key == CODED) {
 
 		}
+
+		if (key == ' ') {
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.DASH, getAngleToMouse());
+		}
+		else if (key == 'q') {
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.BLOCK, true);
+		}
+		
 		if (key == 'a') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'a', true);
 		}
@@ -124,12 +132,6 @@ public class GamePanel extends PApplet implements NetworkListener {
 		}
 		if (key == 'd') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', true);
-		}
-		if (key == ' ') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.DASH, getAngleToMouse());
-		}
-		if (key == 'q') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.BLOCK, true);
 		}
 
 	}
@@ -196,8 +198,8 @@ public class GamePanel extends PApplet implements NetworkListener {
 	private double getAngleToMouse() {
 		double angle = 0;
 		Avatar av = null;
-		
-		
+
+
 		if (currentState != null) {
 			for (Avatar x : currentState.getAvatars()) {
 				if (x.getPlayer().equals(player.getPlayerAddress())) {
@@ -207,11 +209,11 @@ public class GamePanel extends PApplet implements NetworkListener {
 			}
 		}
 		if (av != null) {
-			
+
 			//Untranslating coords
 			double x = mouseX + av.getX() - width/2;
 			double y = mouseY + av.getY() - height/2;
-			
+
 			double centerX = av.getX();
 			double centerY = av.getY();
 
