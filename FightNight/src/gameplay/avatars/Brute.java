@@ -33,6 +33,8 @@ public class Brute extends Avatar {
 		getSpriteListWalk().add("BruteWalking8");
 		getSpriteListWalk().add("BruteWalking9");
 		getSpriteListWalk().add("BruteWalking10");
+		
+		numOfSpriteWalk = 9;
 	}
 
 	/**

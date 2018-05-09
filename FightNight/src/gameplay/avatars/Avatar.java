@@ -52,7 +52,7 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 */
 	protected Rectangle[] sprites;
-	protected int spriteInd;
+	protected int spriteInd, numOfSpriteWalk;
 	private ArrayList<String> spriteListWalk, spriteListAttack;
 
 	private boolean up, down, left, right;
@@ -99,6 +99,7 @@ public abstract class Avatar implements Serializable {
 
 		spriteListWalk = new ArrayList<String>();
 		spriteListAttack = new ArrayList<String>();
+		numOfSpriteWalk = 0;
 	}
 
 	/**
@@ -304,7 +305,7 @@ public abstract class Avatar implements Serializable {
 		}
 		if (right) {
 			moveBy(moveSpeed, 0);
-			walk();
+			walk(numOfSpriteWalk, 200);
 		}
 		if (left) {
 			moveBy(-moveSpeed, 0);
@@ -383,7 +384,7 @@ public abstract class Avatar implements Serializable {
 		surface.imageMode(PApplet.CENTER);
 		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
 
-		if(blocking) {
+		if (blocking) {
 			if (System.currentTimeMillis() / 250 % 5 == 0) {
 				surface.tint(140);
 			} else if (System.currentTimeMillis() / 250 % 5 == 1) {
@@ -393,9 +394,9 @@ public abstract class Avatar implements Serializable {
 			} else if (System.currentTimeMillis() / 250 % 5 == 3) {
 				surface.tint(240);
 			}
-			surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw, 1.5f * sh);
+			surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
+					1.5f * sh);
 		}
-
 
 		surface.rectMode(PApplet.CENTER);
 		surface.noFill();
@@ -408,32 +409,45 @@ public abstract class Avatar implements Serializable {
 		surface.popStyle();
 	}
 
-	public void walk() {
+	public void walk(int numOfSpriteWalk, int divideSpeed) {
 
 		if (!dashing && !blocking) {
-			if (System.currentTimeMillis() / 250 % 11 == 0) {
+			if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 0) {
 				spriteSheetKey = spriteListWalk.get(0);
-			} else if (System.currentTimeMillis() / 250 % 11 == 1) {
+				System.out.println("0");
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 1) {
 				spriteSheetKey = spriteListWalk.get(1);
-			} else if (System.currentTimeMillis() / 250 % 11 == 2) {
+				System.out.println("1");
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 2) {
 				spriteSheetKey = spriteListWalk.get(2);
-			} else if (System.currentTimeMillis() / 250 % 11 == 3) {
+				System.out.println("2");
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 3) {
 				spriteSheetKey = spriteListWalk.get(3);
-			} else if (System.currentTimeMillis() / 250 % 11 == 4) {
+				System.out.println("3");
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 4) {
 				spriteSheetKey = spriteListWalk.get(4);
-			} else if (System.currentTimeMillis() / 250 % 11 == 5) {
+				System.out.println("4");
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 5) {
 				spriteSheetKey = spriteListWalk.get(5);
-			} else if (System.currentTimeMillis() / 250 % 11 == 6) {
+				System.out.println("5");
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 6) {
 				spriteSheetKey = spriteListWalk.get(6);
-			} else if (System.currentTimeMillis() / 250 % 11 == 7) {
+				System.out.println("6");
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 7) {
 				spriteSheetKey = spriteListWalk.get(7);
-			} else if (System.currentTimeMillis() / 250 % 11 == 8) {
+				System.out.println("7");
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 8) {
 				spriteSheetKey = spriteListWalk.get(8);
-			} else if (System.currentTimeMillis() / 250 % 11 == 9) {
-				spriteSheetKey = spriteListWalk.get(9);
-			} else if (System.currentTimeMillis() / 250 % 11 == 10) {
-				spriteSheetKey = spriteListWalk.get(10);
+				System.out.println("8");
 			}
+			// else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 9) {
+			// spriteSheetKey = spriteListWalk.get(9);
+			// System.out.println("9");
+			// } else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 10)
+			// {
+			// spriteSheetKey = spriteListWalk.get(10);
+			// System.out.println("10");
+			// }
 		}
 	}
 
