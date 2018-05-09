@@ -302,9 +302,11 @@ public abstract class Avatar implements Serializable {
 
 		if (up) {
 			moveBy(0, -moveSpeed);
+			walk(numOfSpriteWalk, 200);
 		}
 		if (right) {
 			moveBy(moveSpeed, 0);
+			walk(numOfSpriteWalk, 200);
 		}
 		if (left) {
 			moveBy(-moveSpeed, 0);
@@ -312,6 +314,7 @@ public abstract class Avatar implements Serializable {
 		}
 		if (down) {
 			moveBy(0, moveSpeed);
+			walk(numOfSpriteWalk, 200);
 		}
 
 	}
@@ -383,10 +386,13 @@ public abstract class Avatar implements Serializable {
 		sh = (int) sprites[spriteInd].getHeight();
 
 		surface.imageMode(PApplet.CENTER);
-		
+
 		surface.pushMatrix();
 		if (right) {
 			surface.scale(-1, 1);
+			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw, sh);
+
+		} else {
 			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
 		}
 		surface.popMatrix();
