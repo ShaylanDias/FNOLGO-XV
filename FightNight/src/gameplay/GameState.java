@@ -31,9 +31,6 @@ public class GameState implements Serializable {
 	public GameState() {
 		avatars = new ArrayList<Avatar>();
 		attacks = new ArrayList<Attack>();
-		map = new StandardMap();
-		// avatars.add(new Brute());
-
 	}
 
 	/**
@@ -49,7 +46,6 @@ public class GameState implements Serializable {
 			c.draw(surface);
 		for (Attack a : attacks)
 			a.draw(surface);
-		surface.rect(400f, 300f, 10f, 10f);
 	}
 
 	/**
