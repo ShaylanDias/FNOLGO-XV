@@ -2,6 +2,12 @@ package gameplay.attacks;
 
 import gameplay.attacks.StatusEffect.Effect;
 
+/**
+ * A fireballe projectile that can be created by an avatar
+ * 
+ * @author bgu307
+ *
+ */
 public class Fireball extends Projectile {
 
 	private static final int W = 40, H = 40;

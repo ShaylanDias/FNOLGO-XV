@@ -2,6 +2,13 @@ package clientside.gui;
 
 import networking.frontend.NetworkManagementPanel;
 
+/**
+ * 
+ * Contains main method
+ * 
+ * @author bgu307
+ *
+ */
 public class Main {
 
 	/*

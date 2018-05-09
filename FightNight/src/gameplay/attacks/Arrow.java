@@ -2,6 +2,12 @@ package gameplay.attacks;
 
 import gameplay.attacks.StatusEffect.Effect;
 
+/**
+ * Represents an arrow projectile object
+ * 
+ * @author bgu307
+ *
+ */
 public class Arrow extends Projectile {
 
 	private static final int W = 30, H = 30;

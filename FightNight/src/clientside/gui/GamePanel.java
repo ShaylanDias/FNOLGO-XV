@@ -18,6 +18,14 @@ import networking.frontend.NetworkMessenger;
 import processing.awt.PSurfaceAWT;
 import processing.core.PApplet;
 
+/**
+ * This class draws the game, takes input, and communicates with the server. It
+ * additionally contains a method to calculate the angle of the mouse position
+ * relatvie to the avatar
+ * 
+ * @author bgu307
+ *
+ */
 public class GamePanel extends PApplet implements NetworkListener {
 
 	/**
@@ -79,8 +87,8 @@ public class GamePanel extends PApplet implements NetworkListener {
 					break;
 				}
 			}
-			//Translating to center the Avatar
-			translate((float)(-av.getX() + width/2), (float)-av.getY() + height/2);
+			// Translating to center the Avatar
+			translate((float) (-av.getX() + width / 2), (float) -av.getY() + height / 2);
 			currentState.draw(this);
 			popMatrix();
 		}
@@ -116,11 +124,10 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 		if (key == ' ') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.DASH, getAngleToMouse());
-		}
-		else if (key == 'q') {
+		} else if (key == 'q') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.BLOCK, true);
 		}
-		
+
 		if (key == 'a') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'a', true);
 		}
@@ -199,7 +206,6 @@ public class GamePanel extends PApplet implements NetworkListener {
 		double angle = 0;
 		Avatar av = null;
 
-
 		if (currentState != null) {
 			for (Avatar x : currentState.getAvatars()) {
 				if (x.getPlayer().equals(player.getPlayerAddress())) {
@@ -210,9 +216,9 @@ public class GamePanel extends PApplet implements NetworkListener {
 		}
 		if (av != null) {
 
-			//Untranslating coords
-			double x = mouseX + av.getX() - width/2;
-			double y = mouseY + av.getY() - height/2;
+			// Untranslating coords
+			double x = mouseX + av.getX() - width / 2;
+			double y = mouseY + av.getY() - height / 2;
 
 			double centerX = av.getX();
 			double centerY = av.getY();
