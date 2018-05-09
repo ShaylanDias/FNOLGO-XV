@@ -8,8 +8,6 @@ import gameplay.attacks.Fireball;
 
 public class Brute extends Avatar {
 
-	private ArrayList<String> spriteListWalk, spriteListAttack;
-
 	/**
 	 * Instantiates a Brute
 	 */
@@ -17,19 +15,24 @@ public class Brute extends Avatar {
 		super();
 		super.basicCD = 0.8;
 		spriteSheetKey = "BruteWalking1";
-		sprites = new Rectangle[] { new Rectangle(62, 94, 85, 62) };
+		sprites = new Rectangle[] { new Rectangle(62, 94, 85, 65) };
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
 		dashCD = 1.0;
 		dashDistance = 120;
 		dashSpeed = 40;
 
-		spriteListWalk = new ArrayList<String>();
-		spriteListAttack = new ArrayList<String>();
-
-		spriteListWalk.add("BruteWalking1");
-		spriteListWalk.add("BruteWalking2");
-		spriteListWalk.add("BruteWalking3");
+		getSpriteListWalk().add("BruteWalking0");
+		getSpriteListWalk().add("BruteWalking1");
+		getSpriteListWalk().add("BruteWalking2");
+		getSpriteListWalk().add("BruteWalking3");
+		getSpriteListWalk().add("BruteWalking4");
+		getSpriteListWalk().add("BruteWalking5");
+		getSpriteListWalk().add("BruteWalking6");
+		getSpriteListWalk().add("BruteWalking7");
+		getSpriteListWalk().add("BruteWalking8");
+		getSpriteListWalk().add("BruteWalking9");
+		getSpriteListWalk().add("BruteWalking10");
 	}
 
 	/**
@@ -57,16 +60,6 @@ public class Brute extends Avatar {
 			return f;
 		}
 
-	}
-
-	public void walk() {
-		if (System.currentTimeMillis() / 250 % 3 == 0 && !dashing && !blocking) {
-			setSpriteSheetKey(spriteListWalk.get(0));
-		} else if (System.currentTimeMillis() / 250 % 3 == 1 && !dashing && !blocking) {
-			setSpriteSheetKey(spriteListWalk.get(1));
-		} else if (System.currentTimeMillis() / 250 % 3 == 2 && !dashing && !blocking) {
-			setSpriteSheetKey(spriteListWalk.get(2));
-		}
 	}
 
 	@Override
@@ -110,13 +103,6 @@ public class Brute extends Avatar {
 
 	public void setSpriteSheetKey(String spriteSheetKey) {
 		this.spriteSheetKey = spriteSheetKey;
-	}
-
-	public void act() {
-		super.act();
-
-		if (super.isRight())
-			walk();
 	}
 
 }
