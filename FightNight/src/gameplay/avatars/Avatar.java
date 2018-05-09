@@ -185,6 +185,8 @@ public abstract class Avatar implements Serializable {
 				status = attack.getEffect();
 			}
 			health -= attack.getDamage();
+			if(health <= 0)
+				health = 0;
 			return AttackResult.SUCCESS;
 		} else if (playerAddress.equals(attack.getPlayer())) {
 			return AttackResult.SAME_AVATAR;
