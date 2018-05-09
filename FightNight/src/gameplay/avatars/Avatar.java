@@ -1,5 +1,6 @@
 package gameplay.avatars;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -62,7 +63,7 @@ public abstract class Avatar implements Serializable {
 	protected Rectangle2D.Double hitbox; // The hitbox around this Avatar
 
 	private double angle; // Angle from right horizontal that Avatar is facing, 0-360 going left from 0
-	private double health;
+	protected double health, fullHealth;
 	protected double moveSpeed = 10; // This Avatar's movement speed
 
 	protected double basicCD, rangedCD, dashCD, a1CD, a2CD, a3CD; // Cooldowns on abilities to be set by subclasses
@@ -95,6 +96,7 @@ public abstract class Avatar implements Serializable {
 		health = 0;
 		spriteInd = 0;
 		health = 200;
+		fullHealth = health;
 		spriteListWalk = new ArrayList<String>();
 		spriteListAttack = new ArrayList<String>();
 		numOfSpriteWalk = 0;
@@ -182,7 +184,7 @@ public abstract class Avatar implements Serializable {
 			if (!superArmor) {
 				status = attack.getEffect();
 			}
-			health += attack.getDamage();
+			health -= attack.getDamage();
 			return AttackResult.SUCCESS;
 		} else if (playerAddress.equals(attack.getPlayer())) {
 			return AttackResult.SAME_AVATAR;
@@ -376,7 +378,7 @@ public abstract class Avatar implements Serializable {
 		if (!status.getEffect().equals(Effect.NONE)) {
 			// Add on effect
 		}
-
+		
 		int sx, sy, sw, sh;
 		sx = (int) sprites[spriteInd].getX();
 		sy = (int) sprites[spriteInd].getY();
@@ -409,8 +411,13 @@ public abstract class Avatar implements Serializable {
 					1.5f * sh);
 		}
 
-		surface.rectMode(PApplet.CENTER);
-		surface.noFill();
+		surface.rectMode(PApplet.CORNER);
+		surface.fill(Color.BLACK.getRGB());
+		surface.rect((float)(hitbox.x - hitbox.width * 0.5), (float)(hitbox.y - hitbox.height * 0.7), (float)hitbox.width * 0.7f, (float)hitbox.height/6);
+		surface.fill(Color.GREEN.getRGB());
+		surface.rect((float)(hitbox.x - hitbox.width * 0.5), (float)(hitbox.y - hitbox.height * 0.7), (float)hitbox.width * 0.7f * (float)(health/fullHealth), (float)hitbox.height/6);
+
+		
 		// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
 		// surface.fill(Color.RED.getRGB());
 		// surface.ellipseMode(PApplet.CENTER);
