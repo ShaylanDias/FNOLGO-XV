@@ -23,10 +23,18 @@ public class Resources {
 	public Resources() {
 		// Add all of the necessary images to HashMap
 		images.put("Fireball", new ImageWrapper("Fireball.png"));
+		
 		images.put("Fighter", new ImageWrapper("data/FIghter/Fighter.png"));
 		images.put("Fighter1", new ImageWrapper("data/FIghter/fighter1.png"));
+		
+		images.put("BruteWalking1", new ImageWrapper("data/Brute/Brute-Walk-1.png"));
+		images.put("BruteWalking2", new ImageWrapper("data/Brute/Brute-Walk-2.png"));
+		images.put("BruteWalking3", new ImageWrapper("data/Brute/Brute-Walk-3.png"));
+		
 		images.put("Fireball1", new ImageWrapper("Fireball1.png"));
 		images.put("Arrow1", new ImageWrapper("arrow-projectile.jpg"));
+		images.put("FNOLGO MAP", new ImageWrapper("FNOLGO MAP.png"));
+		
 	}
 
 	/**

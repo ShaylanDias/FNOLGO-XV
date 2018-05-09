@@ -44,6 +44,7 @@ public class GameState implements Serializable {
 	 *            The PApplet to draw to
 	 */
 	public void draw(PApplet surface) {
+		map.draw(surface);
 		for (Avatar c : avatars)
 			c.draw(surface);
 		for (Attack a : attacks)
