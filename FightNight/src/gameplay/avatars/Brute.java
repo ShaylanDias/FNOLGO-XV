@@ -100,7 +100,7 @@ public class Brute extends Avatar {
 	public void act() {
 		super.act();
 
-		if (!super.isLeft()) {
+		if (!super.isLeft() && !super.isRight() && !super.isUp() && !super.isDown()) {
 			spriteSheetKey = "WWDefault";
 		}
 	}
