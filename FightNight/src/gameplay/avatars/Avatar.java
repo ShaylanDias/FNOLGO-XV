@@ -305,7 +305,7 @@ public abstract class Avatar implements Serializable {
 		}
 		if (right) {
 			moveBy(moveSpeed, 0);
-			walk(numOfSpriteWalk, 200);
+			walk(numOfSpriteWalk, 100);
 		}
 		if (left) {
 			moveBy(-moveSpeed, 0);
@@ -414,29 +414,31 @@ public abstract class Avatar implements Serializable {
 
 	public void walk(int numOfSpriteWalk, int divideSpeed) {
 
+		numOfSpriteWalk *= 2;
+		
 		if (!dashing && !blocking) {
-			if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 0) {
+			if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 0 || System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 16) {
 				spriteSheetKey = spriteListWalk.get(0);
 				System.out.println("0");
-			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 1) {
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 1 || System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 15) {
 				spriteSheetKey = spriteListWalk.get(1);
 				System.out.println("1");
-			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 2) {
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 2 || System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 14) {
 				spriteSheetKey = spriteListWalk.get(2);
 				System.out.println("2");
-			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 3) {
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 3 || System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 13) {
 				spriteSheetKey = spriteListWalk.get(3);
 				System.out.println("3");
-			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 4) {
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 4 || System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 12) {
 				spriteSheetKey = spriteListWalk.get(4);
 				System.out.println("4");
-			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 5) {
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 5 || System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 11) {
 				spriteSheetKey = spriteListWalk.get(5);
 				System.out.println("5");
-			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 6) {
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 6 || System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 10) {
 				spriteSheetKey = spriteListWalk.get(6);
 				System.out.println("6");
-			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 7) {
+			} else if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 7 || System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == 9) {
 				spriteSheetKey = spriteListWalk.get(7);
 				System.out.println("7");
 			}
