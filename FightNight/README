@@ -1,16 +1,16 @@
 Fite-Nite Of Legends: Global Offensive XV
 FNOLGO XV
 Shaylan Dias, Ben Gu, Jason Zhu
-5/2/18
+5/9/18
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 Description:
 In a world, where nothing seems to make sense anymore, a dark, dangerous, deadly, death match is taking place.
 The leaders of the splintered factions have placed heavy bets on their champions to succeed. They hold an annual 
-contest to determine the strongest faction of them all to lead their people and rule over all the land. Whose 
-faction are YOU a part of? In this revolutionary, top down, fifteenth edition game, YOU will take control of a champion
-and fight to rule over this mysterious new world.
+contest to determine the strongest faction of them all to lead their people and rule over all the land. Targeted towards 
+battle-royale fanatics of all ages, whose faction are YOU a part of? In this revolutionary, top down, fifteenth edition 
+game, YOU will take control of a championand fight to rule over this mysterious new world.
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -19,11 +19,11 @@ Right now this game is simply a test. Press "Start Server" to launch or use Disc
 connect server buttons to connect with a friend!
 
 Controls:
-WASD - Movement
+W-A-S-D - Movement
 Mouse - Aim
 Left Mouse Button - Basic Attack 1 (Fireball)
 Space - Dash in direction of mouse
-Q- Block
+Q- Block/Shield
 
 Future Controls:
 Right Mouse Button - Basic Attack 2
@@ -44,9 +44,10 @@ Must Haves
 	Win/Loss mechanic (battle royale)
 	3 classes/characters 
 		Brute, mage, ranger 
+		Brute is focused more on melee, Mage and Ranger are focused on projectile attacks
 	Cooldown System
 Want to Haves
-Powerups
+	Powerups
 	Speed-booster, heal (minor, major), no-depletion stamina, shield. 
 	Spectator Mode
 	Weapons pickups
@@ -54,7 +55,7 @@ Powerups
 	Arena obstacles/Effects
 	Multiple classes/types of characters 
 	More advanced abilities (Ultimate ability?)
-	Some Overwatch style ult build up or something like a Smash Ball 
+	Some Overwatch style ultimate ability build up or something like a Smash Ball 
 	The server would be able to handle more than 2 people (Free-for-all)
 	6 classes/characters
 		Fighter, mage, ranger, ninja, sumo, soldier
@@ -108,7 +109,7 @@ networking
 
 Responsibilities: 
 Shaylan Dias: Networking, Projectile Game Mechanics, Game Manager
-Ben Gu: Character movement, Character Movement
+Ben Gu: Character movement, Character movement
 Jason Zhu: Character dashing, Map, Art
 Mr. Shelby APCSDemo: ServerNetworking
 
