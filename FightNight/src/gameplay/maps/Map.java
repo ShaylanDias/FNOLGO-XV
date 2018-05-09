@@ -19,7 +19,6 @@ public abstract class Map implements Serializable{
 	}
 	
 	public void draw(PApplet surface) {
-		surface.image(GamePanel.resources.getImage(imageKey), 0, 0, (int) 3000, (int) 3000);
 
 	}
 
