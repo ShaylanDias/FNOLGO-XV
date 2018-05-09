@@ -4,6 +4,11 @@ import java.awt.Rectangle;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Fireball;
 
+/**
+ * Creates a specific brute type of character.
+ * @author hzhu684
+ *
+ */
 public class Brute extends Avatar {
 
 	/**

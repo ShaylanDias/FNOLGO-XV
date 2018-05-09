@@ -9,7 +9,8 @@ Description:
 In a world, where nothing seems to make sense anymore, a dark, dangerous, deadly, death match is taking place.
 The leaders of the splintered factions have placed heavy bets on their champions to succeed. They hold an annual 
 contest to determine the strongest faction of them all to lead their people and rule over all the land. Whose 
-faction are YOU a part of? Take control of a champion and fight to take control of this mysterious new world.
+faction are YOU a part of? In this revolutionary, top down, fifteenth edition game, YOU will take control of a champion
+and fight to rule over this mysterious new world.
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -109,3 +110,15 @@ Responsibilities:
 Shaylan Dias: Networking, Projectile Game Mechanics, Game Manager
 Ben Gu: Character movement, Character Movement
 Jason Zhu: Character dashing, Map, Art
+Mr. Shelby APCSDemo: ServerNetworking
+
+Feedback by: Warren, Kush, Sepehr
+
+
+****************************************
+
+COMMENTS:::
+
+- UML does not have any connection to ControlType class
+- Is it a top-down or first person game?
+- Good connection within these three components of your game, seems cohesive
