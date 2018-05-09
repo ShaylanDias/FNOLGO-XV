@@ -409,12 +409,31 @@ public abstract class Avatar implements Serializable {
 	}
 
 	public void walk() {
-		if (System.currentTimeMillis() / 250 % 3 == 0 && !dashing && !blocking) {
-			spriteListWalk.get(0);
-		} else if (System.currentTimeMillis() / 250 % 3 == 1 && !dashing && !blocking) {
-			spriteListWalk.get(1);
-		} else if (System.currentTimeMillis() / 250 % 3 == 2 && !dashing && !blocking) {
-			spriteListWalk.get(2);
+
+		if (!dashing && !blocking) {
+			if (System.currentTimeMillis() / 250 % 11 == 0) {
+				spriteSheetKey = spriteListWalk.get(0);
+			} else if (System.currentTimeMillis() / 250 % 11 == 1) {
+				spriteSheetKey = spriteListWalk.get(1);
+			} else if (System.currentTimeMillis() / 250 % 11 == 2) {
+				spriteSheetKey = spriteListWalk.get(2);
+			} else if (System.currentTimeMillis() / 250 % 11 == 3) {
+				spriteSheetKey = spriteListWalk.get(3);
+			} else if (System.currentTimeMillis() / 250 % 11 == 4) {
+				spriteSheetKey = spriteListWalk.get(4);
+			} else if (System.currentTimeMillis() / 250 % 11 == 5) {
+				spriteSheetKey = spriteListWalk.get(5);
+			} else if (System.currentTimeMillis() / 250 % 11 == 6) {
+				spriteSheetKey = spriteListWalk.get(6);
+			} else if (System.currentTimeMillis() / 250 % 11 == 7) {
+				spriteSheetKey = spriteListWalk.get(7);
+			} else if (System.currentTimeMillis() / 250 % 11 == 8) {
+				spriteSheetKey = spriteListWalk.get(8);
+			} else if (System.currentTimeMillis() / 250 % 11 == 9) {
+				spriteSheetKey = spriteListWalk.get(9);
+			} else if (System.currentTimeMillis() / 250 % 11 == 10) {
+				spriteSheetKey = spriteListWalk.get(10);
+			}
 		}
 	}
 
