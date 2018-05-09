@@ -1,8 +1,6 @@
 package gameplay.avatars;
 
 import java.awt.Rectangle;
-import java.util.ArrayList;
-
 import gameplay.attacks.Attack;
 import gameplay.attacks.Fireball;
 
