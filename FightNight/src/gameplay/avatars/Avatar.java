@@ -92,7 +92,7 @@ public abstract class Avatar implements Serializable {
 	 */
 	public Avatar() {
 		sprites = new Rectangle[] { new Rectangle(100, 100, 200, 200) };
-		hitbox = new Rectangle2D.Double(100, 100, 200, 200);
+		hitbox = new Rectangle2D.Double(0, 0, 200, 200);
 		angle = 90;
 		timeActionStarted = System.currentTimeMillis();
 		blocking = false;
@@ -388,8 +388,6 @@ public abstract class Avatar implements Serializable {
 	 * This should be called every round of the game loop
 	 */
 	public void act() {
-
-		System.out.println(shieldHealth);
 
 		if(health > 0) {
 			if (blocking) {
