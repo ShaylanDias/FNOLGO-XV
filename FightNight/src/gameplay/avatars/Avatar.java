@@ -198,6 +198,7 @@ public abstract class Avatar implements Serializable {
 					return null;
 			else if(a.equals(AttackType.RANGED)) {
 				if(System.currentTimeMillis() > rangedCDStart + rangedCD * 1000) {
+					System.out.println("a");
 					return rangedAttack(player, angle);
 				}
 				else
@@ -389,6 +390,12 @@ public abstract class Avatar implements Serializable {
 	 */
 	public void act() {
 
+		double moveSpeed = this.moveSpeed;
+		
+		if(status.getEffect().equals(Effect.SLOWED)) {
+			moveSpeed -= status.getValue();
+		}
+		
 		if(health > 0) {
 			if (blocking) {
 				shieldHealth -= 1;

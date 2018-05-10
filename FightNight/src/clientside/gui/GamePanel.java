@@ -106,7 +106,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		if (nm != null) {
 			if (mouseButton == LEFT)
 				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.BASIC, getAngleToMouse());
-			if(mouseButton == RIGHT)
+			else if(mouseButton == RIGHT)
 				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.RANGED, getAngleToMouse());
 		}
 	}

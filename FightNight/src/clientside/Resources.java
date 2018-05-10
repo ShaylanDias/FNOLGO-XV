@@ -53,7 +53,7 @@ public class Resources {
 		images.put("Shield", new ImageWrapper("Shield.png"));
 
 		images.put("FNOLGO MAP", new ImageWrapper("data/Map/map50x50.png"));
-		images.put("SmallTree", new ImageWrapper("data/Map/smallTree.png"));
+		images.put("SmallTree", new ImageWrapper("data/Map/SmallTree.png"));
 		images.put("LargeTree", new ImageWrapper("data/Map/LargeTree.png"));
 
 		
