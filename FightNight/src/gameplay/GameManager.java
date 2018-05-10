@@ -102,7 +102,6 @@ public class GameManager implements NetworkListener {
 					state.getAttacks().remove(i);
 					i--;
 				}
-
 			}
 			for (Avatar x : state.getAvatars()) {
 				x.act();

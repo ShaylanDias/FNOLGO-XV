@@ -81,6 +81,7 @@ public class Resources {
 	 * @return The PImage
 	 */
 	public PImage getImage(String key) {
+		System.out.println(key);
 		return images.get(key).getPImage();
 	}
 

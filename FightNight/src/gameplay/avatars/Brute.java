@@ -37,7 +37,7 @@ public class Brute extends Avatar {
 		dashCD = 1.0;
 		dashDistance = 120;
 		dashSpeed = 40;
-		a1CD = 10;
+		a1CD = 3;
 		
 		currentAttack = AttackType.NONE;
 		

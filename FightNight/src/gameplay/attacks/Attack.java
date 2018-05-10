@@ -163,7 +163,7 @@ public class Attack extends MovingSprite {
 		return true;
 	}
 
-	private Rectangle getHitbox() {
+	protected Rectangle getHitbox() {
 		return new Rectangle((int) (x + width / 4), (int) (y + height / 4), (int) width, (int) height);
 	}
 
