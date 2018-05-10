@@ -394,6 +394,15 @@ public abstract class Avatar implements Serializable {
 		
 		if(status.getEffect().equals(Effect.SLOWED)) {
 			moveSpeed -= status.getValue();
+		} else if(status.getEffect().equals(Effect.STUNNED)) {
+			if(!status.started())
+					status.startEffect();
+			else {
+				if(status.isFinished()) {
+					status = new StatusEffect(Effect.NONE,0,0);
+				}
+				return;
+			}
 		}
 		
 		if(health > 0) {

@@ -74,6 +74,13 @@ public class StatusEffect implements Serializable {
 			return false;
 	}
 
+	public boolean started() {
+		if(startTime != 0)
+			return true;
+		else
+			return false;
+	}
+	
 	/**
 	 * 
 	 * Returns the value of the Effect
