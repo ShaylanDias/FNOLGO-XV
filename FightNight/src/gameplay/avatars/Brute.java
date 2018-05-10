@@ -230,15 +230,8 @@ public class Brute extends Avatar {
 		surface.pushMatrix();
 		surface.pushStyle();
 
-
-		//Health Bar
-		surface.rectMode(PApplet.CORNER);
-		surface.fill(Color.BLACK.getRGB());
-		surface.rect((float)(hitbox.x - hitbox.width * 0.5), (float)(hitbox.y - hitbox.height * 0.7), (float)hitbox.width * 0.7f, (float)hitbox.height/6);
-		surface.fill(Color.GREEN.getRGB());
-		surface.rect((float)(hitbox.x - hitbox.width * 0.5), (float)(hitbox.y - hitbox.height * 0.7), (float)hitbox.width * 0.7f * (float)(health/fullHealth), (float)hitbox.height/6);
-
-
+		drawHealthBar(surface);
+		
 		if(deathTime != 0) {
 			drawDeath(surface);
 			surface.popMatrix();
