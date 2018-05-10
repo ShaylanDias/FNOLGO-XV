@@ -63,7 +63,7 @@ public class GameManager implements NetworkListener {
 						}
 					}
 					if (avatar != null) {
-						if (action == ControlType.MOVEMENT) {
+						if (action == ControlType.MOVEMENT && avatar.isMoveControlled()) {
 
 							char dir = (char) ndo.message[1];
 							boolean dir1 = (boolean) ndo.message[2];
@@ -79,6 +79,8 @@ public class GameManager implements NetworkListener {
 						} else if (action == ControlType.ATTACK) {
 							if (ndo.message[1] == AttackType.BASIC) {
 								state.addAttack(avatar.attack(AttackType.BASIC, playerNum, (double) ndo.message[2]));
+							} else if(ndo.message[1] == AttackType.A1) {
+								state.addAttack(avatar.attack(AttackType.A1, playerNum, (double) ndo.message[2]));
 							}
 
 						} else if (action == ControlType.DASH) {

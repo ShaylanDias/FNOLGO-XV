@@ -45,21 +45,21 @@ public class Ranger extends Avatar {
 
 	// Shoot bow, arrow goes until it hits a wall
 	@Override
-	public Attack rangedAttack() {
+	public Attack rangedAttack(String player, double angle) {
 		return null;
 	}
 
 	// PlaceTrap, place an invisible trap that expires after a certain amount of
 	// time. The ranger can carry 3 at time
 	@Override
-	public Attack abilityOne() {
+	public Attack abilityOne(String player, double angle) {
 		return null;
 
 	}
 
 	// Barrage - fire multiple arrows in an area
 	@Override
-	public Attack abilityTwo() {
+	public Attack abilityTwo(String player, double angle) {
 		return null;
 
 	}

@@ -39,7 +39,7 @@ public class Attack extends MovingSprite {
 	private double damage;
 	private long startTime;
 	// Time it lasts in seconds
-	protected double duration;
+	protected double duration = 1;
 	// Angle with zero facing right
 	protected double dir;
 	private boolean active;
@@ -188,6 +188,14 @@ public class Attack extends MovingSprite {
 		surface.rotate((PApplet.radians((float) (dir))));
 		surface.image(GamePanel.resources.getImage(imageKey), 0, 0, (int) width, (int) height);
 		surface.popMatrix();
+	}
+	
+	public long getStartTime() {
+		return startTime;
+	}
+	
+	public boolean isShieldBreaker() {
+		return shieldBreaker;
 	}
 
 	/**

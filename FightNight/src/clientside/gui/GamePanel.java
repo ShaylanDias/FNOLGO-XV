@@ -2,7 +2,6 @@ package clientside.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Window;
 
 import javax.swing.JFrame;
 
@@ -23,7 +22,7 @@ import processing.core.PApplet;
  * additionally contains a method to calculate the angle of the mouse position
  * relatvie to the avatar
  * 
- * @author bgu307
+ * @author shaylandias, bgu307
  *
  */
 public class GamePanel extends PApplet implements NetworkListener {
@@ -140,6 +139,9 @@ public class GamePanel extends PApplet implements NetworkListener {
 		if (key == 'd') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', true);
 		}
+		if (key == 'e') {
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, false);
+		}
 
 	}
 
@@ -159,7 +161,10 @@ public class GamePanel extends PApplet implements NetworkListener {
 		if (key == 'd') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', false);
 		}
-		if (key == 'q') {
+		if (key == 'e') {
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.A1, getAngleToMouse());
+		}
+		if(key == 'q') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.BLOCK, false);
 		}
 	}

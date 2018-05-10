@@ -56,20 +56,20 @@ public class Mage extends Avatar {
 	}
 	// Fireball, slow moving, and does a bunch of dmg, goes until it hits a wall.
 	@Override
-	public Attack rangedAttack() {
+	public Attack rangedAttack(String player, double angle) {
 		return null;
 
 	}
 
 	// Fire eruption. circular bust in an area that does dmg to anyone in them.
 	@Override
-	public Attack abilityOne() {
+	public Attack abilityOne(String player, double angle) {
 		return null;
 	}
 
 	// Snow Storm - slows down everybody in an area
 	@Override
-	public Attack abilityTwo() {
+	public Attack abilityTwo(String player, double angle) {
 		return null;
 	}
 

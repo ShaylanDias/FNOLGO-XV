@@ -37,7 +37,7 @@ public abstract class Avatar implements Serializable {
 	 *
 	 */
 	public enum AttackType {
-		BASIC, RANGED, A1, A2, A3
+		BASIC, RANGED, A1, A2, A3, NONE
 	};
 
 	/**
@@ -54,6 +54,8 @@ public abstract class Avatar implements Serializable {
 	protected Rectangle[] sprites;
 	protected int spriteInd, numOfSpriteWalk;
 	private ArrayList<String> spriteListWalk, spriteListAttack;
+	
+	protected boolean lastDir; //True if right, false if left
 
 	private boolean up, down, left, right;
 
@@ -74,7 +76,7 @@ public abstract class Avatar implements Serializable {
 
 	protected boolean blocking, superArmor, dashing;
 
-	private boolean movementControlled; // Can currently control movement (currently blocking or dashing)
+	protected boolean movementControlled; // Can currently control movement (currently blocking or dashing)
 
 	protected double dashSpeed = 20, dashDistance = 100; // Modifiable distance and speed of dash
 	private double dashTraveled, dashAngle; // Distance traveled so far and angle to dash
@@ -103,6 +105,7 @@ public abstract class Avatar implements Serializable {
 		spriteListWalk = new ArrayList<String>();
 		spriteListAttack = new ArrayList<String>();
 		numOfSpriteWalk = 0;
+		movementControlled = true;
 	}
 
 	/**
@@ -143,7 +146,7 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * @return The Attack it performs
 	 */
-	public abstract Attack rangedAttack();
+	public abstract Attack rangedAttack(String player, double angle);
 
 	// Bound to e
 	/**
@@ -152,7 +155,7 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * @return The Attack it performs
 	 */
-	public abstract Attack abilityOne();
+	public abstract Attack abilityOne(String player, double angle);
 
 	// Bound to r
 	/**
@@ -161,7 +164,7 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * @return The Attack it performs
 	 */
-	public abstract Attack abilityTwo();
+	public abstract Attack abilityTwo(String player, double angle);
 
 	// Bound to f
 	/**
@@ -173,22 +176,32 @@ public abstract class Avatar implements Serializable {
 	public abstract Attack abilityThree(String player, double angle);
 
 	public Attack attack(AttackType a, String player, double angle) {
-		if(deathTime == 0) {
-			if(a.equals(AttackType.A1))
-				return abilityOne();
+		if(deathTime == 0 && !currentlyAttacking && movementControlled) {
+			if(a.equals(AttackType.A1) ) {
+				if(System.currentTimeMillis() > a1CDStart + a1CD * 1000)
+					return abilityOne(player, angle);
+				else
+					return null;
+			}
 			else if(a.equals(AttackType.A2))
-				return abilityTwo();
+				if(System.currentTimeMillis() > a1CDStart + a2CD * 1000)
+					return abilityTwo(player, angle);
+				else
+					return null;
 			else if(a.equals(AttackType.A3))
-				return abilityThree(player, angle);
+				if(System.currentTimeMillis() > a1CDStart + a2CD * 1000)
+					return abilityThree(player, angle);
+				else
+					return null;
 			else if(a.equals(AttackType.RANGED))
-				return rangedAttack();
+				return rangedAttack(player, angle);
 			else
 				return basicAttack(player, angle);
 		}
 		else
 			return null;
 	}
-	
+
 	/**
 	 * 
 	 * Hits a player with an Attack
@@ -239,8 +252,10 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * @param dist
 	 *            The distance to travel
+	 * @param angle 
+	 * 			  The angle to travel at
 	 */
-	public void moveDistance(double dist) {
+	public void moveDistance(double dist, double angle) {
 		moveBy(Math.cos(Math.toRadians(angle)) * dist, Math.sin(Math.toRadians(angle)) * dist);
 	}
 
@@ -333,6 +348,10 @@ public abstract class Avatar implements Serializable {
 	 * Starts an Avatar's block
 	 */
 	public void block(boolean block) {
+		if(block)
+			movementControlled = false;
+		else
+			movementControlled = true;
 		blocking = block;
 	}
 
@@ -453,7 +472,7 @@ public abstract class Avatar implements Serializable {
 		surface.imageMode(PApplet.CENTER);
 
 		surface.pushMatrix();
-		if (right) {
+		if (right || lastDir) {
 			surface.scale(-1, 1);
 			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw, sh);
 
@@ -461,7 +480,6 @@ public abstract class Avatar implements Serializable {
 			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
 		}
 		surface.popMatrix();
-
 		if (blocking) {
 			if (System.currentTimeMillis() / 250 % 5 == 0) {
 				surface.tint(140);
@@ -521,6 +539,7 @@ public abstract class Avatar implements Serializable {
 
 	public void setLeft(boolean left) {
 		this.left = left;
+		lastDir = false;
 	}
 
 	public boolean isRight() {
@@ -529,6 +548,7 @@ public abstract class Avatar implements Serializable {
 
 	public void setRight(boolean right) {
 		this.right = right;
+		lastDir = true;
 	}
 
 	public double getWidth() {
@@ -558,7 +578,15 @@ public abstract class Avatar implements Serializable {
 	public ArrayList<String> getSpriteListAttack() {
 		return spriteListAttack;
 	}
+	
+	public StatusEffect getStatus() {
+		return status;
+	}
 
+	public boolean isMoveControlled() {
+		return movementControlled;
+	}
+	
 	public void setSpriteListAttack(ArrayList<String> spriteListAttack) {
 		this.spriteListAttack = spriteListAttack;
 	}
