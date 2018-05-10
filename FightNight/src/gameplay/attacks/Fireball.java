@@ -32,5 +32,9 @@ public class Fireball extends Projectile {
 	public Fireball(int x, int y, String playerAddress, double dir) {
 		super(imageKey, x, y, W, H, playerAddress, DMG, SHIELD_BREAKER, EFFECT, dir, RANGE, SPEED);
 	}
+	
+	public Fireball(int x, int y, String playerAddress, double dir, String imageKey, double range, double speed) {
+		super(imageKey, x, y, W, H, playerAddress, DMG, SHIELD_BREAKER, EFFECT, dir, range, speed);
+	}
 
 }

@@ -54,7 +54,7 @@ public abstract class Avatar implements Serializable {
 	protected Rectangle[] sprites;
 	protected int spriteInd, numOfSpriteWalk;
 	private ArrayList<String> spriteListWalk, spriteListAttack;
-	
+
 	protected boolean lastDir; //True if right, false if left
 
 	private boolean up, down, left, right;
@@ -184,17 +184,22 @@ public abstract class Avatar implements Serializable {
 					return null;
 			}
 			else if(a.equals(AttackType.A2))
-				if(System.currentTimeMillis() > a1CDStart + a2CD * 1000)
+				if(System.currentTimeMillis() > a2CDStart + a2CD * 1000)
 					return abilityTwo(player, angle);
 				else
 					return null;
 			else if(a.equals(AttackType.A3))
-				if(System.currentTimeMillis() > a1CDStart + a2CD * 1000)
+				if(System.currentTimeMillis() > a3CDStart + a3CD * 1000)
 					return abilityThree(player, angle);
 				else
 					return null;
-			else if(a.equals(AttackType.RANGED))
-				return rangedAttack(player, angle);
+			else if(a.equals(AttackType.RANGED)) {
+				if(System.currentTimeMillis() > rangedCDStart + rangedCD * 1000) {
+					return rangedAttack(player, angle);
+				}
+				else
+					return null;		
+			}
 			else
 				return basicAttack(player, angle);
 		}
@@ -578,7 +583,7 @@ public abstract class Avatar implements Serializable {
 	public ArrayList<String> getSpriteListAttack() {
 		return spriteListAttack;
 	}
-	
+
 	public StatusEffect getStatus() {
 		return status;
 	}
@@ -586,7 +591,7 @@ public abstract class Avatar implements Serializable {
 	public boolean isMoveControlled() {
 		return movementControlled;
 	}
-	
+
 	public void setSpriteListAttack(ArrayList<String> spriteListAttack) {
 		this.spriteListAttack = spriteListAttack;
 	}

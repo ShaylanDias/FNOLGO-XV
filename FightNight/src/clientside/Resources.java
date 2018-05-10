@@ -45,12 +45,14 @@ public class Resources {
 		images.put("UpperCut6", new ImageWrapper("data/Brute/UpperCut6.png"));
 		images.put("UpperCut7", new ImageWrapper("data/Brute/UpperCut7.png"));
 		images.put("UpperCut8", new ImageWrapper("data/Brute/UpperCut8.png"));
-
+		images.put("Rock", new ImageWrapper("data/Brute/Rock.png"));
+		images.put("WWBasic", new ImageWrapper("data/Brute/WWBasic.png"));
 		
 		images.put("Fireball1", new ImageWrapper("Fireball1.png"));
 		images.put("Arrow1", new ImageWrapper("arrow-projectile.jpg"));
 		images.put("FNOLGO MAP", new ImageWrapper("FNOLGO MAP v2.png"));
 		images.put("Shield", new ImageWrapper("Shield.png"));
+		
 		
 	}
 
@@ -81,7 +83,6 @@ public class Resources {
 	 * @return The PImage
 	 */
 	public PImage getImage(String key) {
-		System.out.println(key);
 		return images.get(key).getPImage();
 	}
 

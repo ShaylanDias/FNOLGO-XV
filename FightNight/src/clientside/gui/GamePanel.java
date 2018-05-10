@@ -73,7 +73,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 	public void draw() {
 		clear();
 
-		background(Color.WHITE.getRGB());
+		background(Color.BLACK.getRGB());
 
 		color(Color.BLACK.getRGB());
 
@@ -106,6 +106,8 @@ public class GamePanel extends PApplet implements NetworkListener {
 		if (nm != null) {
 			if (mouseButton == LEFT)
 				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.BASIC, getAngleToMouse());
+			if(mouseButton == RIGHT)
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.RANGED, getAngleToMouse());
 		}
 	}
 

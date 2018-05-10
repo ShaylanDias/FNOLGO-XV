@@ -6,8 +6,10 @@ import java.awt.Rectangle;
 import clientside.gui.GamePanel;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Fireball;
-import gameplay.attacks.UpperCut;
+import gameplay.attacks.MeleeAttack;
+import gameplay.attacks.StatusEffect;
 import gameplay.attacks.StatusEffect.Effect;
+import gameplay.attacks.UpperCut;
 import processing.core.PApplet;
 
 /**
@@ -23,7 +25,7 @@ public class Brute extends Avatar {
 	private AttackType currentAttack;
 	private final double upperCutTime = 1.1;
 	private double upperCutAngle;
-	
+
 	/**
 	 * Instantiates a Brute
 	 */
@@ -37,10 +39,12 @@ public class Brute extends Avatar {
 		dashCD = 1.0;
 		dashDistance = 120;
 		dashSpeed = 40;
-		a1CD = 3;
-		
+		a1CD = 7;
+		basicCD = 1.2;
+		rangedCDStart = 0;
+		rangedCD = 5;
 		currentAttack = AttackType.NONE;
-		
+
 		deathImageKeys = new String[] {"WWDying", "WWDead"};
 		upperCutKeys = new String[] {"UpperCut1", "UpperCut2", "UpperCut3", "UpperCut4", "UpperCut5", "UpperCut6", "UpperCut7", "UpperCut8"};
 		getSpriteListWalk().add("WWWalk0");
@@ -66,16 +70,33 @@ public class Brute extends Avatar {
 	@Override
 	public Attack basicAttack(String player, double angle) {
 		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000 && !dashing && !blocking) {
-			super.basicCDStart = System.currentTimeMillis();
-			return new Fireball((int) hitbox.x, (int) hitbox.y, player, angle);
+			super.rangedCDStart = System.currentTimeMillis();
+			currentlyAttacking = true;
+			basicCDStart = System.currentTimeMillis();
+			currentAttack = AttackType.BASIC;
+			timeActionStarted = System.currentTimeMillis();
+			if(angle > 90 && angle < 270) 
+				lastDir = false;
+			else
+				lastDir = true;
+				return new MeleeAttack("WWBasic", (int)( hitbox.x + 50 * Math.cos(Math.toRadians(angle))), (int)( hitbox.y - 50 * Math.sin(Math.toRadians(angle))), 40, 40, player, 20,
+						false, new StatusEffect(Effect.NONE,0,0), angle, 0.15);
 		} else {
-			Fireball f = new Fireball(0, 0, "", 0);
-			f.end();
-			return f;
+			return null;
 		}
-
 	}
 
+	private void basicAct() {
+		if(System.currentTimeMillis() < timeActionStarted + 0.06 * 1000) {
+			spriteSheetKey = upperCutKeys[7];
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.15 * 1000 ) {
+			spriteSheetKey = upperCutKeys[5];
+		} else {
+			currentlyAttacking = false;
+			currentAttack = AttackType.NONE;
+		}
+	}
+	
 	@Override
 	public void dash(Double mouseAngle) {
 		if (System.currentTimeMillis() > super.dashCDStart + super.dashCD * 1000) {
@@ -87,7 +108,31 @@ public class Brute extends Avatar {
 	// Throws a slow moving projectile (Rock)
 	@Override
 	public Attack rangedAttack(String player, double angle) {
-		return null;
+		if (System.currentTimeMillis() > super.rangedCDStart + super.rangedCD * 1000 && !dashing && !blocking) {
+			super.rangedCDStart = System.currentTimeMillis();
+			currentlyAttacking = true;
+			currentAttack = AttackType.RANGED;
+			timeActionStarted = System.currentTimeMillis();
+			if(angle > 90 && angle < 270)
+				lastDir = false;
+			else
+				lastDir = true;
+			return new Fireball((int) hitbox.x, (int) hitbox.y, player, angle, "Rock", 400, 22);
+		} else {
+			return null;
+		}
+
+	}
+
+	private void rangedAct() {
+		if(System.currentTimeMillis() < timeActionStarted + 0.2 * 1000) {
+			spriteSheetKey = upperCutKeys[7];
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.4 * 1000 ) {
+			spriteSheetKey = upperCutKeys[6];
+		} else {
+			currentlyAttacking = false;
+			currentAttack = AttackType.NONE;
+		}
 
 	}
 
@@ -131,7 +176,7 @@ public class Brute extends Avatar {
 			currentlyAttacking = false;
 		}
 	}
-	
+
 	// GroundSmash, and aoe stun that does dmg
 	@Override
 	public Attack abilityTwo(String player, double angle) {
@@ -160,20 +205,27 @@ public class Brute extends Avatar {
 			surface.image(GamePanel.resources.getImage(deathImageKeys[1]), (float)hitbox.x, (float)hitbox.y, (float)hitbox.width * 1.2f, (float)hitbox.height * 0.7f);
 		}
 	}
-	
-	public void act() {
-		super.act();
 
-		if (!super.isLeft() && !super.isRight() && !super.isUp() && !super.isDown()) {
-			spriteSheetKey = "WWDefault";
-		}
-		
+	public void act() {
+
 		if(currentAttack == AttackType.A1)
 			actUpperCut();
-		
+		else if(currentAttack == AttackType.RANGED)
+			rangedAct();
+		else if(currentAttack == AttackType.BASIC)
+			basicAct();
+		else {
+
+			super.act();
+
+			if (!super.isLeft() && !super.isRight() && !super.isUp() && !super.isDown()) {
+				spriteSheetKey = "WWDefault";
+			}
+		}
+
 	}
-	
-	
+
+
 	public void draw(PApplet surface) {
 		surface.pushMatrix();
 		surface.pushStyle();
@@ -210,13 +262,13 @@ public class Brute extends Avatar {
 		surface.imageMode(PApplet.CENTER);
 
 		surface.pushMatrix();
-		
+
 		float widthMod = 1f;
 		if(currentlyAttacking)
 			widthMod = 1.3f;
 		if (super.isRight() || lastDir) {
 			surface.scale(-1, 1);
-				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw * widthMod, sh);
+			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw * widthMod, sh);
 		} else {
 			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw * widthMod, sh);
 		}
@@ -243,6 +295,6 @@ public class Brute extends Avatar {
 		surface.popMatrix();
 		surface.popStyle();
 	}
-	
+
 
 }
