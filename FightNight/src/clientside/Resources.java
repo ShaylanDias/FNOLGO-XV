@@ -44,6 +44,8 @@ public class Resources {
 		images.put("WWWalk1", new ImageWrapper("data/Brute/WW-Walk2.png"));
 		images.put("WWWalk2", new ImageWrapper("data/Brute/WW-Walk3.png"));
 		images.put("WWWalk3", new ImageWrapper("data/Brute/WW-Walk4.png"));
+		images.put("WWDying", new ImageWrapper("data/Brute/WWDying.png"));
+		images.put("WWDead", new ImageWrapper("data/Brute/WWDead.png"));
 		
 		images.put("Fireball1", new ImageWrapper("Fireball1.png"));
 		images.put("Arrow1", new ImageWrapper("arrow-projectile.jpg"));

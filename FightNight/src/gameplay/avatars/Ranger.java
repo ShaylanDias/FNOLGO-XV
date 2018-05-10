@@ -67,7 +67,7 @@ public class Ranger extends Avatar {
 	// Grappling hook - hooks onto a wall in the map and pulls your towards it, dmgs
 	// enemies that you run into, if hook enemy, it acts like a projectile.
 	@Override
-	public Attack abilityThree() {
+	public Attack abilityThree(String player, double angle) {
 		return null;
 
 	}

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import clientside.gui.GamePanel;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Attack.AttackResult;
+import gameplay.attacks.Fireball;
 import gameplay.attacks.StatusEffect;
 import gameplay.attacks.StatusEffect.Effect;
 import processing.core.PApplet;
@@ -81,6 +82,8 @@ public abstract class Avatar implements Serializable {
 	protected boolean currentlyAttacking; // Means cannot move, dash, or block while executing this attack
 	protected long timeActionStarted; // Time is the time that the attack it is executing was started
 
+	protected long deathTime = 0;
+
 	/**
 	 * Initializes a Character with default values
 	 */
@@ -93,10 +96,10 @@ public abstract class Avatar implements Serializable {
 		superArmor = false;
 		dashing = false;
 		status = new StatusEffect(StatusEffect.Effect.NONE, 0, 0);
-		health = 0;
 		spriteInd = 0;
 		health = 200;
 		fullHealth = health;
+		deathTime = 0;
 		spriteListWalk = new ArrayList<String>();
 		spriteListAttack = new ArrayList<String>();
 		numOfSpriteWalk = 0;
@@ -167,8 +170,25 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * @return The Attack it performs
 	 */
-	public abstract Attack abilityThree();
+	public abstract Attack abilityThree(String player, double angle);
 
+	public Attack attack(AttackType a, String player, double angle) {
+		if(deathTime == 0) {
+			if(a.equals(AttackType.A1))
+				return abilityOne();
+			else if(a.equals(AttackType.A2))
+				return abilityTwo();
+			else if(a.equals(AttackType.A3))
+				return abilityThree(player, angle);
+			else if(a.equals(AttackType.RANGED))
+				return rangedAttack();
+			else
+				return basicAttack(player, angle);
+		}
+		else
+			return null;
+	}
+	
 	/**
 	 * 
 	 * Hits a player with an Attack
@@ -185,8 +205,10 @@ public abstract class Avatar implements Serializable {
 				status = attack.getEffect();
 			}
 			health -= attack.getDamage();
-			if(health <= 0)
+			if(health <= 0 && deathTime == 0) {
 				health = 0;
+				deathTime = System.currentTimeMillis();
+			}
 			return AttackResult.SUCCESS;
 		} else if (playerAddress.equals(attack.getPlayer())) {
 			return AttackResult.SAME_AVATAR;
@@ -276,7 +298,7 @@ public abstract class Avatar implements Serializable {
 	 * Starts the Character in a dash, enables superArmor
 	 */
 	public void dash(Double mouseAngle) {
-		
+
 		if(left) {
 			if(up) {
 				dashAngle = 135;
@@ -298,13 +320,13 @@ public abstract class Avatar implements Serializable {
 		} else {
 			dashAngle = 90;
 		}
-		
-		
+
+
 		movementControlled = false;
 		dashing = true;
 		dashTraveled = 0;
 		superArmor = true;
-//		dashAngle = mouseAngle;
+		//		dashAngle = mouseAngle;
 	}
 
 	/**
@@ -319,28 +341,29 @@ public abstract class Avatar implements Serializable {
 	 */
 	public void act() {
 
-		if (blocking)
-			return;
-		else if (dashing) {
-			dashAct();
-			return;
-		}
-
-		if (up) {
-			moveBy(0, -moveSpeed);
-			walk(numOfSpriteWalk, 200);
-		}
-		if (right) {
-			moveBy(moveSpeed, 0);
-			walk(numOfSpriteWalk, 200);
-		}
-		if (left) {
-			moveBy(-moveSpeed, 0);
-			walk(numOfSpriteWalk, 200);
-		}
-		if (down) {
-			moveBy(0, moveSpeed);
-			walk(numOfSpriteWalk, 200);
+		if(health > 0) {
+			if (blocking)
+				return;
+			else if (dashing) {
+				dashAct();
+				return;
+			}
+			if (up) {
+				moveBy(0, -moveSpeed);
+				walk(numOfSpriteWalk, 200);
+			}
+			if (right) {
+				moveBy(moveSpeed, 0);
+				walk(numOfSpriteWalk, 200);
+			}
+			if (left) {
+				moveBy(-moveSpeed, 0);
+				walk(numOfSpriteWalk, 200);
+			}
+			if (down) {
+				moveBy(0, moveSpeed);
+				walk(numOfSpriteWalk, 200);
+			}
 		}
 
 	}
@@ -398,16 +421,32 @@ public abstract class Avatar implements Serializable {
 		surface.pushMatrix();
 		surface.pushStyle();
 
+
+		//Health Bar
+		surface.rectMode(PApplet.CORNER);
+		surface.fill(Color.BLACK.getRGB());
+		surface.rect((float)(hitbox.x - hitbox.width * 0.5), (float)(hitbox.y - hitbox.height * 0.7), (float)hitbox.width * 0.7f, (float)hitbox.height/6);
+		surface.fill(Color.GREEN.getRGB());
+		surface.rect((float)(hitbox.x - hitbox.width * 0.5), (float)(hitbox.y - hitbox.height * 0.7), (float)hitbox.width * 0.7f * (float)(health/fullHealth), (float)hitbox.height/6);
+
+
+		if(deathTime != 0) {
+			drawDeath(surface);
+			surface.popMatrix();
+			surface.popStyle();
+			return;
+		}
+
 		if (blocking) {
 			// Draw block
 		}
 		if (!status.getEffect().equals(Effect.NONE)) {
 			// Add on effect
 		}
-		
-		int sx, sy, sw, sh;
-		sx = (int) sprites[spriteInd].getX();
-		sy = (int) sprites[spriteInd].getY();
+
+		int sw, sh;
+		//		sx = (int) sprites[spriteInd].getX();
+		//		sy = (int) sprites[spriteInd].getY();
 		sw = (int) sprites[spriteInd].getWidth();
 		sh = (int) sprites[spriteInd].getHeight();
 
@@ -437,13 +476,6 @@ public abstract class Avatar implements Serializable {
 					1.5f * sh);
 		}
 
-		surface.rectMode(PApplet.CORNER);
-		surface.fill(Color.BLACK.getRGB());
-		surface.rect((float)(hitbox.x - hitbox.width * 0.5), (float)(hitbox.y - hitbox.height * 0.7), (float)hitbox.width * 0.7f, (float)hitbox.height/6);
-		surface.fill(Color.GREEN.getRGB());
-		surface.rect((float)(hitbox.x - hitbox.width * 0.5), (float)(hitbox.y - hitbox.height * 0.7), (float)hitbox.width * 0.7f * (float)(health/fullHealth), (float)hitbox.height/6);
-
-		
 		// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
 		// surface.fill(Color.RED.getRGB());
 		// surface.ellipseMode(PApplet.CENTER);
@@ -461,6 +493,10 @@ public abstract class Avatar implements Serializable {
 				}
 			}
 		}
+	}
+
+	protected void drawDeath(PApplet surface) {
+		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float)hitbox.x, (float)hitbox.y, (float)hitbox.width, (float)hitbox.height);
 	}
 
 	public boolean isUp() {

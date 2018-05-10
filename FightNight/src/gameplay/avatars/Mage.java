@@ -75,7 +75,7 @@ public class Mage extends Avatar {
 
 	// Lightning blast, stands still and charges a kamehameha.
 	@Override
-	public Attack abilityThree() {
+	public Attack abilityThree(String player, double angle) {
 		return null;
 
 	}

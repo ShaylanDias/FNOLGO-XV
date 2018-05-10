@@ -78,7 +78,7 @@ public class GameManager implements NetworkListener {
 
 						} else if (action == ControlType.ATTACK) {
 							if (ndo.message[1] == AttackType.BASIC) {
-								state.addAttack(avatar.basicAttack(playerNum, (double) ndo.message[2]));
+								state.addAttack(avatar.attack(AttackType.BASIC, playerNum, (double) ndo.message[2]));
 							}
 
 						} else if (action == ControlType.DASH) {
@@ -96,7 +96,7 @@ public class GameManager implements NetworkListener {
 		synchronized (state) {
 			for (int i = 0; i < state.getAttacks().size(); i++) {
 				Attack p = state.getAttacks().get(i);
-				if (!p.act(state.getAvatars())) {
+				if (p == null || !p.act(state.getAvatars())) {
 					state.getAttacks().remove(i);
 					i--;
 				}

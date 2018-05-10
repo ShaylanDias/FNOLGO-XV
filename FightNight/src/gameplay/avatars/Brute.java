@@ -1,16 +1,22 @@
 package gameplay.avatars;
 
 import java.awt.Rectangle;
+
+import clientside.gui.GamePanel;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Fireball;
+import processing.core.PApplet;
 
 /**
  * Creates a specific brute type of character.
+ * 
  * @author hzhu684
  *
  */
 public class Brute extends Avatar {
 
+	private String[] deathImageKeys;
+	
 	/**
 	 * Instantiates a Brute
 	 */
@@ -25,6 +31,8 @@ public class Brute extends Avatar {
 		dashDistance = 120;
 		dashSpeed = 40;
 
+		deathImageKeys = new String[] {"WWDying", "WWDead"};
+		
 		getSpriteListWalk().add("WWWalk0");
 		getSpriteListWalk().add("WWWalk1");
 		getSpriteListWalk().add("WWWalk2");
@@ -42,7 +50,6 @@ public class Brute extends Avatar {
 	public Brute(double x, double y) {
 		this();
 		this.hitbox.x = x;
-
 	}
 
 	// Punch, slow but does a lot of dmg
@@ -89,9 +96,9 @@ public class Brute extends Avatar {
 
 	// EatMutton - heals the dude
 	@Override
-	public Attack abilityThree() {
+	public Attack abilityThree(String player, double angle) {
+		// TODO Auto-generated method stub
 		return null;
-
 	}
 
 	public String getSpriteSheetKey() {
@@ -102,6 +109,14 @@ public class Brute extends Avatar {
 		this.spriteSheetKey = spriteSheetKey;
 	}
 
+	public void drawDeath(PApplet surface){
+		if(System.currentTimeMillis() <= deathTime + 1000)
+			surface.image(GamePanel.resources.getImage(deathImageKeys[0]), (float)hitbox.x, (float)hitbox.y, (float)hitbox.width, (float)hitbox.height);
+		else {
+			surface.image(GamePanel.resources.getImage(deathImageKeys[1]), (float)hitbox.x, (float)hitbox.y, (float)hitbox.width * 1.2f, (float)hitbox.height * 0.7f);
+		}
+	}
+	
 	public void act() {
 		super.act();
 
