@@ -75,6 +75,7 @@ public abstract class Avatar implements Serializable {
 	private StatusEffect status; // Current StatusEffect applied to this Avatar
 
 	protected boolean blocking, superArmor, dashing;
+	protected double shieldHealth, fullShieldHealth;
 
 	protected boolean movementControlled; // Can currently control movement (currently blocking or dashing)
 
@@ -98,6 +99,8 @@ public abstract class Avatar implements Serializable {
 		superArmor = false;
 		dashing = false;
 		status = new StatusEffect(StatusEffect.Effect.NONE, 0, 0);
+		shieldHealth = 125;
+		fullShieldHealth = shieldHealth;
 		spriteInd = 0;
 		health = 200;
 		fullHealth = health;
@@ -217,8 +220,25 @@ public abstract class Avatar implements Serializable {
 	 */
 	public AttackResult takeHit(Attack attack) {
 		if (!playerAddress.equals(attack.getPlayer()) && attack.isActive()) {
-			if (blocking)
-				return AttackResult.BLOCKED;
+			if(blocking) {
+				if(!attack.isShieldBreaker()) {
+					if (blocking) {
+						shieldHealth -= attack.getDamage()/2;
+						if(shieldHealth <= 0) {
+							health += shieldHealth;
+							shieldHealth = 0;
+							blocking = false;
+						}
+						return AttackResult.BLOCKED;
+					}
+				} else {
+					shieldHealth -= 50;
+					if(shieldHealth <= 0) {
+						shieldHealth = 0;
+						blocking = false;
+					}
+				}
+			}
 			if (!superArmor) {
 				status = attack.getEffect();
 			}
@@ -337,7 +357,7 @@ public abstract class Avatar implements Serializable {
 			}
 		} else if(down) {
 			dashAngle = 270;
-		} else {
+		} else if(up){
 			dashAngle = 90;
 		}
 
@@ -353,11 +373,15 @@ public abstract class Avatar implements Serializable {
 	 * Starts an Avatar's block
 	 */
 	public void block(boolean block) {
-		if(block)
-			movementControlled = false;
+		if(shieldHealth > 0) {
+			if(block)
+				movementControlled = false;
+			else
+				movementControlled = true;
+			blocking = block;
+		}
 		else
 			movementControlled = true;
-		blocking = block;
 	}
 
 	/**
@@ -365,10 +389,26 @@ public abstract class Avatar implements Serializable {
 	 */
 	public void act() {
 
+		System.out.println(shieldHealth);
+
 		if(health > 0) {
-			if (blocking)
+			if (blocking) {
+				shieldHealth -= 1;
+				up = false;
+				down = false;
+				left = false;
+				right = false;
+				if(shieldHealth <= 0) {
+					shieldHealth = -50;
+					blocking = false;
+				}
 				return;
-			else if (dashing) {
+			} else {
+				shieldHealth += 1.5;
+				if(shieldHealth > fullShieldHealth)
+					shieldHealth = fullShieldHealth;
+			}
+			if (dashing) {
 				dashAct();
 				return;
 			}
@@ -434,6 +474,21 @@ public abstract class Avatar implements Serializable {
 		}
 	}
 
+	protected void drawHealthBar(PApplet surface) {
+		double shield = shieldHealth;
+		if(shield < 0)
+			shield = 0;
+		
+		surface.rectMode(PApplet.CENTER);
+		surface.fill(Color.BLACK.getRGB());
+		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4), (float)hitbox.width * 0.7f, (float)hitbox.height/6);
+		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 4/5), (float)hitbox.width * 0.7f, (float)hitbox.height/6);
+		surface.fill(Color.CYAN.getRGB());
+		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 4/5), (float)hitbox.width * 0.7f * (float)(shield/fullShieldHealth), (float)hitbox.height/6);
+		surface.fill(Color.GREEN.getRGB());
+		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4), (float)hitbox.width * 0.7f * (float)(health/fullHealth), (float)hitbox.height/6);
+	}
+	
 	/**
 	 * 
 	 * Draws this Avatar to a PApplet
@@ -445,15 +500,8 @@ public abstract class Avatar implements Serializable {
 		surface.pushMatrix();
 		surface.pushStyle();
 
-
-		//Health Bar
-		surface.rectMode(PApplet.CORNER);
-		surface.fill(Color.BLACK.getRGB());
-		surface.rect((float)(hitbox.x - hitbox.width * 0.5), (float)(hitbox.y - hitbox.height * 0.7), (float)hitbox.width * 0.7f, (float)hitbox.height/6);
-		surface.fill(Color.GREEN.getRGB());
-		surface.rect((float)(hitbox.x - hitbox.width * 0.5), (float)(hitbox.y - hitbox.height * 0.7), (float)hitbox.width * 0.7f * (float)(health/fullHealth), (float)hitbox.height/6);
-
-
+		drawHealthBar(surface);
+		
 		if(deathTime != 0) {
 			drawDeath(surface);
 			surface.popMatrix();
@@ -477,7 +525,7 @@ public abstract class Avatar implements Serializable {
 		surface.imageMode(PApplet.CENTER);
 
 		surface.pushMatrix();
-		if (right || lastDir) {
+		if (left || !lastDir) {
 			surface.scale(-1, 1);
 			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw, sh);
 
