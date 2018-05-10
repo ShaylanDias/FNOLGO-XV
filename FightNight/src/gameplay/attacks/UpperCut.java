@@ -38,7 +38,7 @@ public class UpperCut extends Attack{
 
 	@Override
 	public boolean act(ArrayList<Avatar> avatars) {
-		if(System.currentTimeMillis() < super.getStartTime() + 0.88 * 1000) {
+		if(System.currentTimeMillis() < super.getStartTime() + 0.85 * 1000) {
 			x = attacker.getX() + 100 * Math.cos(Math.toRadians(dir));
 			y = attacker.getY() - 60 * Math.sin(Math.toRadians(dir));
 		}
