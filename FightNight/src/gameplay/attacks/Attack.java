@@ -197,7 +197,7 @@ public class Attack extends MovingSprite {
 	public boolean isShieldBreaker() {
 		return shieldBreaker;
 	}
-
+		
 	/**
 	 * Ends the Attack, makes it not a thing
 	 */

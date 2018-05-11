@@ -181,24 +181,30 @@ public abstract class Avatar implements Serializable {
 	public Attack attack(AttackType a, String player, double angle) {
 		if(deathTime == 0 && !currentlyAttacking && movementControlled) {
 			if(a.equals(AttackType.A1) ) {
-				if(System.currentTimeMillis() > a1CDStart + a1CD * 1000)
+				if(System.currentTimeMillis() > a1CDStart + a1CD * 1000) {
+					stop();
 					return abilityOne(player, angle);
+				}
 				else
 					return null;
 			}
 			else if(a.equals(AttackType.A2))
-				if(System.currentTimeMillis() > a2CDStart + a2CD * 1000)
+				if(System.currentTimeMillis() > a2CDStart + a2CD * 1000) {
+					stop();
 					return abilityTwo(player, angle);
+				}
 				else
 					return null;
 			else if(a.equals(AttackType.A3))
-				if(System.currentTimeMillis() > a3CDStart + a3CD * 1000)
+				if(System.currentTimeMillis() > a3CDStart + a3CD * 1000) {
+					stop();
 					return abilityThree(player, angle);
+				}
 				else
 					return null;
 			else if(a.equals(AttackType.RANGED)) {
 				if(System.currentTimeMillis() > rangedCDStart + rangedCD * 1000) {
-					System.out.println("a");
+					stop();
 					return rangedAttack(player, angle);
 				}
 				else
@@ -270,6 +276,13 @@ public abstract class Avatar implements Serializable {
 			hitbox.x += x;
 			hitbox.y += y;
 		}
+	}
+	
+	private void stop() {
+		left = false;
+		right = false;
+		up = false;
+		down = false;
 	}
 
 	/**

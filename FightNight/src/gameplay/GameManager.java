@@ -83,6 +83,8 @@ public class GameManager implements NetworkListener {
 								state.addAttack(avatar.attack(AttackType.A1, playerNum, (double) ndo.message[2]));
 							} else if(ndo.message[1] == AttackType.RANGED) {
 								state.addAttack(avatar.attack(AttackType.RANGED, playerNum, (double) ndo.message[2]));
+							} else if(ndo.message[1] == AttackType.A2) {
+								state.addAttack(avatar.attack(AttackType.A2, playerNum, (double) ndo.message[2]));
 							}
 
 						} else if (action == ControlType.DASH) {

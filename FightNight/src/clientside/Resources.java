@@ -47,6 +47,12 @@ public class Resources {
 		images.put("UpperCut8", new ImageWrapper("data/Brute/UpperCut8.png"));
 		images.put("Rock", new ImageWrapper("data/Brute/Rock.png"));
 		images.put("WWBasic", new ImageWrapper("data/Brute/WWBasic.png"));
+		images.put("Howl", new ImageWrapper("data/Brute/Howl.png"));
+		images.put("Howl1", new ImageWrapper("data/Brute/Howl1.png"));
+		images.put("Howl2", new ImageWrapper("data/Brute/Howl2.png"));
+		images.put("Howl3", new ImageWrapper("data/Brute/Howl3.png"));
+		images.put("Howl4", new ImageWrapper("data/Brute/Howl4.png"));
+
 		
 		images.put("Fireball1", new ImageWrapper("Fireball1.png"));
 		images.put("Arrow1", new ImageWrapper("arrow-projectile.jpg"));

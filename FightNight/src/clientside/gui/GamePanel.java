@@ -142,7 +142,10 @@ public class GamePanel extends PApplet implements NetworkListener {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', true);
 		}
 		if (key == 'e') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, false);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.A1, getAngleToMouse());
+		}
+		if (key == 'r') {
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.A2, getAngleToMouse());
 		}
 
 	}
@@ -162,9 +165,6 @@ public class GamePanel extends PApplet implements NetworkListener {
 		}
 		if (key == 'd') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', false);
-		}
-		if (key == 'e') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.A1, getAngleToMouse());
 		}
 		if(key == 'q') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.BLOCK, false);

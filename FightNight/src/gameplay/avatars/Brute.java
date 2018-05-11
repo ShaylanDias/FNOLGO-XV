@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import clientside.gui.GamePanel;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Fireball;
+import gameplay.attacks.Howl;
 import gameplay.attacks.MeleeAttack;
 import gameplay.attacks.StatusEffect;
 import gameplay.attacks.StatusEffect.Effect;
@@ -22,6 +23,7 @@ public class Brute extends Avatar {
 
 	private String[] deathImageKeys;
 	private String[] upperCutKeys;
+	private String[] howlKeys;
 	private AttackType currentAttack;
 	private final double upperCutTime = 1.1;
 	private double upperCutAngle;
@@ -41,12 +43,14 @@ public class Brute extends Avatar {
 		dashSpeed = 40;
 		a1CD = 7;
 		basicCD = 1.2;
+		a2CD = 10;
 		rangedCDStart = 0;
 		rangedCD = 5;
 		currentAttack = AttackType.NONE;
 
 		deathImageKeys = new String[] {"WWDying", "WWDead"};
 		upperCutKeys = new String[] {"UpperCut1", "UpperCut2", "UpperCut3", "UpperCut4", "UpperCut5", "UpperCut6", "UpperCut7", "UpperCut8"};
+		howlKeys = new String[] {"Howl1", "Howl2", "Howl3", "Howl4"};
 		getSpriteListWalk().add("WWWalk0");
 		getSpriteListWalk().add("WWWalk1");
 		getSpriteListWalk().add("WWWalk2");
@@ -79,8 +83,8 @@ public class Brute extends Avatar {
 				lastDir = false;
 			else
 				lastDir = true;
-				return new MeleeAttack("WWBasic", (int)( hitbox.x + 50 * Math.cos(Math.toRadians(angle))), (int)( hitbox.y - 50 * Math.sin(Math.toRadians(angle))), 40, 40, player, 20,
-						false, new StatusEffect(Effect.NONE,0,0), angle, 0.15);
+			return new MeleeAttack("WWBasic", (int)( hitbox.x + 50 * Math.cos(Math.toRadians(angle))), (int)( hitbox.y - 50 * Math.sin(Math.toRadians(angle))), 40, 40, player, 20,
+					false, new StatusEffect(Effect.NONE,0,0), angle, 0.15);
 		} else {
 			return null;
 		}
@@ -96,7 +100,7 @@ public class Brute extends Avatar {
 			currentAttack = AttackType.NONE;
 		}
 	}
-	
+
 	@Override
 	public void dash(Double mouseAngle) {
 		if (System.currentTimeMillis() > super.dashCDStart + super.dashCD * 1000) {
@@ -142,13 +146,13 @@ public class Brute extends Avatar {
 		currentlyAttacking = true;
 		movementControlled = false;
 		currentAttack = AttackType.A1;
-		timeActionStarted = System.currentTimeMillis();
 		upperCutAngle = 360 - angle;
 		if(angle > 90 && angle < 270)
 			lastDir = false;
 		else
 			lastDir = true;
 		a1CDStart = System.currentTimeMillis();
+		timeActionStarted = a1CDStart;
 		return new UpperCut(this.getPlayer(), angle, this, (int)super.getX(), (int)super.getY());
 	}
 
@@ -180,8 +184,38 @@ public class Brute extends Avatar {
 	// GroundSmash, and aoe stun that does dmg
 	@Override
 	public Attack abilityTwo(String player, double angle) {
-		return null;
+		currentlyAttacking = true;
+		movementControlled = false;
+		currentAttack = AttackType.A2;
+		if(angle > 90 && angle < 270)
+			lastDir = false;
+		else
+			lastDir = true;
+		a2CDStart = System.currentTimeMillis();
+		timeActionStarted = a2CDStart;
+		return new Howl((int)super.getX(), (int)super.getY(), player);
+	}
 
+	private void actHowl() {
+		if(System.currentTimeMillis() < timeActionStarted + 0.25 * 1000) {
+			spriteSheetKey = howlKeys[0];
+		} else if(System.currentTimeMillis() < timeActionStarted +  .5 * 1000 ) {
+			spriteSheetKey = howlKeys[1];
+		} else if(System.currentTimeMillis() < timeActionStarted + 0.75 * 1000) {
+			spriteSheetKey = howlKeys[2];
+		} else if(System.currentTimeMillis() < timeActionStarted + 1.25 * 1000) {
+			spriteSheetKey = howlKeys[3];
+		} else if(System.currentTimeMillis() < timeActionStarted +  1.5 * 1000 ) {
+			spriteSheetKey = howlKeys[2];
+		} else if(System.currentTimeMillis() < timeActionStarted + 1.75 * 1000) {
+			spriteSheetKey = howlKeys[1];
+		} else if(System.currentTimeMillis() < timeActionStarted + 2 * 1000) {
+			spriteSheetKey = howlKeys[0];
+		}else if (System.currentTimeMillis() >= timeActionStarted + 2000) {
+			currentAttack = AttackType.NONE;
+			movementControlled = true;
+			currentlyAttacking = false;
+		}
 	}
 
 	// EatMutton - heals the dude
@@ -214,6 +248,8 @@ public class Brute extends Avatar {
 			rangedAct();
 		else if(currentAttack == AttackType.BASIC)
 			basicAct();
+		else if(currentAttack == AttackType.A2)
+			actHowl();
 		else {
 
 			super.act();
@@ -231,7 +267,7 @@ public class Brute extends Avatar {
 		surface.pushStyle();
 
 		drawHealthBar(surface);
-		
+
 		if(deathTime != 0) {
 			drawDeath(surface);
 			surface.popMatrix();
