@@ -27,20 +27,28 @@ public class StandardMap extends Map{
 			else
 				i--;
 		}
+		int counter = 0;
+		
 		for(int i = 0; i<Tree.length;i++) {
-			for(int j = 0;j<Tree.length;j++) {
+			boolean Intersected = false;
+			for(int j = i+1;j<Tree.length;j++) {
 				
 				//Some checks if the trees are interesecting each other. Check the code in trees. I think I might just be stupid. 
-				if(!Tree[i].checkIntersection(Tree[j].getX(),Tree[j].getY() , Tree[j].getWidth(), Tree[j].getHeight())) {
-					Tree[i].doDraw() ;
+				if(Tree[i].checkIntersection(Tree[j].getX(),Tree[j].getY() , Tree[j].getWidth(), Tree[j].getHeight())) {
+					Intersected = true;
+					break;					
 				}
 			}
+			if(!Intersected) {
+				Tree[i].doDraw() ;
+				counter++;
+			}
+
 		}
+		System.out.println("Counter do draw: " +counter);
 	}
 	
-	public void setup() {
-		
-	}
+	
 	
 	public void draw(PApplet surface) {
 		super.draw(surface);
@@ -48,12 +56,14 @@ public class StandardMap extends Map{
 		surface.noFill();
 		surface.rect(-1500, -1500, 3000, 3000);
 		
+		int counter = 0;
 		for(int i = 0; i< Tree.length;i++) {
 			if(Tree[i].canDraw()) {
 				Tree[i].draw(surface);
+				counter++;
 			}
 		}
-		
+		System.out.println("Counter: " +counter);
 		//Left quadrant tree hitboxes going top down
 //		surface.rect(-1440, -1080, 180, 180);
 //		surface.rect(-1260, -720, 120, 120);

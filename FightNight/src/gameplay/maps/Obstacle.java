@@ -21,10 +21,22 @@ public class Obstacle implements Serializable{
 	 * @return returns true if the 2 hitboxes run into each other, false otherwise. 
 	 */
 	public boolean checkIntersection(double x, double y, double width, double height) {
-		if(x+width/2 >= xPos-width/2 && x-width <= xPos+this.width/2 && y+height/2 >= yPos-height/2 && y-height/2<= yPos+this.height/2) {
+		
+		double xDiff = this.width/2 + width/2;
+		double yDiff = this.height/2 + height/2;
+		//System.out.println(xDiff);
+		//System.out.println(yDiff);
+		
+		if(Math.abs(x-xPos)<xDiff && Math.abs(y-yPos) <yDiff) {
+			System.out.println("Intersect");
 			return true;
 		}
 		
+//		if(x-width/2< xPos+this.width/2 && x+width/2 >xPos-width/2 && y-height/2 < yPos +this.height && y +height/2 > yPos -height/2) {
+//			System.out.println("Intersects");
+//			return true;
+//		}
+//		
 		return false;
 	}
 
