@@ -240,7 +240,7 @@ public class Brute extends Avatar {
 		return new Attack[] {new Howl((int)super.getX(), (int)super.getY(), player)};
 	}
 
-	// Fury- Swipes three times at a location
+	// Fury- Swipes three times as it moves
 	@Override
 	public Attack[] abilityThree(String player, double angle) {
 		currentlyAttacking = true;
@@ -254,8 +254,8 @@ public class Brute extends Avatar {
 		a3CDStart = System.currentTimeMillis();
 		timeActionStarted = a3CDStart;
 		return new Attack[]{new Lunge(this.getPlayer(), angle, this, (int)super.getX(), (int)super.getY(), new StatusEffect(Effect.NONE, 0, 0), 0.9, 0),
-				new TrailingAttack("WWBasic", 50, 50, 60, 50, player, 4, new StatusEffect(Effect.NONE,0,0), angle + 90, 0.9, this),
-				new TrailingAttack("WWBasic", -50, -50, 60, 50, player, 4, new StatusEffect(Effect.NONE,0,0), angle + 90, 0.9, this)};
+				new TrailingAttack("WWBasic", 50, 50, 60, 50, player, 6, new StatusEffect(Effect.NONE,0,0), angle + 90, 0.9, this),
+				new TrailingAttack("WWBasic", -50, -50, 60, 50, player, 6, new StatusEffect(Effect.NONE,0,0), angle + 90, 0.9, this)};
 	}
 
 	private void basicAct() {
