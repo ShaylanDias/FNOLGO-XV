@@ -43,8 +43,8 @@ public class GameState implements Serializable {
 	 *  
 	 */
 	public void draw(PApplet surface, Avatar av, float width, float height) {
-		map.draw(surface);
 		surface.translate((float) (-av.getX() + width / 2), (float) -av.getY() + height / 2);
+		map.draw(surface);
 		for (Avatar c : avatars)
 			c.draw(surface);
 		for (Attack a : attacks)

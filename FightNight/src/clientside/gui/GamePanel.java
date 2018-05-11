@@ -73,6 +73,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 	public void draw() {
 		clear();
 
+		imageMode(CENTER);
 		background(Color.BLACK.getRGB());
 
 		color(Color.BLACK.getRGB());

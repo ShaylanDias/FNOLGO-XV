@@ -730,10 +730,10 @@ public abstract class Avatar implements Serializable {
 	
 	public void spawn() {
 		System.out.println("spawn");
-		hitbox.x = Math.random() * 3000;
-		hitbox.y = Math.random() * 3000;
-		hitbox.x = 1500;
-		hitbox.y = 1500;
+		double x = Math.random() * 3000;
+		double y = Math.random() * 3000;
+		hitbox.x = 1500 - x;
+		hitbox.y = 1500 - y;
 		health = fullHealth;
 		shieldHealth = fullShieldHealth;
 		rangedCDStart = 0;
