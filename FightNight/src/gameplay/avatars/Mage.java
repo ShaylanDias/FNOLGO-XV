@@ -36,7 +36,7 @@ public class Mage extends Avatar {
 
 	// Staff wack, it pushes them back
 	@Override
-	public Attack basicAttack(String player, double angle) {
+	public Attack[] basicAttack(String player, double angle) {
 		return null;
 	}
 	@Override
@@ -48,32 +48,26 @@ public class Mage extends Avatar {
 	}
 	// Fireball, slow moving, and does a bunch of dmg, goes until it hits a wall.
 	@Override
-	public Attack rangedAttack(String player, double angle) {
-		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000) {
-			super.basicCDStart = System.currentTimeMillis();
-			return new Fireball((int) hitbox.x, (int) hitbox.y, player, angle);
-		} else {
-			Fireball f = new Fireball(0, 0, "", 0);
-			f.end();
-			return f;
-		}
+	public Attack[] rangedAttack(String player, double angle) {
+		super.basicCDStart = System.currentTimeMillis();
+		return new Attack[] {new Fireball((int) hitbox.x, (int) hitbox.y, player, angle)};
 	}
 
 	// Fire eruption. circular bust in an area that does dmg to anyone in them.
 	@Override
-	public Attack abilityOne(String player, double angle) {
+	public Attack[] abilityOne(String player, double angle) {
 		return null;
 	}
 
 	// Snow Storm - slows down everybody in an area
 	@Override
-	public Attack abilityTwo(String player, double angle) {
+	public Attack[] abilityTwo(String player, double angle) {
 		return null;
 	}
 
 	// Lightning blast, stands still and charges a kamehameha.
 	@Override
-	public Attack abilityThree(String player, double angle) {
+	public Attack[] abilityThree(String player, double angle) {
 		return null;
 
 	}

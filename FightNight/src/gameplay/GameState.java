@@ -51,10 +51,10 @@ public class GameState implements Serializable {
 			a.draw(surface);
 	}
 
-//	public void drawMap() {
-//		
-//	}
-//	
+	//	public void drawMap() {
+	//		
+	//	}
+	//	
 	/**
 	 * 
 	 * Gets the Avatars in the Game
@@ -83,8 +83,11 @@ public class GameState implements Serializable {
 	 * @param a
 	 *            Attack to add
 	 */
-	public void addAttack(Attack a) {
-		attacks.add(a);
+	public void addAttacks(Attack[] a) {
+		if(a != null) {
+			for(int i = 0; i < a.length; i++)
+				attacks.add(a[i]);
+		}
 	}
 
 	/**

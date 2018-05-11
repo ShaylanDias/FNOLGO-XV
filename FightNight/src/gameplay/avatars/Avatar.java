@@ -142,7 +142,7 @@ public abstract class Avatar implements Serializable {
 	 *            Angle of the attack
 	 * @return The Attack it performs
 	 */
-	public abstract Attack basicAttack(String player, double angle);
+	public abstract Attack[] basicAttack(String player, double angle);
 
 	// Bound to right click
 	/**
@@ -151,7 +151,7 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * @return The Attack it performs
 	 */
-	public abstract Attack rangedAttack(String player, double angle);
+	public abstract Attack[] rangedAttack(String player, double angle);
 
 	// Bound to e
 	/**
@@ -160,7 +160,7 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * @return The Attack it performs
 	 */
-	public abstract Attack abilityOne(String player, double angle);
+	public abstract Attack[] abilityOne(String player, double angle);
 
 	// Bound to r
 	/**
@@ -169,7 +169,7 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * @return The Attack it performs
 	 */
-	public abstract Attack abilityTwo(String player, double angle);
+	public abstract Attack[] abilityTwo(String player, double angle);
 
 	// Bound to f
 	/**
@@ -178,34 +178,30 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * @return The Attack it performs
 	 */
-	public abstract Attack abilityThree(String player, double angle);
+	public abstract Attack[] abilityThree(String player, double angle);
 
-	public Attack attack(AttackType a, String player, double angle) {
+	public Attack[] attack(AttackType a, String player, double angle) {
 		if(deathTime == 0 && !currentlyAttacking && movementControlled && !status.getEffect().equals(Effect.STUNNED)) {
 			if(a.equals(AttackType.A1) ) {
 				if(System.currentTimeMillis() > a1CDStart + a1CD * 1000) {
-					stop();
 					return abilityOne(player, angle);
 				}
 				else
 					return null;
 			} else if(a.equals(AttackType.A2)) {
 				if(System.currentTimeMillis() > a2CDStart + a2CD * 1000) {
-					stop();
 					return abilityTwo(player, angle);
 				}
 				else
 					return null;
 			} else if(a.equals(AttackType.A3)) {
 				if(System.currentTimeMillis() > a3CDStart + a3CD * 1000) {
-					stop();
 					return abilityThree(player, angle);
 				}
 				else
 					return null;
 			} else if(a.equals(AttackType.RANGED)) {
 				if(System.currentTimeMillis() > rangedCDStart + rangedCD * 1000) {
-					stop();
 					return rangedAttack(player, angle);
 				}
 				else
@@ -404,12 +400,12 @@ public abstract class Avatar implements Serializable {
 	 * This should be called every round of the game loop
 	 */
 	public void act() {
-
-		System.out.println(hitbox.x);
 		
 		double moveSpeed = this.moveSpeed;
 
 		if(status.getEffect().equals(Effect.SLOWED)) {
+			if(!status.started())
+				status.startEffect();
 			moveSpeed -= status.getValue();
 		} else if(status.getEffect().equals(Effect.STUNNED)) {
 			if(!status.started())
@@ -632,7 +628,8 @@ public abstract class Avatar implements Serializable {
 
 	public void setLeft(boolean left) {
 		this.left = left;
-		lastDir = false;
+		if(left)
+			lastDir = true;
 	}
 
 	public boolean isRight() {
@@ -641,7 +638,8 @@ public abstract class Avatar implements Serializable {
 
 	public void setRight(boolean right) {
 		this.right = right;
-		lastDir = true;
+		if(right)
+			lastDir = false;
 	}
 
 	public double getWidth() {
@@ -729,7 +727,6 @@ public abstract class Avatar implements Serializable {
 	}
 	
 	public void spawn() {
-		System.out.println("spawn");
 		double x = Math.random() * 3000;
 		double y = Math.random() * 3000;
 		hitbox.x = 1500 - x;
@@ -742,6 +739,7 @@ public abstract class Avatar implements Serializable {
 		a2CDStart = 0;
 		a3CDStart = 0;
 		deathTime = 0;
+		stop();
 		dead = false;
 	}
 

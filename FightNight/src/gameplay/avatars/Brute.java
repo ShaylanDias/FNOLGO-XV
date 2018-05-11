@@ -41,11 +41,11 @@ public class Brute extends Avatar {
 		dashDistance = 120;
 		dashSpeed = 40;
 		a1CD = 7;
-		basicCD = 1.2;
+		basicCD = 0.3;
 		a2CD = 10;
-		super.basicCD = 0.45;
+		super.basicCD = 0.2;
 		rangedCDStart = 0;
-		rangedCD = 5;
+		rangedCD = 3;
 		currentAttack = AttackType.NONE;
 
 		deathImageKeys = new String[] {"WWDying", "WWDead"};
@@ -72,18 +72,18 @@ public class Brute extends Avatar {
 
 	// Punch, slow but does a lot of dmg
 	@Override
-	public Attack basicAttack(String player, double angle) {
+	public Attack[] basicAttack(String player, double angle) {
 		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000 && !dashing && !blocking) {
 			currentlyAttacking = true;
 			basicCDStart = System.currentTimeMillis();
 			currentAttack = AttackType.BASIC;
 			timeActionStarted = System.currentTimeMillis();
 			if(angle > 90 && angle < 270) 
-				lastDir = false;
-			else
 				lastDir = true;
-			return new MeleeAttack("WWBasic", (int)( hitbox.x + 50 * Math.cos(Math.toRadians(angle))), (int)( hitbox.y - 50 * Math.sin(Math.toRadians(angle))), 40, 40, player, 20,
-					false, new StatusEffect(Effect.NONE,0,0), angle, 0.15);
+			else
+				lastDir = false;
+			return new Attack[] {new MeleeAttack("WWBasic", (int)( hitbox.x + 75 * Math.cos(Math.toRadians(angle))), (int)( hitbox.y - 75 * Math.sin(Math.toRadians(angle))), 40, 40, player, 20,
+					false, new StatusEffect(Effect.NONE,0,0), angle, 0.15)};
 		} else {
 			return null;
 		}
@@ -110,17 +110,17 @@ public class Brute extends Avatar {
 
 	// Throws a slow moving projectile (Rock)
 	@Override
-	public Attack rangedAttack(String player, double angle) {
+	public Attack[] rangedAttack(String player, double angle) {
 		if (System.currentTimeMillis() > super.rangedCDStart + super.rangedCD * 1000 && !dashing && !blocking) {
 			super.rangedCDStart = System.currentTimeMillis();
 			currentlyAttacking = true;
 			currentAttack = AttackType.RANGED;
 			timeActionStarted = System.currentTimeMillis();
 			if(angle > 90 && angle < 270)
-				lastDir = false;
-			else
 				lastDir = true;
-			return new Fireball((int) hitbox.x, (int) hitbox.y, player, angle, "Rock", 400, 22);
+			else
+				lastDir = false;
+			return new Attack[] {new Fireball((int) hitbox.x, (int) hitbox.y, player, angle, "Rock", 400, 22)};
 		} else {
 			return null;
 		}
@@ -141,18 +141,18 @@ public class Brute extends Avatar {
 
 	// UpperCut - dashes forwards and stuns someone
 	@Override
-	public Attack abilityOne(String player, double angle) {
+	public Attack[] abilityOne(String player, double angle) {
 		currentlyAttacking = true;
 		movementControlled = false;
 		currentAttack = AttackType.A1;
 		upperCutAngle = 360 - angle;
 		if(angle > 90 && angle < 270)
-			lastDir = false;
-		else
 			lastDir = true;
+		else
+			lastDir = false;
 		a1CDStart = System.currentTimeMillis();
 		timeActionStarted = a1CDStart;
-		return new Lunge(this.getPlayer(), angle, this, (int)super.getX(), (int)super.getY());
+		return new Attack[] {new Lunge(this.getPlayer(), angle, this, (int)super.getX(), (int)super.getY())};
 	}
 
 	private void actUpperCut() {
@@ -182,17 +182,17 @@ public class Brute extends Avatar {
 
 	// GroundSmash, and aoe stun that does dmg
 	@Override
-	public Attack abilityTwo(String player, double angle) {
+	public Attack[] abilityTwo(String player, double angle) {
 		currentlyAttacking = true;
 		movementControlled = false;
 		currentAttack = AttackType.A2;
 		if(angle > 90 && angle < 270)
-			lastDir = false;
-		else
 			lastDir = true;
+		else
+			lastDir = false;
 		a2CDStart = System.currentTimeMillis();
 		timeActionStarted = a2CDStart;
-		return new Howl((int)super.getX(), (int)super.getY(), player);
+		return new Attack[] {new Howl((int)super.getX(), (int)super.getY(), player)};
 	}
 
 	private void actHowl() {
@@ -219,7 +219,7 @@ public class Brute extends Avatar {
 
 	// Fury- Swipes three times at a location
 	@Override
-	public Attack abilityThree(String player, double angle) {
+	public Attack[] abilityThree(String player, double angle) {
 		return null;
 	}
 
@@ -250,9 +250,7 @@ public class Brute extends Avatar {
 		else if(currentAttack == AttackType.A2)
 			actHowl();
 		else {
-
 			super.act();
-
 			if (!super.isLeft() && !super.isRight() && !super.isUp() && !super.isDown()) {
 				spriteSheetKey = "WWDefault";
 			}
@@ -295,7 +293,9 @@ public class Brute extends Avatar {
 		float widthMod = 1f;
 		if(currentlyAttacking)
 			widthMod = 1.3f;
-		if (super.isRight() || lastDir) {
+		System.out.println("left: " + super.isLeft() + ", lastDir:" + lastDir);
+		System.out.println(super.isRight());
+		if (!lastDir) {
 			surface.scale(-1, 1);
 			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw * widthMod, sh);
 		} else {

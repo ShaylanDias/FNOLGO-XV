@@ -11,7 +11,7 @@ public class Howl extends Attack{
 	private static final double damage = 1.5, width = 120, height = 110;
 	
 	public Howl(int x, int y, String playerAddress) {
-		super(imageKey, x, y, (int)width, (int)height, playerAddress, damage, false, new StatusEffect(Effect.SLOWED, 0.5, 10), 0);
+		super(imageKey, x, y, (int)width, (int)height, playerAddress, damage, false, new StatusEffect(Effect.SLOWED, 1, 5), 0);
 		duration = 2;
 	}
 	
