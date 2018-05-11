@@ -45,7 +45,6 @@ public class StandardMap extends Map{
 			}
 
 		}
-		System.out.println("Counter do draw: " +counter);
 	}
 	
 	
@@ -63,7 +62,6 @@ public class StandardMap extends Map{
 				counter++;
 			}
 		}
-		System.out.println("Counter: " +counter);
 		//Left quadrant tree hitboxes going top down
 //		surface.rect(-1440, -1080, 180, 180);
 //		surface.rect(-1260, -720, 120, 120);

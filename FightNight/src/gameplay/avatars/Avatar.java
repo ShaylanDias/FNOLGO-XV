@@ -7,11 +7,9 @@ import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import clientside.ImageWrapper;
 import clientside.gui.GamePanel;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Attack.AttackResult;
-import gameplay.attacks.Fireball;
 import gameplay.attacks.StatusEffect;
 import gameplay.attacks.StatusEffect.Effect;
 import processing.core.PApplet;
@@ -672,5 +670,45 @@ public abstract class Avatar implements Serializable {
 	public void setSpriteListAttack(ArrayList<String> spriteListAttack) {
 		this.spriteListAttack = spriteListAttack;
 	}
+	
+	public long getBasicCooldownLeft() {
+		return System.currentTimeMillis() - basicCDStart;
+	}
+	
+	public long getRangedCooldownLeft() {
+		return System.currentTimeMillis() - rangedCDStart;
+	}
+	
+	public long getA1CooldownLeft() {
+		return System.currentTimeMillis() - a1CDStart;
+	}
+	
+	public long getA2CooldownLeft() {
+		return System.currentTimeMillis() - a2CDStart;
+	}
+	
+	public long getA3CooldownLeft() {
+		return System.currentTimeMillis() - a3CDStart;
+	}
 
+	public double getA1Cooldown() {
+		return a1CD;
+	}
+	
+	public double getBasicCooldown() {
+		return basicCD;
+	}
+	
+	public double getA2Cooldown() {
+		return a2CD;
+	}
+	
+	public double getA3Cooldown() {
+		return a3CD;
+	}
+
+	public double getRangedCooldown() {
+		return rangedCD;
+	}
+	
 }
