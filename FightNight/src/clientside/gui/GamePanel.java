@@ -109,7 +109,6 @@ public class GamePanel extends PApplet implements NetworkListener {
 			if (mouseButton == LEFT)
 				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.BASIC, getAngleToMouse());
 			else if(mouseButton == RIGHT) {
-				System.out.println("a");
 				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.RANGED, getAngleToMouse());
 			}
 		}
@@ -245,20 +244,22 @@ public class GamePanel extends PApplet implements NetworkListener {
 	private void drawCooldowns(PApplet surface, Avatar a) {
 		surface.pushStyle();
 		surface.ellipseMode(CENTER);
-
+		surface.textAlign(CENTER);
+		surface.textSize(16);
+		
 		double refX = a.getX();
 		double refY = a.getY() + height/2 - 60;
 		
-		drawTimer(surface, refX-200, refY, a.getBasicCooldownLeft(), a.getBasicCooldown());
-		drawTimer(surface, refX-100, refY, a.getRangedCooldownLeft(), a.getRangedCooldown());
-		drawTimer(surface, refX, refY, a.getA1CooldownLeft(), a.getA1Cooldown());
-		drawTimer(surface, refX+100, refY, a.getA2CooldownLeft(), a.getA2Cooldown());
-		drawTimer(surface, refX+200, refY, a.getA3CooldownLeft(), a.getA3Cooldown());
+		drawTimer(surface, refX-200, refY, a.getBasicCooldownLeft(), a.getBasicCooldown(), "BASIC");
+		drawTimer(surface, refX-100, refY, a.getRangedCooldownLeft(), a.getRangedCooldown(), "RANGED");
+		drawTimer(surface, refX, refY, a.getA1CooldownLeft(), a.getA1Cooldown(), "A1");
+		drawTimer(surface, refX+100, refY, a.getA2CooldownLeft(), a.getA2Cooldown(), "A2");
+		drawTimer(surface, refX+200, refY, a.getA3CooldownLeft(), a.getA3Cooldown(), "A3");
 		
 		surface.popStyle();
 	}
 	
-	private void drawTimer(PApplet surface, double x, double y, long cdLeft, double cd) {
+	private void drawTimer(PApplet surface, double x, double y, long cdLeft, double cd, String name) {
 		if(cdLeft < cd * 1000) {
 			double percent = cdLeft/(cd*1000);
 			double angle = 2 * Math.PI * percent + 3 * Math.PI/2;
@@ -271,6 +272,8 @@ public class GamePanel extends PApplet implements NetworkListener {
 			surface.fill(Color.GREEN.getRGB());
 			surface.ellipse((float)(x), (float)(y), 100, 100);
 		}
+		surface.fill(Color.RED.getRGB());
+		surface.text(name, (float)x, (float)(y+6));
 
 	}
 

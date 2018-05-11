@@ -186,22 +186,21 @@ public abstract class Avatar implements Serializable {
 				}
 				else
 					return null;
-			}
-			else if(a.equals(AttackType.A2))
+			} else if(a.equals(AttackType.A2)) {
 				if(System.currentTimeMillis() > a2CDStart + a2CD * 1000) {
 					stop();
 					return abilityTwo(player, angle);
 				}
 				else
 					return null;
-			else if(a.equals(AttackType.A3))
+			} else if(a.equals(AttackType.A3)) {
 				if(System.currentTimeMillis() > a3CDStart + a3CD * 1000) {
 					stop();
 					return abilityThree(player, angle);
 				}
 				else
 					return null;
-			else if(a.equals(AttackType.RANGED)) {
+			} else if(a.equals(AttackType.RANGED)) {
 				if(System.currentTimeMillis() > rangedCDStart + rangedCD * 1000) {
 					stop();
 					return rangedAttack(player, angle);
@@ -276,7 +275,7 @@ public abstract class Avatar implements Serializable {
 			hitbox.y += y;
 		}
 	}
-	
+
 	private void stop() {
 		left = false;
 		right = false;
@@ -403,12 +402,12 @@ public abstract class Avatar implements Serializable {
 	public void act() {
 
 		double moveSpeed = this.moveSpeed;
-		
+
 		if(status.getEffect().equals(Effect.SLOWED)) {
 			moveSpeed -= status.getValue();
 		} else if(status.getEffect().equals(Effect.STUNNED)) {
 			if(!status.started())
-					status.startEffect();
+				status.startEffect();
 			else {
 				if(status.isFinished()) {
 					status = new StatusEffect(Effect.NONE,0,0);
@@ -416,7 +415,7 @@ public abstract class Avatar implements Serializable {
 				return;
 			}
 		}
-		
+
 		if(health > 0) {
 			if (blocking) {
 				shieldHealth -= 1;
@@ -504,7 +503,7 @@ public abstract class Avatar implements Serializable {
 		double shield = shieldHealth;
 		if(shield < 0)
 			shield = 0;
-		
+
 		surface.rectMode(PApplet.CENTER);
 		surface.fill(Color.BLACK.getRGB());
 		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4), (float)hitbox.width * 0.7f, (float)hitbox.height/6);
@@ -514,7 +513,7 @@ public abstract class Avatar implements Serializable {
 		surface.fill(Color.GREEN.getRGB());
 		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4), (float)hitbox.width * 0.7f * (float)(health/fullHealth), (float)hitbox.height/6);
 	}
-	
+
 	/**
 	 * 
 	 * Draws this Avatar to a PApplet
@@ -527,7 +526,7 @@ public abstract class Avatar implements Serializable {
 		surface.pushStyle();
 
 		drawHealthBar(surface);
-		
+
 		if(deathTime != 0) {
 			drawDeath(surface);
 			surface.popMatrix();
@@ -536,7 +535,7 @@ public abstract class Avatar implements Serializable {
 		}
 
 		surface.imageMode(PApplet.CENTER);
-		
+
 		if (blocking) {
 			// Draw block
 		}
@@ -670,23 +669,23 @@ public abstract class Avatar implements Serializable {
 	public void setSpriteListAttack(ArrayList<String> spriteListAttack) {
 		this.spriteListAttack = spriteListAttack;
 	}
-	
+
 	public long getBasicCooldownLeft() {
 		return System.currentTimeMillis() - basicCDStart;
 	}
-	
+
 	public long getRangedCooldownLeft() {
 		return System.currentTimeMillis() - rangedCDStart;
 	}
-	
+
 	public long getA1CooldownLeft() {
 		return System.currentTimeMillis() - a1CDStart;
 	}
-	
+
 	public long getA2CooldownLeft() {
 		return System.currentTimeMillis() - a2CDStart;
 	}
-	
+
 	public long getA3CooldownLeft() {
 		return System.currentTimeMillis() - a3CDStart;
 	}
@@ -694,15 +693,15 @@ public abstract class Avatar implements Serializable {
 	public double getA1Cooldown() {
 		return a1CD;
 	}
-	
+
 	public double getBasicCooldown() {
 		return basicCD;
 	}
-	
+
 	public double getA2Cooldown() {
 		return a2CD;
 	}
-	
+
 	public double getA3Cooldown() {
 		return a3CD;
 	}
@@ -710,5 +709,5 @@ public abstract class Avatar implements Serializable {
 	public double getRangedCooldown() {
 		return rangedCD;
 	}
-	
+
 }

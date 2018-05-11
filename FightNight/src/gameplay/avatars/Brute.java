@@ -74,7 +74,6 @@ public class Brute extends Avatar {
 	@Override
 	public Attack basicAttack(String player, double angle) {
 		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000 && !dashing && !blocking) {
-			super.rangedCDStart = System.currentTimeMillis();
 			currentlyAttacking = true;
 			basicCDStart = System.currentTimeMillis();
 			currentAttack = AttackType.BASIC;
