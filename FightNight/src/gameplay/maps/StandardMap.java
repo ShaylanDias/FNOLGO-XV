@@ -7,7 +7,7 @@ import processing.core.PApplet;
  * 
  * The base Map
  * 
- * @author shaylandias
+ * @author Jason Zhu
  *
  */
 public class StandardMap extends Map{
@@ -19,7 +19,6 @@ public class StandardMap extends Map{
 	
 	public StandardMap() {
 		super();
-		// TODO Auto-generated constructor stub
 		for(int i = 0; i<Tree.length;i++) {
 			double size = Math.random()*250;
 			if(size>100) {
@@ -33,7 +32,7 @@ public class StandardMap extends Map{
 				
 				//Some checks if the trees are interesecting each other. Check the code in trees. I think I might just be stupid. 
 				if(!Tree[i].checkIntersection(Tree[j].getX(),Tree[j].getY() , Tree[j].getWidth(), Tree[j].getHeight())) {
-					Tree[j].doDraw() ;
+					Tree[i].doDraw() ;
 				}
 			}
 		}
@@ -50,8 +49,9 @@ public class StandardMap extends Map{
 		surface.rect(-1500, -1500, 3000, 3000);
 		
 		for(int i = 0; i< Tree.length;i++) {
-			if(Tree[i].canDraw())
+			if(Tree[i].canDraw()) {
 				Tree[i].draw(surface);
+			}
 		}
 		
 		//Left quadrant tree hitboxes going top down

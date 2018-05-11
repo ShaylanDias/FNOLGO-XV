@@ -15,13 +15,13 @@ public class Obstacle implements Serializable{
 		this.height = height; 
 	}
 	/**
-	 * Based on an x, y position centered in the top left corner of the rectangle hitbox
+	 * Based on an x, y position based off of the center of the rectangle hitbox
 	 * @param x
 	 * @param y
 	 * @return returns true if the 2 hitboxes run into each other, false otherwise. 
 	 */
 	public boolean checkIntersection(double x, double y, double width, double height) {
-		if(x >= xPos && x <= xPos+this.width && y>=yPos && y<= yPos+this.height) {
+		if(x+width/2 >= xPos-width/2 && x-width <= xPos+this.width/2 && y+height/2 >= yPos-height/2 && y-height/2<= yPos+this.height/2) {
 			return true;
 		}
 		
