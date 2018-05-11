@@ -3,6 +3,8 @@ package gameplay.avatars;
 import java.awt.Rectangle;
 
 import gameplay.attacks.Attack;
+import gameplay.attacks.Fireball;
+import gameplay.avatars.Avatar.AttackType;
 
 /**
  * A ranger class character 
@@ -11,6 +13,8 @@ import gameplay.attacks.Attack;
  */
 public class Ranger extends Avatar {
 
+	private AttackType currentAttack;
+	
 	/**
 	 * Instantiates a Ranger
 	 */
@@ -46,7 +50,19 @@ public class Ranger extends Avatar {
 	// Shoot bow, arrow goes until it hits a wall
 	@Override
 	public Attack rangedAttack(String player, double angle) {
-		return null;
+		if (System.currentTimeMillis() > super.rangedCDStart + super.rangedCD * 1000 && !dashing && !blocking) {
+			super.rangedCDStart = System.currentTimeMillis();
+			currentlyAttacking = true;
+			currentAttack = AttackType.RANGED;
+			timeActionStarted = System.currentTimeMillis();
+			if(angle > 90 && angle < 270)
+				lastDir = false;
+			else
+				lastDir = true;
+			return new Fireball((int) hitbox.x, (int) hitbox.y, player, angle, "Rock", 400, 22);
+		} else {
+			return null;
+		}
 	}
 
 	// PlaceTrap, place an invisible trap that expires after a certain amount of

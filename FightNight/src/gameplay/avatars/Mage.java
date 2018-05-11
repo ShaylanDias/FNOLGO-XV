@@ -37,15 +37,7 @@ public class Mage extends Avatar {
 	// Staff wack, it pushes them back
 	@Override
 	public Attack basicAttack(String player, double angle) {
-		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000) {
-			super.basicCDStart = System.currentTimeMillis();
-			return new Fireball((int) hitbox.x, (int) hitbox.y, player, angle);
-		} else {
-			Fireball f = new Fireball(0, 0, "", 0);
-			f.end();
-			return f;
-		}
-
+		return null;
 	}
 	@Override
 	public void dash(Double mouseAngle) {
@@ -57,8 +49,14 @@ public class Mage extends Avatar {
 	// Fireball, slow moving, and does a bunch of dmg, goes until it hits a wall.
 	@Override
 	public Attack rangedAttack(String player, double angle) {
-		return null;
-
+		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000) {
+			super.basicCDStart = System.currentTimeMillis();
+			return new Fireball((int) hitbox.x, (int) hitbox.y, player, angle);
+		} else {
+			Fireball f = new Fireball(0, 0, "", 0);
+			f.end();
+			return f;
+		}
 	}
 
 	// Fire eruption. circular bust in an area that does dmg to anyone in them.
