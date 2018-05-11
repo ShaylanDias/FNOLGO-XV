@@ -2,8 +2,6 @@ package gameplay.attacks;
 
 import java.util.ArrayList;
 
-import gameplay.attacks.Attack.AttackResult;
-import gameplay.attacks.StatusEffect.Effect;
 import gameplay.avatars.Avatar;
 import gameplay.avatars.Brute;
 import processing.core.PApplet;
@@ -14,12 +12,16 @@ public class Lunge extends Attack{
 	private static boolean shieldBreaker = true;
 	private Brute attacker;
 	private static String imageKey = "UpperCut";
+	private double stopMoving;
 
-	public Lunge(String playerAddress, double dir, Brute attacker, int x, int y) {
-		super(imageKey, x, y, 100, 50, playerAddress, damage, shieldBreaker, new StatusEffect(Effect.STUNNED, 1.5d, 1d), dir);
+	public Lunge(String playerAddress, double dir, Brute attacker, int x, int y, StatusEffect status, double duration, double stopMoving) {
+		super(imageKey, x, y, 100, 50, playerAddress, damage, shieldBreaker, status, dir);
 		this.attacker = attacker;
-		duration = 1.1;
+		this.duration = duration;
+		this.stopMoving = stopMoving;
 	}
+	
+	
 
 	public void draw(PApplet surface) {
 
@@ -38,7 +40,7 @@ public class Lunge extends Attack{
 
 	@Override
 	public boolean act(ArrayList<Avatar> avatars) {
-		if(System.currentTimeMillis() < super.getStartTime() + 0.85 * 1000) {
+		if(System.currentTimeMillis() < super.getStartTime() + (duration-stopMoving) * 1000) {
 			x = attacker.getX() + 100 * Math.cos(Math.toRadians(dir));
 			y = attacker.getY() - 60 * Math.sin(Math.toRadians(dir));
 		}
