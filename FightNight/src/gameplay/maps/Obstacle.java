@@ -4,7 +4,7 @@ import java.io.Serializable;
 import processing.core.PApplet;
 
 
-public class Obstacle{
+public class Obstacle implements Serializable{
 	
 	private double xPos, yPos, width, height;
 	

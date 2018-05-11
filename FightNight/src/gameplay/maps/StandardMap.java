@@ -13,14 +13,31 @@ import processing.core.PApplet;
 public class StandardMap extends Map{
 
 	private static String imageKey = "FNOLGO MAP";
-	private SmallTree[] sTree = new SmallTree[25];
-	private LargeTree[] lTree = new LargeTree[25];
+	private Tree[] Tree = new Tree[50];
 
 	
 	
 	public StandardMap() {
 		super();
 		// TODO Auto-generated constructor stub
+		double r = 1000;
+		double sqrt2 = 1.41421356237;
+		double cellsize = r/sqrt2;
+		for(int i = 0; i<Tree.length;i++) {
+			double size = Math.random()*300;
+			
+			double dimX = (int)Math.ceil(5000/cellsize);
+			double dimY = (int)Math.ceil(5000/cellsize);
+
+			if(size>100)
+				Tree[i] = new Tree(dimX,dimY, size, size);
+			else
+				i--;
+		}
+	}
+	
+	public void setup() {
+		
 	}
 	
 	public void draw(PApplet surface) {
@@ -29,6 +46,9 @@ public class StandardMap extends Map{
 		surface.noFill();
 		surface.rect(-1500, -1500, 3000, 3000);
 		
+		for(int i = 0; i< Tree.length;i++) {
+			Tree[i].draw(surface);
+		}
 		
 		//Left quadrant tree hitboxes going top down
 //		surface.rect(-1440, -1080, 180, 180);
