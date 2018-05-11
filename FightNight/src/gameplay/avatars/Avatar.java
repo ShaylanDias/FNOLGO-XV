@@ -501,17 +501,21 @@ public abstract class Avatar implements Serializable {
 
 	protected void drawHealthBar(PApplet surface) {
 		double shield = shieldHealth;
+		double health = this.health;
+		if(health < 0)
+			health = 0;
 		if(shield < 0)
 			shield = 0;
 
 		surface.rectMode(PApplet.CENTER);
 		surface.fill(Color.BLACK.getRGB());
-		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4), (float)hitbox.width * 0.7f, (float)hitbox.height/6);
-		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 4/5), (float)hitbox.width * 0.7f, (float)hitbox.height/6);
+		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4 - 10), (float)hitbox.width, (float)8);
 		surface.fill(Color.CYAN.getRGB());
-		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 4/5), (float)hitbox.width * 0.7f * (float)(shield/fullShieldHealth), (float)hitbox.height/6);
+		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4 - 10), (float)hitbox.width * (float)(shield/fullShieldHealth), (float)(8));
+		surface.fill(Color.BLACK.getRGB());
+		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4 - 2), (float)hitbox.width , (float)10);
 		surface.fill(Color.GREEN.getRGB());
-		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4), (float)hitbox.width * 0.7f * (float)(health/fullHealth), (float)hitbox.height/6);
+		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4 - 2), (float)hitbox.width * (float)(health/fullHealth), (float)10);
 	}
 
 	/**

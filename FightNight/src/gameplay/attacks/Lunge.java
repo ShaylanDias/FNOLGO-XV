@@ -16,7 +16,7 @@ public class Lunge extends Attack{
 	private static String imageKey = "UpperCut";
 
 	public Lunge(String playerAddress, double dir, Brute attacker, int x, int y) {
-		super(imageKey, x, y, 50, 20, playerAddress, damage, shieldBreaker, effect, dir);
+		super(imageKey, x, y, 100, 50, playerAddress, damage, shieldBreaker, effect, dir);
 		this.attacker = attacker;
 		duration = 1.1;
 	}
