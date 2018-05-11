@@ -217,7 +217,7 @@ public class Brute extends Avatar {
 		}
 	}
 
-	// EatMutton - heals the dude
+	// Fury- Swipes three times at a location
 	@Override
 	public Attack abilityThree(String player, double angle) {
 		return null;
