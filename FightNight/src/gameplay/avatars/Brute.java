@@ -47,7 +47,7 @@ public class Brute extends Avatar {
 		rangedCDStart = 0;
 		rangedCD = 3;
 		currentAttack = AttackType.NONE;
-		a3CD = 15;
+		a3CD = 10;
 		deathImageKeys = new String[] {"WWDying", "WWDead"};
 		upperCutKeys = new String[] {"UpperCut1", "UpperCut2", "UpperCut3", "UpperCut4", "UpperCut5", "UpperCut6", "UpperCut7", "UpperCut8"};
 		howlKeys = new String[] {"Howl1", "Howl2", "Howl3", "Howl4"};
