@@ -13,26 +13,29 @@ import processing.core.PApplet;
 public class StandardMap extends Map{
 
 	private static String imageKey = "FNOLGO MAP";
-	private Tree[] Tree = new Tree[50];
+	private Tree[] Tree = new Tree[100];
 
 	
 	
 	public StandardMap() {
 		super();
 		// TODO Auto-generated constructor stub
-		double r = 1000;
-		double sqrt2 = 1.41421356237;
-		double cellsize = r/sqrt2;
 		for(int i = 0; i<Tree.length;i++) {
-			double size = Math.random()*300;
-			
-			double dimX = (int)Math.ceil(5000/cellsize);
-			double dimY = (int)Math.ceil(5000/cellsize);
-
-			if(size>100)
-				Tree[i] = new Tree(dimX,dimY, size, size);
+			double size = Math.random()*250;
+			if(size>100) {
+				Tree[i] = new Tree(Math.random()*3000.0-1500,Math.random()*3000.0-1500, size, size);
+			}	
 			else
 				i--;
+		}
+		for(int i = 0; i<Tree.length;i++) {
+			for(int j = 0;j<Tree.length;j++) {
+				
+				//Some checks if the trees are interesecting each other. Check the code in trees. I think I might just be stupid. 
+				if(!Tree[i].checkIntersection(Tree[j].getX(),Tree[j].getY() , Tree[j].getWidth(), Tree[j].getHeight())) {
+					Tree[j].doDraw() ;
+				}
+			}
 		}
 	}
 	
@@ -47,7 +50,8 @@ public class StandardMap extends Map{
 		surface.rect(-1500, -1500, 3000, 3000);
 		
 		for(int i = 0; i< Tree.length;i++) {
-			Tree[i].draw(surface);
+			if(Tree[i].canDraw())
+				Tree[i].draw(surface);
 		}
 		
 		//Left quadrant tree hitboxes going top down
