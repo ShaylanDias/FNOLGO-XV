@@ -10,7 +10,7 @@ import gameplay.attacks.Howl;
 import gameplay.attacks.MeleeAttack;
 import gameplay.attacks.StatusEffect;
 import gameplay.attacks.StatusEffect.Effect;
-import gameplay.attacks.UpperCut;
+import gameplay.attacks.Lunge;
 import processing.core.PApplet;
 
 /**
@@ -33,7 +33,6 @@ public class Brute extends Avatar {
 	 */
 	public Brute() {
 		super();
-		super.basicCD = 0.8;
 		spriteSheetKey = "WWDefault";
 		sprites = new Rectangle[] { new Rectangle(62, 94, 85, 65) };
 		hitbox.height = sprites[0].height;
@@ -44,6 +43,7 @@ public class Brute extends Avatar {
 		a1CD = 7;
 		basicCD = 1.2;
 		a2CD = 10;
+		super.basicCD = 0.45;
 		rangedCDStart = 0;
 		rangedCD = 5;
 		currentAttack = AttackType.NONE;
@@ -153,7 +153,7 @@ public class Brute extends Avatar {
 			lastDir = true;
 		a1CDStart = System.currentTimeMillis();
 		timeActionStarted = a1CDStart;
-		return new UpperCut(this.getPlayer(), angle, this, (int)super.getX(), (int)super.getY());
+		return new Lunge(this.getPlayer(), angle, this, (int)super.getX(), (int)super.getY());
 	}
 
 	private void actUpperCut() {

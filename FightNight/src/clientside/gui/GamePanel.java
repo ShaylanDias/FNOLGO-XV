@@ -102,7 +102,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 	/**
 	 * Detects mouse clicks to trigger abilities
 	 */
-	public void mousePressed() {
+	public void mouseClicked() {
 		if (nm != null) {
 			if (mouseButton == LEFT)
 				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.BASIC, getAngleToMouse());

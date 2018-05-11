@@ -7,7 +7,7 @@ import gameplay.avatars.Avatar;
 import gameplay.avatars.Brute;
 import processing.core.PApplet;
 
-public class UpperCut extends Attack{
+public class Lunge extends Attack{
 
 	private static double damage = 30;
 	private static boolean shieldBreaker = true;
@@ -15,7 +15,7 @@ public class UpperCut extends Attack{
 	private Brute attacker;
 	private static String imageKey = "UpperCut";
 
-	public UpperCut(String playerAddress, double dir, Brute attacker, int x, int y) {
+	public Lunge(String playerAddress, double dir, Brute attacker, int x, int y) {
 		super(imageKey, x, y, 50, 20, playerAddress, damage, shieldBreaker, effect, dir);
 		this.attacker = attacker;
 		duration = 1.1;
