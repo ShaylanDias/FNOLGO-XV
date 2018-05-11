@@ -56,6 +56,8 @@ public abstract class Avatar implements Serializable {
 
 	protected boolean lastDir; //True if right, false if left
 
+	private boolean dead;
+	
 	private boolean up, down, left, right;
 
 	private String playerAddress = "";
@@ -91,7 +93,7 @@ public abstract class Avatar implements Serializable {
 	 */
 	public Avatar() {
 		sprites = new Rectangle[] { new Rectangle(100, 100, 200, 200) };
-		hitbox = new Rectangle2D.Double(0, 0, 200, 200);
+		hitbox = new Rectangle2D.Double(-1000, -1000, 200, 200);
 		angle = 90;
 		timeActionStarted = System.currentTimeMillis();
 		blocking = false;
@@ -103,11 +105,12 @@ public abstract class Avatar implements Serializable {
 		spriteInd = 0;
 		health = 200;
 		fullHealth = health;
-		deathTime = 0;
+		deathTime = -1;
 		spriteListWalk = new ArrayList<String>();
 		spriteListAttack = new ArrayList<String>();
 		numOfSpriteWalk = 0;
 		movementControlled = true;
+		dead = true;
 	}
 
 	/**
@@ -250,6 +253,7 @@ public abstract class Avatar implements Serializable {
 			health -= attack.getDamage();
 			if(health <= 0 && deathTime == 0) {
 				health = 0;
+				dead = true;
 				deathTime = System.currentTimeMillis();
 			}
 			return AttackResult.SUCCESS;
@@ -270,7 +274,7 @@ public abstract class Avatar implements Serializable {
 	 *            Y to move
 	 */
 	public void moveBy(double x, double y) {
-		if (status.getEffect().equals(Effect.NONE) || status.isFinished()) {
+		if (!status.getEffect().equals(Effect.STUNNED) || status.isFinished()) {
 			hitbox.x += x;
 			hitbox.y += y;
 		}
@@ -401,6 +405,8 @@ public abstract class Avatar implements Serializable {
 	 */
 	public void act() {
 
+		System.out.println(hitbox.x);
+		
 		double moveSpeed = this.moveSpeed;
 
 		if(status.getEffect().equals(Effect.SLOWED)) {
@@ -416,7 +422,7 @@ public abstract class Avatar implements Serializable {
 			}
 		}
 
-		if(health > 0) {
+		if(!dead) {
 			if (blocking) {
 				shieldHealth -= 1;
 				up = false;
@@ -452,6 +458,10 @@ public abstract class Avatar implements Serializable {
 			if (down) {
 				moveBy(0, moveSpeed);
 				walk(numOfSpriteWalk, 200);
+			}
+		} else {
+			if(System.currentTimeMillis() > deathTime + 6 * 1000) {
+				spawn();
 			}
 		}
 
@@ -712,6 +722,27 @@ public abstract class Avatar implements Serializable {
 
 	public double getRangedCooldown() {
 		return rangedCD;
+	}
+	
+	public boolean isDead() {
+		return dead;
+	}
+	
+	public void spawn() {
+		System.out.println("spawn");
+		hitbox.x = Math.random() * 3000;
+		hitbox.y = Math.random() * 3000;
+		hitbox.x = 1500;
+		hitbox.y = 1500;
+		health = fullHealth;
+		shieldHealth = fullShieldHealth;
+		rangedCDStart = 0;
+		basicCDStart = 0;
+		a1CDStart = 0;
+		a2CDStart = 0;
+		a3CDStart = 0;
+		deathTime = 0;
+		dead = false;
 	}
 
 }

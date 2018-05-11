@@ -39,15 +39,22 @@ public class GameState implements Serializable {
 	 * 
 	 * @param surface
 	 *            The PApplet to draw to
+	 * @param av The Avatar to draw with respect to           
+	 *  
 	 */
-	public void draw(PApplet surface) {
+	public void draw(PApplet surface, Avatar av, float width, float height) {
 		map.draw(surface);
+		surface.translate((float) (-av.getX() + width / 2), (float) -av.getY() + height / 2);
 		for (Avatar c : avatars)
 			c.draw(surface);
 		for (Attack a : attacks)
 			a.draw(surface);
 	}
 
+//	public void drawMap() {
+//		
+//	}
+//	
 	/**
 	 * 
 	 * Gets the Avatars in the Game

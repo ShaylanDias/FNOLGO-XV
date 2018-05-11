@@ -86,9 +86,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 					break;
 				}
 			}
-			// Translating to center the Avatar
-			translate((float) (-av.getX() + width / 2), (float) -av.getY() + height / 2);
-			currentState.draw(this);
+			currentState.draw(this, av, width, height);
 			drawCooldowns(this, av);
 			popMatrix();
 		}
