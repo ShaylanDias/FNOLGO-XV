@@ -7,6 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import clientside.ImageWrapper;
 import clientside.gui.GamePanel;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Attack.AttackResult;
@@ -179,7 +180,7 @@ public abstract class Avatar implements Serializable {
 	public abstract Attack abilityThree(String player, double angle);
 
 	public Attack attack(AttackType a, String player, double angle) {
-		if(deathTime == 0 && !currentlyAttacking && movementControlled) {
+		if(deathTime == 0 && !currentlyAttacking && movementControlled && !status.getEffect().equals(Effect.STUNNED)) {
 			if(a.equals(AttackType.A1) ) {
 				if(System.currentTimeMillis() > a1CDStart + a1CD * 1000) {
 					stop();
@@ -387,7 +388,7 @@ public abstract class Avatar implements Serializable {
 	 * Starts an Avatar's block
 	 */
 	public void block(boolean block) {
-		if(shieldHealth > 0) {
+		if(shieldHealth > 0 && !status.getEffect().equals(Effect.STUNNED)) {
 			if(block)
 				movementControlled = false;
 			else
@@ -536,11 +537,13 @@ public abstract class Avatar implements Serializable {
 			return;
 		}
 
+		surface.imageMode(PApplet.CENTER);
+		
 		if (blocking) {
 			// Draw block
 		}
-		if (!status.getEffect().equals(Effect.NONE)) {
-			// Add on effect
+		if (status.getEffect().equals(Effect.STUNNED)) {
+			surface.image(GamePanel.resources.getImage("Stun"), (float)hitbox.x, (float)hitbox.y);
 		}
 
 		int sw, sh;
@@ -549,7 +552,6 @@ public abstract class Avatar implements Serializable {
 		sw = (int) sprites[spriteInd].getWidth();
 		sh = (int) sprites[spriteInd].getHeight();
 
-		surface.imageMode(PApplet.CENTER);
 
 		surface.pushMatrix();
 		if (left || !lastDir) {

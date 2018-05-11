@@ -52,7 +52,7 @@ public class Resources {
 		images.put("Howl2", new ImageWrapper("data/Brute/Howl2.png"));
 		images.put("Howl3", new ImageWrapper("data/Brute/Howl3.png"));
 		images.put("Howl4", new ImageWrapper("data/Brute/Howl4.png"));
-
+		images.put("Stun", new ImageWrapper("data/Stun.png"));
 		
 		images.put("Fireball1", new ImageWrapper("Fireball1.png"));
 		images.put("Arrow1", new ImageWrapper("arrow-projectile.jpg"));

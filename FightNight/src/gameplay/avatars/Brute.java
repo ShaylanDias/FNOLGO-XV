@@ -278,9 +278,6 @@ public class Brute extends Avatar {
 		if (blocking) {
 			// Draw block
 		}
-		if (!super.getStatus().getEffect().equals(Effect.NONE)) {
-			// Add on effect
-		}
 
 		int sw, sh;
 		//		sx = (int) sprites[spriteInd].getX();
@@ -290,6 +287,10 @@ public class Brute extends Avatar {
 
 		surface.imageMode(PApplet.CENTER);
 
+		if (super.getStatus().getEffect().equals(Effect.STUNNED)) {
+			surface.image(GamePanel.resources.getImage("Stun"), (float)hitbox.x, (float)(hitbox.y - hitbox.height * 1.1), 30, 30);
+		}
+		
 		surface.pushMatrix();
 
 		float widthMod = 1f;
