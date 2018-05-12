@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import clientside.gui.GamePanel;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Attack.AttackResult;
-import gameplay.attacks.Fireball;
 import gameplay.attacks.StatusEffect;
 import gameplay.attacks.StatusEffect.Effect;
 import processing.core.PApplet;
@@ -57,6 +56,8 @@ public abstract class Avatar implements Serializable {
 
 	protected boolean lastDir; //True if right, false if left
 
+	private boolean dead;
+	
 	private boolean up, down, left, right;
 
 	private String playerAddress = "";
@@ -65,7 +66,6 @@ public abstract class Avatar implements Serializable {
 
 	protected Rectangle2D.Double hitbox; // The hitbox around this Avatar
 
-	private double angle; // Angle from right horizontal that Avatar is facing, 0-360 going left from 0
 	protected double health, fullHealth;
 	protected double moveSpeed = 10; // This Avatar's movement speed
 
@@ -92,8 +92,7 @@ public abstract class Avatar implements Serializable {
 	 */
 	public Avatar() {
 		sprites = new Rectangle[] { new Rectangle(100, 100, 200, 200) };
-		hitbox = new Rectangle2D.Double(100, 100, 200, 200);
-		angle = 90;
+		hitbox = new Rectangle2D.Double(-1000, -1000, 200, 200);
 		timeActionStarted = System.currentTimeMillis();
 		blocking = false;
 		superArmor = false;
@@ -104,11 +103,12 @@ public abstract class Avatar implements Serializable {
 		spriteInd = 0;
 		health = 200;
 		fullHealth = health;
-		deathTime = 0;
+		deathTime = -1;
 		spriteListWalk = new ArrayList<String>();
 		spriteListAttack = new ArrayList<String>();
 		numOfSpriteWalk = 0;
 		movementControlled = true;
+		dead = true;
 	}
 
 	/**
@@ -119,84 +119,186 @@ public abstract class Avatar implements Serializable {
 	 *            X-coordinate
 	 * @param y
 	 *            Y-coordinate
-	 * @param angle
-	 *            The angle from vertical the Character is facing
 	 */
-	public Avatar(double x, double y, double angle) {
+	public Avatar(double x, double y) {
 		super();
 		hitbox.x = (int) x;
 		hitbox.y = (int) y;
-		this.angle = angle;
 	}
 
-	// Bound to left click
 	/**
-	 * 
-	 * Attack bound to left click
-	 * 
-	 * @param player
-	 *            The player's IP address
-	 * @param angle
-	 *            Angle of the attack
-	 * @return The Attack it performs
+	 * This should be called every round of the game loop
 	 */
-	public abstract Attack basicAttack(String player, double angle);
-
-	// Bound to right click
-	/**
-	 * 
-	 * Attack bound to right click
-	 * 
-	 * @return The Attack it performs
-	 */
-	public abstract Attack rangedAttack(String player, double angle);
-
-	// Bound to e
-	/**
-	 * 
-	 * Attack bound to e
-	 * 
-	 * @return The Attack it performs
-	 */
-	public abstract Attack abilityOne(String player, double angle);
-
-	// Bound to r
-	/**
-	 * 
-	 * Attack bound to r
-	 * 
-	 * @return The Attack it performs
-	 */
-	public abstract Attack abilityTwo(String player, double angle);
-
-	// Bound to f
-	/**
-	 * 
-	 * Attack bound to f
-	 * 
-	 * @return The Attack it performs
-	 */
-	public abstract Attack abilityThree(String player, double angle);
-
-	public Attack attack(AttackType a, String player, double angle) {
-		if(deathTime == 0 && !currentlyAttacking && movementControlled) {
-			if(a.equals(AttackType.A1) ) {
-				if(System.currentTimeMillis() > a1CDStart + a1CD * 1000)
-					return abilityOne(player, angle);
-				else
-					return null;
+	public void act() {
+		
+		double moveSpeed = this.moveSpeed;
+	
+		if(status.getEffect().equals(Effect.SLOWED)) {
+			if(!status.started())
+				status.startEffect();
+			moveSpeed -= status.getValue();
+		} else if(status.getEffect().equals(Effect.STUNNED)) {
+			if(!status.started())
+				status.startEffect();
+			else {
+				if(status.isFinished()) {
+					status = new StatusEffect(Effect.NONE,0,0);
+				}
+				return;
 			}
-			else if(a.equals(AttackType.A2))
-				if(System.currentTimeMillis() > a2CDStart + a2CD * 1000)
+		}
+	
+		if(!dead) {
+			if (blocking) {
+				shieldHealth -= 1;
+				up = false;
+				down = false;
+				left = false;
+				right = false;
+				if(shieldHealth <= 0) {
+					shieldHealth = -50;
+					blocking = false;
+				}
+				return;
+			} else {
+				shieldHealth += 1.5;
+				if(shieldHealth > fullShieldHealth)
+					shieldHealth = fullShieldHealth;
+			}
+			if (dashing) {
+				dashAct();
+				return;
+			}
+			if (up) {
+				moveBy(0, -moveSpeed);
+				walk(numOfSpriteWalk, 200);
+			}
+			if (right) {
+				moveBy(moveSpeed, 0);
+				walk(numOfSpriteWalk, 200);
+			}
+			if (left) {
+				moveBy(-moveSpeed, 0);
+				walk(numOfSpriteWalk, 200);
+			}
+			if (down) {
+				moveBy(0, moveSpeed);
+				walk(numOfSpriteWalk, 200);
+			}
+		} else {
+			if(System.currentTimeMillis() > deathTime + 6 * 1000) {
+				spawn();
+			}
+		}
+	
+	}
+
+	/**
+	 * 
+	 * Draws this Avatar to a PApplet
+	 * 
+	 * @param surface
+	 *            PApplet to draw to
+	 */
+	public void draw(PApplet surface) {
+		surface.pushMatrix();
+		surface.pushStyle();
+	
+		drawHealthBar(surface);
+	
+		if(deathTime != 0) {
+			drawDeath(surface);
+			surface.popMatrix();
+			surface.popStyle();
+			return;
+		}
+	
+		surface.imageMode(PApplet.CENTER);
+	
+		if (blocking) {
+			// Draw block
+		}
+		if (status.getEffect().equals(Effect.STUNNED)) {
+			surface.image(GamePanel.resources.getImage("Stun"), (float)hitbox.x, (float)hitbox.y);
+		}
+	
+		int sw, sh;
+		//		sx = (int) sprites[spriteInd].getX();
+		//		sy = (int) sprites[spriteInd].getY();
+		sw = (int) sprites[spriteInd].getWidth();
+		sh = (int) sprites[spriteInd].getHeight();
+	
+	
+		surface.pushMatrix();
+		if (!lastDir) {
+			surface.scale(-1, 1);
+			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw, sh);
+	
+		} else {
+			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
+		}
+		surface.popMatrix();
+		if (blocking) {
+			if (System.currentTimeMillis() / 250 % 5 == 0) {
+				surface.tint(140);
+			} else if (System.currentTimeMillis() / 250 % 5 == 1) {
+				surface.tint(170);
+			} else if (System.currentTimeMillis() / 250 % 5 == 2) {
+				surface.tint(200);
+			} else if (System.currentTimeMillis() / 250 % 5 == 3) {
+				surface.tint(240);
+			}
+			surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
+					1.5f * sh);
+		}
+	
+		// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
+		// surface.fill(Color.RED.getRGB());
+		// surface.ellipseMode(PApplet.CENTER);
+		// surface.ellipse((float)(hitbox.x), (float)(hitbox.y), 5f, 5f);
+	
+		surface.popMatrix();
+		surface.popStyle();
+	}
+
+	public void spawn() {
+		double x = Math.random() * 3000;
+		double y = Math.random() * 3000;
+		hitbox.x = 1500 - x;
+		hitbox.y = 1500 - y;
+		health = fullHealth;
+		shieldHealth = fullShieldHealth;
+		rangedCDStart = 0;
+		basicCDStart = 0;
+		a1CDStart = 0;
+		a2CDStart = 0;
+		a3CDStart = 0;
+		deathTime = 0;
+		stop();
+		dead = false;
+	}
+
+	public Attack[] attack(AttackType a, String player, double angle) {
+		if(deathTime == 0 && !currentlyAttacking && movementControlled && !status.getEffect().equals(Effect.STUNNED)) {
+			if(a.equals(AttackType.A1) ) {
+				if(System.currentTimeMillis() > a1CDStart + a1CD * 1000) {
+					return abilityOne(player, angle);
+				}
+				else
+					return null;
+			} else if(a.equals(AttackType.A2)) {
+				if(System.currentTimeMillis() > a2CDStart + a2CD * 1000) {
 					return abilityTwo(player, angle);
+				}
 				else
 					return null;
-			else if(a.equals(AttackType.A3))
-				if(System.currentTimeMillis() > a3CDStart + a3CD * 1000)
+			} else if(a.equals(AttackType.A3)) {
+				if(System.currentTimeMillis() > a3CDStart + a3CD * 1000) {
 					return abilityThree(player, angle);
+				}
 				else
 					return null;
-			else if(a.equals(AttackType.RANGED)) {
+			} else if(a.equals(AttackType.RANGED)) {
 				if(System.currentTimeMillis() > rangedCDStart + rangedCD * 1000) {
 					return rangedAttack(player, angle);
 				}
@@ -245,6 +347,7 @@ public abstract class Avatar implements Serializable {
 			health -= attack.getDamage();
 			if(health <= 0 && deathTime == 0) {
 				health = 0;
+				dead = true;
 				deathTime = System.currentTimeMillis();
 			}
 			return AttackResult.SUCCESS;
@@ -265,7 +368,7 @@ public abstract class Avatar implements Serializable {
 	 *            Y to move
 	 */
 	public void moveBy(double x, double y) {
-		if (status.getEffect().equals(Effect.NONE) || status.isFinished()) {
+		if (!status.getEffect().equals(Effect.STUNNED) || status.isFinished()) {
 			hitbox.x += x;
 			hitbox.y += y;
 		}
@@ -298,47 +401,18 @@ public abstract class Avatar implements Serializable {
 		hitbox.y = (int) y;
 	}
 
-	/**
-	 * 
-	 * Turns by input angle;
-	 * 
-	 * @param angle
-	 *            Angle to turn by
-	 */
-	public void turn(double angle) {
-		this.angle += angle;
-	}
-
-	/**
-	 * 
-	 * Turns to this angle, vertical is 0
-	 * 
-	 * @param angle
-	 *            Angle to turn to
-	 */
-	public void turnTo(double angle) {
-		this.angle = angle;
-	}
-
-	/**
-	 * 
-	 * Gets the IP address of the Player that owns this Avatar
-	 * 
-	 * @return The player that owns this Avatar's IP address
-	 */
-	public String getPlayer() {
-		return playerAddress;
-	}
-
-	public void setPlayer(String address) {
-		playerAddress = address;
+	private void stop() {
+		left = false;
+		right = false;
+		up = false;
+		down = false;
 	}
 
 	/**
 	 * Starts the Character in a dash, enables superArmor
 	 */
 	public void dash(Double mouseAngle) {
-
+	
 		if(left) {
 			if(up) {
 				dashAngle = 135;
@@ -360,8 +434,8 @@ public abstract class Avatar implements Serializable {
 		} else if(up){
 			dashAngle = 90;
 		}
-
-
+	
+	
 		movementControlled = false;
 		dashing = true;
 		dashTraveled = 0;
@@ -369,11 +443,22 @@ public abstract class Avatar implements Serializable {
 		//		dashAngle = mouseAngle;
 	}
 
+	private void dashAct() { // Where the actual Dash action occurs
+		moveBy(Math.cos(Math.toRadians(dashAngle)) * dashSpeed, -Math.sin(Math.toRadians(dashAngle)) * dashSpeed);
+		dashTraveled += dashSpeed;
+		if (dashTraveled >= dashDistance) {
+			dashing = false;
+			movementControlled = true;
+			dashTraveled = 0;
+			superArmor = false;
+		}
+	}
+
 	/**
 	 * Starts an Avatar's block
 	 */
 	public void block(boolean block) {
-		if(shieldHealth > 0) {
+		if(shieldHealth > 0 && !status.getEffect().equals(Effect.STUNNED)) {
 			if(block)
 				movementControlled = false;
 			else
@@ -385,51 +470,17 @@ public abstract class Avatar implements Serializable {
 	}
 
 	/**
-	 * This should be called every round of the game loop
+	 * 
+	 * Gets the IP address of the Player that owns this Avatar
+	 * 
+	 * @return The player that owns this Avatar's IP address
 	 */
-	public void act() {
+	public String getPlayer() {
+		return playerAddress;
+	}
 
-		System.out.println(shieldHealth);
-
-		if(health > 0) {
-			if (blocking) {
-				shieldHealth -= 1;
-				up = false;
-				down = false;
-				left = false;
-				right = false;
-				if(shieldHealth <= 0) {
-					shieldHealth = -50;
-					blocking = false;
-				}
-				return;
-			} else {
-				shieldHealth += 1.5;
-				if(shieldHealth > fullShieldHealth)
-					shieldHealth = fullShieldHealth;
-			}
-			if (dashing) {
-				dashAct();
-				return;
-			}
-			if (up) {
-				moveBy(0, -moveSpeed);
-				walk(numOfSpriteWalk, 200);
-			}
-			if (right) {
-				moveBy(moveSpeed, 0);
-				walk(numOfSpriteWalk, 200);
-			}
-			if (left) {
-				moveBy(-moveSpeed, 0);
-				walk(numOfSpriteWalk, 200);
-			}
-			if (down) {
-				moveBy(0, moveSpeed);
-				walk(numOfSpriteWalk, 200);
-			}
-		}
-
+	public void setPlayer(String address) {
+		playerAddress = address;
 	}
 
 	/**
@@ -463,97 +514,23 @@ public abstract class Avatar implements Serializable {
 		return movementControlled;
 	}
 
-	private void dashAct() { // Where the actual Dash action occurs
-		moveBy(Math.cos(Math.toRadians(dashAngle)) * dashSpeed, -Math.sin(Math.toRadians(dashAngle)) * dashSpeed);
-		dashTraveled += dashSpeed;
-		if (dashTraveled >= dashDistance) {
-			dashing = false;
-			movementControlled = true;
-			dashTraveled = 0;
-			superArmor = false;
-		}
-	}
-
 	protected void drawHealthBar(PApplet surface) {
 		double shield = shieldHealth;
+		double health = this.health;
+		if(health < 0)
+			health = 0;
 		if(shield < 0)
 			shield = 0;
-		
+
 		surface.rectMode(PApplet.CENTER);
 		surface.fill(Color.BLACK.getRGB());
-		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4), (float)hitbox.width * 0.7f, (float)hitbox.height/6);
-		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 4/5), (float)hitbox.width * 0.7f, (float)hitbox.height/6);
+		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4 - 10), (float)hitbox.width, (float)8);
 		surface.fill(Color.CYAN.getRGB());
-		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 4/5), (float)hitbox.width * 0.7f * (float)(shield/fullShieldHealth), (float)hitbox.height/6);
+		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4 - 10), (float)hitbox.width * (float)(shield/fullShieldHealth), (float)(8));
+		surface.fill(Color.BLACK.getRGB());
+		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4 - 2), (float)hitbox.width , (float)10);
 		surface.fill(Color.GREEN.getRGB());
-		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4), (float)hitbox.width * 0.7f * (float)(health/fullHealth), (float)hitbox.height/6);
-	}
-	
-	/**
-	 * 
-	 * Draws this Avatar to a PApplet
-	 * 
-	 * @param surface
-	 *            PApplet to draw to
-	 */
-	public void draw(PApplet surface) {
-		surface.pushMatrix();
-		surface.pushStyle();
-
-		drawHealthBar(surface);
-		
-		if(deathTime != 0) {
-			drawDeath(surface);
-			surface.popMatrix();
-			surface.popStyle();
-			return;
-		}
-
-		if (blocking) {
-			// Draw block
-		}
-		if (!status.getEffect().equals(Effect.NONE)) {
-			// Add on effect
-		}
-
-		int sw, sh;
-		//		sx = (int) sprites[spriteInd].getX();
-		//		sy = (int) sprites[spriteInd].getY();
-		sw = (int) sprites[spriteInd].getWidth();
-		sh = (int) sprites[spriteInd].getHeight();
-
-		surface.imageMode(PApplet.CENTER);
-
-		surface.pushMatrix();
-		if (left || !lastDir) {
-			surface.scale(-1, 1);
-			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw, sh);
-
-		} else {
-			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
-		}
-		surface.popMatrix();
-		if (blocking) {
-			if (System.currentTimeMillis() / 250 % 5 == 0) {
-				surface.tint(140);
-			} else if (System.currentTimeMillis() / 250 % 5 == 1) {
-				surface.tint(170);
-			} else if (System.currentTimeMillis() / 250 % 5 == 2) {
-				surface.tint(200);
-			} else if (System.currentTimeMillis() / 250 % 5 == 3) {
-				surface.tint(240);
-			}
-			surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
-					1.5f * sh);
-		}
-
-		// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
-		// surface.fill(Color.RED.getRGB());
-		// surface.ellipseMode(PApplet.CENTER);
-		// surface.ellipse((float)(hitbox.x), (float)(hitbox.y), 5f, 5f);
-
-		surface.popMatrix();
-		surface.popStyle();
+		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4 - 2), (float)hitbox.width * (float)(health/fullHealth), (float)10);
 	}
 
 	public void walk(int numOfSpriteWalk, int divideSpeed) {
@@ -570,6 +547,8 @@ public abstract class Avatar implements Serializable {
 		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float)hitbox.x, (float)hitbox.y, (float)hitbox.width, (float)hitbox.height);
 	}
 
+	
+	//Getters and Setters
 	public boolean isUp() {
 		return up;
 	}
@@ -592,7 +571,8 @@ public abstract class Avatar implements Serializable {
 
 	public void setLeft(boolean left) {
 		this.left = left;
-		lastDir = false;
+		if(left)
+			lastDir = true;
 	}
 
 	public boolean isRight() {
@@ -601,7 +581,8 @@ public abstract class Avatar implements Serializable {
 
 	public void setRight(boolean right) {
 		this.right = right;
-		lastDir = true;
+		if(right)
+			lastDir = false;
 	}
 
 	public double getWidth() {
@@ -642,6 +623,94 @@ public abstract class Avatar implements Serializable {
 
 	public void setSpriteListAttack(ArrayList<String> spriteListAttack) {
 		this.spriteListAttack = spriteListAttack;
+	}
+
+	public long getBasicCooldownLeft() {
+		return System.currentTimeMillis() - basicCDStart;
+	}
+
+	public long getRangedCooldownLeft() {
+		return System.currentTimeMillis() - rangedCDStart;
+	}
+
+	public long getA1CooldownLeft() {
+		return System.currentTimeMillis() - a1CDStart;
+	}
+
+	public long getA2CooldownLeft() {
+		return System.currentTimeMillis() - a2CDStart;
+	}
+
+	public long getA3CooldownLeft() {
+		return System.currentTimeMillis() - a3CDStart;
+	}
+
+	public double getA1Cooldown() {
+		return a1CD;
+	}
+
+	public double getBasicCooldown() {
+		return basicCD;
+	}
+
+	public double getA2Cooldown() {
+		return a2CD;
+	}
+
+	public double getA3Cooldown() {
+		return a3CD;
+	}
+
+	public double getRangedCooldown() {
+		return rangedCD;
+	}
+	
+	/**
+	 * 
+	 * Attack bound to left click
+	 * 
+	 * @param player
+	 *            The player's IP address
+	 * @param angle
+	 *            Angle of the attack
+	 * @return The Attack it performs
+	 */
+	public abstract Attack[] basicAttack(String player, double angle);
+
+	/**
+	 * 
+	 * Attack bound to right click
+	 * 
+	 * @return The Attack it performs
+	 */
+	public abstract Attack[] rangedAttack(String player, double angle);
+
+	/**
+	 * 
+	 * Attack bound to e
+	 * 
+	 * @return The Attack it performs
+	 */
+	public abstract Attack[] abilityOne(String player, double angle);
+
+	/**
+	 * 
+	 * Attack bound to r
+	 * 
+	 * @return The Attack it performs
+	 */
+	public abstract Attack[] abilityTwo(String player, double angle);
+
+	/**
+	 * 
+	 * Attack bound to f
+	 * 
+	 * @return The Attack it performs
+	 */
+	public abstract Attack[] abilityThree(String player, double angle);
+
+	public boolean isDead() {
+		return dead;
 	}
 
 }

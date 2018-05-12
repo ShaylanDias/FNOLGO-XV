@@ -35,28 +35,27 @@ F - Ability 3
 
 Feature List:
 Must Haves
-	Server Networking
+	Server Networking - DONE
 	Menu
-	Select server
-	Single map, GUI with basic character models that move
-	Basic movement and combat abilities w/ effects
-	Block and roll defensive mechanics
+	Select server - DONE
+	Single map, GUI with basic character models that move - DONE
+	Basic movement and combat abilities w/ effects - DONE
+	Block and roll defensive mechanics - DONE
 	Win/Loss mechanic (battle royale)
 	3 classes/characters 
 		Brute, mage, ranger 
 		Brute is focused more on melee, Mage and Ranger are focused on projectile attacks
-	Cooldown System
+	Cooldown System - DONE
 Want to Haves
 	Powerups
 	Speed-booster, heal (minor, major), no-depletion stamina, shield. 
 	Spectator Mode
-	Weapons pickups
-	Crossbow, Bomb, Mine
+	Weapons pickups: Crossbow, Bomb, Mine
 	Arena obstacles/Effects
 	Multiple classes/types of characters 
 	More advanced abilities (Ultimate ability?)
 	Some Overwatch style ultimate ability build up or something like a Smash Ball 
-	The server would be able to handle more than 2 people (Free-for-all)
+	The server would be able to handle more than 2 people (Free-for-all) - DONE
 	6 classes/characters
 		Fighter, mage, ranger, ninja, sumo, soldier
 Stretches 
@@ -108,7 +107,7 @@ networking
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 Responsibilities: 
-Shaylan Dias: Networking, Projectile Game Mechanics, Game Manager
+Shaylan Dias: Networking, Projectile Game Mechanics, Game Manager, Brute class and abilities, GamePanel, Method of sending data
 Ben Gu: Character movement, Character movement
 Jason Zhu: Character dashing, Map, Art
 Mr. Shelby APCSDemo: ServerNetworking

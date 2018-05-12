@@ -4,7 +4,7 @@ import java.io.Serializable;
 import processing.core.PApplet;
 
 
-public class Obstacle{
+public class Obstacle implements Serializable{
 	
 	private double xPos, yPos, width, height;
 	
@@ -15,16 +15,28 @@ public class Obstacle{
 		this.height = height; 
 	}
 	/**
-	 * Based on an x, y position centered in the top left corner of the rectangle hitbox
+	 * Based on an x, y position based off of the center of the rectangle hitbox
 	 * @param x
 	 * @param y
 	 * @return returns true if the 2 hitboxes run into each other, false otherwise. 
 	 */
 	public boolean checkIntersection(double x, double y, double width, double height) {
-		if(x >= xPos && x <= xPos+this.width && y>=yPos && y<= yPos+this.height) {
+		
+		double xDiff = this.width/2 + width/2;
+		double yDiff = this.height/2 + height/2;
+		//System.out.println(xDiff);
+		//System.out.println(yDiff);
+		
+		if(Math.abs(x-xPos)<xDiff && Math.abs(y-yPos) <yDiff) {
+			System.out.println("Intersect");
 			return true;
 		}
 		
+//		if(x-width/2< xPos+this.width/2 && x+width/2 >xPos-width/2 && y-height/2 < yPos +this.height && y +height/2 > yPos -height/2) {
+//			System.out.println("Intersects");
+//			return true;
+//		}
+//		
 		return false;
 	}
 

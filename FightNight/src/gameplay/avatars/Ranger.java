@@ -3,6 +3,8 @@ package gameplay.avatars;
 import java.awt.Rectangle;
 
 import gameplay.attacks.Attack;
+import gameplay.attacks.Fireball;
+import gameplay.avatars.Avatar.AttackType;
 
 /**
  * A ranger class character 
@@ -10,6 +12,8 @@ import gameplay.attacks.Attack;
  *
  */
 public class Ranger extends Avatar {
+
+	private AttackType currentAttack;
 
 	/**
 	 * Instantiates a Ranger
@@ -33,33 +37,42 @@ public class Ranger extends Avatar {
 		this();
 		this.hitbox.x = x;
 	}
-	
-	
-	
+
+
+
 	// Knife, shank some fool
 	@Override
-	public Attack basicAttack(String player, double angle) {
+	public Attack[] basicAttack(String player, double angle) {
 		return null;
 
 	}
 
 	// Shoot bow, arrow goes until it hits a wall
 	@Override
-	public Attack rangedAttack(String player, double angle) {
-		return null;
+	public Attack[] rangedAttack(String player, double angle) {
+		super.rangedCDStart = System.currentTimeMillis();
+		currentlyAttacking = true;
+		currentAttack = AttackType.RANGED;
+		timeActionStarted = System.currentTimeMillis();
+		if(angle > 90 && angle < 270)
+			lastDir = false;
+		else
+			lastDir = true;
+		return new Attack[] {new Fireball((int) hitbox.x, (int) hitbox.y, player, angle, "Rock", 400, 22)};
+
 	}
 
 	// PlaceTrap, place an invisible trap that expires after a certain amount of
 	// time. The ranger can carry 3 at time
 	@Override
-	public Attack abilityOne(String player, double angle) {
+	public Attack[] abilityOne(String player, double angle) {
 		return null;
 
 	}
 
 	// Barrage - fire multiple arrows in an area
 	@Override
-	public Attack abilityTwo(String player, double angle) {
+	public Attack[] abilityTwo(String player, double angle) {
 		return null;
 
 	}
@@ -67,7 +80,7 @@ public class Ranger extends Avatar {
 	// Grappling hook - hooks onto a wall in the map and pulls your towards it, dmgs
 	// enemies that you run into, if hook enemy, it acts like a projectile.
 	@Override
-	public Attack abilityThree(String player, double angle) {
+	public Attack[] abilityThree(String player, double angle) {
 		return null;
 
 	}

@@ -2,24 +2,26 @@ package gameplay.attacks;
 
 import java.util.ArrayList;
 
-import gameplay.attacks.StatusEffect.Effect;
 import gameplay.avatars.Avatar;
 import gameplay.avatars.Brute;
 import processing.core.PApplet;
 
-public class UpperCut extends Attack{
+public class Lunge extends Attack{
 
 	private static double damage = 30;
 	private static boolean shieldBreaker = true;
-	private static StatusEffect effect = new StatusEffect(Effect.STUNNED, 1d, 1d);
 	private Brute attacker;
 	private static String imageKey = "UpperCut";
+	private double stopMoving;
 
-	public UpperCut(String playerAddress, double dir, Brute attacker, int x, int y) {
-		super(imageKey, x, y, 50, 20, playerAddress, damage, shieldBreaker, effect, dir);
+	public Lunge(String playerAddress, double dir, Brute attacker, int x, int y, StatusEffect status, double duration, double stopMoving) {
+		super(imageKey, x, y, 100, 50, playerAddress, damage, shieldBreaker, status, dir);
 		this.attacker = attacker;
-		duration = 1.1;
+		this.duration = duration;
+		this.stopMoving = stopMoving;
 	}
+	
+	
 
 	public void draw(PApplet surface) {
 
@@ -38,12 +40,22 @@ public class UpperCut extends Attack{
 
 	@Override
 	public boolean act(ArrayList<Avatar> avatars) {
-		if(System.currentTimeMillis() < super.getStartTime() + 0.85 * 1000) {
+		if(System.currentTimeMillis() < super.getStartTime() + (duration-stopMoving) * 1000) {
 			x = attacker.getX() + 100 * Math.cos(Math.toRadians(dir));
 			y = attacker.getY() - 60 * Math.sin(Math.toRadians(dir));
 		}
-		return super.act(avatars);
+		return !checkEnd();
+
 	}
 
+	protected boolean checkEnd() {
+		if (!super.isActive())
+			return true;
+		if (System.currentTimeMillis() > super.getStartTime() + duration * 1000) {
+			end();
+			return true;
+		} else
+			return false;
+	}
 
 }

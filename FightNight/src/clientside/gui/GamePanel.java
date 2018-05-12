@@ -73,6 +73,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 	public void draw() {
 		clear();
 
+		imageMode(CENTER);
 		background(Color.BLACK.getRGB());
 
 		color(Color.BLACK.getRGB());
@@ -86,11 +87,11 @@ public class GamePanel extends PApplet implements NetworkListener {
 					break;
 				}
 			}
-			// Translating to center the Avatar
-			translate((float) (-av.getX() + width / 2), (float) -av.getY() + height / 2);
-			currentState.draw(this);
+			currentState.draw(this, av, width, height);
+			drawCooldowns(this, av);
 			popMatrix();
 		}
+
 
 		// Starting Setup
 		stroke(0, 0, 0);
@@ -102,12 +103,13 @@ public class GamePanel extends PApplet implements NetworkListener {
 	/**
 	 * Detects mouse clicks to trigger abilities
 	 */
-	public void mousePressed() {
+	public void mouseClicked() {
 		if (nm != null) {
 			if (mouseButton == LEFT)
 				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.BASIC, getAngleToMouse());
-			if(mouseButton == RIGHT)
+			else if(mouseButton == RIGHT) {
 				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.RANGED, getAngleToMouse());
+			}
 		}
 	}
 
@@ -131,18 +133,28 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 		if (key == 'a') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'a', true);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', false);
 		}
 		if (key == 'w') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'w', true);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 's', false);
 		}
 		if (key == 's') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 's', true);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'w', false);
 		}
 		if (key == 'd') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', true);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'a', false);
 		}
 		if (key == 'e') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, false);
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.A1, getAngleToMouse());
+		}
+		if (key == 'r') {
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.A2, getAngleToMouse());
+		}
+		if (key == 'f') {
+			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.A3, getAngleToMouse());
 		}
 
 	}
@@ -162,9 +174,6 @@ public class GamePanel extends PApplet implements NetworkListener {
 		}
 		if (key == 'd') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', false);
-		}
-		if (key == 'e') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.A1, getAngleToMouse());
 		}
 		if(key == 'q') {
 			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.BLOCK, false);
@@ -236,6 +245,42 @@ public class GamePanel extends PApplet implements NetworkListener {
 			}
 		}
 		return angle;
+	}
+
+	private void drawCooldowns(PApplet surface, Avatar a) {
+		surface.pushStyle();
+		surface.ellipseMode(CENTER);
+		surface.textAlign(CENTER);
+		surface.textSize(16);
+		
+		double refX = a.getX();
+		double refY = a.getY() + height/2 - 60;
+		
+		drawTimer(surface, refX-200, refY, a.getBasicCooldownLeft(), a.getBasicCooldown(), "BASIC");
+		drawTimer(surface, refX-100, refY, a.getRangedCooldownLeft(), a.getRangedCooldown(), "RANGED");
+		drawTimer(surface, refX, refY, a.getA1CooldownLeft(), a.getA1Cooldown(), "A1");
+		drawTimer(surface, refX+100, refY, a.getA2CooldownLeft(), a.getA2Cooldown(), "A2");
+		drawTimer(surface, refX+200, refY, a.getA3CooldownLeft(), a.getA3Cooldown(), "A3");
+		
+		surface.popStyle();
+	}
+	
+	private void drawTimer(PApplet surface, double x, double y, long cdLeft, double cd, String name) {
+		if(cdLeft < cd * 1000) {
+			double percent = cdLeft/(cd*1000);
+			double angle = 2 * Math.PI * percent + 3 * Math.PI/2;
+			surface.fill(Color.BLACK.getRGB());
+			surface.ellipse((float)(x), (float)(y), 100, 100);
+			surface.fill(Color.GREEN.getRGB());
+			surface.arc((float)(x), (float)(y), 100, 100, 3f *(float)Math.PI/2, (float)angle, PIE);
+
+		} else {
+			surface.fill(Color.GREEN.getRGB());
+			surface.ellipse((float)(x), (float)(y), 100, 100);
+		}
+		surface.fill(Color.RED.getRGB());
+		surface.text(name, (float)x, (float)(y+6));
+
 	}
 
 }

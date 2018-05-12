@@ -7,21 +7,47 @@ import processing.core.PApplet;
  * 
  * The base Map
  * 
- * @author shaylandias
+ * @author Jason Zhu
  *
  */
 public class StandardMap extends Map{
 
 	private static String imageKey = "FNOLGO MAP";
-	private SmallTree[] sTree = new SmallTree[25];
-	private LargeTree[] lTree = new LargeTree[25];
+	private Tree[] Tree = new Tree[100];
 
 	
 	
 	public StandardMap() {
 		super();
-		// TODO Auto-generated constructor stub
+		for(int i = 0; i<Tree.length;i++) {
+			double size = Math.random()*250;
+			if(size>100) {
+				Tree[i] = new Tree(Math.random()*3000.0-1500,Math.random()*3000.0-1500, size, size);
+			}	
+			else
+				i--;
+		}
+		int counter = 0;
+		
+		for(int i = 0; i<Tree.length;i++) {
+			boolean Intersected = false;
+			for(int j = i+1;j<Tree.length;j++) {
+				
+				//Some checks if the trees are interesecting each other. Check the code in trees. I think I might just be stupid. 
+				if(Tree[i].checkIntersection(Tree[j].getX(),Tree[j].getY() , Tree[j].getWidth(), Tree[j].getHeight())) {
+					Intersected = true;
+					break;					
+				}
+			}
+			if(!Intersected) {
+				Tree[i].doDraw() ;
+				counter++;
+			}
+
+		}
 	}
+	
+	
 	
 	public void draw(PApplet surface) {
 		super.draw(surface);
@@ -29,7 +55,13 @@ public class StandardMap extends Map{
 		surface.noFill();
 		surface.rect(-1500, -1500, 3000, 3000);
 		
-		
+		int counter = 0;
+		for(int i = 0; i< Tree.length;i++) {
+			if(Tree[i].canDraw()) {
+				Tree[i].draw(surface);
+				counter++;
+			}
+		}
 		//Left quadrant tree hitboxes going top down
 //		surface.rect(-1440, -1080, 180, 180);
 //		surface.rect(-1260, -720, 120, 120);
