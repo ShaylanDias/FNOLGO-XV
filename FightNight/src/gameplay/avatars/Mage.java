@@ -7,7 +7,6 @@ import gameplay.attacks.Attack;
 import gameplay.attacks.Fireball;
 import gameplay.attacks.Lightning;
 import gameplay.attacks.StatusEffect.Effect;
-import gameplay.avatars.Avatar.AttackType;
 import processing.core.PApplet;
 /**
  * Creates a mage character
@@ -26,7 +25,7 @@ public class Mage extends Avatar {
 		super.basicCD = 0.9;
 		spriteSheetKey = "Mage";
 		sprites = new Rectangle[] { new Rectangle(70, 94, 54, 90) };
-		a3CD = 10;
+		a3CD = 11;
 		rangedCD = 0.5;
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
@@ -123,8 +122,8 @@ public class Mage extends Avatar {
 	}
 	
 	private double randomLightningAngle(double angle) {
-		double diff = Math.random() * 30;
-		diff = 15-diff;
+		double diff = Math.random() * 45;
+		diff = 22.5-diff;
 		return angle + diff;
 	}
 	
