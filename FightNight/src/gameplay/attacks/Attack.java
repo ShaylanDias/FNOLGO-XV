@@ -198,6 +198,10 @@ public class Attack extends MovingSprite {
 		return shieldBreaker;
 	}
 		
+	public void setActive(boolean b) {
+		active = b;
+	}
+	
 	/**
 	 * Ends the Attack, makes it not a thing
 	 */

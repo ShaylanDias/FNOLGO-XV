@@ -1,7 +1,7 @@
 package clientside;
 
 import gameplay.avatars.Avatar;
-import gameplay.avatars.Brute;
+import gameplay.avatars.Mage;
 
 /**
  * 
@@ -20,7 +20,7 @@ public class Player {
 	 */
 	public Player() {
 		playerAddress = "";
-		avatar = new Brute();
+		avatar = new Mage();
 	}
 
 	/**

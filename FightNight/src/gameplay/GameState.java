@@ -85,8 +85,9 @@ public class GameState implements Serializable {
 	 */
 	public void addAttacks(Attack[] a) {
 		if(a != null) {
-			for(int i = 0; i < a.length; i++)
+			for(int i = 0; i < a.length; i++) {
 				attacks.add(a[i]);
+			}
 		}
 	}
 

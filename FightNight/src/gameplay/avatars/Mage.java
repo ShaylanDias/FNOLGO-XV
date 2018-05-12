@@ -2,8 +2,13 @@ package gameplay.avatars;
 
 import java.awt.Rectangle;
 
+import clientside.gui.GamePanel;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Fireball;
+import gameplay.attacks.Lightning;
+import gameplay.attacks.StatusEffect.Effect;
+import gameplay.avatars.Avatar.AttackType;
+import processing.core.PApplet;
 /**
  * Creates a mage character
  * @author hzhu684
@@ -11,14 +16,18 @@ import gameplay.attacks.Fireball;
  */
 public class Mage extends Avatar {
 
+	private AttackType currentAttack;
+	
 	/**
 	 * Instantiates a Mage
 	 */
 	public Mage() {
 		super();
 		super.basicCD = 0.9;
-		spriteSheetKey = "Mage1";
+		spriteSheetKey = "Mage";
 		sprites = new Rectangle[] { new Rectangle(70, 94, 54, 90) };
+		a3CD = 10;
+		rangedCD = 0.5;
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
 		dashCD = 2.0;
@@ -49,7 +58,7 @@ public class Mage extends Avatar {
 	// Fireball, slow moving, and does a bunch of dmg, goes until it hits a wall.
 	@Override
 	public Attack[] rangedAttack(String player, double angle) {
-		super.basicCDStart = System.currentTimeMillis();
+		super.rangedCDStart = System.currentTimeMillis();
 		return new Attack[] {new Fireball((int) hitbox.x, (int) hitbox.y, player, angle)};
 	}
 
@@ -68,7 +77,116 @@ public class Mage extends Avatar {
 	// Lightning blast, stands still and charges a kamehameha.
 	@Override
 	public Attack[] abilityThree(String player, double angle) {
-		return null;
-
+//		currentlyAttacking = true;
+//		movementControlled = false;
+		currentAttack = AttackType.A3;
+		if(angle > 90 && angle < 270)
+			lastDir = true;
+		else
+			lastDir = false;
+		a3CDStart = System.currentTimeMillis();
+		timeActionStarted = a3CDStart;		double w, h;
+		h = Lightning.h;
+		w = Lightning.w;
+		angle = randomLightningAngle(360-angle);
+		
+		double x = super.getX();
+		double y = super.getY();
+		y -= 20;
+		if(lastDir)
+			x -= 80;
+		else
+			x += 80;
+		
+		Lightning l1 = new Lightning("Lightning", (int)(x), (int)(y), player, randomLightningAngle(angle), 0.05, null);
+		angle = randomLightningAngle(angle);
+		x += w * Math.cos(Math.toRadians(angle));
+		y +=  h * Math.sin(Math.toRadians(angle));
+		Lightning l2 = new Lightning("Lightning1", (int)(x), (int)(y), player, randomLightningAngle(angle), 0.1, l1);
+		angle = randomLightningAngle(angle);
+		x += w * Math.cos(Math.toRadians(angle));
+		y +=  h * Math.sin(Math.toRadians(angle));
+		Lightning l3 = new Lightning("Lightning2", (int)(x), (int)(y), player, randomLightningAngle(angle), 0.15, l2);
+		angle = randomLightningAngle(angle);
+		x += w * Math.cos(Math.toRadians(angle));
+		y +=  h * Math.sin(Math.toRadians(angle));
+		Lightning l4 = new Lightning("Lightning3", (int)(x), (int)(y), player, randomLightningAngle(angle), 0.2, l3);
+		angle = randomLightningAngle(angle);
+		x += w * Math.cos(Math.toRadians(angle));
+		y +=  h * Math.sin(Math.toRadians(angle));
+		Lightning l5 = new Lightning("Lightning4", (int)(x), (int)(y), player, randomLightningAngle(angle), 0.25, l4);
+		angle = randomLightningAngle(angle);
+		x += w * Math.cos(Math.toRadians(angle));
+		y +=  h * Math.sin(Math.toRadians(angle));
+		Lightning l6 = new Lightning("Lightning5", (int)(x), (int)(y), player, randomLightningAngle(angle), 0.3, l5);
+		return new Attack[] {l6, l5, l4, l3, l2, l1};
 	}
+	
+	private double randomLightningAngle(double angle) {
+		double diff = Math.random() * 30;
+		diff = 15-diff;
+		return angle + diff;
+	}
+	
+	public void draw(PApplet surface) {
+		surface.pushMatrix();
+		surface.pushStyle();
+	
+		drawHealthBar(surface);
+	
+		if(deathTime != 0) {
+			drawDeath(surface);
+			surface.popMatrix();
+			surface.popStyle();
+			return;
+		}
+	
+		surface.imageMode(PApplet.CENTER);
+	
+		if (blocking) {
+			// Draw block
+		}
+		if (super.getStatus().getEffect().equals(Effect.STUNNED)) {
+			surface.image(GamePanel.resources.getImage("Stun"), (float)hitbox.x, (float)hitbox.y);
+		}
+	
+		int sw, sh;
+		//		sx = (int) sprites[spriteInd].getX();
+		//		sy = (int) sprites[spriteInd].getY();
+		sw = (int) sprites[spriteInd].getWidth();
+		sh = (int) sprites[spriteInd].getHeight();
+	
+	
+		surface.pushMatrix();
+		if (!lastDir) {
+			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
+	
+		} else {
+			surface.scale(-1, 1);
+			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw, sh);
+		}
+		surface.popMatrix();
+		if (blocking) {
+			if (System.currentTimeMillis() / 250 % 5 == 0) {
+				surface.tint(140);
+			} else if (System.currentTimeMillis() / 250 % 5 == 1) {
+				surface.tint(170);
+			} else if (System.currentTimeMillis() / 250 % 5 == 2) {
+				surface.tint(200);
+			} else if (System.currentTimeMillis() / 250 % 5 == 3) {
+				surface.tint(240);
+			}
+			surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
+					1.5f * sh);
+		}
+	
+		// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
+		// surface.fill(Color.RED.getRGB());
+		// surface.ellipseMode(PApplet.CENTER);
+		// surface.ellipse((float)(hitbox.x), (float)(hitbox.y), 5f, 5f);
+	
+		surface.popMatrix();
+		surface.popStyle();
+	}
+	
 }
