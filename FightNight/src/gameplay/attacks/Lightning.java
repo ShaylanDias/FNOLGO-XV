@@ -11,7 +11,6 @@ public class Lightning extends Attack{
 	private double delay;
 	private Lightning attached;
 	public static final int w = 80, h = 80, damage = 40;
-	private boolean flipDraw;
 	private boolean dead;
 	
 	public Lightning(String imageKey, int x, int y, String playerAddress, double dir, double delay, Lightning attached) {

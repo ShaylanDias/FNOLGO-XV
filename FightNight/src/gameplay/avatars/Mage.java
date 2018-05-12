@@ -17,7 +17,7 @@ import processing.core.PApplet;
 public class Mage extends Avatar {
 
 	private AttackType currentAttack;
-	
+
 	/**
 	 * Instantiates a Mage
 	 */
@@ -27,6 +27,7 @@ public class Mage extends Avatar {
 		spriteSheetKey = "Mage";
 		sprites = new Rectangle[] { new Rectangle(70, 94, 54, 90) };
 		a3CD = 11;
+		a2CD = 9;
 		rangedCD = 0.5;
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
@@ -58,8 +59,16 @@ public class Mage extends Avatar {
 	// Fireball, slow moving, and does a bunch of dmg, goes until it hits a wall.
 	@Override
 	public Attack[] rangedAttack(String player, double angle) {
+		currentAttack = AttackType.RANGED;
 		super.rangedCDStart = System.currentTimeMillis();
-		return new Attack[] {new Fireball((int) hitbox.x, (int) hitbox.y, player, angle)};
+		if(angle > 90 && angle < 270) {
+			lastDir = true;
+			return new Attack[] {new Fireball((int) hitbox.x - 40, (int) hitbox.y - 40, player, angle)};
+		}
+		else {
+			lastDir = false;
+			return new Attack[] {new Fireball((int) hitbox.x + 10, (int) hitbox.y - 43, player, angle)};
+		}
 	}
 
 	// Fire eruption. circular bust in an area that does dmg to anyone in them.
@@ -71,8 +80,8 @@ public class Mage extends Avatar {
 	// Snow Storm - slows down everybody in an area
 	@Override
 	public Attack[] abilityTwo(String player, double angle) {
-//		currentlyAttacking = true;
-//		movementControlled = false;
+		//		currentlyAttacking = true;
+		//		movementControlled = false;
 		currentAttack = AttackType.A2;
 		if(angle > 90 && angle < 270)
 			lastDir = true;
@@ -80,7 +89,7 @@ public class Mage extends Avatar {
 			lastDir = false;
 		a2CDStart = System.currentTimeMillis();
 		timeActionStarted = a2CDStart;	
-		
+
 		angle = 360 - angle;
 		double x = super.getX() + 180 * Math.cos(Math.toRadians(angle));
 		double y = super.getY() + 180 * Math.sin(Math.toRadians(angle));
@@ -91,8 +100,8 @@ public class Mage extends Avatar {
 	// Lightning blast, stands still and charges a kamehameha.
 	@Override
 	public Attack[] abilityThree(String player, double angle) {
-//		currentlyAttacking = true;
-//		movementControlled = false;
+		//		currentlyAttacking = true;
+		//		movementControlled = false;
 		currentAttack = AttackType.A3;
 		if(angle > 90 && angle < 270)
 			lastDir = true;
@@ -104,7 +113,7 @@ public class Mage extends Avatar {
 		h = Lightning.h;
 		w = Lightning.w;
 		angle = randomLightningAngle(360-angle);
-		
+
 		double x = super.getX();
 		double y = super.getY();
 		y -= 20;
@@ -112,7 +121,7 @@ public class Mage extends Avatar {
 			x -= 80;
 		else
 			x += 80;
-		
+
 		Lightning l1 = new Lightning("Lightning", (int)(x), (int)(y), player, randomLightningAngle(angle), 0.05, null);
 		angle = randomLightningAngle(angle);
 		x += w * Math.cos(Math.toRadians(angle));
@@ -136,46 +145,46 @@ public class Mage extends Avatar {
 		Lightning l6 = new Lightning("Lightning5", (int)(x), (int)(y), player, randomLightningAngle(angle), 0.3, l5);
 		return new Attack[] {l6, l5, l4, l3, l2, l1};
 	}
-	
+
 	private double randomLightningAngle(double angle) {
 		double diff = Math.random() * 45;
 		diff = 22.5-diff;
 		return angle + diff;
 	}
-	
+
 	public void draw(PApplet surface) {
 		surface.pushMatrix();
 		surface.pushStyle();
-	
+
 		drawHealthBar(surface);
-	
+
 		if(deathTime != 0) {
 			drawDeath(surface);
 			surface.popMatrix();
 			surface.popStyle();
 			return;
 		}
-	
+
 		surface.imageMode(PApplet.CENTER);
-	
+
 		if (blocking) {
 			// Draw block
 		}
 		if (super.getStatus().getEffect().equals(Effect.STUNNED)) {
 			surface.image(GamePanel.resources.getImage("Stun"), (float)hitbox.x, (float)hitbox.y);
 		}
-	
+
 		int sw, sh;
 		//		sx = (int) sprites[spriteInd].getX();
 		//		sy = (int) sprites[spriteInd].getY();
 		sw = (int) sprites[spriteInd].getWidth();
 		sh = (int) sprites[spriteInd].getHeight();
-	
-	
+
+
 		surface.pushMatrix();
 		if (!lastDir) {
 			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
-	
+
 		} else {
 			surface.scale(-1, 1);
 			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw, sh);
@@ -194,14 +203,14 @@ public class Mage extends Avatar {
 			surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
 					1.5f * sh);
 		}
-	
+
 		// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
 		// surface.fill(Color.RED.getRGB());
 		// surface.ellipseMode(PApplet.CENTER);
 		// surface.ellipse((float)(hitbox.x), (float)(hitbox.y), 5f, 5f);
-	
+
 		surface.popMatrix();
 		surface.popStyle();
 	}
-	
+
 }
