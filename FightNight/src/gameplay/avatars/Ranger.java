@@ -21,11 +21,16 @@ public class Ranger extends Avatar {
 	public Ranger() {
 		super();
 		super.basicCD = 0.5;
-		spriteSheetKey = "Ranger1";
+		spriteSheetKey = "Ranger";
 		sprites = new Rectangle[] { new Rectangle(92, 94, 52, 88) };
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
 		dashCD = 0.5;	
+		getSpriteListWalk().add("Ranger");
+		for(int i = 1; i < 11; i++) {
+			getSpriteListWalk().add("Ranger"+i);
+		}
+
 	}
 	/**
 	 * Creates a Ranger at this x,y
@@ -77,8 +82,7 @@ public class Ranger extends Avatar {
 
 	}
 
-	// Grappling hook - hooks onto a wall in the map and pulls your towards it, dmgs
-	// enemies that you run into, if hook enemy, it acts like a projectile.
+	// Smoke Bomb - Turns you invisible to other players for a few seconds
 	@Override
 	public Attack[] abilityThree(String player, double angle) {
 		return null;
