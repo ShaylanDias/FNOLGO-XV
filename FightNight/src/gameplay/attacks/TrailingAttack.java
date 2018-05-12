@@ -2,6 +2,7 @@ package gameplay.attacks;
 
 import java.util.ArrayList;
 
+import gameplay.attacks.Attack.AttackResult;
 import gameplay.avatars.Avatar;
 
 public class TrailingAttack extends Attack{
@@ -23,6 +24,12 @@ public class TrailingAttack extends Attack{
 		if(System.currentTimeMillis() < super.getStartTime() + (duration) * 1000) {
 			x = trail.getX() + xOffset * Math.cos(Math.toRadians(dir));
 			y = trail.getY() - yOffset * Math.sin(Math.toRadians(dir));
+		}
+		
+		for (Avatar a : avatars) {
+			if (a.getHitbox().intersects(this)) {
+				a.takeHit(this);
+			}
 		}
 		return !checkEnd();
 

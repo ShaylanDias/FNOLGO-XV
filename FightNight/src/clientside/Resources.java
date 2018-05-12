@@ -62,8 +62,7 @@ public class Resources {
 		images.put("Lightning4", new ImageWrapper("data/Mage/Lightning5.png"));
 		images.put("Lightning5", new ImageWrapper("data/Mage/Lightning6.png"));
 		images.put("Mage", new ImageWrapper("data/Mage/Mage.png"));
-
-		
+		images.put("SnowField", new ImageWrapper("data/Mage/SnowField.png"));
 		
 		images.put("Fireball1", new ImageWrapper("Fireball1.png"));
 		images.put("Arrow1", new ImageWrapper("arrow-projectile.jpg"));

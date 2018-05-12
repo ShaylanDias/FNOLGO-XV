@@ -6,6 +6,7 @@ import clientside.gui.GamePanel;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Fireball;
 import gameplay.attacks.Lightning;
+import gameplay.attacks.SnowField;
 import gameplay.attacks.StatusEffect.Effect;
 import processing.core.PApplet;
 /**
@@ -70,7 +71,21 @@ public class Mage extends Avatar {
 	// Snow Storm - slows down everybody in an area
 	@Override
 	public Attack[] abilityTwo(String player, double angle) {
-		return null;
+//		currentlyAttacking = true;
+//		movementControlled = false;
+		currentAttack = AttackType.A2;
+		if(angle > 90 && angle < 270)
+			lastDir = true;
+		else
+			lastDir = false;
+		a2CDStart = System.currentTimeMillis();
+		timeActionStarted = a2CDStart;	
+		
+		angle = 360 - angle;
+		double x = super.getX() + 180 * Math.cos(Math.toRadians(angle));
+		double y = super.getY() + 180 * Math.sin(Math.toRadians(angle));
+
+		return new Attack[] {new SnowField((int)x, (int)y, player, angle)};
 	}
 
 	// Lightning blast, stands still and charges a kamehameha.
@@ -84,7 +99,8 @@ public class Mage extends Avatar {
 		else
 			lastDir = false;
 		a3CDStart = System.currentTimeMillis();
-		timeActionStarted = a3CDStart;		double w, h;
+		timeActionStarted = a3CDStart;		
+		double w, h;
 		h = Lightning.h;
 		w = Lightning.w;
 		angle = randomLightningAngle(360-angle);
