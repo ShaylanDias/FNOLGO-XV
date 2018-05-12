@@ -16,6 +16,8 @@ import gameplay.avatars.Avatar.AttackType;
 import gameplay.avatars.Brute;
 import gameplay.avatars.Mage;
 import gameplay.avatars.Ranger;
+import gameplay.maps.Map;
+import gameplay.maps.StandardMap;
 import networking.frontend.NetworkDataObject;
 import networking.frontend.NetworkListener;
 import networking.frontend.NetworkMessenger;
@@ -38,6 +40,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 	public static Resources resources = new Resources();
 
 	private Player player;
+	private Map map; 
 	private NetworkMessenger nm;
 	private boolean connected;
 
@@ -64,6 +67,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		window.setVisible(true);
 
 		player = new Player();
+		map = new StandardMap();
 		brute = new Rectangle(100, 100, 100, 100);
 		mage = new Rectangle(210, 100, 100, 100);
 		ranger = new Rectangle(320, 100, 100, 100);
@@ -104,15 +108,27 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 			color(Color.BLACK.getRGB());
 
-			if (currentState != null) {
+			if (currentState != null) { //gets the avatar information from the currentState
 				pushMatrix();
 				Avatar av = null;
+				map = currentState.getMap(); //gets the map that's made on the server. 
 				for (Avatar x : currentState.getAvatars()) {
 					if (x.getPlayer().equals(player.getPlayerAddress())) {
 						av = x;
 						break;
 					}
+					
 				}
+				if(map.hitTree(av.getX(),av.getY(), av.getWidth(), av.getHeight())) {
+					System.out.println("crashed into a tree");
+					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', false);
+					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 's', false);
+					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'w', false);
+					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'a', false);
+
+				}
+								
+
 				currentState.draw(this, av, width, height);
 				drawCooldowns(this, av);
 				popMatrix();

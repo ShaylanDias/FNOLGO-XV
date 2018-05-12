@@ -107,7 +107,7 @@ public class GameState implements Serializable {
 	 * 
 	 * @return The Map
 	 */
-	public Map map() {
+	public Map getMap() {
 		return map;
 	}
 
