@@ -26,8 +26,8 @@ public class Mage extends Avatar {
 		super.basicCD = 0.9;
 		spriteSheetKey = "Mage";
 		sprites = new Rectangle[] { new Rectangle(70, 94, 54, 90) };
-		a3CD = 11;
-		a2CD = 9;
+		a3CD = 6;
+		a2CD = 8;
 		rangedCD = 0.5;
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;

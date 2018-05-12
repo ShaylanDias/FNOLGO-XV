@@ -224,6 +224,7 @@ public class NetworkManagementPanel extends JPanel
 				gc.addNetworkListener(new NetworkMessageHandler());
 				clientProgram.connectedToServer(gc);
 				((GamePanel)clientProgram).sendConnectInit();
+				((GamePanel)clientProgram).setConnected(true);
 				setButtons(false);
 			}
 		}
