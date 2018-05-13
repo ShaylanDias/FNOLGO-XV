@@ -119,15 +119,6 @@ public class GamePanel extends PApplet implements NetworkListener {
 					}
 					
 				}
-				if(map.hitTree(av.getX(),av.getY(), av.getWidth(), av.getHeight())) {
-					System.out.println("crashed into a tree");
-					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', false);
-					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 's', false);
-					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'w', false);
-					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'a', false);
-
-				}
-								
 
 				currentState.draw(this, av, width, height);
 				drawCooldowns(this, av);

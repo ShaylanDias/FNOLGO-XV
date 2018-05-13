@@ -97,9 +97,13 @@ public class StandardMap extends Map{
 				return true;
 			}
 		}
-		
-		
 		return false;
+	}
+	public boolean inBounds(double x, double y , double width, double height) {
+		if(x+width/2>1500 || x-width/2< -1500 || y+height/2>1500 || y-height/2< -1500)
+			return false;
+		
+		return true;
 	}
 
 }

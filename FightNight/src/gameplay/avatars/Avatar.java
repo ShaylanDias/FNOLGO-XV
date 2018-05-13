@@ -372,7 +372,7 @@ public abstract class Avatar implements Serializable {
 	public void moveBy(double x, double y, Map map) {
 		if (!status.getEffect().equals(Effect.STUNNED) || status.isFinished()) {
 							
-			if(!map.hitTree(hitbox.x + x, hitbox.y + y, hitbox.width, hitbox.height)) {
+			if(!map.hitTree(hitbox.x + x, hitbox.y + y, hitbox.width, hitbox.height) && map.inBounds(hitbox.x + x, hitbox.y + y, hitbox.width, hitbox.height)) {
 				hitbox.x += x;
 				hitbox.y += y;
 			}

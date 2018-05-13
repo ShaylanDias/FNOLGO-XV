@@ -22,7 +22,6 @@ public abstract class Map implements Serializable{
 
 	}
 
-	public boolean hitTree(double x, double y, double width, double height) { 
-		return false;
-	}
+	public abstract boolean hitTree(double x, double y, double width, double height);
+	public abstract boolean inBounds(double x, double y, double width, double height);
 }
