@@ -54,6 +54,22 @@ public class Resources {
 		images.put("Howl4", new ImageWrapper("data/Brute/Howl4.png"));
 		images.put("Stun", new ImageWrapper("data/Stun.png"));
 		
+		//Mage
+		images.put("Lightning", new ImageWrapper("data/Mage/Lightning1.png"));
+		images.put("Lightning1", new ImageWrapper("data/Mage/Lightning2.png"));
+		images.put("Lightning2", new ImageWrapper("data/Mage/Lightning3.png"));
+		images.put("Lightning3", new ImageWrapper("data/Mage/Lightning4.png"));
+		images.put("Lightning4", new ImageWrapper("data/Mage/Lightning5.png"));
+		images.put("Lightning5", new ImageWrapper("data/Mage/Lightning6.png"));
+		images.put("Mage", new ImageWrapper("data/Mage/Mage.png"));
+		images.put("SnowField", new ImageWrapper("data/Mage/SnowField.png"));
+		
+		//Ranger
+		images.put("Ranger", new ImageWrapper("data/Ranger/Ranger.png"));
+		for(int i = 1; i < 11; i++) {
+			images.put("Ranger"+i, new ImageWrapper("data/Ranger/Ranger" + i + ".png"));
+		}
+		
 		images.put("Fireball1", new ImageWrapper("Fireball1.png"));
 		images.put("Arrow1", new ImageWrapper("arrow-projectile.jpg"));
 		images.put("Shield", new ImageWrapper("Shield.png"));

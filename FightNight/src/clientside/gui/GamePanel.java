@@ -2,6 +2,8 @@ package clientside.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
 
 import javax.swing.JFrame;
 
@@ -11,6 +13,11 @@ import clientside.Resources;
 import gameplay.GameState;
 import gameplay.avatars.Avatar;
 import gameplay.avatars.Avatar.AttackType;
+import gameplay.avatars.Brute;
+import gameplay.avatars.Mage;
+import gameplay.avatars.Ranger;
+import gameplay.maps.Map;
+import gameplay.maps.StandardMap;
 import networking.frontend.NetworkDataObject;
 import networking.frontend.NetworkListener;
 import networking.frontend.NetworkMessenger;
@@ -33,7 +40,11 @@ public class GamePanel extends PApplet implements NetworkListener {
 	public static Resources resources = new Resources();
 
 	private Player player;
+	private Map map; 
 	private NetworkMessenger nm;
+	private boolean connected;
+
+	private Rectangle brute, ranger, mage;
 
 	private GameState currentState = null;
 
@@ -56,6 +67,10 @@ public class GamePanel extends PApplet implements NetworkListener {
 		window.setVisible(true);
 
 		player = new Player();
+		map = new StandardMap();
+		brute = new Rectangle(100, 100, 100, 100);
+		mage = new Rectangle(210, 100, 100, 100);
+		ranger = new Rectangle(320, 100, 100, 100);
 
 	}
 
@@ -73,30 +88,58 @@ public class GamePanel extends PApplet implements NetworkListener {
 	public void draw() {
 		clear();
 
-		imageMode(CENTER);
-		background(Color.BLACK.getRGB());
+		if(!connected) {
 
-		color(Color.BLACK.getRGB());
+			rectMode(CORNER);
+			textAlign(CENTER);
+			fill(255);
+			rect(brute.x, brute.y, brute.width, brute.height);
+			rect(mage.x, mage.y, mage.width, mage.height);
+			rect(ranger.x, ranger.y, ranger.width, ranger.height);
+			fill(0);
+			text("Brute", brute.x + brute.width/2, brute.y + brute.y/2);
+			text("Mage", mage.x + mage.width/2, mage.y + mage.height/2);
+			text("Ranger", ranger.x + ranger.width/2, ranger.y + ranger.height/2);
 
-		if (currentState != null) {
-			pushMatrix();
-			Avatar av = null;
-			for (Avatar x : currentState.getAvatars()) {
-				if (x.getPlayer().equals(player.getPlayerAddress())) {
-					av = x;
-					break;
+		} else {
+
+			imageMode(CENTER);
+			background(Color.BLACK.getRGB());
+
+			color(Color.BLACK.getRGB());
+
+			if (currentState != null) { //gets the avatar information from the currentState
+				pushMatrix();
+				Avatar av = null;
+				map = currentState.getMap(); //gets the map that's made on the server. 
+				for (Avatar x : currentState.getAvatars()) {
+					if (x.getPlayer().equals(player.getPlayerAddress())) {
+						av = x;
+						break;
+					}
+					
 				}
+				if(map.hitTree(av.getX(),av.getY(), av.getWidth(), av.getHeight())) {
+					System.out.println("crashed into a tree");
+					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', false);
+					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 's', false);
+					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'w', false);
+					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'a', false);
+
+				}
+								
+
+				currentState.draw(this, av, width, height);
+				drawCooldowns(this, av);
+				popMatrix();
 			}
-			currentState.draw(this, av, width, height);
-			drawCooldowns(this, av);
-			popMatrix();
+
+
+			// Starting Setup
+			stroke(0, 0, 0);
+
+			mousePressed();
 		}
-
-
-		// Starting Setup
-		stroke(0, 0, 0);
-
-		mousePressed();
 
 	}
 
@@ -104,11 +147,25 @@ public class GamePanel extends PApplet implements NetworkListener {
 	 * Detects mouse clicks to trigger abilities
 	 */
 	public void mouseClicked() {
-		if (nm != null) {
-			if (mouseButton == LEFT)
-				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.BASIC, getAngleToMouse());
-			else if(mouseButton == RIGHT) {
-				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.RANGED, getAngleToMouse());
+
+		if(!connected) {
+
+			if(brute.contains(new Point(mouseX, mouseY))) {
+				player.setAvatar(new Brute());
+			}
+			else if(mage.contains(new Point(mouseX, mouseY)))
+					player.setAvatar(new Mage());
+			else if(ranger.contains(new Point(mouseX, mouseY)))
+					player.setAvatar(new Ranger());
+			
+		} else {
+
+			if (nm != null) {
+				if (mouseButton == LEFT)
+					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.BASIC, getAngleToMouse());
+				else if(mouseButton == RIGHT) {
+					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.RANGED, getAngleToMouse());
+				}
 			}
 		}
 	}
@@ -200,12 +257,14 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 		} else if (ndo.messageType.equals(NetworkDataObject.HANDSHAKE)) {
 			System.out.println("\n" + ndo.dataSource + " connected. ");
+			setConnected(true);
 		} else if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
 			if (ndo.dataSource.equals(ndo.serverHost)) {
 				System.out.println("Disconnected from server " + ndo.serverHost);
 			} else {
 				System.out.println("Disconected from server");
 			}
+			setConnected(false);
 		}
 	}
 
@@ -252,19 +311,23 @@ public class GamePanel extends PApplet implements NetworkListener {
 		surface.ellipseMode(CENTER);
 		surface.textAlign(CENTER);
 		surface.textSize(16);
-		
+
 		double refX = a.getX();
 		double refY = a.getY() + height/2 - 60;
-		
+
 		drawTimer(surface, refX-200, refY, a.getBasicCooldownLeft(), a.getBasicCooldown(), "BASIC");
 		drawTimer(surface, refX-100, refY, a.getRangedCooldownLeft(), a.getRangedCooldown(), "RANGED");
 		drawTimer(surface, refX, refY, a.getA1CooldownLeft(), a.getA1Cooldown(), "A1");
 		drawTimer(surface, refX+100, refY, a.getA2CooldownLeft(), a.getA2Cooldown(), "A2");
 		drawTimer(surface, refX+200, refY, a.getA3CooldownLeft(), a.getA3Cooldown(), "A3");
-		
+
 		surface.popStyle();
 	}
-	
+
+	public void setConnected(boolean connect) {
+		connected = connect;
+	}
+
 	private void drawTimer(PApplet surface, double x, double y, long cdLeft, double cd, String name) {
 		if(cdLeft < cd * 1000) {
 			double percent = cdLeft/(cd*1000);

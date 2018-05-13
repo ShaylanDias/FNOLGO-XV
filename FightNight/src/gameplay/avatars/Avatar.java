@@ -96,6 +96,7 @@ public abstract class Avatar implements Serializable {
 		timeActionStarted = System.currentTimeMillis();
 		blocking = false;
 		superArmor = false;
+		numOfSpriteWalk = 5;
 		dashing = false;
 		status = new StatusEffect(StatusEffect.Effect.NONE, 0, 0);
 		shieldHealth = 125;
@@ -252,7 +253,7 @@ public abstract class Avatar implements Serializable {
 					1.5f * sh);
 		}
 	
-		// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
+		 surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
 		// surface.fill(Color.RED.getRGB());
 		// surface.ellipseMode(PApplet.CENTER);
 		// surface.ellipse((float)(hitbox.x), (float)(hitbox.y), 5f, 5f);

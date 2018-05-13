@@ -28,7 +28,6 @@ public class Obstacle implements Serializable{
 		//System.out.println(yDiff);
 		
 		if(Math.abs(x-xPos)<xDiff && Math.abs(y-yPos) <yDiff) {
-			System.out.println("Intersect");
 			return true;
 		}
 		

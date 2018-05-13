@@ -13,7 +13,7 @@ import processing.core.PApplet;
 public class StandardMap extends Map{
 
 	private static String imageKey = "FNOLGO MAP";
-	private Tree[] Tree = new Tree[100];
+	private Tree[] Tree = new Tree[100]; //optimization possiblity: arraylist instead of array, small improvement
 
 	
 	
@@ -78,14 +78,27 @@ public class StandardMap extends Map{
 //		surface.rect(-1200, 600, 120, 120);
 //		surface.rect(-1380, 780, 120, 120);
 
-
-
+	}
+	
+	/**
+	 * checks if something, namely the avatar, collides with a tree object 
+	 * 
+	 * @param x X coordinate of the character
+	 * @param y Y coordinate of the character
+	 * @param width character's width 
+	 * @param height character's height 
+	 * @return true if it does collide with a tree
+	 */
+	public boolean hitTree(double x, double y, double width, double height) { 
 		
-
-
+		for(int i = 0; i<Tree.length;i++) {
+			if(Tree[i].canDraw() && Tree[i].checkIntersection(x,y,width,height)){
+				return true;
+			}
+		}
 		
 		
-
+		return false;
 	}
 
 }
