@@ -253,7 +253,7 @@ public abstract class Avatar implements Serializable {
 					1.5f * sh);
 		}
 	
-		// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
+		 surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
 		// surface.fill(Color.RED.getRGB());
 		// surface.ellipseMode(PApplet.CENTER);
 		// surface.ellipse((float)(hitbox.x), (float)(hitbox.y), 5f, 5f);

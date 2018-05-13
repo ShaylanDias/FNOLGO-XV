@@ -21,6 +21,8 @@ public class Tree extends Obstacle{
 	
 	public void draw(PApplet tree) {
 		tree.image(GamePanel.resources.getImage(imageKey),(float) xPos,(float) yPos, (int) width, (int) height);
+		tree.rectMode(PApplet.CENTER);
+		tree.rect((float)xPos, (float)yPos,(float) width, (float)height);
 
 	}
 	
