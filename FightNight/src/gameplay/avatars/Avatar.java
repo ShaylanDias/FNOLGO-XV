@@ -189,7 +189,7 @@ public abstract class Avatar implements Serializable {
 			}
 		} else {
 			if(System.currentTimeMillis() > deathTime + 6 * 1000) {
-				spawn();
+				spawn(map);
 			}
 		}
 	
@@ -263,11 +263,17 @@ public abstract class Avatar implements Serializable {
 		surface.popStyle();
 	}
 
-	public void spawn() {
-		double x = Math.random() * 3000;
-		double y = Math.random() * 3000;
-		hitbox.x = 1500 - x;
-		hitbox.y = 1500 - y;
+	public void spawn(Map map) {
+		double x = 1500 - Math.random() * 3000;
+		double y = 1500 - Math.random() * 3000;		
+		if(map.hitTree(x, y, hitbox.width, hitbox.height)) {
+			spawn(map);
+		}
+		else {
+			hitbox.x = x;
+			hitbox.y = y;
+		}
+
 		health = fullHealth;
 		shieldHealth = fullShieldHealth;
 		rangedCDStart = 0;
