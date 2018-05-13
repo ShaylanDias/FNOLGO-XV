@@ -6,6 +6,7 @@ import clientside.gui.GamePanel;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Fireball;
 import gameplay.attacks.StatusEffect.Effect;
+import gameplay.avatars.Avatar.AttackType;
 import gameplay.maps.Map;
 import processing.core.PApplet;
 
@@ -24,11 +25,13 @@ public class Ranger extends Avatar {
 	public Ranger() {
 		super();
 		super.basicCD = 0.5;
+		moveSpeed = 8;
 		spriteSheetKey = "Ranger";
 		sprites = new Rectangle[] { new Rectangle(92, 94, 52, 88) };
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
 		dashCD = 0.5;	
+		rangedCD = 0.5;
 		numOfSpriteWalk = 10;
 		for(int i = 1; i < 11; i++) {
 			getSpriteListWalk().add("Ranger"+i);
@@ -58,16 +61,16 @@ public class Ranger extends Avatar {
 	// Shoot bow, arrow goes until it hits a wall
 	@Override
 	public Attack[] rangedAttack(String player, double angle) {
-		super.rangedCDStart = System.currentTimeMillis();
-		currentlyAttacking = true;
 		currentAttack = AttackType.RANGED;
-		timeActionStarted = System.currentTimeMillis();
-		if(angle > 90 && angle < 270)
-			lastDir = false;
-		else
+		super.rangedCDStart = System.currentTimeMillis();
+		if(angle > 90 && angle < 270) {
 			lastDir = true;
-		return new Attack[] {new Fireball((int) hitbox.x, (int) hitbox.y, player, angle, "Rock", 400, 22)};
-
+			return new Attack[] {new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle, "Arrow", 600, 40, 60, 30)};
+		}
+		else {
+			lastDir = false;
+			return new Attack[] {new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle, "Arrow", 600, 40, 60, 30)};
+		}
 	}
 
 	// PlaceTrap, place an invisible trap that expires after a certain amount of
@@ -81,7 +84,29 @@ public class Ranger extends Avatar {
 	// Barrage - fire multiple arrows in an area
 	@Override
 	public Attack[] abilityTwo(String player, double angle) {
-		return null;
+		currentAttack = AttackType.A2;
+		super.rangedCDStart = System.currentTimeMillis();
+		if(angle > 90 && angle < 270) {
+			lastDir = true;
+			return new Attack[] {new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle, "Arrow", 600, 40, 60, 30), 
+					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle-10, "Arrow", 600, 40, 60, 30),
+					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle-5, "Arrow", 600, 40, 60, 30),
+					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle+5, "Arrow", 600, 40, 60, 30),
+					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle+10, "Arrow", 600, 40, 60, 30),
+					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle+15, "Arrow", 600, 40, 60, 30),
+					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle-15, "Arrow", 600, 40, 60, 30)};
+		}
+		else {
+			lastDir = false;
+			return new Attack[] {new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle, "Arrow", 600, 40, 60, 30),
+					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle-10, "Arrow", 600, 40, 60, 30),
+					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle-5, "Arrow", 600, 40, 60, 30),
+					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle+5, "Arrow", 600, 40, 60, 30),
+					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle+10, "Arrow", 600, 40, 60, 30),
+					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle+15, "Arrow", 600, 40, 60, 30),
+					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle-15, "Arrow", 600, 40, 60, 30)};
+			
+		}
 
 	}
 

@@ -111,6 +111,7 @@ public abstract class Avatar implements Serializable {
 		numOfSpriteWalk = 0;
 		movementControlled = true;
 		dead = true;
+		dashCD = 1;
 	}
 
 	/**

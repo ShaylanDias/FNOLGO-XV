@@ -24,6 +24,7 @@ public class Mage extends Avatar {
 	public Mage() {
 		super();
 		super.basicCD = 0.9;
+		moveSpeed = 7;
 		spriteSheetKey = "Mage";
 		sprites = new Rectangle[] { new Rectangle(70, 94, 54, 90) };
 		a3CD = 6;

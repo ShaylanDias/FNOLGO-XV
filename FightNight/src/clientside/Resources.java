@@ -69,9 +69,9 @@ public class Resources {
 		for(int i = 1; i < 11; i++) {
 			images.put("Ranger"+i, new ImageWrapper("data/Ranger/Ranger" + i + ".png"));
 		}
+		images.put("Arrow", new ImageWrapper("data/Ranger/Arrow.png"));
 		
 		images.put("Fireball1", new ImageWrapper("Fireball1.png"));
-		images.put("Arrow1", new ImageWrapper("arrow-projectile.jpg"));
 		images.put("Shield", new ImageWrapper("Shield.png"));
 
 		images.put("FNOLGO MAP", new ImageWrapper("data/Map/map50x50.png"));
