@@ -53,6 +53,7 @@ public class StandardMap extends Map{
 		super.draw(surface);
 		surface.image(GamePanel.resources.getImage(imageKey), 0, 0, (int) 3000, (int) 3000);
 		surface.noFill();
+		surface.rectMode(PApplet.CORNER);
 		surface.rect(-1500, -1500, 3000, 3000);
 		
 		int counter = 0;
