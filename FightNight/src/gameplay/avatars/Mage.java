@@ -25,13 +25,17 @@ public class Mage extends Avatar {
 		super();
 		super.basicCD = 0.9;
 		spriteSheetKey = "Mage";
-		sprites = new Rectangle[] { new Rectangle(70, 94, 54, 90) };
+		sprites = new Rectangle[] { new Rectangle(70, 94, 50, 90) };
 		a3CD = 6;
 		a2CD = 8;
 		rangedCD = 0.5;
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
 		dashCD = 2.0;
+		numOfSpriteWalk = 3;
+		for(int i = 1; i < 4; i++) {
+			getSpriteListWalk().add("Mage"+i);
+		}
 	}
 	/**
 	 * Creats a Mage at this x,y

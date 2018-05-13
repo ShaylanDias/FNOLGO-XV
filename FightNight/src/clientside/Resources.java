@@ -62,6 +62,9 @@ public class Resources {
 		images.put("Lightning4", new ImageWrapper("data/Mage/Lightning5.png"));
 		images.put("Lightning5", new ImageWrapper("data/Mage/Lightning6.png"));
 		images.put("Mage", new ImageWrapper("data/Mage/Mage.png"));
+		for(int i = 1; i < 4; i++) {
+			images.put("Mage"+i, new ImageWrapper("data/Mage/Mage" + i + ".png"));
+		}
 		images.put("SnowField", new ImageWrapper("data/Mage/SnowField.png"));
 		
 		//Ranger
