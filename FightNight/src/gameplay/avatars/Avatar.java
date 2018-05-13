@@ -368,15 +368,19 @@ public abstract class Avatar implements Serializable {
 	 *            X to move
 	 * @param y
 	 *            Y to move
+	 * @return True if successfully could move
 	 */
-	public void moveBy(double x, double y, Map map) {
+	public boolean moveBy(double x, double y, Map map) {
 		if (!status.getEffect().equals(Effect.STUNNED) || status.isFinished()) {
 							
 			if(!map.hitTree(hitbox.x + x, hitbox.y + y, hitbox.width, hitbox.height)) {
 				hitbox.x += x;
 				hitbox.y += y;
-			}
-		}
+				return true;
+			} else
+				return false;
+		} else
+			return false;
 	}
 
 	/**
@@ -387,9 +391,10 @@ public abstract class Avatar implements Serializable {
 	 *            The distance to travel
 	 * @param angle 
 	 * 			  The angle to travel at
+	 * @return True if successful
 	 */
-	public void moveDistance(double dist, double angle, Map map) {
-		moveBy(Math.cos(Math.toRadians(angle)) * dist, Math.sin(Math.toRadians(angle)) * dist, map);
+	public boolean moveDistance(double dist, double angle, Map map) {
+		return moveBy(Math.cos(Math.toRadians(angle)) * dist, Math.sin(Math.toRadians(angle)) * dist, map);
 	}
 
 	/**
@@ -449,8 +454,10 @@ public abstract class Avatar implements Serializable {
 	}
 
 	private void dashAct(Map map) { // Where the actual Dash action occurs
-		moveBy(Math.cos(Math.toRadians(dashAngle)) * dashSpeed, -Math.sin(Math.toRadians(dashAngle)) * dashSpeed, map);
-		dashTraveled += dashSpeed;
+		if(moveBy(Math.cos(Math.toRadians(dashAngle)) * dashSpeed, -Math.sin(Math.toRadians(dashAngle)) * dashSpeed, map))
+			dashTraveled += dashSpeed;
+		else
+			dashTraveled = dashDistance + 1;
 		if (dashTraveled >= dashDistance) {
 			dashing = false;
 			movementControlled = true;
