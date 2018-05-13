@@ -6,6 +6,7 @@ import clientside.gui.GamePanel;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Fireball;
 import gameplay.attacks.StatusEffect.Effect;
+import gameplay.maps.Map;
 import processing.core.PApplet;
 
 /**
@@ -156,8 +157,8 @@ public class Ranger extends Avatar {
 		surface.popStyle();
 	}
 	
-	public void act() {
-		super.act();
+	public void act(Map map) {
+		super.act(map);
 		if (!super.isLeft() && !super.isRight() && !super.isUp() && !super.isDown()) {
 			spriteSheetKey = "Ranger";
 		}

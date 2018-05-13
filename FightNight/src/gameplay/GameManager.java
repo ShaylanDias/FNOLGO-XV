@@ -110,7 +110,7 @@ public class GameManager implements NetworkListener {
 				}
 			}
 			for (Avatar x : state.getAvatars()) {
-				x.act();
+				x.act(state.getMap());
 			}
 
 		}

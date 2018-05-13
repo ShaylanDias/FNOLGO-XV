@@ -11,6 +11,7 @@ import gameplay.attacks.MeleeAttack;
 import gameplay.attacks.StatusEffect;
 import gameplay.attacks.StatusEffect.Effect;
 import gameplay.attacks.TrailingAttack;
+import gameplay.maps.Map;
 import processing.core.PApplet;
 
 /**
@@ -70,9 +71,9 @@ public class Brute extends Avatar {
 		this.hitbox.x = x;
 	}
 
-	public void act() {
+	public void act(Map map) {
 		if(currentAttack == AttackType.A1)
-			actUpperCut();
+			actUpperCut(map);
 		else if(currentAttack == AttackType.RANGED)
 			rangedAct();
 		else if(currentAttack == AttackType.BASIC)
@@ -80,9 +81,9 @@ public class Brute extends Avatar {
 		else if(currentAttack == AttackType.A2)
 			actHowl();
 		else if(currentAttack == AttackType.A3)
-			actFury();
+			actFury(map);
 		else {
-			super.act();
+			super.act(map);
 			if (!super.isLeft() && !super.isRight() && !super.isUp() && !super.isDown()) {
 				spriteSheetKey = "WWDefault";
 			}
@@ -281,7 +282,7 @@ public class Brute extends Avatar {
 
 	}
 
-	private void actUpperCut() {
+	private void actUpperCut(Map map) {
 		if(System.currentTimeMillis() < timeActionStarted + 0.1 * 1000) {
 			spriteSheetKey = upperCutKeys[0];
 		} else if(System.currentTimeMillis() < timeActionStarted +  0.15 * 1000 ) {
@@ -292,7 +293,7 @@ public class Brute extends Avatar {
 			spriteSheetKey = upperCutKeys[3];
 		} else if(System.currentTimeMillis() < timeActionStarted + 0.85 * 1000) {
 			spriteSheetKey = upperCutKeys[4];
-			super.moveDistance(30, upperCutAngle);
+			super.moveDistance(30, upperCutAngle, map);
 		} else if(System.currentTimeMillis() < timeActionStarted + 0.88 * 1000) {
 			spriteSheetKey = upperCutKeys[5];
 		} else if(System.currentTimeMillis() < timeActionStarted + 0.94 * 1000) {
@@ -328,7 +329,7 @@ public class Brute extends Avatar {
 		}
 	}
 
-	private void actFury() {
+	private void actFury(Map map) {
 		if(System.currentTimeMillis() < timeActionStarted + 0.1 * 1000) {
 			spriteSheetKey = upperCutKeys[0];
 		} else if(System.currentTimeMillis() < timeActionStarted +  0.15 * 1000 ) {
@@ -339,7 +340,7 @@ public class Brute extends Avatar {
 			spriteSheetKey = upperCutKeys[3];
 		} else if(System.currentTimeMillis() < timeActionStarted + 0.9 * 1000) {
 			spriteSheetKey = upperCutKeys[4];
-			super.moveDistance(30, upperCutAngle);
+			super.moveDistance(30, upperCutAngle, map);
 		} else if(System.currentTimeMillis() < timeActionStarted + 0.88 * 1000) {
 			spriteSheetKey = upperCutKeys[5];
 		} else if(System.currentTimeMillis() < timeActionStarted + 0.94 * 1000) {

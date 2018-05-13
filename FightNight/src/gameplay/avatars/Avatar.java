@@ -12,6 +12,7 @@ import gameplay.attacks.Attack;
 import gameplay.attacks.Attack.AttackResult;
 import gameplay.attacks.StatusEffect;
 import gameplay.attacks.StatusEffect.Effect;
+import gameplay.maps.Map;
 import processing.core.PApplet;
 
 /**
@@ -130,7 +131,7 @@ public abstract class Avatar implements Serializable {
 	/**
 	 * This should be called every round of the game loop
 	 */
-	public void act() {
+	public void act(Map map) {
 		
 		double moveSpeed = this.moveSpeed;
 	
@@ -167,23 +168,23 @@ public abstract class Avatar implements Serializable {
 					shieldHealth = fullShieldHealth;
 			}
 			if (dashing) {
-				dashAct();
+				dashAct(map);
 				return;
 			}
 			if (up) {
-				moveBy(0, -moveSpeed);
+				moveBy(0, -moveSpeed, map);
 				walk(numOfSpriteWalk, 200);
 			}
 			if (right) {
-				moveBy(moveSpeed, 0);
+				moveBy(moveSpeed, 0, map);
 				walk(numOfSpriteWalk, 200);
 			}
 			if (left) {
-				moveBy(-moveSpeed, 0);
+				moveBy(-moveSpeed, 0, map);
 				walk(numOfSpriteWalk, 200);
 			}
 			if (down) {
-				moveBy(0, moveSpeed);
+				moveBy(0, moveSpeed, map);
 				walk(numOfSpriteWalk, 200);
 			}
 		} else {
@@ -368,10 +369,13 @@ public abstract class Avatar implements Serializable {
 	 * @param y
 	 *            Y to move
 	 */
-	public void moveBy(double x, double y) {
+	public void moveBy(double x, double y, Map map) {
 		if (!status.getEffect().equals(Effect.STUNNED) || status.isFinished()) {
-			hitbox.x += x;
-			hitbox.y += y;
+							
+			if(!map.hitTree(hitbox.x + x, hitbox.y + y, hitbox.width, hitbox.height)) {
+				hitbox.x += x;
+				hitbox.y += y;
+			}
 		}
 	}
 
@@ -384,8 +388,8 @@ public abstract class Avatar implements Serializable {
 	 * @param angle 
 	 * 			  The angle to travel at
 	 */
-	public void moveDistance(double dist, double angle) {
-		moveBy(Math.cos(Math.toRadians(angle)) * dist, Math.sin(Math.toRadians(angle)) * dist);
+	public void moveDistance(double dist, double angle, Map map) {
+		moveBy(Math.cos(Math.toRadians(angle)) * dist, Math.sin(Math.toRadians(angle)) * dist, map);
 	}
 
 	/**
@@ -444,8 +448,8 @@ public abstract class Avatar implements Serializable {
 		//		dashAngle = mouseAngle;
 	}
 
-	private void dashAct() { // Where the actual Dash action occurs
-		moveBy(Math.cos(Math.toRadians(dashAngle)) * dashSpeed, -Math.sin(Math.toRadians(dashAngle)) * dashSpeed);
+	private void dashAct(Map map) { // Where the actual Dash action occurs
+		moveBy(Math.cos(Math.toRadians(dashAngle)) * dashSpeed, -Math.sin(Math.toRadians(dashAngle)) * dashSpeed, map);
 		dashTraveled += dashSpeed;
 		if (dashTraveled >= dashDistance) {
 			dashing = false;
