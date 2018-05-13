@@ -6,13 +6,12 @@ import processing.core.PApplet;
 
 public class Obstacle implements Serializable{
 	
-	private double xPos, yPos, width, height;
+	private double xPos, yPos, radius;
 	
-	public Obstacle(double x, double y, double width, double height) {
+	public Obstacle(double x, double y, double radius) {
 		xPos = x;
 		yPos =y;
-		this.width = width;
-		this.height = height; 
+		this.radius = radius;
 	}
 	/**
 	 * Based on an x, y position based off of the center of the rectangle hitbox
@@ -22,8 +21,8 @@ public class Obstacle implements Serializable{
 	 */
 	public boolean checkIntersection(double x, double y, double width, double height) {
 		
-		double xDiff = this.width/2 + width/2;
-		double yDiff = this.height/2 + height/2;
+		double xDiff = radius + width/2;
+		double yDiff = radius + height/2;
 		//System.out.println(xDiff);
 		//System.out.println(yDiff);
 		

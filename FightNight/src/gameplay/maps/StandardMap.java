@@ -22,7 +22,7 @@ public class StandardMap extends Map{
 		for(int i = 0; i<Tree.length;i++) {
 			double size = Math.random()*250;
 			if(size>100) {
-				Tree[i] = new Tree(Math.random()*3000.0-1500,Math.random()*3000.0-1500, size, size);
+				Tree[i] = new Tree(Math.random()*3000.0-1500,Math.random()*3000.0-1500, size/2);
 			}	
 			else
 				i--;
@@ -34,7 +34,7 @@ public class StandardMap extends Map{
 			for(int j = i+1;j<Tree.length;j++) {
 				
 				//Some checks if the trees are interesecting each other. Check the code in trees. I think I might just be stupid. 
-				if(Tree[i].checkIntersection(Tree[j].getX(),Tree[j].getY() , Tree[j].getWidth(), Tree[j].getHeight())) {
+				if(Tree[i].checkIntersection(Tree[j].getX(),Tree[j].getY() , Tree[j].getRadius()*2, Tree[j].getRadius()*2)) {
 					Intersected = true;
 					break;					
 				}
@@ -56,11 +56,9 @@ public class StandardMap extends Map{
 		surface.rectMode(PApplet.CORNER);
 		surface.rect(-1500, -1500, 3000, 3000);
 		
-		int counter = 0;
 		for(int i = 0; i< Tree.length;i++) {
 			if(Tree[i].canDraw()) {
 				Tree[i].draw(surface);
-				counter++;
 			}
 		}
 		//Left quadrant tree hitboxes going top down
