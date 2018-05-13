@@ -57,8 +57,6 @@ public abstract class Avatar implements Serializable {
 
 	protected boolean lastDir; //True if right, false if left
 
-	private boolean dead;
-	
 	private boolean up, down, left, right;
 
 	private String playerAddress = "";
@@ -86,12 +84,15 @@ public abstract class Avatar implements Serializable {
 	protected boolean currentlyAttacking; // Means cannot move, dash, or block while executing this attack
 	protected long timeActionStarted; // Time is the time that the attack it is executing was started
 
+	private boolean dead, eliminated;
+	private int lives;
 	protected long deathTime = 0;
 
 	/**
 	 * Initializes a Character with default values
 	 */
 	public Avatar() {
+		lives = 1;
 		sprites = new Rectangle[] { new Rectangle(100, 100, 200, 200) };
 		hitbox = new Rectangle2D.Double(-1000, -1000, 200, 200);
 		timeActionStarted = System.currentTimeMillis();
@@ -133,9 +134,13 @@ public abstract class Avatar implements Serializable {
 	 * This should be called every round of the game loop
 	 */
 	public void act(Map map) {
-		
+
 		double moveSpeed = this.moveSpeed;
-	
+
+		if(health <= 0) {
+			die();
+		}
+		
 		if(status.getEffect().equals(Effect.SLOWED)) {
 			if(!status.started())
 				status.startEffect();
@@ -150,7 +155,7 @@ public abstract class Avatar implements Serializable {
 				return;
 			}
 		}
-	
+
 		if(!dead) {
 			if (blocking) {
 				shieldHealth -= 1;
@@ -193,7 +198,7 @@ public abstract class Avatar implements Serializable {
 				spawn(map);
 			}
 		}
-	
+
 	}
 
 	/**
@@ -206,37 +211,37 @@ public abstract class Avatar implements Serializable {
 	public void draw(PApplet surface) {
 		surface.pushMatrix();
 		surface.pushStyle();
-	
+
 		drawHealthBar(surface);
-	
+
 		if(deathTime != 0) {
 			drawDeath(surface);
 			surface.popMatrix();
 			surface.popStyle();
 			return;
 		}
-	
+
 		surface.imageMode(PApplet.CENTER);
-	
+
 		if (blocking) {
 			// Draw block
 		}
 		if (status.getEffect().equals(Effect.STUNNED)) {
 			surface.image(GamePanel.resources.getImage("Stun"), (float)hitbox.x, (float)hitbox.y);
 		}
-	
+
 		int sw, sh;
 		//		sx = (int) sprites[spriteInd].getX();
 		//		sy = (int) sprites[spriteInd].getY();
 		sw = (int) sprites[spriteInd].getWidth();
 		sh = (int) sprites[spriteInd].getHeight();
-	
-	
+
+
 		surface.pushMatrix();
 		if (!lastDir) {
 			surface.scale(-1, 1);
 			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw, sh);
-	
+
 		} else {
 			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
 		}
@@ -254,37 +259,39 @@ public abstract class Avatar implements Serializable {
 			surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
 					1.5f * sh);
 		}
-	
-		 //surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
+
+		//surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
 		// surface.fill(Color.RED.getRGB());
 		// surface.ellipseMode(PApplet.CENTER);
 		// surface.ellipse((float)(hitbox.x), (float)(hitbox.y), 5f, 5f);
-	
+
 		surface.popMatrix();
 		surface.popStyle();
 	}
 
 	public void spawn(Map map) {
-		double x = 1500 - Math.random() * 3000;
-		double y = 1500 - Math.random() * 3000;		
-		if(map.hitTree(x, y, hitbox.width, hitbox.height)) {
-			spawn(map);
-		}
-		else {
-			hitbox.x = x;
-			hitbox.y = y;
-		}
+		if(!eliminated) {
+			double x = 1500 - Math.random() * 3000;
+			double y = 1500 - Math.random() * 3000;		
+			if(map.hitTree(x, y, hitbox.width, hitbox.height)) {
+				spawn(map);
+			}
+			else {
+				hitbox.x = x;
+				hitbox.y = y;
+			}
 
-		health = fullHealth;
-		shieldHealth = fullShieldHealth;
-		rangedCDStart = 0;
-		basicCDStart = 0;
-		a1CDStart = 0;
-		a2CDStart = 0;
-		a3CDStart = 0;
-		deathTime = 0;
-		stop();
-		dead = false;
+			health = fullHealth;
+			shieldHealth = fullShieldHealth;
+			rangedCDStart = 0;
+			basicCDStart = 0;
+			a1CDStart = 0;
+			a2CDStart = 0;
+			a3CDStart = 0;
+			deathTime = 0;
+			stop();
+			dead = false;
+		}
 	}
 
 	public Attack[] attack(AttackType a, String player, double angle) {
@@ -355,9 +362,7 @@ public abstract class Avatar implements Serializable {
 			}
 			health -= attack.getDamage();
 			if(health <= 0 && deathTime == 0) {
-				health = 0;
-				dead = true;
-				deathTime = System.currentTimeMillis();
+				die();
 			}
 			return AttackResult.SUCCESS;
 		} else if (playerAddress.equals(attack.getPlayer())) {
@@ -367,6 +372,15 @@ public abstract class Avatar implements Serializable {
 		}
 	}
 
+	private void die() {
+		health = 0;
+		dead = true;
+		lives--;
+		if(lives <= 0)
+			eliminated = true;
+		deathTime = System.currentTimeMillis();
+	}
+	
 	/**
 	 * 
 	 * Moves the Avatar by the input x and y values
@@ -379,7 +393,7 @@ public abstract class Avatar implements Serializable {
 	 */
 	public boolean moveBy(double x, double y, Map map) {
 		if (!status.getEffect().equals(Effect.STUNNED) || status.isFinished()) {
-							
+
 			if(!map.hitTree(hitbox.x + x, hitbox.y + y, hitbox.width, hitbox.height) && map.inBounds(hitbox.x + x, hitbox.y + y, hitbox.width, hitbox.height)) {
 				hitbox.x += x;
 				hitbox.y += y;
@@ -429,7 +443,7 @@ public abstract class Avatar implements Serializable {
 	 * Starts the Character in a dash, enables superArmor
 	 */
 	public void dash(Double mouseAngle) {
-	
+
 		if(left) {
 			if(up) {
 				dashAngle = 135;
@@ -451,8 +465,8 @@ public abstract class Avatar implements Serializable {
 		} else if(up){
 			dashAngle = 90;
 		}
-	
-	
+
+
 		movementControlled = false;
 		dashing = true;
 		dashTraveled = 0;
@@ -566,7 +580,7 @@ public abstract class Avatar implements Serializable {
 		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float)hitbox.x, (float)hitbox.y, (float)hitbox.width, (float)hitbox.height);
 	}
 
-	
+
 	//Getters and Setters
 	public boolean isUp() {
 		return up;
@@ -683,7 +697,7 @@ public abstract class Avatar implements Serializable {
 	public double getRangedCooldown() {
 		return rangedCD;
 	}
-	
+
 	/**
 	 * 
 	 * Attack bound to left click
@@ -730,6 +744,14 @@ public abstract class Avatar implements Serializable {
 
 	public boolean isDead() {
 		return dead;
+	}
+
+	public boolean isEliminated() {
+		return eliminated;
+	}
+	
+	public int getLives() {
+		return lives;
 	}
 
 }

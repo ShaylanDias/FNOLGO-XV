@@ -43,6 +43,8 @@ public class GamePanel extends PApplet implements NetworkListener {
 	private Map map; 
 	private NetworkMessenger nm;
 	private boolean connected;
+	private boolean gameEnded;
+	private boolean won;
 
 	private Rectangle brute, ranger, mage;
 
@@ -71,6 +73,8 @@ public class GamePanel extends PApplet implements NetworkListener {
 		brute = new Rectangle(100, 100, 100, 100);
 		mage = new Rectangle(210, 100, 100, 100);
 		ranger = new Rectangle(320, 100, 100, 100);
+		won = false;
+		gameEnded = false;
 
 	}
 
@@ -240,10 +244,14 @@ public class GamePanel extends PApplet implements NetworkListener {
 			if (ndo.message[0] != null) {
 				if (ndo.message[0] instanceof GameState) {
 					currentState = (GameState) ndo.message[0];
+				} else if(ndo.message[0] instanceof String) {
+					if(ndo.message[0].equals("ENDED")) {
+						gameEnded = true;
+						if(player.getPlayerAddress().equals(ndo.message[1])) {
+							won = true;
+						}
+					}
 				}
-				// if (ndo.message[0] instanceof String) {
-				//
-				// }
 			}
 
 		} else if (ndo.messageType.equals(NetworkDataObject.HANDSHAKE)) {

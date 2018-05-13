@@ -22,13 +22,18 @@ public class GameManager implements NetworkListener {
 
 	private GameState state;
 	private ArrayList<NetworkDataObject> commands;
+	private boolean gameEnded;
+	private String winner;
 
 	/**
 	 * Initializes a GameManager
 	 */
 	public GameManager() {
 		state = new GameState();
+		gameEnded = false;
 		commands = new ArrayList<NetworkDataObject>();
+		gameEnded = false;
+		winner = "";
 	}
 
 	/**
@@ -109,8 +114,21 @@ public class GameManager implements NetworkListener {
 					i--;
 				}
 			}
+			int total = 0;
 			for (Avatar x : state.getAvatars()) {
+				if(x.isEliminated())
+					total++;
 				x.act(state.getMap());
+			}
+			if(state.getAttacks().size() > 1 && total > state.getAvatars().size() - 1) {
+				 String x = "";
+				 for(int i = 0; i < state.getAvatars().size(); i++) {
+					 if(!state.getAvatars().get(i).isEliminated()) {
+						 winner = state.getAttacks().get(i).getPlayer();
+						 break;
+					 }
+				 }
+				gameEnded = true;
 			}
 
 		}
@@ -151,4 +169,12 @@ public class GameManager implements NetworkListener {
 		}
 	}
 
+	public String getWinner() {
+		return winner;
+	}
+	
+	public boolean isGameEnded() {
+		return gameEnded;
+	}
+	
 }
