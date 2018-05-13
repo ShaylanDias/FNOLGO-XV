@@ -15,7 +15,7 @@ public class Lunge extends Attack{
 	private double stopMoving;
 
 	public Lunge(String playerAddress, double dir, Brute attacker, int x, int y, StatusEffect status, double duration, double stopMoving) {
-		super(imageKey, x, y, 100, 50, playerAddress, damage, shieldBreaker, status, dir);
+		super(imageKey, x, y, 50, 100, playerAddress, damage, shieldBreaker, status, dir);
 		this.attacker = attacker;
 		this.duration = duration;
 		this.stopMoving = stopMoving;

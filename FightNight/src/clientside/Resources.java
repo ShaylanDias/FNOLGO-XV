@@ -70,6 +70,7 @@ public class Resources {
 			images.put("Ranger"+i, new ImageWrapper("data/Ranger/Ranger" + i + ".png"));
 		}
 		images.put("Arrow", new ImageWrapper("data/Ranger/Arrow.png"));
+		images.put("Mushroom", new ImageWrapper("data/Ranger/MushroomTrap.png"));
 		
 		images.put("Fireball1", new ImageWrapper("Fireball1.png"));
 		images.put("Shield", new ImageWrapper("Shield.png"));
