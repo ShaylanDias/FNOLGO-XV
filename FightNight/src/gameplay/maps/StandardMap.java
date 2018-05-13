@@ -34,7 +34,7 @@ public class StandardMap extends Map{
 			for(int j = i+1;j<Tree.length;j++) {
 				
 				//Some checks if the trees are interesecting each other. Check the code in trees. I think I might just be stupid. 
-				if(Tree[i].checkIntersection(Tree[j].getX(),Tree[j].getY() , Tree[j].getRadius()*2, Tree[j].getRadius()*2)) {
+				if(Tree[i].checkIntersection(Tree[j].getX(),Tree[j].getY() , Tree[j].getRadius())) {
 					Intersected = true;
 					break;					
 				}
