@@ -96,6 +96,7 @@ public abstract class Avatar implements Serializable {
 		timeActionStarted = System.currentTimeMillis();
 		blocking = false;
 		superArmor = false;
+		numOfSpriteWalk = 5;
 		dashing = false;
 		status = new StatusEffect(StatusEffect.Effect.NONE, 0, 0);
 		shieldHealth = 125;
