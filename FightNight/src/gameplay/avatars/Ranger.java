@@ -33,6 +33,9 @@ public class Ranger extends Avatar {
 		super();
 		super.basicCD = 0.5;
 		moveSpeed = 8;
+		a2CD = 10;
+		a1CD = 6;
+		a3CD = 8;
 		spriteSheetKey = "Ranger";
 		sprites = new Rectangle[] { new Rectangle(92, 94, 52, 88) };
 		hitbox.height = sprites[0].height;
