@@ -284,6 +284,7 @@ public class Ranger extends Avatar {
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	private void actRanged() {
 		if(System.currentTimeMillis() < timeActionStarted + 0.03 * 1000) {
@@ -311,6 +312,8 @@ public class Ranger extends Avatar {
 			currentAttack = AttackType.NONE;
 		}
 	}
+=======
+>>>>>>> parent of 3e0ae92... Some Ranger Animations
 =======
 >>>>>>> parent of 3e0ae92... Some Ranger Animations
 
