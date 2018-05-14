@@ -347,7 +347,7 @@ public class GameServer implements NetworkMessenger {
 		for(int i = 0; i < connections.length; i++) {
 			con[i] = connections[i] + "FNOLGO";
 		}
-		Object[] message = Arrays.copyOf(connections, connections.length, Object[].class);
+		Object[] message = Arrays.copyOf(con, connections.length, Object[].class);
 		sendMessage(NetworkDataObject.CLIENT_LIST, message);
 	}
 
