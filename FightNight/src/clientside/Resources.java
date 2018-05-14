@@ -74,6 +74,19 @@ public class Resources {
 		images.put("Mushroom", new ImageWrapper("data/Ranger/MushroomTrap.png"));
 		images.put("Knife", new ImageWrapper("data/Ranger/KnifeSlash.png"));
 		images.put("Smoke", new ImageWrapper("data/Ranger/Smoke.png"));
+		for(int i = 0; i < 10; i++) {
+			images.put("RangerRanged"+i, new ImageWrapper("data/Ranger/Ranged"+i+".png"));
+		}
+		for(int i = 1; i < 4; i++) {
+			images.put("RangerBasic"+i, new ImageWrapper("data/Ranger/Basic"+i+".png"));
+		}
+		images.put("RangerBasicEnd1", new ImageWrapper("data/Ranger/BasicEnd1.png"));
+		images.put("RangerBasicEnd2", new ImageWrapper("data/Ranger/BasicEnd2.png"));
+		images.put("RangerBasicEnd3", new ImageWrapper("data/Ranger/BasicEnd3.png"));
+		images.put("RangerDying1", new ImageWrapper("data/Ranger/Dying1.png"));
+		images.put("RangerDying2", new ImageWrapper("data/Ranger/Dying2.png"));
+		images.put("RangerDying3", new ImageWrapper("data/Ranger/Dying3.png"));
+		images.put("RangerDead", new ImageWrapper("data/Ranger/Dead.png"));
 		
 		images.put("Fireball1", new ImageWrapper("Fireball1.png"));
 		images.put("Shield", new ImageWrapper("Shield.png"));

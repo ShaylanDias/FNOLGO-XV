@@ -184,9 +184,6 @@ public class Mage extends Avatar {
 
 		surface.imageMode(PApplet.CENTER);
 
-		if (blocking) {
-			// Draw block
-		}
 		if (super.getStatus().getEffect().equals(Effect.STUNNED)) {
 			surface.image(GamePanel.resources.getImage("Stun"), (float)hitbox.x, (float)hitbox.y);
 		}

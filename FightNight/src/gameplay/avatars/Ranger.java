@@ -9,6 +9,7 @@ import gameplay.attacks.Fireball;
 import gameplay.attacks.MeleeAttack;
 import gameplay.attacks.StatusEffect;
 import gameplay.attacks.StatusEffect.Effect;
+import gameplay.avatars.Avatar.AttackType;
 import gameplay.attacks.Trap;
 import gameplay.maps.Map;
 import processing.core.PApplet;
@@ -60,7 +61,7 @@ public class Ranger extends Avatar {
 	@Override
 	public Attack[] basicAttack(String player, double angle) {
 		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000 && !dashing && !blocking) {
-			//			currentlyAttacking = true;
+			currentlyAttacking = true;
 			basicCDStart = System.currentTimeMillis();
 			currentAttack = AttackType.BASIC;
 			timeActionStarted = System.currentTimeMillis();
@@ -182,8 +183,10 @@ public class Ranger extends Avatar {
 		surface.pushMatrix();
 		surface.pushStyle();
 		float widthMod = 1f;
-		if(currentlyAttacking)
-			widthMod = 1f;
+		if(currentlyAttacking) {
+			if(currentAttack.equals(AttackType.BASIC) && System.currentTimeMillis() > timeActionStarted +  0.25 * 1000 )
+				widthMod = 1.5f;
+		}
 
 		if(invisible && System.currentTimeMillis() < smokeTime) {
 			surface.image(GamePanel.resources.getImage("Smoke"), (float) hitbox.x, (float) hitbox.y, sw * widthMod, sh);
@@ -226,6 +229,13 @@ public class Ranger extends Avatar {
 	public void act(Map map) {
 		super.act(map);
 
+		if(currentlyAttacking) {
+			if(currentAttack.equals(AttackType.BASIC))
+				actBasic();
+			return;
+		}
+		
+		
 		if(invisible) {
 			if(System.currentTimeMillis() > invisStartTime + invisLength * 1000)
 				invisible = false;
@@ -254,6 +264,21 @@ public class Ranger extends Avatar {
 	public void spawn(Map map) {
 		invisible = false;
 		super.spawn(map);
+	}
+	
+	private void actBasic() {
+		if(System.currentTimeMillis() < timeActionStarted + 0.06 * 1000) {
+			spriteSheetKey = "RangerBasic1";
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.1 * 1000 ) {
+			spriteSheetKey = "RangerBasic2";
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.16 * 1000 ) {
+			spriteSheetKey = "RangerBasic3";
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.3 * 1000 ) {
+			spriteSheetKey = "RangerBasicEnd1";
+		} else if(System.currentTimeMillis() > timeActionStarted +  0.3 * 1000 ){
+			currentlyAttacking = false;
+			currentAttack = AttackType.NONE;
+		}
 	}
 
 }

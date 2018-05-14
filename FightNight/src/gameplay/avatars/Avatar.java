@@ -224,9 +224,6 @@ public abstract class Avatar implements Serializable {
 
 		surface.imageMode(PApplet.CENTER);
 
-		if (blocking) {
-			// Draw block
-		}
 		if (status.getEffect().equals(Effect.STUNNED)) {
 			surface.image(GamePanel.resources.getImage("Stun"), (float)hitbox.x, (float)hitbox.y);
 		}
