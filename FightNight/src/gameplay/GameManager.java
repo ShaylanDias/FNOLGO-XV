@@ -115,28 +115,48 @@ public class GameManager implements NetworkListener {
 					i--;
 				}
 			}
-			int total = 0;
-			for (Avatar x : state.getAvatars()) {
-				if(x.isEliminated())
-					total++;
+			for (int i = 0; i < state.getAvatars().size(); i++) {
+				Avatar x = state.getAvatars().get(i);
+				if(x.isEliminated() && !(x instanceof Spectator)) {
+					state.getAvatars().remove(x);
+					Avatar y = new Spectator();
+					y.setPlayer(x.getPlayer());
+					state.addAvatar(y);
+				}
 				x.act(state.getMap());
 			}
-			int x = state.getAvatars().size();
-			int spectators = 0;
-			for(Avatar a : state.getAvatars()) {
-				if(a instanceof Spectator)
-					x--;
-				spectators ++;
+			
+			Avatar av = null;
+			if(state.getAvatars().size() > 1) {
+				int spectators = 0;
+				for(Avatar x : state.getAvatars()) {
+					if(x instanceof Spectator) {
+						spectators++;
+					} else
+						av = x;
+				}
+				if(spectators >= state.getAvatars().size()-1) {
+					winner = av.getPlayer();
+					gameEnded = true;
+				}
 			}
-			if(x > 1 && total > state.getAvatars().size() - 1 - spectators) {
-				 for(int i = 0; i < state.getAvatars().size(); i++) {
-					 if(!(state.getAvatars().get(i) instanceof Spectator) && !state.getAvatars().get(i).isEliminated()) {
-						 winner = state.getAttacks().get(i).getPlayer();
-						 break;
-					 }
-				 }
-				gameEnded = true;
-			}
+			
+//			int x = state.getAvatars().size();
+//			int spectators = 0;
+//			for(Avatar a : state.getAvatars()) {
+//				if(a instanceof Spectator)
+//					x--;
+//				spectators ++;
+//			}
+//			if(x > 1 && total > state.getAvatars().size() - 1 - spectators) {
+//				 for(int i = 0; i < state.getAvatars().size(); i++) {
+//					 if(!(state.getAvatars().get(i) instanceof Spectator) && !state.getAvatars().get(i).isEliminated()) {
+//						 winner = state.getAttacks().get(i).getPlayer();
+//						 break;
+//					 }
+//				 }
+//				gameEnded = true;
+//			}
 
 		}
 

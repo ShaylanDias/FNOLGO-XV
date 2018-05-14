@@ -1,11 +1,10 @@
 package gameplay.avatars;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 
 import gameplay.attacks.Attack;
-import gameplay.attacks.StatusEffect;
 import gameplay.attacks.Attack.AttackResult;
 import gameplay.maps.Map;
 import processing.core.PApplet;
@@ -27,14 +26,20 @@ public class Spectator extends Avatar{
 		spriteInd = 0;
 		health = 200;
 		fullHealth = health;
-		deathTime = -1;
+		deathTime = 1241241243;
 		numOfSpriteWalk = 0;
 		movementControlled = true;
 		dashCD = 1;
+		super.setDead(true);
 	}
 	
 	public void draw(PApplet surface) {
-		
+		surface.pushStyle();
+		surface.textAlign(PApplet.CENTER);
+		surface.fill(0);
+		surface.textSize(30);
+		surface.text("Spectating", (float)(hitbox.x), (float)(hitbox.y - 250));
+		surface.popStyle();
 	}
 	
 	@Override
@@ -87,9 +92,4 @@ public class Spectator extends Avatar{
 		return null;
 	}
 
-	@Override
-	public void spawn(Map map) {
-		super.moveTo(1500,  1500);
-	}
-	
 }

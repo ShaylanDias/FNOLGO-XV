@@ -113,6 +113,7 @@ public abstract class Avatar implements Serializable {
 		movementControlled = true;
 		dead = true;
 		dashCD = 1;
+		eliminated = false;
 	}
 
 	/**
@@ -194,7 +195,7 @@ public abstract class Avatar implements Serializable {
 				walk(numOfSpriteWalk, 200);
 			}
 		} else {
-			if(System.currentTimeMillis() > deathTime + 6 * 1000) {
+			if(dead && System.currentTimeMillis() > deathTime + 6 * 1000) {
 				spawn(map);
 			}
 		}
@@ -270,10 +271,10 @@ public abstract class Avatar implements Serializable {
 	}
 
 	public void spawn(Map map) {
-		if(!eliminated) {
+		if(!eliminated || this instanceof Spectator) {
 			double x = 1500 - Math.random() * 3000;
 			double y = 1500 - Math.random() * 3000;		
-			if(map.hitTree(x, y, hitbox.width, hitbox.height)) {
+			if(map.hitTree(x, y, hitbox.width, hitbox.height) || !map.inBounds(x, y, hitbox.width, hitbox.height)) {
 				spawn(map);
 			}
 			else {
@@ -746,6 +747,10 @@ public abstract class Avatar implements Serializable {
 		return dead;
 	}
 
+	public void setDead(boolean dead) {
+		this.dead = dead;
+	}
+	
 	public void setLives(int x) {
 		lives = x;
 	}
