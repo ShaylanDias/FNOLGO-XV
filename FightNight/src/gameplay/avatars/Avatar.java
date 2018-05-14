@@ -338,7 +338,7 @@ public abstract class Avatar implements Serializable {
 	 * @return The result of the attack
 	 */
 	public AttackResult takeHit(Attack attack) {
-		if (!playerAddress.equals(attack.getPlayer()) && attack.isActive() && !dead) {
+		if (!playerAddress.equals(attack.getPlayer()) && attack.isActive()) {
 			if(blocking) {
 				if(!attack.isShieldBreaker()) {
 					if (blocking) {
@@ -374,14 +374,12 @@ public abstract class Avatar implements Serializable {
 	}
 
 	private void die() {
-		if(!dead) {
-			health = 0;
-			dead = true;
-			lives--;
-			if(lives <= 0)
-				eliminated = true;
-			deathTime = System.currentTimeMillis();
-		}
+		health = 0;
+		dead = true;
+		lives--;
+		if(lives <= 0)
+			eliminated = true;
+		deathTime = System.currentTimeMillis();
 	}
 
 	/**
