@@ -338,7 +338,7 @@ public abstract class Avatar implements Serializable {
 	 * @return The result of the attack
 	 */
 	public AttackResult takeHit(Attack attack) {
-		if (!playerAddress.equals(attack.getPlayer()) && attack.isActive()) {
+		if (!playerAddress.equals(attack.getPlayer()) && attack.isActive() && !dead) {
 			if(blocking) {
 				if(!attack.isShieldBreaker()) {
 					if (blocking) {

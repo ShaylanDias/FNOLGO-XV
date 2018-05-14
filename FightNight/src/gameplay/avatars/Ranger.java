@@ -190,7 +190,7 @@ public class Ranger extends Avatar {
 		float widthMod = 1f;
 		if(currentlyAttacking) {
 			if(currentAttack.equals(AttackType.BASIC) && System.currentTimeMillis() > timeActionStarted +  0.25 * 1000 )
-				widthMod = 1.5f;
+				widthMod = 1.2f;
 		}
 
 		if(invisible && System.currentTimeMillis() < smokeTime) {
@@ -313,7 +313,6 @@ public class Ranger extends Avatar {
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}
-		System.out.println(spriteSheetKey);
 	}
 
 }
