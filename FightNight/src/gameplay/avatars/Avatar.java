@@ -141,65 +141,62 @@ public abstract class Avatar implements Serializable {
 		if(health <= 0) {
 			die();
 		}
-
-		if(!currentlyAttacking) {
-
-			if(status.getEffect().equals(Effect.SLOWED)) {
-				if(!status.started())
-					status.startEffect();
-				moveSpeed -= status.getValue();
-			} else if(status.getEffect().equals(Effect.STUNNED)) {
-				if(!status.started())
-					status.startEffect();
-				else {
-					if(status.isFinished()) {
-						status = new StatusEffect(Effect.NONE,0,0);
-					}
-					return;
+		
+		if(status.getEffect().equals(Effect.SLOWED)) {
+			if(!status.started())
+				status.startEffect();
+			moveSpeed -= status.getValue();
+		} else if(status.getEffect().equals(Effect.STUNNED)) {
+			if(!status.started())
+				status.startEffect();
+			else {
+				if(status.isFinished()) {
+					status = new StatusEffect(Effect.NONE,0,0);
 				}
+				return;
 			}
+		}
 
-			if(!dead) {
-				if (blocking) {
-					shieldHealth -= 1;
-					up = false;
-					down = false;
-					left = false;
-					right = false;
-					if(shieldHealth <= 0) {
-						shieldHealth = -50;
-						blocking = false;
-					}
-					return;
-				} else {
-					shieldHealth += 1.5;
-					if(shieldHealth > fullShieldHealth)
-						shieldHealth = fullShieldHealth;
+		if(!dead) {
+			if (blocking) {
+				shieldHealth -= 1;
+				up = false;
+				down = false;
+				left = false;
+				right = false;
+				if(shieldHealth <= 0) {
+					shieldHealth = -50;
+					blocking = false;
 				}
-				if (dashing) {
-					dashAct(map);
-					return;
-				}
-				if (up) {
-					moveBy(0, -moveSpeed, map);
-					walk(numOfSpriteWalk, 200);
-				}
-				if (right) {
-					moveBy(moveSpeed, 0, map);
-					walk(numOfSpriteWalk, 200);
-				}
-				if (left) {
-					moveBy(-moveSpeed, 0, map);
-					walk(numOfSpriteWalk, 200);
-				}
-				if (down) {
-					moveBy(0, moveSpeed, map);
-					walk(numOfSpriteWalk, 200);
-				}
+				return;
 			} else {
-				if(dead && System.currentTimeMillis() > deathTime + 6 * 1000) {
-					spawn(map);
-				}
+				shieldHealth += 1.5;
+				if(shieldHealth > fullShieldHealth)
+					shieldHealth = fullShieldHealth;
+			}
+			if (dashing) {
+				dashAct(map);
+				return;
+			}
+			if (up) {
+				moveBy(0, -moveSpeed, map);
+				walk(numOfSpriteWalk, 200);
+			}
+			if (right) {
+				moveBy(moveSpeed, 0, map);
+				walk(numOfSpriteWalk, 200);
+			}
+			if (left) {
+				moveBy(-moveSpeed, 0, map);
+				walk(numOfSpriteWalk, 200);
+			}
+			if (down) {
+				moveBy(0, moveSpeed, map);
+				walk(numOfSpriteWalk, 200);
+			}
+		} else {
+			if(dead && System.currentTimeMillis() > deathTime + 6 * 1000) {
+				spawn(map);
 			}
 		}
 
@@ -381,7 +378,7 @@ public abstract class Avatar implements Serializable {
 			eliminated = true;
 		deathTime = System.currentTimeMillis();
 	}
-
+	
 	/**
 	 * 
 	 * Moves the Avatar by the input x and y values
@@ -750,15 +747,15 @@ public abstract class Avatar implements Serializable {
 	public void setDead(boolean dead) {
 		this.dead = dead;
 	}
-
+	
 	public void setLives(int x) {
 		lives = x;
 	}
-
+	
 	public boolean isEliminated() {
 		return eliminated;
 	}
-
+	
 	public int getLives() {
 		return lives;
 	}
