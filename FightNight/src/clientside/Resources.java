@@ -63,6 +63,7 @@ public class Resources {
 		images.put("Lightning5", new ImageWrapper("data/Mage/Lightning6.png"));
 		images.put("Mage", new ImageWrapper("data/Mage/Mage.png"));
 		images.put("SnowField", new ImageWrapper("data/Mage/SnowField.png"));
+		images.put("MageBasic", new ImageWrapper("data/Mage/Basic.png"));
 		
 		//Ranger
 		images.put("Ranger", new ImageWrapper("data/Ranger/Ranger.png"));
@@ -71,6 +72,8 @@ public class Resources {
 		}
 		images.put("Arrow", new ImageWrapper("data/Ranger/Arrow.png"));
 		images.put("Mushroom", new ImageWrapper("data/Ranger/MushroomTrap.png"));
+		images.put("Knife", new ImageWrapper("data/Ranger/KnifeSlash.png"));
+		images.put("Smoke", new ImageWrapper("data/Ranger/Smoke.png"));
 		
 		images.put("Fireball1", new ImageWrapper("Fireball1.png"));
 		images.put("Shield", new ImageWrapper("Shield.png"));

@@ -24,7 +24,7 @@ public class Lightning extends Attack{
 //		}
 		this.delay = delay;
 		this.attached = attached;
-		duration = 2;
+		duration = 0.5;
 		dead = false;
 	}
 

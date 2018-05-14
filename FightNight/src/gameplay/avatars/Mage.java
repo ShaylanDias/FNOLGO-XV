@@ -6,8 +6,11 @@ import clientside.gui.GamePanel;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Fireball;
 import gameplay.attacks.Lightning;
+import gameplay.attacks.MeleeAttack;
 import gameplay.attacks.SnowField;
+import gameplay.attacks.StatusEffect;
 import gameplay.attacks.StatusEffect.Effect;
+import gameplay.avatars.Avatar.AttackType;
 import processing.core.PApplet;
 /**
  * Creates a mage character
@@ -48,7 +51,20 @@ public class Mage extends Avatar {
 	// Staff wack, it pushes them back
 	@Override
 	public Attack[] basicAttack(String player, double angle) {
-		return null;
+		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000 && !dashing && !blocking) {
+			//			currentlyAttacking = true;
+			basicCDStart = System.currentTimeMillis();
+			currentAttack = AttackType.BASIC;
+			timeActionStarted = System.currentTimeMillis();
+			if(angle > 90 && angle < 270) 
+				lastDir = true;
+			else
+				lastDir = false;
+			return new Attack[] {new MeleeAttack("MageBasic", (int)( hitbox.x + 50 * Math.cos(Math.toRadians(angle))), (int)( hitbox.y - 75 * Math.sin(Math.toRadians(angle))), 40, 40, player, 20,
+					false, new StatusEffect(Effect.NONE,0,0), angle, 0.15)};
+		} else {
+			return null;
+		}
 	}
 	@Override
 	public void dash(Double mouseAngle) {

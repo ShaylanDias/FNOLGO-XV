@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import gameplay.attacks.Attack;
 import gameplay.avatars.Avatar;
+import gameplay.avatars.Ranger;
 import gameplay.maps.Map;
 import gameplay.maps.StandardMap;
 import processing.core.PApplet;
@@ -42,11 +43,23 @@ public class GameState implements Serializable {
 	 * @param av The Avatar to draw with respect to           
 	 *  
 	 */
-	public void draw(PApplet surface, Avatar av, float width, float height) {
+	public void draw(PApplet surface, Avatar av, float width, float height, String playerAddress) {
 		surface.translate((float) (-av.getX() + width / 2), (float) -av.getY() + height / 2);
 		map.draw(surface);
-		for (Avatar c : avatars)
-			c.draw(surface);
+		for (Avatar c : avatars) {
+			if(c instanceof Ranger) {
+				if(((Ranger)c).isInvisible()) {
+					if(c.getPlayer().equals(playerAddress))
+						c.draw(surface);
+					else {
+						if(((Ranger) c).isSmoke())
+							c.draw(surface);
+					}
+				} else
+					c.draw(surface);
+			} else
+				c.draw(surface);
+		}
 		for (Attack a : attacks)
 			a.draw(surface);
 	}
