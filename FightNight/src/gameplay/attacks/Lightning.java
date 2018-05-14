@@ -33,6 +33,8 @@ public class Lightning extends Attack{
 		
 		if(System.currentTimeMillis() > super.getStartTime() + delay * 1000)
 			super.setActive(true);
+		else
+			return true;
 		
 		if (checkEnd()) {
 			return false;
