@@ -94,16 +94,32 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 		if(!connected) {
 
-			rectMode(CORNER);
-			textAlign(CENTER);
-			fill(255);
-			rect(brute.x, brute.y, brute.width, brute.height);
-			rect(mage.x, mage.y, mage.width, mage.height);
-			rect(ranger.x, ranger.y, ranger.width, ranger.height);
-			fill(0);
-			text("Brute", brute.x + brute.width/2, brute.y + brute.y/2);
-			text("Mage", mage.x + mage.width/2, mage.y + mage.height/2);
-			text("Ranger", ranger.x + ranger.width/2, ranger.y + ranger.height/2);
+			if(!gameEnded) {
+				//Move all of these around to be right and have a background image and a title
+				//Make a way to switch to instructions screen
+				//Make buttons change color to indicate which character you selected
+				rectMode(CORNER);
+				textAlign(CENTER);
+				fill(255);
+				rect(brute.x, brute.y, brute.width, brute.height);
+				rect(mage.x, mage.y, mage.width, mage.height);
+				rect(ranger.x, ranger.y, ranger.width, ranger.height);
+				//Make this button change color if it was selected
+				fill(0);
+				text("Brute", brute.x + brute.width/2, brute.y + brute.y/2);
+				text("Mage", mage.x + mage.width/2, mage.y + mage.height/2);
+				text("Ranger", ranger.x + ranger.width/2, ranger.y + ranger.height/2);
+			} else {
+				
+				//Provide a button to click to send you back to the title screen (change gameEnded to false)
+				if(won) {
+					//What to draw if this player won
+					//Probably a picture of their avatar and say won
+				} else {
+					//What to draw if this player lost
+					//Probably avatar dead and say you lost
+				}
+			}
 
 		} else {
 
@@ -235,6 +251,8 @@ public class GamePanel extends PApplet implements NetworkListener {
 	@Override
 	public void connectedToServer(NetworkMessenger nm) {
 		this.nm = nm;
+		gameEnded = false;
+		won = false;
 		player.setPlayerAddress(nm.getHost().toString());
 	}
 
