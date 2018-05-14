@@ -343,11 +343,11 @@ public class GameServer implements NetworkMessenger {
 
 	private void sendClientList() {
 		InetAddress[] connections = getConnectedHosts();
-		String[] con = new String[connections.length];
-		for(int i = 0; i < connections.length; i++) {
-			con[i] = connections[i] + "FNOLGO";
-		}
-		Object[] message = Arrays.copyOf(con, connections.length, Object[].class);
+//		String[] con = new String[connections.length];
+//		for(int i = 0; i < connections.length; i++) {
+//			con[i] = connections[i] + "FNOLGO";
+//		}
+		Object[] message = Arrays.copyOf(connections, connections.length, Object[].class);
 		sendMessage(NetworkDataObject.CLIENT_LIST, message);
 	}
 
