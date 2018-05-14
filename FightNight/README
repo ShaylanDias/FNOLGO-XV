@@ -41,9 +41,9 @@ Must Haves
 	Single map, GUI with basic character models that move - DONE
 	Basic movement and combat abilities w/ effects - DONE
 	Block and roll defensive mechanics - DONE
-	Win/Loss mechanic (battle royale)
+	Win/Loss mechanic (battle royale) - DONE
 	3 classes/characters 
-		Brute, mage, ranger 
+		Brute, mage, ranger - DONE
 		Brute is focused more on melee, Mage and Ranger are focused on projectile attacks
 	Cooldown System - DONE
 Want to Haves
@@ -60,7 +60,7 @@ Want to Haves
 		Fighter, mage, ranger, ninja, sumo, soldier
 Stretches 
 	Multiple Maps
-	Team games/Multiple game modes (Deathmatch, Duel, 
+	Team games/Multiple game modes (Deathmatch, Duel, Capture the Flag)
 	Progression from wins -> Customizable abilities by class (upgrades/perk tree)’
 
 ------------------------------------------------------------------------------------------------------------------------------------------

@@ -6,6 +6,7 @@ import clientside.ControlType;
 import gameplay.attacks.Attack;
 import gameplay.avatars.Avatar;
 import gameplay.avatars.Avatar.AttackType;
+import gameplay.avatars.Spectator;
 import networking.frontend.NetworkDataObject;
 import networking.frontend.NetworkListener;
 import networking.frontend.NetworkMessenger;
@@ -120,10 +121,16 @@ public class GameManager implements NetworkListener {
 					total++;
 				x.act(state.getMap());
 			}
-			if(state.getAttacks().size() > 1 && total > state.getAvatars().size() - 1) {
-				 String x = "";
+			int x = state.getAvatars().size();
+			int spectators = 0;
+			for(Avatar a : state.getAvatars()) {
+				if(a instanceof Spectator)
+					x--;
+				spectators ++;
+			}
+			if(x > 1 && total > state.getAvatars().size() - 1 - spectators) {
 				 for(int i = 0; i < state.getAvatars().size(); i++) {
-					 if(!state.getAvatars().get(i).isEliminated()) {
+					 if(!(state.getAvatars().get(i) instanceof Spectator) && !state.getAvatars().get(i).isEliminated()) {
 						 winner = state.getAttacks().get(i).getPlayer();
 						 break;
 					 }
