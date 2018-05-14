@@ -141,7 +141,7 @@ public abstract class Avatar implements Serializable {
 		if(health <= 0) {
 			die();
 		}
-		
+
 		if(status.getEffect().equals(Effect.SLOWED)) {
 			if(!status.started())
 				status.startEffect();
@@ -371,14 +371,16 @@ public abstract class Avatar implements Serializable {
 	}
 
 	private void die() {
-		health = 0;
-		dead = true;
-		lives--;
-		if(lives <= 0)
-			eliminated = true;
-		deathTime = System.currentTimeMillis();
+		if(!dead) {
+			health = 0;
+			dead = true;
+			lives--;
+			if(lives <= 0)
+				eliminated = true;
+			deathTime = System.currentTimeMillis();
+		}
 	}
-	
+
 	/**
 	 * 
 	 * Moves the Avatar by the input x and y values
@@ -747,15 +749,15 @@ public abstract class Avatar implements Serializable {
 	public void setDead(boolean dead) {
 		this.dead = dead;
 	}
-	
+
 	public void setLives(int x) {
 		lives = x;
 	}
-	
+
 	public boolean isEliminated() {
 		return eliminated;
 	}
-	
+
 	public int getLives() {
 		return lives;
 	}
