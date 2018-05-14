@@ -374,12 +374,14 @@ public abstract class Avatar implements Serializable {
 	}
 
 	private void die() {
-		health = 0;
-		dead = true;
-		lives--;
-		if(lives <= 0)
-			eliminated = true;
-		deathTime = System.currentTimeMillis();
+		if(!dead) {
+			health = 0;
+			dead = true;
+			lives--;
+			if(lives <= 0)
+				eliminated = true;
+			deathTime = System.currentTimeMillis();
+		}
 	}
 
 	/**
