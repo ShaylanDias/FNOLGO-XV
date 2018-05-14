@@ -334,9 +334,9 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 		drawTimer(surface, refX-200, refY, a.getBasicCooldownLeft(), a.getBasicCooldown(), "BASIC");
 		drawTimer(surface, refX-100, refY, a.getRangedCooldownLeft(), a.getRangedCooldown(), "RANGED");
-		drawTimer(surface, refX, refY, a.getA1CooldownLeft(), a.getA1Cooldown(), "A1");
-		drawTimer(surface, refX+100, refY, a.getA2CooldownLeft(), a.getA2Cooldown(), "A2");
-		drawTimer(surface, refX+200, refY, a.getA3CooldownLeft(), a.getA3Cooldown(), "A3");
+		drawTimer(surface, refX, refY, a.getA1CooldownLeft(), a.getA1Cooldown(), "E");
+		drawTimer(surface, refX+100, refY, a.getA2CooldownLeft(), a.getA2Cooldown(), "R");
+		drawTimer(surface, refX+200, refY, a.getA3CooldownLeft(), a.getA3Cooldown(), "F");
 
 		surface.popStyle();
 	}

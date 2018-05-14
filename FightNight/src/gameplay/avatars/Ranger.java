@@ -79,15 +79,17 @@ public class Ranger extends Avatar {
 	// Shoot bow, arrow goes until it hits a wall
 	@Override
 	public Attack[] rangedAttack(String player, double angle) {
+		currentlyAttacking = true;
 		currentAttack = AttackType.RANGED;
+		timeActionStarted = System.currentTimeMillis();
 		super.rangedCDStart = System.currentTimeMillis();
 		if(angle > 90 && angle < 270) {
 			lastDir = true;
-			return new Attack[] {new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle, "Arrow", 600, 40, 60, 30)};
+			return new Attack[] {new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle, "Arrow", 600, 40, 60, 30, 0.3)};
 		}
 		else {
 			lastDir = false;
-			return new Attack[] {new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle, "Arrow", 600, 40, 60, 30)};
+			return new Attack[] {new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle, "Arrow", 600, 40, 60, 30, 0.3)};
 		}
 	}
 
@@ -95,27 +97,29 @@ public class Ranger extends Avatar {
 	// Barrage - fire multiple arrows in an area
 	@Override
 	public Attack[] abilityOne(String player, double angle) {
-		currentAttack = AttackType.A2;
-		super.rangedCDStart = System.currentTimeMillis();
+		currentAttack = AttackType.A1;
+		currentlyAttacking = true;
+		timeActionStarted = System.currentTimeMillis();
+		super.rangedCDStart = timeActionStarted;
 		if(angle > 90 && angle < 270) {
 			lastDir = true;
-			return new Attack[] {new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle, "Arrow", 600, 40, 60, 30), 
-					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle-10, "Arrow", 600, 40, 60, 30),
-					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle-5, "Arrow", 600, 40, 60, 30),
-					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle+5, "Arrow", 600, 40, 60, 30),
-					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle+10, "Arrow", 600, 40, 60, 30),
-					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle+15, "Arrow", 600, 40, 60, 30),
-					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle-15, "Arrow", 600, 40, 60, 30)};
+			return new Attack[] {new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle, "Arrow", 600, 40, 60, 30, 0.3), 
+					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle-10, "Arrow", 600, 40, 60, 30, 0.3),
+					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle-5, "Arrow", 600, 40, 60, 30, 0.3),
+					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle+5, "Arrow", 600, 40, 60, 30, 0.3),
+					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle+10, "Arrow", 600, 40, 60, 30, 0.3),
+					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle+15, "Arrow", 600, 40, 60, 30, 0.3),
+					new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle-15, "Arrow", 600, 40, 60, 30, 0.3)};
 		}
 		else {
 			lastDir = false;
-			return new Attack[] {new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle, "Arrow", 600, 40, 60, 30),
-					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle-10, "Arrow", 600, 40, 60, 30),
-					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle-5, "Arrow", 600, 40, 60, 30),
-					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle+5, "Arrow", 600, 40, 60, 30),
-					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle+10, "Arrow", 600, 40, 60, 30),
-					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle+15, "Arrow", 600, 40, 60, 30),
-					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle-15, "Arrow", 600, 40, 60, 30)};
+			return new Attack[] {new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle, "Arrow", 600, 40, 60, 30, 0.3),
+					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle-10, "Arrow", 600, 40, 60, 30, 0.3),
+					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle-5, "Arrow", 600, 40, 60, 30, 0.3),
+					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle+5, "Arrow", 600, 40, 60, 30, 0.3),
+					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle+10, "Arrow", 600, 40, 60, 30, 0.3),
+					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle+15, "Arrow", 600, 40, 60, 30, 0.3),
+					new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle-15, "Arrow", 600, 40, 60, 30, 0.3)};
 
 		}
 	}
@@ -124,6 +128,7 @@ public class Ranger extends Avatar {
 	// time. The ranger can carry 3 at time
 	@Override
 	public Attack[] abilityTwo(String player, double angle) {
+//		currentlyAttacking = true;
 		currentAttack = AttackType.A2;
 		super.rangedCDStart = System.currentTimeMillis();
 		if(angle > 90 && angle < 270) {
@@ -232,6 +237,8 @@ public class Ranger extends Avatar {
 		if(currentlyAttacking) {
 			if(currentAttack.equals(AttackType.BASIC))
 				actBasic();
+			else if(currentAttack.equals(AttackType.RANGED) || currentAttack.equals(AttackType.A1))
+				actRanged();
 			return;
 		}
 		
@@ -279,6 +286,34 @@ public class Ranger extends Avatar {
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}
+	}
+	
+	private void actRanged() {
+		if(System.currentTimeMillis() < timeActionStarted + 0.03 * 1000) {
+			spriteSheetKey = "RangerRanged0";
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.06 * 1000 ) {
+			spriteSheetKey = "RangerRanged1";
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.09 * 1000 ) {
+			spriteSheetKey = "RangerRanged2";
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.12 * 1000 ) {
+			spriteSheetKey = "RangerRanged3";
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.15 * 1000 ) {
+			spriteSheetKey = "RangerRanged4";
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.18 * 1000 ) {
+			spriteSheetKey = "RangerRanged5";
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.21 * 1000 ) {
+			spriteSheetKey = "RangerRanged6";
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.24 * 1000 ) {
+			spriteSheetKey = "RangerRanged7";
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.27 * 1000 ) {
+			spriteSheetKey = "RangerRanged8";
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.30 * 1000 ) {
+			spriteSheetKey = "RangerRanged9";
+		} else if(System.currentTimeMillis() > timeActionStarted +  0.31 * 1000 ){
+			currentlyAttacking = false;
+			currentAttack = AttackType.NONE;
+		}
+		System.out.println(spriteSheetKey);
 	}
 
 }
