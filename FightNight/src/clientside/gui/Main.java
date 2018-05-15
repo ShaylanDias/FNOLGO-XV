@@ -26,7 +26,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		GamePanel game = new GamePanel(false);
-		NetworkManagementPanel nmp = new NetworkManagementPanel("Chat", 16, game);
+		NetworkManagementPanel nmp = new NetworkManagementPanel("FNOLGO", 16, game);
 
 	}
 
