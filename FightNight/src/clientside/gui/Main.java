@@ -32,6 +32,7 @@ public class Main {
 		GamePanel game = new GamePanel(false);
 		NetworkManagementPanel nmp = new NetworkManagementPanel("Chat", 16, game);
 		StartMenu menu = new StartMenu();
+		
 	}
 
 }
