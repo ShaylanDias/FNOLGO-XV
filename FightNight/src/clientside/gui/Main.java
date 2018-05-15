@@ -1,5 +1,9 @@
 package clientside.gui;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import networking.frontend.NetworkManagementPanel;
 
 /**
@@ -27,7 +31,7 @@ public class Main {
 	public static void main(String[] args) {
 		GamePanel game = new GamePanel(false);
 		NetworkManagementPanel nmp = new NetworkManagementPanel("Chat", 16, game);
-
+		StartMenu menu = new StartMenu();
 	}
 
 }
