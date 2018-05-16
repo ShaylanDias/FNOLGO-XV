@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -21,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import clientside.Player;
 import networking.frontend.NetworkManagementPanel;
 
 public class StartMenu extends JPanel{
@@ -100,24 +102,25 @@ public class StartMenu extends JPanel{
 		characterSelection.setBackground(Color.BLACK);
 		
 		try {
-			BufferedImage Brute = ImageIO.read(new File("data/Brute/WW-Default.png"));
-			BufferedImage Mage = ImageIO.read(new File("data/Mage/Mage.png"));
-			BufferedImage Ranger = ImageIO.read(new File("data/Ranger/Ranger.png"));
+			Image Brute = ImageIO.read(new File("data/Brute/WW-Default.png"));
+			Image Mage = ImageIO.read(new File("data/Mage/Mage.png"));
+			Image Ranger = ImageIO.read(new File("data/Ranger/Ranger.png"));
+			Brute = Brute.getScaledInstance(100,100,Image.SCALE_DEFAULT);
+			Mage = Mage.getScaledInstance(100,100,Image.SCALE_DEFAULT);
+			Ranger = Ranger.getScaledInstance(100,100,Image.SCALE_DEFAULT);
+			
 			JLabel bruteLabel = new JLabel(new ImageIcon(Brute));
-			bruteLabel.setPreferredSize(new Dimension(100,100));
-			bruteLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
+			bruteLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
 			bruteLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 			JLabel mageLabel = new JLabel(new ImageIcon(Mage));
-			mageLabel.setPreferredSize(new Dimension(100,100));
-			mageLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
-			mageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+			mageLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
+			mageLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 
 			JLabel rangerLabel = new JLabel(new ImageIcon(Ranger));
-			rangerLabel.setPreferredSize(new Dimension(100,100));
-			rangerLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
-			rangerLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+			rangerLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
+			rangerLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 
 			characterSelection.add(bruteLabel);
