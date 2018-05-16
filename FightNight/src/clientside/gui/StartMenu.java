@@ -9,6 +9,9 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -108,20 +111,34 @@ public class StartMenu extends JPanel{
 			Brute = Brute.getScaledInstance(100,100,Image.SCALE_DEFAULT);
 			Mage = Mage.getScaledInstance(100,100,Image.SCALE_DEFAULT);
 			Ranger = Ranger.getScaledInstance(100,100,Image.SCALE_DEFAULT);
-						
+			
+			
 			JLabel bruteLabel = new JLabel(new ImageIcon(Brute));
 			bruteLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
 			bruteLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+			bruteLabel.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent arg0) {
+					
+				}
+			});
 			
 			JLabel mageLabel = new JLabel(new ImageIcon(Mage));
 			mageLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
 			mageLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-
+			mageLabel.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent arg0) {
+					
+				}
+			});
 
 			JLabel rangerLabel = new JLabel(new ImageIcon(Ranger));
 			rangerLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
 			rangerLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-
+			rangerLabel.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent arg0) {
+					
+				}
+			});
 
 			characterSelection.add(bruteLabel);
 			characterSelection.add(mageLabel);
@@ -176,6 +193,8 @@ public class StartMenu extends JPanel{
 		frame.setResizable(false);
 		frame.setVisible(true);
 	
+	}
+	public void mouseCLicked(MouseEvent me) {
 		
 	}
 	
