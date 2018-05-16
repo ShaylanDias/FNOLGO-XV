@@ -108,11 +108,11 @@ public class StartMenu extends JPanel{
 			Brute = Brute.getScaledInstance(100,100,Image.SCALE_DEFAULT);
 			Mage = Mage.getScaledInstance(100,100,Image.SCALE_DEFAULT);
 			Ranger = Ranger.getScaledInstance(100,100,Image.SCALE_DEFAULT);
-			
+						
 			JLabel bruteLabel = new JLabel(new ImageIcon(Brute));
 			bruteLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
 			bruteLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-
+			
 			JLabel mageLabel = new JLabel(new ImageIcon(Mage));
 			mageLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
 			mageLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -130,9 +130,9 @@ public class StartMenu extends JPanel{
 			ex.printStackTrace();
 		}
 		
+		
 		GamePanel game = new GamePanel(false);
 		NetworkManagementPanel nmp = new NetworkManagementPanel("Chat", 16, game);
-		
 		
 		c1.show(panelCont, "1");
 		
