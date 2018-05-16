@@ -30,7 +30,7 @@ import processing.awt.PSurfaceAWT;
 
 public class StartMenu extends JPanel{
 
-	private JFrame frame  = new JFrame("Game");
+	private JFrame frame  = new JFrame("FNOLGO XV");
 	private JPanel panelCont = new JPanel();
 	private JPanel startMenu = new JPanel();
 	private JPanel serverConnect = new JPanel();

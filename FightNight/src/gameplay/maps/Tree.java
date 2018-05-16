@@ -1,7 +1,5 @@
 package gameplay.maps;
 
-import java.io.Serializable;
-
 import clientside.gui.GamePanel;
 import processing.core.PApplet;
 

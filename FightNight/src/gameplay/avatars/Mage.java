@@ -69,7 +69,7 @@ public class Mage extends Avatar {
 	@Override
 	public Attack[] basicAttack(String player, double angle) {
 		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000 && !dashing && !blocking) {
-			// currentlyAttacking = true;
+			currentlyAttacking = true;
 			basicCDStart = System.currentTimeMillis();
 			currentAttack = AttackType.BASIC;
 			timeActionStarted = System.currentTimeMillis();
@@ -85,19 +85,21 @@ public class Mage extends Avatar {
 		}
 	}
 
-	@Override
-	public void dash(Double mouseAngle) {
-		if (System.currentTimeMillis() > super.dashCDStart + super.dashCD * 1000) {
-			super.dashCDStart = System.currentTimeMillis();
-			super.dash(mouseAngle);
-		}
-	}
+	//	@Override
+	//	public void dash(Double mouseAngle) {
+	//		if (System.currentTimeMillis() > super.dashCDStart + super.dashCD * 1000) {
+	//			super.dashCDStart = System.currentTimeMillis();
+	//			super.dash(mouseAngle);
+	//		}
+	//	}
 
 	// Fireball, slow moving, and does a bunch of dmg, goes until it hits a wall.
 	@Override
 	public Attack[] rangedAttack(String player, double angle) {
 		currentAttack = AttackType.RANGED;
+		currentlyAttacking = true;
 		super.rangedCDStart = System.currentTimeMillis();
+		timeActionStarted = rangedCDStart;
 		if (angle > 90 && angle < 270) {
 			lastDir = true;
 			return new Attack[] { new Fireball((int) hitbox.x - 40, (int) hitbox.y - 40, player, angle) };
@@ -111,13 +113,11 @@ public class Mage extends Avatar {
 	@Override
 	public Attack[] abilityOne(String player, double angle) {
 		currentAttack = AttackType.A1;
-
+		currentlyAttacking = true;
 		a1CDStart = System.currentTimeMillis();
 		timeActionStarted = a1CDStart;
-		// int x, int y, String playerAddress, double dir, String imageKey, double
-		// range, double speed, int w, int h, double delay
 
-		Attack[] attack = new Attack[72];
+		Attack[] attack = new Attack[40];
 
 		for (int i = 0; i < 40; i++) {
 			attack[i] = new Fireball((int) hitbox.x - 40, (int) hitbox.y - 40, player, i * 18, "Fireball1", 250, 20, 40, 40, (double) i / 50);
@@ -129,8 +129,7 @@ public class Mage extends Avatar {
 	// Snow Storm - slows down everybody in an area
 	@Override
 	public Attack[] abilityTwo(String player, double angle) {
-		// currentlyAttacking = true;
-		// movementControlled = false;
+		currentlyAttacking = true;
 		currentAttack = AttackType.A2;
 
 		if (angle > 90 && angle < 270)
@@ -151,8 +150,7 @@ public class Mage extends Avatar {
 	// Lightning blast, stands still and charges a kamehameha.
 	@Override
 	public Attack[] abilityThree(String player, double angle) {
-		// currentlyAttacking = true;
-		// movementControlled = false;
+		currentlyAttacking = true;
 		currentAttack = AttackType.A3;
 
 		if (angle > 90 && angle < 270)
@@ -271,14 +269,62 @@ public class Mage extends Avatar {
 	public void act(Map map) {
 
 		if(currentlyAttacking) {
+			if(currentAttack.equals(AttackType.RANGED))
+				actRanged();
+			else if(currentAttack.equals(AttackType.BASIC))
+				actBasic();
+			else if(currentAttack.equals(AttackType.A1))
+				actFireEruption();
+			else if(currentAttack.equals(AttackType.A2))
+				actSnowField();
+			else if(currentAttack.equals(AttackType.A3))
+				actLightning();
 
-			
-			
 		} else {
 			super.act(map);
 			if (!super.isLeft() && !super.isRight() && !super.isUp() && !super.isDown()) {
 				spriteSheetKey = "Mage";
 			}
+		}
+	}
+
+	private void actBasic() {
+		if(System.currentTimeMillis() > timeActionStarted + 0.07*1000) {
+			System.out.println("true");
+			currentlyAttacking = false;
+			currentAttack = AttackType.NONE;
+		}
+	}
+
+	private void actRanged() {
+		if(System.currentTimeMillis() > timeActionStarted + 0.12*1000) {
+			System.out.println("true");
+			currentlyAttacking = false;
+			currentAttack = AttackType.NONE;
+		}
+	}
+
+	private void actFireEruption() {
+		if(System.currentTimeMillis() > timeActionStarted + 0.8*1000) {
+			System.out.println("true");
+			currentlyAttacking = false;
+			currentAttack = AttackType.NONE;
+		}
+	}
+
+	private void actSnowField() {
+		if(System.currentTimeMillis() > timeActionStarted + 0.15*1000) {
+			System.out.println("true");
+			currentlyAttacking = false;
+			currentAttack = AttackType.NONE;
+		}
+	}
+
+	private void actLightning() {
+		if(System.currentTimeMillis() > timeActionStarted + 0.3*1000) {
+			System.out.println("true");
+			currentlyAttacking = false;
+			currentAttack = AttackType.NONE;
 		}
 	}
 
