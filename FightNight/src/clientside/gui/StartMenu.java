@@ -21,16 +21,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import gameplay.avatars.Brute;
+import gameplay.avatars.Mage;
+import gameplay.avatars.Ranger;
 import networking.frontend.NetworkManagementPanel;
 import processing.awt.PSurfaceAWT;
-import processing.core.PApplet;
 
 public class StartMenu extends JPanel{
 
-	JFrame frame  = new JFrame("Game");
-	JPanel panelCont = new JPanel();
-	JPanel startMenu = new JPanel();
-	JPanel serverConnect = new JPanel();
+	private JFrame frame  = new JFrame("Game");
+	private JPanel panelCont = new JPanel();
+	private JPanel startMenu = new JPanel();
+	private JPanel serverConnect = new JPanel();
 
 
 	private GamePanel game;  // These are PApplets - you use these to do regular processing stuff
@@ -44,9 +46,12 @@ public class StartMenu extends JPanel{
 
 	CardLayout c1 = new CardLayout();
 
-	public StartMenu() {
+	public StartMenu(GamePanel game) {
+		
+		this.game = game;
+		
 		//Very First Menu
-		panelCont.setLayout(c1);;
+		panelCont.setLayout(c1);
 		JLabel title = new JLabel();
 		startMenu.setLayout(new BoxLayout(startMenu,BoxLayout.Y_AXIS));
 		startMenu.setBackground(Color.black);
@@ -122,7 +127,7 @@ public class StartMenu extends JPanel{
 			bruteLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 			bruteLabel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent arg0) {
-
+					game.getPlayer().setAvatar(new Brute());
 				}
 			});
 
@@ -131,7 +136,7 @@ public class StartMenu extends JPanel{
 			mageLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 			mageLabel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent arg0) {
-
+					game.getPlayer().setAvatar(new Mage());
 				}
 			});
 
@@ -140,7 +145,7 @@ public class StartMenu extends JPanel{
 			rangerLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 			rangerLabel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent arg0) {
-
+					game.getPlayer().setAvatar(new Ranger());
 				}
 			});
 
@@ -152,21 +157,20 @@ public class StartMenu extends JPanel{
 		}
 
 
-		//Game Stuff Initializing
+		//Game Stuff
 		
-		game = new GamePanel(false);
-		game.runMe();
-		
-		JPanel mainPanel = new JPanel();
-		
-//		PApplet.runSketch(new String[] { "" }, game);
-		surf = (PSurfaceAWT) game.getSurface();
-		processingCanvas = (PSurfaceAWT.SmoothCanvas) surf.getNative();
-		processingCanvas.requestFocus();
-		game.runMe();
-		mainPanel.add(processingCanvas);
-		frame.add(mainPanel);
-		NetworkManagementPanel nmp = new NetworkManagementPanel("Chat", 16, game);
+//		game = new GamePanel(false);
+//		JPanel mainPanel = new JPanel();
+//		frame.add(mainPanel);
+////		game.setSize(600, 800);
+//		surf = (PSurfaceAWT) game.getSurface();
+//		processingCanvas = (PSurfaceAWT.SmoothCanvas) surf.getNative();
+//		processingCanvas.requestFocus();
+//		game.runMe();
+//		fixProcessingPanelSizes(frame);
+//		frame.add(mainPanel);
+//		mainPanel.setSize(new Dimension(800, 600));
+		NetworkManagementPanel nmp = new NetworkManagementPanel("FNOLGO", 16, game);
 		frame.add(nmp);
 
 		c1.show(panelCont, "1");
@@ -174,6 +178,7 @@ public class StartMenu extends JPanel{
 		panelCont.add(startMenu,"1");
 		panelCont.add(Instructions,"1.5");
 		panelCont.add(characterSelection, "2");
+//		panelCont.add(mainPanel, "4");
 		panelCont.add(nmp, "3");
 
 		//Interactions when the buttons are pressed
@@ -212,6 +217,14 @@ public class StartMenu extends JPanel{
 	}
 	public void mouseClicked(MouseEvent me) {
 
+	}
+	
+	public CardLayout getCardLayout() {
+		return c1;
+	}
+	
+	public JPanel getPanel() {
+		return panelCont;
 	}
 	
 	public void fixProcessingPanelSizes(Component match) {

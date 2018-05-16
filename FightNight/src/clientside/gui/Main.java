@@ -29,9 +29,9 @@ public class Main {
 	 *            Args
 	 */
 	public static void main(String[] args) {
-		//GamePanel game = new GamePanel(false);
+		GamePanel game = new GamePanel(false);
 		//NetworkManagementPanel nmp = new NetworkManagementPanel("Chat", 16, game);
-		StartMenu menu = new StartMenu();
+		StartMenu menu = new StartMenu(game);
 		
 	}
 
