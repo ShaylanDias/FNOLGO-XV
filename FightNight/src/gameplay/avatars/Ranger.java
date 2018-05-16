@@ -45,6 +45,8 @@ public class Ranger extends Avatar {
 		for(int i = 1; i < 11; i++) {
 			getSpriteListWalk().add("Ranger"+i);
 		}
+		
+		getSpriteListDeath().add("Ranger");
 
 	}
 	/**

@@ -217,6 +217,8 @@ public class Mage extends Avatar {
 
 		drawHealthBar(surface);
 
+		System.out.println(super.isDead());
+		
 		if (super.isDead()) {
 			drawDeath(numOfSpriteDeath, spriteSpeedDeath);
 			surface.popMatrix();

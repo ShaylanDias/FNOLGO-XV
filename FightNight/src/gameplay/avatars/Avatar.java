@@ -294,6 +294,7 @@ public abstract class Avatar implements Serializable {
 			a3CDStart = 0;
 			deathTime = 0;
 			stop();
+			System.out.println("spawn method called");
 			dead = false;
 		}
 	}
@@ -359,7 +360,7 @@ public abstract class Avatar implements Serializable {
 				status = attack.getEffect();
 			}
 			health -= attack.getDamage();
-			if (health <= 0) {
+			if (health <= 0 && !dead) {
 				die();
 			}
 			return AttackResult.SUCCESS;
@@ -371,8 +372,9 @@ public abstract class Avatar implements Serializable {
 	}
 
 	private void die() {
+		System.out.println("died called");
 		if (!dead) {
-			health = 0;
+//			health = 0;
 			dead = true;
 			lives--;
 			System.out.println("died");
