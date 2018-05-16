@@ -168,7 +168,7 @@ public class Ranger extends Avatar {
 		drawHealthBar(surface);
 
 		if(deathTime != 0) {
-			drawDeath(surface);
+			drawDeath(numOfSpriteDeath, spriteSpeedDeath);
 			surface.popMatrix();
 			surface.popStyle();
 			return;

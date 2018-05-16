@@ -106,7 +106,7 @@ public class GameClient implements NetworkMessenger {
 			Socket s = new Socket(host, port);
 			s.setKeepAlive(true);
 
-			System.out.println("Client connected to " + s.getInetAddress().getHostAddress());
+			//System.out.println("Client connected to " + s.getInetAddress().getHostAddress());
 
 			reader = new ClientReader(s);
 			writer = new ClientWriter(s);

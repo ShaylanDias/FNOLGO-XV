@@ -40,7 +40,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 	public static Resources resources = new Resources();
 
 	private Player player;
-	private Map map; 
+	private Map map;
 	private NetworkMessenger nm;
 	private boolean connected;
 	private boolean gameEnded;
@@ -91,40 +91,41 @@ public class GamePanel extends PApplet implements NetworkListener {
 	public void draw() {
 		clear();
 
-		if(!connected) {
+		if (!connected) {
 
-			if(!gameEnded) {
-				
+			if (!gameEnded) {
+
 				fill(255);
 				textAlign(CENTER);
 				textSize(40);
-				text("Waiting For Connection", width/2, height/2);
-				
-				//Move all of these around to be right and have a background image and a title
-				//Make a way to switch to instructions screen
-				//Make buttons change color to indicate which character you selected
-//				rectMode(CORNER);
-//				textAlign(CENTER);
-//				fill(255);
-//				rect(brute.x, brute.y, brute.width, brute.height);
-//				rect(mage.x, mage.y, mage.width, mage.height);
-//				rect(ranger.x, ranger.y, ranger.width, ranger.height);
-//				//Make this button change color if it was selected
-//				fill(0);
-//				text("Brute", brute.x + brute.width/2, brute.y + brute.y/2);
-//				text("Mage", mage.x + mage.width/2, mage.y + mage.height/2);
-//				text("Ranger", ranger.x + ranger.width/2, ranger.y + ranger.height/2);
+				text("Waiting For Connection", width / 2, height / 2);
+
+				// Move all of these around to be right and have a background image and a title
+				// Make a way to switch to instructions screen
+				// Make buttons change color to indicate which character you selected
+				// rectMode(CORNER);
+				// textAlign(CENTER);
+				// fill(255);
+				// rect(brute.x, brute.y, brute.width, brute.height);
+				// rect(mage.x, mage.y, mage.width, mage.height);
+				// rect(ranger.x, ranger.y, ranger.width, ranger.height);
+				// //Make this button change color if it was selected
+				// fill(0);
+				// text("Brute", brute.x + brute.width/2, brute.y + brute.y/2);
+				// text("Mage", mage.x + mage.width/2, mage.y + mage.height/2);
+				// text("Ranger", ranger.x + ranger.width/2, ranger.y + ranger.height/2);
 			} else {
-				
-				//I guess this version of the menu is not working
-				
-				//Provide a button to click to send you back to the title screen (change gameEnded to false)
-				if(won) {
-					//What to draw if this player won
-					//Probably a picture of their avatar and say won
+
+				// I guess this version of the menu is not working
+
+				// Provide a button to click to send you back to the title screen (change
+				// gameEnded to false)
+				if (won) {
+					// What to draw if this player won
+					// Probably a picture of their avatar and say won
 				} else {
-					//What to draw if this player lost
-					//Probably avatar dead and say you lost
+					// What to draw if this player lost
+					// Probably avatar dead and say you lost
 				}
 			}
 
@@ -135,23 +136,22 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 			color(Color.BLACK.getRGB());
 
-			if (currentState != null) { //gets the avatar information from the currentState
+			if (currentState != null) { // gets the avatar information from the currentState
 				pushMatrix();
 				Avatar av = null;
-				map = currentState.getMap(); //gets the map that's made on the server. 
+				map = currentState.getMap(); // gets the map that's made on the server.
 				for (Avatar x : currentState.getAvatars()) {
 					if (x.getPlayer().equals(player.getPlayerAddress())) {
 						av = x;
 						break;
 					}
-					
+
 				}
 
 				currentState.draw(this, av, width, height, player.getPlayerAddress());
 				drawCooldowns(this, av);
 				popMatrix();
 			}
-
 
 			// Starting Setup
 			stroke(0, 0, 0);
@@ -166,22 +166,22 @@ public class GamePanel extends PApplet implements NetworkListener {
 	 */
 	public void mouseClicked() {
 
-		if(!connected) {
+		if (!connected) {
 
-//			if(brute.contains(new Point(mouseX, mouseY))) {
-//				player.setAvatar(new Brute());
-//			}
-//			else if(mage.contains(new Point(mouseX, mouseY)))
-//					player.setAvatar(new Mage());
-//			else if(ranger.contains(new Point(mouseX, mouseY)))
-//					player.setAvatar(new Ranger());
-			
+			// if(brute.contains(new Point(mouseX, mouseY))) {
+			// player.setAvatar(new Brute());
+			// }
+			// else if(mage.contains(new Point(mouseX, mouseY)))
+			// player.setAvatar(new Mage());
+			// else if(ranger.contains(new Point(mouseX, mouseY)))
+			// player.setAvatar(new Ranger());
+
 		} else {
 
 			if (nm != null) {
 				if (mouseButton == LEFT)
 					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.BASIC, getAngleToMouse());
-				else if(mouseButton == RIGHT) {
+				else if (mouseButton == RIGHT) {
 					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.RANGED, getAngleToMouse());
 				}
 			}
@@ -196,62 +196,67 @@ public class GamePanel extends PApplet implements NetworkListener {
 		 * Send a "Message" NetworkDataObject to the server with message array in
 		 * format: [ControlType, arg, arg, ...]
 		 */
-		if (key == CODED) {
 
-		}
+		if (currentState != null) {
+			if (key == CODED) {
 
-		if (key == ' ') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.DASH, getAngleToMouse());
-		} else if (key == 'q') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.BLOCK, true);
-		}
+			}
 
-		if (key == 'a') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'a', true);
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', false);
-		}
-		if (key == 'w') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'w', true);
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 's', false);
-		}
-		if (key == 's') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 's', true);
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'w', false);
-		}
-		if (key == 'd') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', true);
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'a', false);
-		}
-		if (key == 'e') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.A1, getAngleToMouse());
-		}
-		if (key == 'r') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.A2, getAngleToMouse());
-		}
-		if (key == 'f') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.A3, getAngleToMouse());
-		}
+			if (key == ' ') {
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.DASH, getAngleToMouse());
+			} else if (key == 'q') {
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.BLOCK, true);
+			}
 
+			if (key == 'a') {
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'a', true);
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', false);
+			}
+			if (key == 'w') {
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'w', true);
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 's', false);
+			}
+			if (key == 's') {
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 's', true);
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'w', false);
+			}
+			if (key == 'd') {
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', true);
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'a', false);
+			}
+			if (key == 'e') {
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.A1, getAngleToMouse());
+			}
+			if (key == 'r') {
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.A2, getAngleToMouse());
+			}
+			if (key == 'f') {
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.A3, getAngleToMouse());
+			}
+		}
 	}
 
 	/**
 	 * Detects key releases to trigger character abilities
 	 */
 	public void keyReleased() {
-		if (key == 'a') { // Set boolean in character to true
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'a', false);
-		}
-		if (key == 'w') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'w', false);
-		}
-		if (key == 's') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 's', false);
-		}
-		if (key == 'd') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', false);
-		}
-		if(key == 'q') {
-			nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.BLOCK, false);
+
+		if (currentState != null) {
+			if (key == 'a') { // Set boolean in character to true
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'a', false);
+			}
+			if (key == 'w') {
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'w', false);
+			}
+			if (key == 's') {
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 's', false);
+			}
+			if (key == 'd') {
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'd', false);
+			}
+			if (key == 'q') {
+				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.BLOCK, false);
+			}
 		}
 	}
 
@@ -269,10 +274,10 @@ public class GamePanel extends PApplet implements NetworkListener {
 			if (ndo.message[0] != null) {
 				if (ndo.message[0] instanceof GameState) {
 					currentState = (GameState) ndo.message[0];
-				} else if(ndo.message[0] instanceof String) {
-					if(ndo.message[0].equals("ENDED")) {
+				} else if (ndo.message[0] instanceof String) {
+					if (ndo.message[0].equals("ENDED")) {
 						gameEnded = true;
-						if(player.getPlayerAddress().equals(ndo.message[1])) {
+						if (player.getPlayerAddress().equals(ndo.message[1])) {
 							won = true;
 						}
 					}
@@ -337,13 +342,13 @@ public class GamePanel extends PApplet implements NetworkListener {
 		surface.textSize(16);
 
 		double refX = a.getX();
-		double refY = a.getY() + height/2 - 60;
+		double refY = a.getY() + height / 2 - 60;
 
-		drawTimer(surface, refX-200, refY, a.getBasicCooldownLeft(), a.getBasicCooldown(), "BASIC");
-		drawTimer(surface, refX-100, refY, a.getRangedCooldownLeft(), a.getRangedCooldown(), "RANGED");
+		drawTimer(surface, refX - 200, refY, a.getBasicCooldownLeft(), a.getBasicCooldown(), "BASIC");
+		drawTimer(surface, refX - 100, refY, a.getRangedCooldownLeft(), a.getRangedCooldown(), "RANGED");
 		drawTimer(surface, refX, refY, a.getA1CooldownLeft(), a.getA1Cooldown(), "A1");
-		drawTimer(surface, refX+100, refY, a.getA2CooldownLeft(), a.getA2Cooldown(), "A2");
-		drawTimer(surface, refX+200, refY, a.getA3CooldownLeft(), a.getA3Cooldown(), "A3");
+		drawTimer(surface, refX + 100, refY, a.getA2CooldownLeft(), a.getA2Cooldown(), "A2");
+		drawTimer(surface, refX + 200, refY, a.getA3CooldownLeft(), a.getA3Cooldown(), "A3");
 
 		surface.popStyle();
 	}
@@ -353,32 +358,32 @@ public class GamePanel extends PApplet implements NetworkListener {
 	}
 
 	private void drawTimer(PApplet surface, double x, double y, long cdLeft, double cd, String name) {
-		if(cdLeft < cd * 1000) {
-			double percent = cdLeft/(cd*1000);
-			double angle = 2 * Math.PI * percent + 3 * Math.PI/2;
+		if (cdLeft < cd * 1000) {
+			double percent = cdLeft / (cd * 1000);
+			double angle = 2 * Math.PI * percent + 3 * Math.PI / 2;
 			surface.fill(Color.BLACK.getRGB());
-			surface.ellipse((float)(x), (float)(y), 100, 100);
+			surface.ellipse((float) (x), (float) (y), 100, 100);
 			surface.fill(Color.GREEN.getRGB());
-			surface.arc((float)(x), (float)(y), 100, 100, 3f *(float)Math.PI/2, (float)angle, PIE);
+			surface.arc((float) (x), (float) (y), 100, 100, 3f * (float) Math.PI / 2, (float) angle, PIE);
 
 		} else {
 			surface.fill(Color.GREEN.getRGB());
-			surface.ellipse((float)(x), (float)(y), 100, 100);
+			surface.ellipse((float) (x), (float) (y), 100, 100);
 		}
 		surface.fill(Color.RED.getRGB());
-		surface.text(name, (float)x, (float)(y+6));
+		surface.text(name, (float) x, (float) (y + 6));
 
 	}
-	
+
 	public Player getPlayer() {
 		return player;
 	}
-	
-//	public void runMe() {
-//		super.setSize(800,600);
-////		super.sketchPath();
-////		super.initSurface();
-////		super.surface.startThread();
-////		System.out.println("init");
-//	}	
+
+	// public void runMe() {
+	// super.setSize(800,600);
+	//// super.sketchPath();
+	//// super.initSurface();
+	//// super.surface.startThread();
+	//// System.out.println("init");
+	// }
 }

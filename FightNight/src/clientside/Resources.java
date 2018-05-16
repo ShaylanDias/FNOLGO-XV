@@ -23,11 +23,11 @@ public class Resources {
 	public Resources() {
 		// Add all of the necessary images to HashMap
 		images.put("Fireball", new ImageWrapper("Fireball.png"));
-		
+
 		images.put("Fighter", new ImageWrapper("data/FIghter/Fighter.png"));
 		images.put("Fighter1", new ImageWrapper("data/FIghter/fighter1.png"));
-		
-		//Brute
+
+		// Brute
 		images.put("WWDefault", new ImageWrapper("data/Brute/WW-Default.png"));
 		images.put("WWWalk0", new ImageWrapper("data/Brute/WW-Walk1.png"));
 		images.put("WWWalk1", new ImageWrapper("data/Brute/WW-Walk2.png"));
@@ -53,35 +53,38 @@ public class Resources {
 		images.put("Howl3", new ImageWrapper("data/Brute/Howl3.png"));
 		images.put("Howl4", new ImageWrapper("data/Brute/Howl4.png"));
 		images.put("Stun", new ImageWrapper("data/Stun.png"));
-		
-		//Mage
+
+		// Mage 
+		images.put("Mage", new ImageWrapper("data/Mage/Mage.png"));
+		for (int i = 1; i < 9; i++) {
+			images.put("Mage" + i, new ImageWrapper("data/Mage/Mage" + i + ".png"));
+		}
+		for (int i = 1; i < 8; i++) {
+			images.put("MageDeath" + i, new ImageWrapper("data/Mage/MageDeath" + i + ".png"));
+		}
 		images.put("Lightning", new ImageWrapper("data/Mage/Lightning1.png"));
 		images.put("Lightning1", new ImageWrapper("data/Mage/Lightning2.png"));
 		images.put("Lightning2", new ImageWrapper("data/Mage/Lightning3.png"));
 		images.put("Lightning3", new ImageWrapper("data/Mage/Lightning4.png"));
 		images.put("Lightning4", new ImageWrapper("data/Mage/Lightning5.png"));
 		images.put("Lightning5", new ImageWrapper("data/Mage/Lightning6.png"));
-		images.put("Mage", new ImageWrapper("data/Mage/Mage.png"));
-		for(int i = 1; i < 4; i++) {
-			images.put("Mage"+i, new ImageWrapper("data/Mage/Mage" + i + ".png"));
-		}
 		images.put("SnowField", new ImageWrapper("data/Mage/SnowField.png"));
 		images.put("MageBasic", new ImageWrapper("data/Mage/Basic.png"));
-		
-		//Ranger
+
+		// Ranger
 		images.put("Ranger", new ImageWrapper("data/Ranger/Ranger.png"));
-		for(int i = 1; i < 11; i++) {
-			images.put("Ranger"+i, new ImageWrapper("data/Ranger/Ranger" + i + ".png"));
+		for (int i = 1; i < 11; i++) {
+			images.put("Ranger" + i, new ImageWrapper("data/Ranger/Ranger" + i + ".png"));
 		}
 		images.put("Arrow", new ImageWrapper("data/Ranger/Arrow.png"));
 		images.put("Mushroom", new ImageWrapper("data/Ranger/MushroomTrap.png"));
 		images.put("Knife", new ImageWrapper("data/Ranger/KnifeSlash.png"));
 		images.put("Smoke", new ImageWrapper("data/Ranger/Smoke.png"));
-		for(int i = 0; i < 10; i++) {
-			images.put("RangerRanged"+i, new ImageWrapper("data/Ranger/Ranged"+i+".png"));
+		for (int i = 0; i < 10; i++) {
+			images.put("RangerRanged" + i, new ImageWrapper("data/Ranger/Ranged" + i + ".png"));
 		}
-		for(int i = 1; i < 4; i++) {
-			images.put("RangerBasic"+i, new ImageWrapper("data/Ranger/Basic"+i+".png"));
+		for (int i = 1; i < 4; i++) {
+			images.put("RangerBasic" + i, new ImageWrapper("data/Ranger/Basic" + i + ".png"));
 		}
 		images.put("RangerBasicEnd1", new ImageWrapper("data/Ranger/BasicEnd1.png"));
 		images.put("RangerBasicEnd2", new ImageWrapper("data/Ranger/BasicEnd2.png"));
@@ -90,16 +93,13 @@ public class Resources {
 		images.put("RangerDying2", new ImageWrapper("data/Ranger/Dying2.png"));
 		images.put("RangerDying3", new ImageWrapper("data/Ranger/Dying3.png"));
 		images.put("RangerDead", new ImageWrapper("data/Ranger/Dead.png"));
-		
+
 		images.put("Fireball1", new ImageWrapper("Fireball1.png"));
 		images.put("Shield", new ImageWrapper("Shield.png"));
 
 		images.put("FNOLGO MAP", new ImageWrapper("data/Map/map50x50.png"));
 		images.put("SmallTree", new ImageWrapper("data/Map/SmallTree.png"));
 
-		
-		
-		
 	}
 
 	/**

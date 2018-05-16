@@ -249,7 +249,7 @@ public class GameServer implements NetworkMessenger {
 					while (listening) {
 						Socket s = serverSocket.accept();
 
-						System.out.println("Server connected to " + s.getInetAddress().getHostAddress());
+						//System.out.println("Server connected to " + s.getInetAddress().getHostAddress());
 
 						if (maxConnections == readers.size()) {
 							s.close();

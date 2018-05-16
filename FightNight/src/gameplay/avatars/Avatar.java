@@ -52,10 +52,10 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 */
 	protected Rectangle[] sprites;
-	protected int spriteInd, numOfSpriteWalk;
-	private ArrayList<String> spriteListWalk, spriteListAttack;
+	protected int spriteInd, numOfSpriteWalk, numOfSpriteDeath, spriteSpeedWalk, spriteSpeedDeath;
+	private ArrayList<String> spriteListWalk, spriteListAttack, spriteListDeath;;
 
-	protected boolean lastDir; //True if right, false if left
+	protected boolean lastDir; // True if right, false if left
 
 	private boolean up, down, left, right;
 
@@ -109,7 +109,11 @@ public abstract class Avatar implements Serializable {
 		deathTime = -1;
 		spriteListWalk = new ArrayList<String>();
 		spriteListAttack = new ArrayList<String>();
+		spriteListDeath = new ArrayList<String>();
 		numOfSpriteWalk = 0;
+		numOfSpriteDeath = 0;
+		spriteSpeedWalk = 150;
+		spriteSpeedDeath = 500;
 		movementControlled = true;
 		dead = true;
 		dashCD = 1;
@@ -138,40 +142,40 @@ public abstract class Avatar implements Serializable {
 
 		double moveSpeed = this.moveSpeed;
 
-		if(health <= 0) {
+		if (health <= 0) {
 			die();
 		}
 
-		if(status.getEffect().equals(Effect.SLOWED)) {
-			if(!status.started())
+		if (status.getEffect().equals(Effect.SLOWED)) {
+			if (!status.started())
 				status.startEffect();
 			moveSpeed -= status.getValue();
-		} else if(status.getEffect().equals(Effect.STUNNED)) {
-			if(!status.started())
+		} else if (status.getEffect().equals(Effect.STUNNED)) {
+			if (!status.started())
 				status.startEffect();
 			else {
-				if(status.isFinished()) {
-					status = new StatusEffect(Effect.NONE,0,0);
+				if (status.isFinished()) {
+					status = new StatusEffect(Effect.NONE, 0, 0);
 				}
 				return;
 			}
 		}
 
-		if(!dead && !currentlyAttacking) {
+		if (!dead && !currentlyAttacking) {
 			if (blocking) {
 				shieldHealth -= 1;
 				up = false;
 				down = false;
 				left = false;
 				right = false;
-				if(shieldHealth <= 0) {
+				if (shieldHealth <= 0) {
 					shieldHealth = -50;
 					blocking = false;
 				}
 				return;
 			} else {
 				shieldHealth += 1.5;
-				if(shieldHealth > fullShieldHealth)
+				if (shieldHealth > fullShieldHealth)
 					shieldHealth = fullShieldHealth;
 			}
 			if (dashing) {
@@ -180,22 +184,22 @@ public abstract class Avatar implements Serializable {
 			}
 			if (up) {
 				moveBy(0, -moveSpeed, map);
-				walk(numOfSpriteWalk, 200);
+				walk(numOfSpriteWalk, spriteSpeedWalk);
 			}
 			if (right) {
 				moveBy(moveSpeed, 0, map);
-				walk(numOfSpriteWalk, 200);
+				walk(numOfSpriteWalk, spriteSpeedWalk);
 			}
 			if (left) {
 				moveBy(-moveSpeed, 0, map);
-				walk(numOfSpriteWalk, 200);
+				walk(numOfSpriteWalk, spriteSpeedWalk);
 			}
 			if (down) {
 				moveBy(0, moveSpeed, map);
-				walk(numOfSpriteWalk, 200);
+				walk(numOfSpriteWalk, spriteSpeedWalk);
 			}
 		} else {
-			if(dead && System.currentTimeMillis() > deathTime + 6 * 1000) {
+			if (dead && System.currentTimeMillis() > deathTime + 6 * 1000) {
 				spawn(map);
 			}
 		}
@@ -215,8 +219,8 @@ public abstract class Avatar implements Serializable {
 
 		drawHealthBar(surface);
 
-		if(deathTime != 0) {
-			drawDeath(surface);
+		if (deathTime != 0) {
+			drawDeath(numOfSpriteDeath, spriteSpeedDeath);
 			surface.popMatrix();
 			surface.popStyle();
 			return;
@@ -225,15 +229,14 @@ public abstract class Avatar implements Serializable {
 		surface.imageMode(PApplet.CENTER);
 
 		if (status.getEffect().equals(Effect.STUNNED)) {
-			surface.image(GamePanel.resources.getImage("Stun"), (float)hitbox.x, (float)hitbox.y);
+			surface.image(GamePanel.resources.getImage("Stun"), (float) hitbox.x, (float) hitbox.y);
 		}
 
 		int sw, sh;
-		//		sx = (int) sprites[spriteInd].getX();
-		//		sy = (int) sprites[spriteInd].getY();
+		// sx = (int) sprites[spriteInd].getX();
+		// sy = (int) sprites[spriteInd].getY();
 		sw = (int) sprites[spriteInd].getWidth();
 		sh = (int) sprites[spriteInd].getHeight();
-
 
 		surface.pushMatrix();
 		if (!lastDir) {
@@ -258,7 +261,7 @@ public abstract class Avatar implements Serializable {
 					1.5f * sh);
 		}
 
-		//surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
+		// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
 		// surface.fill(Color.RED.getRGB());
 		// surface.ellipseMode(PApplet.CENTER);
 		// surface.ellipse((float)(hitbox.x), (float)(hitbox.y), 5f, 5f);
@@ -268,13 +271,12 @@ public abstract class Avatar implements Serializable {
 	}
 
 	public void spawn(Map map) {
-		if(!eliminated || this instanceof Spectator) {
+		if (!eliminated || this instanceof Spectator) {
 			double x = 1500 - Math.random() * 3000;
-			double y = 1500 - Math.random() * 3000;		
-			if(map.hitTree(x, y, hitbox.width, hitbox.height) || !map.inBounds(x, y, hitbox.width, hitbox.height)) {
+			double y = 1500 - Math.random() * 3000;
+			if (map.hitTree(x, y, hitbox.width, hitbox.height) || !map.inBounds(x, y, hitbox.width, hitbox.height)) {
 				spawn(map);
-			}
-			else {
+			} else {
 				hitbox.x = x;
 				hitbox.y = y;
 			}
@@ -293,36 +295,30 @@ public abstract class Avatar implements Serializable {
 	}
 
 	public Attack[] attack(AttackType a, String player, double angle) {
-		if(deathTime == 0 && !currentlyAttacking && movementControlled && !status.getEffect().equals(Effect.STUNNED)) {
-			if(a.equals(AttackType.A1) ) {
-				if(System.currentTimeMillis() > a1CDStart + a1CD * 1000) {
+		if (deathTime == 0 && !currentlyAttacking && movementControlled && !status.getEffect().equals(Effect.STUNNED)) {
+			if (a.equals(AttackType.A1)) {
+				if (System.currentTimeMillis() > a1CDStart + a1CD * 1000) {
 					return abilityOne(player, angle);
-				}
-				else
+				} else
 					return null;
-			} else if(a.equals(AttackType.A2)) {
-				if(System.currentTimeMillis() > a2CDStart + a2CD * 1000) {
+			} else if (a.equals(AttackType.A2)) {
+				if (System.currentTimeMillis() > a2CDStart + a2CD * 1000) {
 					return abilityTwo(player, angle);
-				}
-				else
+				} else
 					return null;
-			} else if(a.equals(AttackType.A3)) {
-				if(System.currentTimeMillis() > a3CDStart + a3CD * 1000) {
+			} else if (a.equals(AttackType.A3)) {
+				if (System.currentTimeMillis() > a3CDStart + a3CD * 1000) {
 					return abilityThree(player, angle);
-				}
-				else
+				} else
 					return null;
-			} else if(a.equals(AttackType.RANGED)) {
-				if(System.currentTimeMillis() > rangedCDStart + rangedCD * 1000) {
+			} else if (a.equals(AttackType.RANGED)) {
+				if (System.currentTimeMillis() > rangedCDStart + rangedCD * 1000) {
 					return rangedAttack(player, angle);
-				}
-				else
-					return null;		
-			}
-			else
+				} else
+					return null;
+			} else
 				return basicAttack(player, angle);
-		}
-		else
+		} else
 			return null;
 	}
 
@@ -336,11 +332,11 @@ public abstract class Avatar implements Serializable {
 	 */
 	public AttackResult takeHit(Attack attack) {
 		if (!playerAddress.equals(attack.getPlayer()) && attack.isActive()) {
-			if(blocking) {
-				if(!attack.isShieldBreaker()) {
+			if (blocking) {
+				if (!attack.isShieldBreaker()) {
 					if (blocking) {
-						shieldHealth -= attack.getDamage()/2;
-						if(shieldHealth <= 0) {
+						shieldHealth -= attack.getDamage() / 2;
+						if (shieldHealth <= 0) {
 							health += shieldHealth;
 							shieldHealth = 0;
 							blocking = false;
@@ -349,7 +345,7 @@ public abstract class Avatar implements Serializable {
 					}
 				} else {
 					shieldHealth -= 50;
-					if(shieldHealth <= 0) {
+					if (shieldHealth <= 0) {
 						shieldHealth = 0;
 						blocking = false;
 					}
@@ -359,7 +355,7 @@ public abstract class Avatar implements Serializable {
 				status = attack.getEffect();
 			}
 			health -= attack.getDamage();
-			if(health <= 0 && deathTime == 0) {
+			if (health <= 0 && deathTime == 0) {
 				die();
 			}
 			return AttackResult.SUCCESS;
@@ -371,11 +367,11 @@ public abstract class Avatar implements Serializable {
 	}
 
 	private void die() {
-		if(!dead) {
+		if (!dead) {
 			health = 0;
 			dead = true;
 			lives--;
-			if(lives <= 0)
+			if (lives <= 0)
 				eliminated = true;
 			deathTime = System.currentTimeMillis();
 		}
@@ -394,7 +390,8 @@ public abstract class Avatar implements Serializable {
 	public boolean moveBy(double x, double y, Map map) {
 		if (!status.getEffect().equals(Effect.STUNNED) || status.isFinished()) {
 
-			if(!map.hitTree(hitbox.x + x, hitbox.y + y, hitbox.width, hitbox.height) && map.inBounds(hitbox.x + x, hitbox.y + y, hitbox.width, hitbox.height)) {
+			if (!map.hitTree(hitbox.x + x, hitbox.y + y, hitbox.width, hitbox.height)
+					&& map.inBounds(hitbox.x + x, hitbox.y + y, hitbox.width, hitbox.height)) {
 				hitbox.x += x;
 				hitbox.y += y;
 				return true;
@@ -410,8 +407,8 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * @param dist
 	 *            The distance to travel
-	 * @param angle 
-	 * 			  The angle to travel at
+	 * @param angle
+	 *            The angle to travel at
 	 * @return True if successful
 	 */
 	public boolean moveDistance(double dist, double angle, Map map) {
@@ -444,38 +441,38 @@ public abstract class Avatar implements Serializable {
 	 */
 	public void dash(Double mouseAngle) {
 
-		if(left) {
-			if(up) {
+		if (left) {
+			if (up) {
 				dashAngle = 135;
-			} else if(down) {
+			} else if (down) {
 				dashAngle = 225;
 			} else {
 				dashAngle = 180;
 			}
-		} else if(right){
-			if(up) {
+		} else if (right) {
+			if (up) {
 				dashAngle = 45;
-			} else if(down) {
+			} else if (down) {
 				dashAngle = 315;
 			} else {
 				dashAngle = 0;
 			}
-		} else if(down) {
+		} else if (down) {
 			dashAngle = 270;
-		} else if(up){
+		} else if (up) {
 			dashAngle = 90;
 		}
-
 
 		movementControlled = false;
 		dashing = true;
 		dashTraveled = 0;
 		superArmor = true;
-		//		dashAngle = mouseAngle;
+		// dashAngle = mouseAngle;
 	}
 
 	private void dashAct(Map map) { // Where the actual Dash action occurs
-		if(moveBy(Math.cos(Math.toRadians(dashAngle)) * dashSpeed, -Math.sin(Math.toRadians(dashAngle)) * dashSpeed, map))
+		if (moveBy(Math.cos(Math.toRadians(dashAngle)) * dashSpeed, -Math.sin(Math.toRadians(dashAngle)) * dashSpeed,
+				map))
 			dashTraveled += dashSpeed;
 		else
 			dashTraveled = dashDistance + 1;
@@ -491,14 +488,13 @@ public abstract class Avatar implements Serializable {
 	 * Starts an Avatar's block
 	 */
 	public void block(boolean block) {
-		if(shieldHealth > 0 && !status.getEffect().equals(Effect.STUNNED)) {
-			if(block)
+		if (shieldHealth > 0 && !status.getEffect().equals(Effect.STUNNED)) {
+			if (block)
 				movementControlled = false;
 			else
 				movementControlled = true;
 			blocking = block;
-		}
-		else
+		} else
 			movementControlled = true;
 	}
 
@@ -550,38 +546,46 @@ public abstract class Avatar implements Serializable {
 	protected void drawHealthBar(PApplet surface) {
 		double shield = shieldHealth;
 		double health = this.health;
-		if(health < 0)
+		if (health < 0)
 			health = 0;
-		if(shield < 0)
+		if (shield < 0)
 			shield = 0;
 
 		surface.rectMode(PApplet.CENTER);
 		surface.fill(Color.BLACK.getRGB());
-		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4 - 10), (float)hitbox.width, (float)8);
+		surface.rect((float) (hitbox.x), (float) (hitbox.y - hitbox.height * 3 / 4 - 10), (float) hitbox.width,
+				(float) 8);
 		surface.fill(Color.CYAN.getRGB());
-		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4 - 10), (float)hitbox.width * (float)(shield/fullShieldHealth), (float)(8));
+		surface.rect((float) (hitbox.x), (float) (hitbox.y - hitbox.height * 3 / 4 - 10),
+				(float) hitbox.width * (float) (shield / fullShieldHealth), (float) (8));
 		surface.fill(Color.BLACK.getRGB());
-		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4 - 2), (float)hitbox.width , (float)10);
+		surface.rect((float) (hitbox.x), (float) (hitbox.y - hitbox.height * 3 / 4 - 2), (float) hitbox.width,
+				(float) 10);
 		surface.fill(Color.GREEN.getRGB());
-		surface.rect((float)(hitbox.x), (float)(hitbox.y - hitbox.height * 3/4 - 2), (float)hitbox.width * (float)(health/fullHealth), (float)10);
+		surface.rect((float) (hitbox.x), (float) (hitbox.y - hitbox.height * 3 / 4 - 2),
+				(float) hitbox.width * (float) (health / fullHealth), (float) 10);
 	}
 
-	public void walk(int numOfSpriteWalk, int divideSpeed) {
+	public void walk(int numOfSpriteWalk, int spriteSpeedWalk) {
 		if (!dashing && !blocking) {
 			for (int i = 0; i < numOfSpriteWalk; i++) {
-				if (System.currentTimeMillis() / divideSpeed % numOfSpriteWalk == i) {
+				if (System.currentTimeMillis() / spriteSpeedWalk % numOfSpriteWalk == i) {
 					spriteSheetKey = getSpriteListWalk().get(i);
 				}
 			}
 		}
 	}
 
-	protected void drawDeath(PApplet surface) {
-		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float)hitbox.x, (float)hitbox.y, (float)hitbox.width, (float)hitbox.height);
+	protected void drawDeath(int numOfSpriteDeath, int spriteSpeedDeath) {
+		for (int i = 0; i < numOfSpriteWalk; i++) {
+			if (System.currentTimeMillis() / spriteSpeedDeath % numOfSpriteDeath == i) {
+				spriteSheetKey = getSpriteListDeath().get(i);
+			}
+		}
+
 	}
 
-
-	//Getters and Setters
+	// Getters and Setters
 	public boolean isUp() {
 		return up;
 	}
@@ -604,7 +608,7 @@ public abstract class Avatar implements Serializable {
 
 	public void setLeft(boolean left) {
 		this.left = left;
-		if(left)
+		if (left)
 			lastDir = true;
 	}
 
@@ -614,7 +618,7 @@ public abstract class Avatar implements Serializable {
 
 	public void setRight(boolean right) {
 		this.right = right;
-		if(right)
+		if (right)
 			lastDir = false;
 	}
 
@@ -760,6 +764,14 @@ public abstract class Avatar implements Serializable {
 
 	public int getLives() {
 		return lives;
+	}
+
+	public ArrayList<String> getSpriteListDeath() {
+		return spriteListDeath;
+	}
+
+	public void setSpriteListDeath(ArrayList<String> spriteListDeath) {
+		this.spriteListDeath = spriteListDeath;
 	}
 
 }

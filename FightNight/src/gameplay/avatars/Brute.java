@@ -22,7 +22,6 @@ import processing.core.PApplet;
  */
 public class Brute extends Avatar {
 
-	private String[] deathImageKeys;
 	private String[] upperCutKeys;
 	private String[] howlKeys;
 	private AttackType currentAttack;
@@ -49,7 +48,8 @@ public class Brute extends Avatar {
 		rangedCD = 3;
 		currentAttack = AttackType.NONE;
 		a3CD = 10;
-		deathImageKeys = new String[] {"WWDying", "WWDead"};
+		getSpriteListDeath().add("WWDying");
+		getSpriteListDeath().add("WWDead");
 		upperCutKeys = new String[] {"UpperCut1", "UpperCut2", "UpperCut3", "UpperCut4", "UpperCut5", "UpperCut6", "UpperCut7", "UpperCut8"};
 		howlKeys = new String[] {"Howl1", "Howl2", "Howl3", "Howl4"};
 		getSpriteListWalk().add("WWWalk0");
@@ -57,6 +57,7 @@ public class Brute extends Avatar {
 		getSpriteListWalk().add("WWWalk2");
 		getSpriteListWalk().add("WWWalk3");
 		numOfSpriteWalk = 4;
+		numOfSpriteDeath = 2;
 	}
 
 	/**
@@ -96,9 +97,9 @@ public class Brute extends Avatar {
 		surface.pushStyle();
 	
 		drawHealthBar(surface);
-	
+		
 		if(deathTime != 0) {
-			drawDeath(surface);
+			drawDeath(numOfSpriteDeath, spriteSpeedDeath);
 			surface.popMatrix();
 			surface.popStyle();
 			return;
@@ -154,14 +155,6 @@ public class Brute extends Avatar {
 	
 		surface.popMatrix();
 		surface.popStyle();
-	}
-
-	protected void drawDeath(PApplet surface){
-		if(System.currentTimeMillis() <= deathTime + 1000)
-			surface.image(GamePanel.resources.getImage(deathImageKeys[0]), (float)hitbox.x, (float)hitbox.y, (float)hitbox.width, (float)hitbox.height);
-		else {
-			surface.image(GamePanel.resources.getImage(deathImageKeys[1]), (float)hitbox.x, (float)hitbox.y, (float)hitbox.width * 1.2f, (float)hitbox.height * 0.7f);
-		}
 	}
 
 	@Override
