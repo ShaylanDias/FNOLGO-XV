@@ -362,5 +362,5 @@ public class GamePanel extends PApplet implements NetworkListener {
 		surface.text(name, (float)x, (float)(y+6));
 
 	}
-
+	
 }

@@ -8,13 +8,20 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+
+import networking.frontend.NetworkManagementPanel;
 
 public class StartMenu extends JPanel{
 	
@@ -80,15 +87,40 @@ public class StartMenu extends JPanel{
 		
 		JPanel characterSelection = new JPanel();
 		JButton characterSelectionButton = new JButton("Select Character");
+		JButton cBack = new JButton("back");
+		JLabel testText = new JLabel("HElloooo");
+		testText.setForeground(Color.WHITE);
+		characterSelection.add(testText);
+		
+		characterSelection.add(cBack);
 		characterSelection.setPreferredSize(new Dimension(1200,800));
 		characterSelection.add(characterSelectionButton);
-		characterSelection.setBackground(Color.blue);
+		characterSelection.setBackground(Color.BLACK);
+		
+		try {
+			BufferedImage Brute = ImageIO.read(new File("data/Brute/Brute.png"));
+			BufferedImage Mage = ImageIO.read(new File("data/Brute/Mage.png"));
+			BufferedImage Ranger = ImageIO.read(new File("Ranger.png"));
+			JLabel bruteLabel = new JLabel(new ImageIcon(Brute));
+			JLabel mageLabel = new JLabel(new ImageIcon(Mage));
+			JLabel rangerLabel = new JLabel(new ImageIcon(Ranger));
+			characterSelection.add(bruteLabel);
+			characterSelection.add(mageLabel);
+			characterSelection.add(rangerLabel);
+		} catch(IOException ex) {
+			ex.printStackTrace();
+		}
+		
+		GamePanel game = new GamePanel(false);
+		NetworkManagementPanel nmp = new NetworkManagementPanel("Chat", 16, game);
+		
 		
 		c1.show(panelCont, "1");
 		
 		panelCont.add(startMenu,"1");
 		panelCont.add(Instructions,"1.5");
 		panelCont.add(characterSelection, "2");
+		panelCont.add(nmp, "3");
 		
 		//Interactions when the buttons are pressed
 		playButton.addActionListener(new ActionListener() {
@@ -101,14 +133,19 @@ public class StartMenu extends JPanel{
 				c1.show(panelCont,"1.5");
 			}
 		});
-		iback.addActionListener(new ActionListener() {
+		playButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				c1.show(panelCont,"2");
+			}
+		});
+		cBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				c1.show(panelCont,"1");
 			}
 		});
 		characterSelectionButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				c1.show(panelCont,"1");
+				c1.show(panelCont,"3");
 			}
 		});
 		
