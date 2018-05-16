@@ -196,10 +196,22 @@ public class GameManager implements NetworkListener {
 		}
 	}
 
+	/**
+	 * 
+	 * If this player won
+	 * 
+	 * @return True if won
+	 */
 	public String getWinner() {
 		return winner;
 	}
 	
+	/**
+	 * 
+	 * Has the game ended
+	 * 
+	 * @return True if ended
+	 */
 	public boolean isGameEnded() {
 		return gameEnded;
 	}

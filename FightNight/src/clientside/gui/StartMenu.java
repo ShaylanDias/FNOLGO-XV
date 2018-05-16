@@ -27,7 +27,11 @@ import gameplay.avatars.Mage;
 import gameplay.avatars.Ranger;
 import networking.frontend.NetworkManagementPanel;
 import processing.awt.PSurfaceAWT;
-
+/**
+ * Initiates a Start Menu. Creates a Java.awt start menu where character selection, instructions, and the server connection is located 
+ * @author Jason Zhu
+ *
+ */
 public class StartMenu extends JPanel{
 
 	private JFrame frame  = new JFrame("FNOLGO XV");
@@ -46,7 +50,10 @@ public class StartMenu extends JPanel{
 
 
 	private CardLayout c1 = new CardLayout();
-
+	/**
+	 * 
+	 * @param game : A instance of the game panel class. This is what the start menu is connected to. 
+	 */
 	public StartMenu(GamePanel game) {
 		
 		this.game = game;
@@ -227,10 +234,6 @@ public class StartMenu extends JPanel{
 		frame.setVisible(true);
 
 	}
-	public void mouseClicked(MouseEvent me) {
-
-	}
-	
 	public CardLayout getCardLayout() {
 		return c1;
 	}

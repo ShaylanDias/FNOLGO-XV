@@ -127,7 +127,7 @@ public class Mage extends Avatar {
 		return attack;
 	}
 
-	// Snow Storm - slows down everybody in an area
+	// Snow Storm - slows down everybody in an area and does a ton of damage 
 	@Override
 	public Attack[] abilityTwo(String player, double angle) {
 		currentlyAttacking = true;
@@ -199,10 +199,15 @@ public class Mage extends Avatar {
 		Lightning l6 = new Lightning("Lightning5", (int) (x), (int) (y), player, randomLightningAngle(angle), 0.3, l5);
 		return new Attack[] { l6, l5, l4, l3, l2, l1 };
 	}
-
+	
+	/**
+	 * Creates the randomness of each lightning bolt sent out.
+	 * @param angle the initial angle of the lightning bolt 
+	 * @return
+	 */
 	private double randomLightningAngle(double angle) {
-		double diff = Math.random() * 45;
-		diff = 22.5 - diff;
+		double diff = Math.random() * 30;
+		diff = 15 - diff;
 		return angle + diff;
 	}
 
@@ -266,7 +271,7 @@ public class Mage extends Avatar {
 	public String toString() {
 		return "Mage";
 	}
-
+	
 	public void act(Map map) {
 
 		if(currentlyAttacking) {
@@ -305,7 +310,6 @@ public class Mage extends Avatar {
 
 	private void actFireEruption() {
 		if(System.currentTimeMillis() > timeActionStarted + 0.8*1000) {
-			System.out.println("true");
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}
@@ -313,7 +317,6 @@ public class Mage extends Avatar {
 
 	private void actSnowField() {
 		if(System.currentTimeMillis() > timeActionStarted + 0.15*1000) {
-			System.out.println("true");
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}
@@ -321,7 +324,6 @@ public class Mage extends Avatar {
 
 	private void actLightning() {
 		if(System.currentTimeMillis() > timeActionStarted + 0.3*1000) {
-			System.out.println("true");
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}

@@ -24,9 +24,6 @@ public class Resources {
 		// Add all of the necessary images to HashMap
 		images.put("Fireball", new ImageWrapper("Fireball.png"));
 
-		images.put("Fighter", new ImageWrapper("data/FIghter/Fighter.png"));
-		images.put("Fighter1", new ImageWrapper("data/FIghter/fighter1.png"));
-
 		// Brute
 		images.put("WWDefault", new ImageWrapper("data/Brute/WW-Default.png"));
 		images.put("WWWalk0", new ImageWrapper("data/Brute/WW-Walk1.png"));
