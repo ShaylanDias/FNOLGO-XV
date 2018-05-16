@@ -373,7 +373,7 @@ public abstract class Avatar implements Serializable {
 
 	private void die() {
 		System.out.println("died called");
-		if (!dead) {
+		if (System.currentTimeMillis() * 1000 > this.deathTime) {
 //			health = 0;
 			dead = true;
 			lives--;
