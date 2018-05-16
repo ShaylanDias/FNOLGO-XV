@@ -29,9 +29,6 @@ public class SnowField extends Attack{
 		for (Avatar a : avatars) {
 			if (a.getHitbox().intersects(this)) {
 				AttackResult res = a.takeHit(this);
-				if (res.equals(AttackResult.BLOCKED) || res.equals(AttackResult.SUCCESS)) {
-					end();
-				}
 			}
 		}
 		
