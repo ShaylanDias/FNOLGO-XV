@@ -8,7 +8,7 @@ import processing.core.PApplet;
 
 public class Lunge extends Attack{
 
-	private static double damage = 40;
+	private static double damage = 30;
 	private static boolean shieldBreaker = true;
 	private Brute attacker;
 	private static String imageKey = "UpperCut";
