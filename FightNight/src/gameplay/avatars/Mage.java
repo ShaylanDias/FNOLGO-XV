@@ -193,8 +193,6 @@ public class Mage extends Avatar {
 		surface.pushStyle();
 
 		drawHealthBar(surface);
-		
-		drawDeath(numOfSpriteDeath, spriteSpeedDeath);
 
 		if (deathTime != 0) {
 			drawDeath(numOfSpriteDeath, spriteSpeedDeath);
