@@ -34,13 +34,13 @@ F - Ability 3
 Feature List:
 Must Haves
 	Server Networking - DONE
-	Menu
+	Menu - DONE
 	Select server - DONE
 	Single map, GUI with basic character models that move - DONE
 	Basic movement and combat abilities w/ effects - DONE
 	Block and roll defensive mechanics - DONE
 	Win/Loss mechanic (battle royale) - DONE
-	3 classes/characters  - PARTLY DONE
+	3 classes/characters  - DONE
 		Brute, mage, ranger
 		Brute is focused more on melee, Mage and Ranger are focused on projectile attacks
 	Cooldown System - DONE
@@ -128,6 +128,9 @@ Cyrus Annihilator (Sprites Unlimited): Ranger and Mage Sprite
 Boo.: Werewolf Sprite
 menos_grante: Wolf Howl Sprite
 Cosmix (PixelArtMaker): Shield Sprite
+upsidesmile on AdobeStock: Fireball Sprite
+MiloSanz on DeviantArt: Teemo Shroom Sprite
+Mii-design on GraphicRiver: Arrow Sprite
 
 
 Feedback by: Warren, Kush, Sepehr
