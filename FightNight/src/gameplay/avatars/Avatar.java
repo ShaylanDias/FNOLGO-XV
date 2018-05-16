@@ -217,7 +217,7 @@ public abstract class Avatar implements Serializable {
 
 		drawHealthBar(surface);
 
-		if (deathTime != 0) {
+		if (dead) {
 			drawDeath(numOfSpriteDeath, spriteSpeedDeath);
 			surface.popMatrix();
 			surface.popStyle();
@@ -278,6 +278,7 @@ public abstract class Avatar implements Serializable {
 		if (!eliminated || this instanceof Spectator) {
 			double x = 1500 - Math.random() * 3000;
 			double y = 1500 - Math.random() * 3000;
+			
 			if (map.hitTree(x, y, hitbox.width, hitbox.height) || !map.inBounds(x, y, hitbox.width, hitbox.height)) {
 				spawn(map);
 			} else {
@@ -332,7 +333,7 @@ public abstract class Avatar implements Serializable {
 	 * Hits a player with an Attack
 	 * 
 	 * @param attack
-	 *            The attack that hits
+	 *            The attack that hitsr
 	 * @return The result of the attack
 	 */
 	public AttackResult takeHit(Attack attack) {
