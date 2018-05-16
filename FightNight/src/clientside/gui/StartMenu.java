@@ -51,9 +51,10 @@ public class StartMenu extends JPanel{
 		title.setAlignmentX(Component.CENTER_ALIGNMENT);
 		startMenu.add(title,startMenu);
 		
+		
 		JButton playButton = new JButton("Play");
 		playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		playButton.setPreferredSize(new Dimension(200,100));
+		playButton.setSize(new Dimension(100,50));
 		startMenu.add(playButton,startMenu);
 		
 		JButton instructionButton = new JButton("Instructions");
@@ -93,17 +94,32 @@ public class StartMenu extends JPanel{
 		characterSelection.add(testText);
 		
 		characterSelection.add(cBack);
+		characterSelection.setLayout(new BoxLayout(characterSelection,BoxLayout.Y_AXIS));
 		characterSelection.setPreferredSize(new Dimension(1200,800));
 		characterSelection.add(characterSelectionButton);
 		characterSelection.setBackground(Color.BLACK);
 		
 		try {
-			BufferedImage Brute = ImageIO.read(new File("data/Brute/Brute.png"));
-			BufferedImage Mage = ImageIO.read(new File("data/Brute/Mage.png"));
-			BufferedImage Ranger = ImageIO.read(new File("Ranger.png"));
+			BufferedImage Brute = ImageIO.read(new File("data/Brute/WW-Default.png"));
+			BufferedImage Mage = ImageIO.read(new File("data/Mage/Mage.png"));
+			BufferedImage Ranger = ImageIO.read(new File("data/Ranger/Ranger.png"));
 			JLabel bruteLabel = new JLabel(new ImageIcon(Brute));
+			bruteLabel.setPreferredSize(new Dimension(100,100));
+			bruteLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
+			bruteLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
 			JLabel mageLabel = new JLabel(new ImageIcon(Mage));
+			mageLabel.setPreferredSize(new Dimension(100,100));
+			mageLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
+			mageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
 			JLabel rangerLabel = new JLabel(new ImageIcon(Ranger));
+			rangerLabel.setPreferredSize(new Dimension(100,100));
+			rangerLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
+			rangerLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+
 			characterSelection.add(bruteLabel);
 			characterSelection.add(mageLabel);
 			characterSelection.add(rangerLabel);
