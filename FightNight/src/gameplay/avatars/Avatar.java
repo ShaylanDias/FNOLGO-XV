@@ -268,6 +268,12 @@ public abstract class Avatar implements Serializable {
 		surface.popStyle();
 	}
 
+	/**
+	 * 
+	 * Spawns the AVatar at a random spot on the map
+	 * 
+	 * @param map  The Map to draw at
+	 */
 	public void spawn(Map map) {
 		if (!eliminated || this instanceof Spectator) {
 			double x = 1500 - Math.random() * 3000;
@@ -751,14 +757,32 @@ public abstract class Avatar implements Serializable {
 	 */
 	public abstract Attack[] abilityThree(String player, double angle);
 
+	/**
+	 * 
+	 * Is the Avatar dead
+	 * 
+	 * @return True if dead
+	 */
 	public boolean isDead() {
 		return dead;
 	}
 
+	/**
+	 * 
+	 * Set if the Avatar is dead
+	 * 
+	 * @param dead True for dead
+	 */
 	public void setDead(boolean dead) {
 		this.dead = dead;
 	}
 
+	/**
+	 * 
+	 * Sets the Avatar's number of lives
+	 * 
+	 * @param x The number of lives
+	 */
 	public void setLives(int x) {
 		lives = x;
 	}
@@ -767,14 +791,32 @@ public abstract class Avatar implements Serializable {
 		return eliminated;
 	}
 
+	/**
+	 * 
+	 * Gets the Avatar's lives
+	 * 
+	 * @return Number of lives left
+	 */
 	public int getLives() {
 		return lives;
 	}
 
+	/**
+	 * 
+	 * Gets the list of keys for the death animation
+	 * 
+	 * @return The list of keys for the death animation
+	 */
 	public ArrayList<String> getSpriteListDeath() {
 		return spriteListDeath;
 	}
 
+	/**
+	 * 
+	 * Sets the list of keys for the death animation
+	 * 
+	 * @param spriteListDeath The death animation keys
+	 */
 	public void setSpriteListDeath(ArrayList<String> spriteListDeath) {
 		this.spriteListDeath = spriteListDeath;
 	}

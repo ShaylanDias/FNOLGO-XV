@@ -1,11 +1,5 @@
 package clientside.gui;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import networking.frontend.NetworkManagementPanel;
-
 /**
  * 
  * Contains main method

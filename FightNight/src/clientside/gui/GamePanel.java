@@ -45,7 +45,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 	private boolean connected;
 	private boolean gameEnded;
 	private boolean won;
-	JFrame window;
+	private JFrame window;
 
 	private Rectangle brute, ranger, mage;
 

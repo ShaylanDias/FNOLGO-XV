@@ -1,6 +1,5 @@
 package gameplay.avatars;
 
-import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
@@ -9,6 +8,13 @@ import gameplay.attacks.Attack.AttackResult;
 import gameplay.maps.Map;
 import processing.core.PApplet;
 
+/**
+ * 
+ * An Avatar that can move but is invisible and cannot interact with the game.
+ * 
+ * @author sdias695
+ *
+ */
 public class Spectator extends Avatar{
 
 	public Spectator() {

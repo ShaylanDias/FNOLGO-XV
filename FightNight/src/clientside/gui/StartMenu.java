@@ -47,6 +47,12 @@ public class StartMenu extends JPanel{
 
 	private CardLayout c1 = new CardLayout();
 
+	/**
+	 * 
+	 * Initializes the StartMenu
+	 * 
+	 * @param game The GamePanel this is associated with
+	 */
 	public StartMenu(GamePanel game) {
 		
 		this.game = game;
