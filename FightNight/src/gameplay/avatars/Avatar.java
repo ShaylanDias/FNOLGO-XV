@@ -189,10 +189,12 @@ public abstract class Avatar implements Serializable {
 			if (right) {
 				moveBy(moveSpeed, 0, map);
 				walk(numOfSpriteWalk, spriteSpeedWalk);
+				lastDir = false;
 			}
 			if (left) {
 				moveBy(-moveSpeed, 0, map);
 				walk(numOfSpriteWalk, spriteSpeedWalk);
+				lastDir = true;
 			}
 			if (down) {
 				moveBy(0, moveSpeed, map);

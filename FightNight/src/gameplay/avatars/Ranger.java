@@ -235,7 +235,6 @@ public class Ranger extends Avatar {
 	}
 
 	public void act(Map map) {
-		super.act(map);
 
 		if(currentlyAttacking) {
 			if(currentAttack.equals(AttackType.BASIC))
@@ -243,9 +242,14 @@ public class Ranger extends Avatar {
 			else if(currentAttack.equals(AttackType.RANGED) || currentAttack.equals(AttackType.A1))
 				actRanged();
 			return;
+		} else {
+			super.act(map);
+			if (!super.isLeft() && !super.isRight() && !super.isUp() && !super.isDown()) {
+				spriteSheetKey = "WWDefault";
+			}		
 		}
-		
-		
+
+
 		if(invisible) {
 			if(System.currentTimeMillis() > invisStartTime + invisLength * 1000)
 				invisible = false;
@@ -275,7 +279,7 @@ public class Ranger extends Avatar {
 		invisible = false;
 		super.spawn(map);
 	}
-	
+
 	private void actBasic() {
 		if(System.currentTimeMillis() < timeActionStarted + 0.06 * 1000) {
 			spriteSheetKey = "RangerBasic1";
@@ -290,7 +294,7 @@ public class Ranger extends Avatar {
 			currentAttack = AttackType.NONE;
 		}
 	}
-	
+
 	private void actRanged() {
 		if(System.currentTimeMillis() < timeActionStarted + 0.03 * 1000) {
 			spriteSheetKey = "RangerRanged0";
@@ -321,5 +325,5 @@ public class Ranger extends Avatar {
 	public String toString() {
 		return "Ranger";
 	}
-	
+
 }

@@ -102,8 +102,8 @@ public class StartMenu extends JPanel{
 		howToPlay.setText("The objective of the game is to be the last remaining Avatar on the map. You are in an arena with up to 16 \nother players, each " + 
 				"with 4 lives. Use your abilities to take down your opponents and be the last one \nstanding in this contest of champions!\n\nCONTROLS:\n"
 				+ "WASD - movement"
-				+ "Space - Dash in direction of movement\n" + 
-				"Q- Block/Shield\n" + 
+				+ "\nSpace - Dash in direction of movement\n" + 
+				"Q- Shield\n" + 
 				"Mouse - Aim\n" + 
 				"Left Mouse Button - Basic Attack\n" + 
 				"Right Mouse Button - Ranged Attack\n" + 
@@ -112,6 +112,7 @@ public class StartMenu extends JPanel{
 				"F - Ability 3");
 		howToPlay.setBackground(Color.BLACK);
 		howToPlay.setSelectedTextColor(Color.WHITE);
+		howToPlay.setEditable(false);
 //		howToPlay.setText("HI");
 
 		JPanel characterSelection = new JPanel();

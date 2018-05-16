@@ -35,6 +35,7 @@ public class Mage extends Avatar {
 		sprites = new Rectangle[] { new Rectangle(70, 94, 60, 90) };
 		a3CD = 6;
 		a2CD = 8;
+		a1CD = 6;
 		rangedCD = 0.5;
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
@@ -110,10 +111,9 @@ public class Mage extends Avatar {
 	@Override
 	public Attack[] abilityOne(String player, double angle) {
 		currentAttack = AttackType.A1;
-
+		
 		a1CDStart = System.currentTimeMillis();
 		timeActionStarted = a1CDStart;
-
 		// int x, int y, String playerAddress, double dir, String imageKey, double
 		// range, double speed, int w, int h, double delay
 
