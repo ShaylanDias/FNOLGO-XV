@@ -111,7 +111,7 @@ public abstract class Avatar implements Serializable {
 		spriteListAttack = new ArrayList<String>();
 		spriteListDeath = new ArrayList<String>();
 		numOfSpriteWalk = 0;
-		numOfSpriteDeath = 0;
+		numOfSpriteDeath = 1;
 		spriteSpeedWalk = 150;
 		spriteSpeedDeath = 500;
 		movementControlled = true;
