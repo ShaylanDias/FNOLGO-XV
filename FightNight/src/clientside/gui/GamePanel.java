@@ -45,6 +45,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 	private boolean connected;
 	private boolean gameEnded;
 	private boolean won;
+	JFrame window;
 
 	private Rectangle brute, ranger, mage;
 
@@ -60,14 +61,13 @@ public class GamePanel extends PApplet implements NetworkListener {
 		PSurfaceAWT surf = (PSurfaceAWT) this.getSurface();
 		PSurfaceAWT.SmoothCanvas canvas = (PSurfaceAWT.SmoothCanvas) surf.getNative();
 
-		JFrame window = (JFrame) canvas.getFrame();
+		window = (JFrame) canvas.getFrame();
 		window.setSize(1200, 800);
 		window.setLocation(100, 50);
 		window.setMinimumSize(new Dimension(600, 400));
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(true);
 		window.setVisible(true);
-
 		player = new Player();
 		map = new StandardMap();
 		brute = new Rectangle(100, 100, 100, 100);
@@ -372,6 +372,10 @@ public class GamePanel extends PApplet implements NetworkListener {
 	
 	public Player getPlayer() {
 		return player;
+	}
+
+	public JFrame getFrame() {
+		return window;
 	}
 	
 //	public void runMe() {

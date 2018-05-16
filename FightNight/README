@@ -15,18 +15,16 @@ game, YOU will take control of a championand fight to rule over this mysterious 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 Instructions:
-Right now this game is simply a test. Press "Start Server" to launch or use Discover Server and/or one of the
-connect server buttons to connect with a friend!
+The Objective of the game is to be the last remaining Avatar on the map. You are in an arena with up to 16 other players, each 
+with 4 lives. Use your abilities to take down your opponents and be the last one standing in this contest of champions!
 
 Controls:
 W-A-S-D - Movement
+Space - Dash in direction of movement
 Mouse - Aim
-Left Mouse Button - Basic Attack 1 (Fireball)
-Space - Dash in direction of mouse
 Q- Block/Shield
-
-Future Controls:
-Right Mouse Button - Basic Attack 2
+Left Mouse Button - Basic Attack
+Right Mouse Button - Ranged Attack
 E - Ability 1
 R - Ability 2
 F - Ability 3
