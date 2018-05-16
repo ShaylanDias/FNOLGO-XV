@@ -167,11 +167,11 @@ public class NetworkManagementPanel extends JPanel
 			discoverButton.setEnabled(false);
 		}
 
-		JFrame window = new JFrame("Network Management");
-		window.setBounds(300, 300, 700, 480);
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.add(this);
-		window.setVisible(true);
+//		JFrame window = new JFrame("Network Management");
+//		window.setBounds(300, 300, 700, 480);
+//		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		window.add(this);
+//		window.setVisible(true);
 	}
 	
 	
