@@ -157,7 +157,7 @@ public abstract class Avatar implements Serializable {
 			}
 		}
 
-		if(!dead) {
+		if(!dead && !currentlyAttacking) {
 			if (blocking) {
 				shieldHealth -= 1;
 				up = false;

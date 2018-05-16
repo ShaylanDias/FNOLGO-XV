@@ -66,7 +66,6 @@ public class GamePanel extends PApplet implements NetworkListener {
 		window.setMinimumSize(new Dimension(600, 400));
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(true);
-
 		window.setVisible(true);
 
 		player = new Player();
@@ -116,6 +115,8 @@ public class GamePanel extends PApplet implements NetworkListener {
 //				text("Mage", mage.x + mage.width/2, mage.y + mage.height/2);
 //				text("Ranger", ranger.x + ranger.width/2, ranger.y + ranger.height/2);
 			} else {
+				
+				//I guess this version of the menu is not working
 				
 				//Provide a button to click to send you back to the title screen (change gameEnded to false)
 				if(won) {

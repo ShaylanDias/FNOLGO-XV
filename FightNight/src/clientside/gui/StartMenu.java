@@ -211,7 +211,7 @@ public class StartMenu extends JPanel{
 		frame.add(panelCont);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.pack();
-		frame.setResizable(false);
+		frame.setResizable(true);
 		frame.setVisible(true);
 
 	}
