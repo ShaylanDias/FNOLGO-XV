@@ -103,8 +103,7 @@ public class Ranger extends Avatar {
 		currentAttack = AttackType.A1;
 		currentlyAttacking = true;
 		timeActionStarted = System.currentTimeMillis();
-		super.rangedCDStart = timeActionStarted;
-		super.a1CDStart = System.currentTimeMillis();
+		super.a1CDStart = timeActionStarted;
 		if(angle > 90 && angle < 270) {
 			lastDir = true;
 			return new Attack[] {new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle, "Arrow", 600, 40, 60, 30, 0.3), 
@@ -133,7 +132,7 @@ public class Ranger extends Avatar {
 	@Override
 	public Attack[] abilityTwo(String player, double angle) {
 		currentAttack = AttackType.A2;
-		super.rangedCDStart = System.currentTimeMillis();
+		super.a2CDStart = System.currentTimeMillis();
 		if(angle > 90 && angle < 270) {
 			lastDir = true;
 		}
