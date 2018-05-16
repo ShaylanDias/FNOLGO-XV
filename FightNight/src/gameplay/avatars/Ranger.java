@@ -318,4 +318,8 @@ public class Ranger extends Avatar {
 		}
 	}
 
+	public String toString() {
+		return "Ranger";
+	}
+	
 }

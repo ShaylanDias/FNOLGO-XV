@@ -92,4 +92,8 @@ public class Spectator extends Avatar{
 		return null;
 	}
 
+	public String toString() {
+		return "Spectator";
+	}
+	
 }

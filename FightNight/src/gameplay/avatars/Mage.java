@@ -226,5 +226,9 @@ public class Mage extends Avatar {
 		surface.popMatrix();
 		surface.popStyle();
 	}
+	
+	public String toString() {
+		return "Mage";
+	}
 
 }

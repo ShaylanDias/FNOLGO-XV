@@ -45,7 +45,7 @@ public class StartMenu extends JPanel{
 	private PSurfaceAWT.SmoothCanvas processingCanvas;  // These are swing components (think of it as the canvas that the PApplet draws on to)
 
 
-	CardLayout c1 = new CardLayout();
+	private CardLayout c1 = new CardLayout();
 
 	public StartMenu(GamePanel game) {
 		
@@ -124,6 +124,12 @@ public class StartMenu extends JPanel{
 		characterSelection.add(characterSelectionButton);
 		characterSelection.setBackground(Color.BLACK);
 
+		JLabel selected = new JLabel();
+		selected.setForeground(Color.WHITE);
+		selected.setFont(new Font("arial",Font.PLAIN,25));
+		selected.setAlignmentX(Component.LEFT_ALIGNMENT);
+		selected.setText("Selected: " + game.getPlayer().getAvatar().toString());
+		
 		try {
 			Image Brute = ImageIO.read(new File("data/Brute/WW-Default.png"));
 			Image Mage = ImageIO.read(new File("data/Mage/Mage.png"));
@@ -139,6 +145,7 @@ public class StartMenu extends JPanel{
 			bruteLabel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent arg0) {
 					game.getPlayer().setAvatar(new Brute());
+					selected.setText("Selected: " + game.getPlayer().getAvatar().toString());
 				}
 			});
 
@@ -148,18 +155,21 @@ public class StartMenu extends JPanel{
 			mageLabel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent arg0) {
 					game.getPlayer().setAvatar(new Mage());
+					selected.setText("Selected: " + game.getPlayer().getAvatar().toString());
 				}
 			});
-
+			
 			JLabel rangerLabel = new JLabel(new ImageIcon(Ranger));
 			rangerLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
 			rangerLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 			rangerLabel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent arg0) {
 					game.getPlayer().setAvatar(new Ranger());
+					selected.setText("Selected: " + game.getPlayer().getAvatar().toString());
 				}
 			});
 
+			characterSelection.add(selected);
 			characterSelection.add(bruteLabel);
 			characterSelection.add(mageLabel);
 			characterSelection.add(rangerLabel);
