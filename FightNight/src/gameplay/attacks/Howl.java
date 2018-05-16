@@ -8,7 +8,7 @@ import gameplay.avatars.Avatar;
 public class Howl extends Attack{
 
 	private static final String imageKey = "Howl";
-	private static final double damage = 1.5, width = 120, height = 110;
+	private static final double damage = 1, width = 120, height = 110;
 	
 	public Howl(int x, int y, String playerAddress) {
 		super(imageKey, x, y, (int)width, (int)height, playerAddress, damage, false, new StatusEffect(Effect.SLOWED, 1, 5), 0);
