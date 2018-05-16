@@ -25,7 +25,6 @@ public class Brute extends Avatar {
 	private String[] upperCutKeys;
 	private String[] howlKeys;
 	private AttackType currentAttack;
-	private final double upperCutTime = 1.1;
 	private double upperCutAngle;
 
 	/**
@@ -37,7 +36,7 @@ public class Brute extends Avatar {
 		sprites = new Rectangle[] { new Rectangle(62, 94, 85, 65) };
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
-		dashCD = 1.0;
+		dashCD = 1.7;
 		dashDistance = 120;
 		dashSpeed = 40;
 		a1CD = 7;
@@ -148,6 +147,7 @@ public class Brute extends Avatar {
 					1.5f * sh);
 		}
 	
+		// Draws the hitbox around him
 		// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
 		// surface.fill(Color.RED.getRGB());
 		// surface.ellipseMode(PApplet.CENTER);

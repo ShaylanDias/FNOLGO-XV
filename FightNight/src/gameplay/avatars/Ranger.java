@@ -40,7 +40,7 @@ public class Ranger extends Avatar {
 		sprites = new Rectangle[] { new Rectangle(92, 94, 52, 88) };
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
-		dashCD = 1.5;	
+		dashCD = 1.2;	
 		rangedCD = 0.5;
 		numOfSpriteWalk = 10;
 		for(int i = 1; i < 11; i++) {
