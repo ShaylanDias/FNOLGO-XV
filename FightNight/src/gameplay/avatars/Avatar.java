@@ -118,6 +118,8 @@ public abstract class Avatar implements Serializable {
 		dead = true;
 		dashCD = 1;
 		eliminated = false;
+		dead = true;
+		deathTime = System.currentTimeMillis();
 	}
 
 	/**
@@ -270,7 +272,7 @@ public abstract class Avatar implements Serializable {
 
 	/**
 	 * 
-	 * Spawns the AVatar at a random spot on the map
+	 * Spawns the Avatar at a random spot on the map
 	 * 
 	 * @param map  The Map to draw at
 	 */
@@ -278,7 +280,7 @@ public abstract class Avatar implements Serializable {
 		if (!eliminated || this instanceof Spectator) {
 			double x = 1500 - Math.random() * 3000;
 			double y = 1500 - Math.random() * 3000;
-			
+
 			if (map.hitTree(x, y, hitbox.width, hitbox.height) || !map.inBounds(x, y, hitbox.width, hitbox.height)) {
 				spawn(map);
 			} else {
@@ -295,7 +297,6 @@ public abstract class Avatar implements Serializable {
 			a3CDStart = 0;
 			deathTime = 0;
 			stop();
-			System.out.println("spawn method called");
 			dead = false;
 		}
 	}
@@ -376,12 +377,10 @@ public abstract class Avatar implements Serializable {
 	}
 
 	private void die() {
-		System.out.println("died called");
 		if (System.currentTimeMillis() * 1000 > this.deathTime) {
-//			health = 0;
+			//			health = 0;
 			dead = true;
 			lives--;
-			System.out.println("died");
 
 			if (lives <= 0)
 				eliminated = true;
@@ -481,9 +480,9 @@ public abstract class Avatar implements Serializable {
 			dashing = true;
 			dashTraveled = 0;
 			superArmor = true;
-			
+
 			dashCDStart = System.currentTimeMillis();
-			
+
 		}
 	}
 
@@ -583,6 +582,21 @@ public abstract class Avatar implements Serializable {
 				(float) hitbox.width * (float) (health / fullHealth), (float) 10);
 	}
 
+	protected void drawDeath(int numOfSpriteDeath, int spriteSpeedDeath) {
+	
+		double deathAnimationTime = 1.5;
+		double step = deathAnimationTime/numOfSpriteDeath;
+		spriteSheetKey = getSpriteListDeath().get(getSpriteListDeath().size()-1);
+		for(int i = 1; i < numOfSpriteDeath+1; i++) {
+			if ((System.currentTimeMillis() - deathTime) <= i*step * 1000) {
+				spriteSheetKey = getSpriteListDeath().get(i-1);
+				break;
+			}
+		}
+
+		
+	}
+
 	public void walk(int numOfSpriteWalk, int spriteSpeedWalk) {
 		if (!dashing && !blocking) {
 			for (int i = 0; i < numOfSpriteWalk; i++) {
@@ -591,15 +605,6 @@ public abstract class Avatar implements Serializable {
 				}
 			}
 		}
-	}
-
-	protected void drawDeath(int numOfSpriteDeath, int spriteSpeedDeath) {
-		for (int i = 0; i < numOfSpriteWalk; i++) {
-			if (System.currentTimeMillis() / spriteSpeedDeath % numOfSpriteDeath == i) {
-				spriteSheetKey = getSpriteListDeath().get(i);
-			}
-		}
-
 	}
 
 	// Getters and Setters

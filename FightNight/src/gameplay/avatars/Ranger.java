@@ -173,15 +173,24 @@ public class Ranger extends Avatar {
 		drawHealthBar(surface);
 
 		if(super.isDead()) {
+			int sw, sh;
+			sw = (int) sprites[spriteInd].getWidth();
+			sh = (int) sprites[spriteInd].getHeight();
+			
 			drawDeath(numOfSpriteDeath, spriteSpeedDeath);
+			if (lastDir) {
+				surface.scale(-1, 1);
+				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw, sh);
+			} else {
+				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
+			}
+
 			surface.popMatrix();
 			surface.popStyle();
 			return;
 		}
-
+		else {
 		int sw, sh;
-		//		sx = (int) sprites[spriteInd].getX();
-		//		sy = (int) sprites[spriteInd].getY();
 		sw = (int) sprites[spriteInd].getWidth();
 		sh = (int) sprites[spriteInd].getHeight();
 
@@ -199,12 +208,11 @@ public class Ranger extends Avatar {
 		if(currentlyAttacking) {
 			if(currentAttack.equals(AttackType.BASIC) && System.currentTimeMillis() > timeActionStarted +  0.25 * 1000 )
 				widthMod = 1.2f;
-		}
+		} else {
 
 		if(invisible && System.currentTimeMillis() < smokeTime) {
 			surface.image(GamePanel.resources.getImage("Smoke"), (float) hitbox.x, (float) hitbox.y, sw * widthMod, sh);
 		}
-		else {
 			if(invisible)
 				surface.tint(10);
 			if (lastDir) {
@@ -228,6 +236,7 @@ public class Ranger extends Avatar {
 			}
 			surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
 					1.5f * sh);
+		}
 		}
 
 		// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);

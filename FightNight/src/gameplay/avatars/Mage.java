@@ -200,7 +200,7 @@ public class Mage extends Avatar {
 		Lightning l6 = new Lightning("Lightning5", (int) (x), (int) (y), player, randomLightningAngle(angle), 0.3, l5);
 		return new Attack[] { l6, l5, l4, l3, l2, l1 };
 	}
-	
+
 	/**
 	 * Creates the randomness of each lightning bolt sent out.
 	 * @param angle the initial angle of the lightning bolt 
@@ -215,66 +215,76 @@ public class Mage extends Avatar {
 	public void draw(PApplet surface) {
 		surface.pushMatrix();
 		surface.pushStyle();
-
-		drawHealthBar(surface);
-
-		System.out.println(super.isDead());
 		
 		if (super.isDead()) {
+			int sw, sh;
+			sw = (int) sprites[spriteInd].getWidth();
+			sh = (int) sprites[spriteInd].getHeight();
+			
 			drawDeath(numOfSpriteDeath, spriteSpeedDeath);
+			if (!lastDir) {
+				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
+
+			} else {
+				surface.scale(-1, 1);
+				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw, sh);
+			}
 			surface.popMatrix();
 			surface.popStyle();
-			return;
-		}
-
-		surface.imageMode(PApplet.CENTER);
-
-		if (super.getStatus().getEffect().equals(Effect.STUNNED)) {
-			surface.image(GamePanel.resources.getImage("Stun"), (float) hitbox.x, (float) hitbox.y);
-		}
-
-		int sw, sh;
-		// sx = (int) sprites[spriteInd].getX();
-		// sy = (int) sprites[spriteInd].getY();
-		sw = (int) sprites[spriteInd].getWidth();
-		sh = (int) sprites[spriteInd].getHeight();
-
-		surface.pushMatrix();
-		if (!lastDir) {
-			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
-
 		} else {
-			surface.scale(-1, 1);
-			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw, sh);
-		}
-		surface.popMatrix();
-		if (blocking) {
-			if (System.currentTimeMillis() / 250 % 5 == 0) {
-				surface.tint(140);
-			} else if (System.currentTimeMillis() / 250 % 5 == 1) {
-				surface.tint(170);
-			} else if (System.currentTimeMillis() / 250 % 5 == 2) {
-				surface.tint(200);
-			} else if (System.currentTimeMillis() / 250 % 5 == 3) {
-				surface.tint(240);
+			drawHealthBar(surface);
+
+			System.out.println(super.isDead());
+
+
+			surface.imageMode(PApplet.CENTER);
+
+			if (super.getStatus().getEffect().equals(Effect.STUNNED)) {
+				surface.image(GamePanel.resources.getImage("Stun"), (float) hitbox.x, (float) hitbox.y);
 			}
-			surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
-					1.5f * sh);
+
+			int sw, sh;
+			// sx = (int) sprites[spriteInd].getX();
+			// sy = (int) sprites[spriteInd].getY();
+			sw = (int) sprites[spriteInd].getWidth();
+			sh = (int) sprites[spriteInd].getHeight();
+
+			surface.pushMatrix();
+			if (!lastDir) {
+				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
+
+			} else {
+				surface.scale(-1, 1);
+				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw, sh);
+			}
+			surface.popMatrix();
+			if (blocking) {
+				if (System.currentTimeMillis() / 250 % 5 == 0) {
+					surface.tint(140);
+				} else if (System.currentTimeMillis() / 250 % 5 == 1) {
+					surface.tint(170);
+				} else if (System.currentTimeMillis() / 250 % 5 == 2) {
+					surface.tint(200);
+				} else if (System.currentTimeMillis() / 250 % 5 == 3) {
+					surface.tint(240);
+				}
+				surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
+						1.5f * sh);
+			}
+
+			// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
+			// surface.fill(Color.RED.getRGB());
+			// surface.ellipseMode(PApplet.CENTER);
+			// surface.ellipse((float)(hitbox.x), (float)(hitbox.y), 5f, 5f);
+			surface.popMatrix();
+			surface.popStyle();
 		}
-
-		// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
-		// surface.fill(Color.RED.getRGB());
-		// surface.ellipseMode(PApplet.CENTER);
-		// surface.ellipse((float)(hitbox.x), (float)(hitbox.y), 5f, 5f);
-
-		surface.popMatrix();
-		surface.popStyle();
 	}
 
 	public String toString() {
 		return "Mage";
 	}
-	
+
 	public void act(Map map) {
 
 		if(currentlyAttacking) {
@@ -291,7 +301,7 @@ public class Mage extends Avatar {
 
 		} else {
 			super.act(map);
-			if (!super.isLeft() && !super.isRight() && !super.isUp() && !super.isDown()) {
+			if (!super.isLeft() && !super.isRight() && !super.isUp() && !super.isDown() && !super.isDead()) {
 				spriteSheetKey = "Mage";
 			}
 		}

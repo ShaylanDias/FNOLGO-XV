@@ -90,73 +90,76 @@ public class Brute extends Avatar {
 				spriteSheetKey = "WWDefault";
 			}
 		}
-	
+
 	}
 
 	public void draw(PApplet surface) {
 		surface.pushMatrix();
 		surface.pushStyle();
-	
+
 		drawHealthBar(surface);
-		
-		
-		
+
+
+
 		if(super.isDead()) {
+			int sw, sh;
+			sw = (int) sprites[spriteInd].getWidth();
+			sh = (int) sprites[spriteInd].getHeight();
 			drawDeath(numOfSpriteDeath, spriteSpeedDeath);
+			if (!lastDir) {
+				surface.scale(-1, 1);
+				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw, sh);
+			} else {
+				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
+			}
 			surface.popMatrix();
 			surface.popStyle();
 			return;
-		}
-	
-		if (blocking) {
-			// Draw block
-		}
-	
-		int sw, sh;
-		//		sx = (int) sprites[spriteInd].getX();
-		//		sy = (int) sprites[spriteInd].getY();
-		sw = (int) sprites[spriteInd].getWidth();
-		sh = (int) sprites[spriteInd].getHeight();
-	
-		surface.imageMode(PApplet.CENTER);
-	
-		if (super.getStatus().getEffect().equals(Effect.STUNNED)) {
-			surface.image(GamePanel.resources.getImage("Stun"), (float)hitbox.x, (float)(hitbox.y - hitbox.height * 1.1), 30, 30);
-		}
-		
-		surface.pushMatrix();
-	
-		float widthMod = 1f;
-		if(currentlyAttacking)
-			widthMod = 1.3f;
-		
-		if (!lastDir) {
-			surface.scale(-1, 1);
-			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw * widthMod, sh);
 		} else {
-			surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw * widthMod, sh);
-		}
-		surface.popMatrix();
-		if (blocking) {
-			if (System.currentTimeMillis() / 250 % 5 == 0) {
-				surface.tint(140);
-			} else if (System.currentTimeMillis() / 250 % 5 == 1) {
-				surface.tint(170);
-			} else if (System.currentTimeMillis() / 250 % 5 == 2) {
-				surface.tint(200);
-			} else if (System.currentTimeMillis() / 250 % 5 == 3) {
-				surface.tint(240);
+
+			int sw, sh;
+			sw = (int) sprites[spriteInd].getWidth();
+			sh = (int) sprites[spriteInd].getHeight();
+
+			surface.imageMode(PApplet.CENTER);
+
+			if (super.getStatus().getEffect().equals(Effect.STUNNED)) {
+				surface.image(GamePanel.resources.getImage("Stun"), (float)hitbox.x, (float)(hitbox.y - hitbox.height * 1.1), 30, 30);
 			}
-			surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
-					1.5f * sh);
+
+			surface.pushMatrix();
+
+			float widthMod = 1f;
+			if(currentlyAttacking)
+				widthMod = 1.3f;
+
+			if (!lastDir) {
+				surface.scale(-1, 1);
+				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw * widthMod, sh);
+			} else {
+				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw * widthMod, sh);
+			}
+			surface.popMatrix();
+			if (blocking) {
+				if (System.currentTimeMillis() / 250 % 5 == 0) {
+					surface.tint(140);
+				} else if (System.currentTimeMillis() / 250 % 5 == 1) {
+					surface.tint(170);
+				} else if (System.currentTimeMillis() / 250 % 5 == 2) {
+					surface.tint(200);
+				} else if (System.currentTimeMillis() / 250 % 5 == 3) {
+					surface.tint(240);
+				}
+				surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
+						1.5f * sh);
+			}
 		}
-	
 		// Draws the hitbox around him
 		// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
 		// surface.fill(Color.RED.getRGB());
 		// surface.ellipseMode(PApplet.CENTER);
 		// surface.ellipse((float)(hitbox.x), (float)(hitbox.y), 5f, 5f);
-	
+
 		surface.popMatrix();
 		surface.popStyle();
 	}
@@ -197,7 +200,7 @@ public class Brute extends Avatar {
 		} else {
 			return null;
 		}
-	
+
 	}
 
 	// UpperCut - dashes forwards and stuns someone
@@ -344,7 +347,7 @@ public class Brute extends Avatar {
 			currentlyAttacking = false;
 		}
 	}
-	
+
 	public String getSpriteSheetKey() {
 		return spriteSheetKey;
 	}
@@ -356,5 +359,5 @@ public class Brute extends Avatar {
 	public String toString() {
 		return "Brute";
 	}
-	
+
 }
