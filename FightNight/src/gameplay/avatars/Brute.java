@@ -355,4 +355,8 @@ public class Brute extends Avatar {
 		this.spriteSheetKey = spriteSheetKey;
 	}
 
+	public String toString() {
+		return "Brute";
+	}
+	
 }

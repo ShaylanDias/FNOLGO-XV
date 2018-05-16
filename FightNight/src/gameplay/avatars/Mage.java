@@ -246,6 +246,10 @@ public class Mage extends Avatar {
 		surface.popMatrix();
 		surface.popStyle();
 	}
+	
+	public String toString() {
+		return "Mage";
+	}
 
 	public void act(Map map) {
 		super.act(map);

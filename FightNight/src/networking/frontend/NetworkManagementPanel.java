@@ -11,7 +11,6 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -24,6 +23,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.text.DefaultCaret;
 
 import clientside.gui.GamePanel;
+import clientside.gui.StartMenu;
 import networking.backend.GameClient;
 import networking.backend.GameServer;
 import networking.backend.PeerDiscovery;
@@ -53,6 +53,10 @@ public class NetworkManagementPanel extends JPanel
 	private JButton discoverButton;
 	private JButton disconnectButton;
 	private JButton connectCustomButton;
+	
+	//I ADDED THIS
+	private JButton backButton;
+	private StartMenu menu;
 
 	private InetAddress myIP;
 	private PeerDiscovery discover;
@@ -75,10 +79,12 @@ public class NetworkManagementPanel extends JPanel
 	 * @param maxPerServer The maximum number of connections a server should accept.
 	 * @param nl The listener to be notified of network events.
 	 */
-	public NetworkManagementPanel (String programID, int maxPerServer, NetworkListener nl) {
+	public NetworkManagementPanel (String programID, int maxPerServer, NetworkListener nl, StartMenu menu) {
 		ActionHandler actionEventHandler = new ActionHandler();
 		refreshTimer = new Timer(1000, actionEventHandler);
 		setLayout(new BorderLayout());
+		
+		this.menu = menu;
 		
 		this.programID = programID;
 		this.clientProgram = nl;
@@ -134,9 +140,12 @@ public class NetworkManagementPanel extends JPanel
 		disconnectButton.addActionListener(actionEventHandler);
 		connectCustomButton = new JButton("Connect to Custom IP");
 		connectCustomButton.addActionListener(actionEventHandler);
+		backButton = new JButton("Character Select");
+		backButton.addActionListener(actionEventHandler);
 		serverButton = new JButton("Start a Server");
 		serverButton.addActionListener(actionEventHandler);
 		
+		ePanel.add(backButton);
 		ePanel.add(discoverButton);
 		ePanel.add(connectButton);
 		ePanel.add(connectCustomButton);
@@ -190,6 +199,7 @@ public class NetworkManagementPanel extends JPanel
 		connectButton.setEnabled(x);
 		connectCustomButton.setEnabled(x);
 		serverButton.setEnabled(x);
+		backButton.setEnabled(x);
 	}
 	
 	private void disconnect() {
@@ -203,6 +213,7 @@ public class NetworkManagementPanel extends JPanel
 	private void connect(String host) {
 		try {
 			connect(InetAddress.getByName(host));
+			backButton.setEnabled(false);
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -225,6 +236,7 @@ public class NetworkManagementPanel extends JPanel
 				clientProgram.connectedToServer(gc);
 				((GamePanel)clientProgram).sendConnectInit();
 				((GamePanel)clientProgram).setConnected(true);
+//				((GamePanel)clientProgram).getFrame().setVisible(true);
 				setButtons(false);
 			}
 		}
@@ -299,6 +311,8 @@ public class NetworkManagementPanel extends JPanel
 					statusText.append("\nFinished discovery.");
 				}
 				hostList.setListData(discover.getPeers());
+			} else if (source == backButton) {
+				menu.getCardLayout().show(menu.getPanel(),"2");
 			}
 
 		}
