@@ -43,7 +43,7 @@ public class Spectator extends Avatar{
 	}
 	
 	@Override
-	public void dash(Double x) {
+	public void dash() {
 
 	}
 	

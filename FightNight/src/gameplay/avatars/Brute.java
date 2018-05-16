@@ -157,14 +157,6 @@ public class Brute extends Avatar {
 		surface.popStyle();
 	}
 
-	@Override
-	public void dash(Double mouseAngle) {
-		if (System.currentTimeMillis() > super.dashCDStart + super.dashCD * 1000) {
-			super.dashCDStart = System.currentTimeMillis();
-			super.dash(mouseAngle);
-		}
-	}
-
 	// Punch, slow but does a lot of dmg
 	@Override
 	public Attack[] basicAttack(String player, double angle) {

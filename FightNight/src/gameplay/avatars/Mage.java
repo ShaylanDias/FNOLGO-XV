@@ -36,6 +36,7 @@ public class Mage extends Avatar {
 		a3CD = 6;
 		a2CD = 8;
 		a1CD = 6;
+		dashCD = 2.5;
 		rangedCD = 0.5;
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;

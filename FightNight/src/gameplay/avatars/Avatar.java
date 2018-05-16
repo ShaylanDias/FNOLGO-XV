@@ -441,35 +441,40 @@ public abstract class Avatar implements Serializable {
 	/**
 	 * Starts the Character in a dash, enables superArmor
 	 */
-	public void dash(Double mouseAngle) {
+	public void dash() {
 
-		if (left) {
-			if (up) {
-				dashAngle = 135;
+		if(System.currentTimeMillis() > dashCDStart + dashCD * 1000) {
+
+			if (left) {
+				if (up) {
+					dashAngle = 135;
+				} else if (down) {
+					dashAngle = 225;
+				} else {
+					dashAngle = 180;
+				}
+			} else if (right) {
+				if (up) {
+					dashAngle = 45;
+				} else if (down) {
+					dashAngle = 315;
+				} else {
+					dashAngle = 0;
+				}
 			} else if (down) {
-				dashAngle = 225;
-			} else {
-				dashAngle = 180;
+				dashAngle = 270;
+			} else if (up) {
+				dashAngle = 90;
 			}
-		} else if (right) {
-			if (up) {
-				dashAngle = 45;
-			} else if (down) {
-				dashAngle = 315;
-			} else {
-				dashAngle = 0;
-			}
-		} else if (down) {
-			dashAngle = 270;
-		} else if (up) {
-			dashAngle = 90;
+
+			movementControlled = false;
+			dashing = true;
+			dashTraveled = 0;
+			superArmor = true;
+			
+			dashCDStart = System.currentTimeMillis();
+			
 		}
-
-		movementControlled = false;
-		dashing = true;
-		dashTraveled = 0;
-		superArmor = true;
-		// dashAngle = mouseAngle;
 	}
 
 	private void dashAct(Map map) { // Where the actual Dash action occurs

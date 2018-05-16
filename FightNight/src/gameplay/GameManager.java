@@ -96,7 +96,7 @@ public class GameManager implements NetworkListener {
 							}
 
 						} else if (action == ControlType.DASH) {
-							avatar.dash((double) ndo.message[1]);
+							avatar.dash();
 						} else if (action == ControlType.BLOCK) {
 							avatar.block((boolean) ndo.message[1]);
 						}
