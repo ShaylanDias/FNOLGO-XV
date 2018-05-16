@@ -101,12 +101,13 @@ public class Mage extends Avatar {
 		currentlyAttacking = true;
 		super.rangedCDStart = System.currentTimeMillis();
 		timeActionStarted = rangedCDStart;
+		double damage = 25;
 		if (angle > 90 && angle < 270) {
 			lastDir = true;
-			return new Attack[] { new Fireball((int) hitbox.x - 40, (int) hitbox.y - 40, player, angle) };
+			return new Attack[] { new Fireball((int) hitbox.x - 40, (int) hitbox.y - 40, player, angle,damage) };
 		} else {
 			lastDir = false;
-			return new Attack[] { new Fireball((int) hitbox.x + 10, (int) hitbox.y - 43, player, angle) };
+			return new Attack[] { new Fireball((int) hitbox.x + 10, (int) hitbox.y - 43, player, angle,damage) };
 		}
 	}
 
@@ -119,9 +120,9 @@ public class Mage extends Avatar {
 		timeActionStarted = a1CDStart;
 
 		Attack[] attack = new Attack[40];
-
+		double damage = 12.5;
 		for (int i = 0; i < 40; i++) {
-			attack[i] = new Fireball((int) hitbox.x - 40, (int) hitbox.y - 40, player, i * 18, "Fireball1", 250, 20, 40, 40, (double) i / 50, true);
+			attack[i] = new Fireball((int) hitbox.x - 40, (int) hitbox.y - 40, player, i * 18, "Fireball1", 250, 20, 40, 40, (double) i / 50, true,damage);
 		}
 
 		return attack;

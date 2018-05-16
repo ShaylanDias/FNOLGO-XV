@@ -7,7 +7,7 @@ import gameplay.avatars.Avatar;
 
 public class SnowField extends Attack{
 
-	private static final int w = 200, h = 200, damage = 4;
+	private static final int w = 200, h = 200, damage = 3;
 	private static final boolean shieldBreaker = false;
 	private int direction, direction2;
 	
