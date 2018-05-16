@@ -107,10 +107,10 @@ networking
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 Responsibilities: 
-Shaylan Dias: Networking, Projectile Game Mechanics, Game Manager, Brute class and abilities, GamePanel, Parsing Sent/Received Data
+Shaylan Dias: Networking, Projectile and Attack Game Mechanics, Game Manager, Avatar classes and abilities, Spectator, GamePanel, Parsing Sent/Received Data
 Ben Gu: Character movement, Character movement
 Jason Zhu: Character dashing, Map, Art
-Mr. Shelby APCSDemo: ServerNetworking
+Mr. Shelby APCSDemo: ServerNetworking, ProcessingWithJPanels
 PokerPhaze: tree texture
 Cyrus Annihilator (Sprites Unlimited): Ranger and Mage Sprite	
 Boo.: Werewolf Sprite
