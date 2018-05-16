@@ -9,7 +9,6 @@ import gameplay.attacks.Fireball;
 import gameplay.attacks.MeleeAttack;
 import gameplay.attacks.StatusEffect;
 import gameplay.attacks.StatusEffect.Effect;
-import gameplay.avatars.Avatar.AttackType;
 import gameplay.attacks.Trap;
 import gameplay.maps.Map;
 import processing.core.PApplet;
@@ -132,7 +131,9 @@ public class Ranger extends Avatar {
 	@Override
 	public Attack[] abilityTwo(String player, double angle) {
 		currentAttack = AttackType.A2;
-		super.a2CDStart = System.currentTimeMillis();
+
+		a2CDStart = System.currentTimeMillis();
+		timeActionStarted = a2CDStart;		
 		if(angle > 90 && angle < 270) {
 			lastDir = true;
 		}
@@ -147,6 +148,7 @@ public class Ranger extends Avatar {
 	public Attack[] abilityThree(String player, double angle) {
 		invisible = true;
 		invisStartTime = System.currentTimeMillis();
+		a3CDStart = invisStartTime;
 		smokeTime = invisStartTime + 200;
 		return null;
 
@@ -265,6 +267,7 @@ public class Ranger extends Avatar {
 			invisible = false;
 		return res;
 	}
+	
 	@Override
 	public Attack[] attack(AttackType a, String player, double angle) {
 		Attack[] res = super.attack(a, player, angle);
