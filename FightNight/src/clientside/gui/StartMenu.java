@@ -133,6 +133,7 @@ public class StartMenu extends JPanel{
 		GamePanel game = new GamePanel(false);
 		NetworkManagementPanel nmp = new NetworkManagementPanel("Chat", 16, game);
 		
+		frame.add(nmp);
 		
 		c1.show(panelCont, "1");
 		
