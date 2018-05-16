@@ -1,0 +1,8 @@
+clientside
+clientside.gui
+gameplay
+gameplay.attacks
+gameplay.avatars
+gameplay.maps
+networking.backend
+networking.frontend
