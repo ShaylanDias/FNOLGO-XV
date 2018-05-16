@@ -121,7 +121,7 @@ public class Mage extends Avatar {
 		Attack[] attack = new Attack[40];
 
 		for (int i = 0; i < 40; i++) {
-			attack[i] = new Fireball((int) hitbox.x - 40, (int) hitbox.y - 40, player, i * 18, "Fireball1", 250, 20, 40, 40, (double) i / 50);
+			attack[i] = new Fireball((int) hitbox.x - 40, (int) hitbox.y - 40, player, i * 18, "Fireball1", 250, 20, 40, 40, (double) i / 50, true);
 		}
 
 		return attack;
@@ -291,7 +291,6 @@ public class Mage extends Avatar {
 
 	private void actBasic() {
 		if(System.currentTimeMillis() > timeActionStarted + 0.07*1000) {
-			System.out.println("true");
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}

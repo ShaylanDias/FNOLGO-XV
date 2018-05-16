@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import gameplay.attacks.StatusEffect.Effect;
 import gameplay.avatars.Avatar;
+import processing.core.PApplet;
 
 /**
  * A fireballe projectile that can be created by an avatar
@@ -19,6 +20,7 @@ public class Fireball extends Projectile {
 	private static StatusEffect EFFECT = new StatusEffect(Effect.NONE, 0, 0);
 	private static final String imageKey = "Fireball1";
 	private double delay = 0;
+	private boolean drawDelay = false;
 	private long startTime;
 
 	/**
@@ -50,6 +52,22 @@ public class Fireball extends Projectile {
 		super(imageKey, x, y, w, h, playerAddress, DMG, SHIELD_BREAKER, EFFECT, dir, range, speed);
 		this.delay = delay;
 		this.startTime = System.currentTimeMillis();
+	}
+	
+	public Fireball(int x, int y, String playerAddress, double dir, String imageKey, double range, double speed, int w, int h, double delay, boolean drawDelay) {
+		super(imageKey, x, y, w, h, playerAddress, DMG, SHIELD_BREAKER, EFFECT, dir, range, speed);
+		this.delay = delay;
+		this.drawDelay = drawDelay;
+		this.startTime = System.currentTimeMillis();
+	}
+	
+	@Override
+	public void draw(PApplet surface) {
+		if(drawDelay) {
+			if(System.currentTimeMillis() > startTime + delay * 1000)
+				super.draw(surface);
+		} else
+			super.draw(surface);
 	}
 	
 	@Override
