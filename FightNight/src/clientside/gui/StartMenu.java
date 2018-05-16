@@ -27,7 +27,11 @@ import gameplay.avatars.Mage;
 import gameplay.avatars.Ranger;
 import networking.frontend.NetworkManagementPanel;
 import processing.awt.PSurfaceAWT;
-
+/**
+ * Initiates a Start Menu. Creates a Java.awt start menu where character selection, instructions, and the server connection is located 
+ * @author Jason Zhu
+ *
+ */
 public class StartMenu extends JPanel{
 
 	private JFrame frame  = new JFrame("FNOLGO XV");
