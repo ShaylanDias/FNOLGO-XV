@@ -8,7 +8,7 @@ import processing.core.PApplet;
  * @author jason
  *
  */
-public class Obstacle implements Serializable{
+public abstract class Obstacle implements Serializable{
 	
 	private double xPos, yPos, radius;
 	

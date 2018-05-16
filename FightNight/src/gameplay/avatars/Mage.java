@@ -65,7 +65,7 @@ public class Mage extends Avatar {
 		this.hitbox.x = x;
 	}
 
-	// Staff wack, it pushes them back
+	// Creates a small damaging orb
 	@Override
 	public Attack[] basicAttack(String player, double angle) {
 		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000 && !dashing && !blocking) {
@@ -111,14 +111,14 @@ public class Mage extends Avatar {
 	@Override
 	public Attack[] abilityOne(String player, double angle) {
 		currentAttack = AttackType.A1;
-		
+
 		a1CDStart = System.currentTimeMillis();
 		timeActionStarted = a1CDStart;
 		// int x, int y, String playerAddress, double dir, String imageKey, double
 		// range, double speed, int w, int h, double delay
 
 		Attack[] attack = new Attack[72];
-		
+
 		for (int i = 0; i < 40; i++) {
 			attack[i] = new Fireball((int) hitbox.x - 40, (int) hitbox.y - 40, player, i * 18, "Fireball1", 250, 20, 40, 40, (double) i / 50);
 		}
@@ -269,9 +269,18 @@ public class Mage extends Avatar {
 	}
 
 	public void act(Map map) {
-		super.act(map);
-		if (!super.isLeft() && !super.isRight() && !super.isUp() && !super.isDown()) {
-			spriteSheetKey = "Mage";
+
+		if(currentlyAttacking) {
+
+			
+			
+		} else {
+			super.act(map);
+			if (!super.isLeft() && !super.isRight() && !super.isUp() && !super.isDown()) {
+				spriteSheetKey = "Mage";
+			}
 		}
 	}
+
+
 }

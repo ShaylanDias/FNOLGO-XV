@@ -12,7 +12,7 @@ import gameplay.avatars.Avatar;
  * @author shaylandias
  *
  */
-public class Projectile extends Attack {
+public abstract class Projectile extends Attack {
 
 	private double range;
 	private double speed;

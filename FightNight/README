@@ -67,8 +67,9 @@ Class List:
 
 clientside
 	gui
-		Main - Main method for the code 
+		Main - Main method to launch the game 
 		GamePanel - The interface that draws everything 
+		StartMenu - Contains a start/end screen, instructions, character select, and server selection
 	ControlType - enum of controls to send to characters
 	ImageWrapper - a wrapper for the images to store in Resources
 	Player - creates an individual player and stores their data
@@ -78,34 +79,44 @@ gameplay
 	GameState - Stores the gamedata to send from the server to the GamePanel to be drawn
 	attacks
 		Attack - A damaging or status-causing effect that an Avatar can create
-		Fireball - the projectile attack
+		Fireball - The main projectile attack, used with different settings for different abilities
+		Howl - An attack that forms around the player and changes size
+		Lightning- An attack that chains with itself to create a long chain of Attacks that depend on each other
+		Lunge - An Attack that moves in front of the Avatar
+		TrailingAttack - An Attack that follows the Avatar
+		SnowField - An Attack that moves in a circular pattern
+		MeleeAttack - A short ranged, stationary, short lasting Attack meant for the Avatar basicAttack()
+		Trap- An Attack that stays on the ground for a long time and changes looks when activated
 		MovingSprite - superclass for Attack
-		Projectile - creates the projectiles that a character will fire
-		StatusEffect - stuns, stuff that inhibits avatar movement
+		Projectile - Abstract class representing an Attack that moves on its own
+		StatusEffect - Stuns and slows, stuff that inhibits avatar movement
 	avatars
 		Avatar  - abstract class that defines what a player’s character is
 		Brute - A class in the game. Melee strongman type of deal
 		Ranger - A class in the game. Bow user
 		Mage - Another type of character in the game. Magic caster
+		Spectator - An Avatar that can move around the game but is invisible and cannot interact with anything
 	maps
 		Map - abstract class that declares map 
 		StandardMap - the base map
+		Obstacle - Abstract implementation of any object that is on the map and can be interacted with
+		Tree- An impassable obstacle that appears as a tree on the map
 networking
 	frontend
 		NetworkDataObject - A piece of data sent over the network between clients and servers.
-		NetworkListener - Called when a successful connection with a server is made.
+		NetworkListener - Interface for classes that take in data off the server
 		NetworkManagementPanel - Window for creating and connecting to servers
-		NetworkMessenger - Sends data to other connected clients.
+		NetworkMessenger - Interface for classes that send data to other connected clients.
 	backend
-		ClientReader
-		ClientWriter
+		ClientReader - Reads in data collevted by a NetworkListener
+		ClientWriter - Writes data to be sent by a NetworkMessenger
 		GameServer - Takes in information from connected GamePanels to pass on to GameManager and sends back GameState to be drawn
 		PeerDiscovery - Performs broadcast and multicast peer detection. How well this works depends on your network configuration
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 Responsibilities: 
-Shaylan Dias: Networking, Projectile Game Mechanics, Game Manager, Brute class and abilities, GamePanel, Parsing Sent/Received Data
+Shaylan Dias: Networking, Attack Game Mechanics, Game Manager, Most of the abilities, GamePanel, Player HUD, Parsing Sent/Received Data
 Ben Gu: Character movement, Brute walking and death animations, Mage walking and death animations
 Jason Zhu: Character dashing, Map Design, object collision, start menu. 
 Mr. Shelby APCSDemo: ServerNetworking
