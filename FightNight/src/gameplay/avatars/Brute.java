@@ -37,8 +37,9 @@ public class Brute extends Avatar {
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
 		dashCD = 1.7;
-		dashDistance = 120;
-		dashSpeed = 40;
+		dashDistance = 140;
+		dashSpeed = 50;
+		moveSpeed = 12;
 		a1CD = 7;
 		basicCD = 0.3;
 		a2CD = 10;
@@ -57,6 +58,7 @@ public class Brute extends Avatar {
 		getSpriteListWalk().add("WWWalk3");
 		numOfSpriteWalk = 4;
 		numOfSpriteDeath = 2;
+		health = 400;
 	}
 
 	/**
@@ -241,9 +243,10 @@ public class Brute extends Avatar {
 			lastDir = false;
 		a3CDStart = System.currentTimeMillis();
 		timeActionStarted = a3CDStart;
+		//Change damage values over here for the 3rd ability
 		return new Attack[]{new Lunge(this.getPlayer(), angle, this, (int)super.getX(), (int)super.getY(), new StatusEffect(Effect.NONE, 0, 0), 0.9, 0),
-				new TrailingAttack("WWBasic", 50, 50, 60, 50, player, 6, new StatusEffect(Effect.NONE,0,0), angle + 90, 0.9, this),
-				new TrailingAttack("WWBasic", -50, -50, 60, 50, player, 6, new StatusEffect(Effect.NONE,0,0), angle + 90, 0.9, this)};
+				new TrailingAttack("WWBasic", 50, 50, 60, 50, player, 25, new StatusEffect(Effect.NONE,0,0), angle + 90, 0.9, this),
+				new TrailingAttack("WWBasic", -50, -50, 60, 50, player, 25, new StatusEffect(Effect.NONE,0,0), angle + 90, 0.9, this)};
 	}
 
 	private void basicAct() {
