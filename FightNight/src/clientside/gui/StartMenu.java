@@ -167,7 +167,7 @@ public class StartMenu extends JPanel{
 			ex.printStackTrace();
 		}
 
-		NetworkManagementPanel nmp = new NetworkManagementPanel("FNOLGO", 16, game);
+		NetworkManagementPanel nmp = new NetworkManagementPanel("FNOLGO", 16, game, this);
 		frame.add(nmp);
 
 		c1.show(panelCont, "1");
@@ -231,6 +231,5 @@ public class StartMenu extends JPanel{
 	public void fixProcessingPanelSizes(Component match) {
 		surf.setSize(match.getWidth(),match.getHeight());
 	}
-
 
 }
