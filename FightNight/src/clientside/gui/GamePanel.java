@@ -55,18 +55,19 @@ public class GamePanel extends PApplet implements NetworkListener {
 	 */
 	public GamePanel(boolean isHost) {
 		// Setting up the window
+		super();
 		PApplet.runSketch(new String[] { "" }, this);
-		PSurfaceAWT surf = (PSurfaceAWT) this.getSurface();
-		PSurfaceAWT.SmoothCanvas canvas = (PSurfaceAWT.SmoothCanvas) surf.getNative();
+//		PSurfaceAWT surf = (PSurfaceAWT) this.getSurface();
+//		PSurfaceAWT.SmoothCanvas canvas = (PSurfaceAWT.SmoothCanvas) surf.getNative();
+//
+//		JFrame window = (JFrame) canvas.getFrame();
+//		window.setSize(1200, 800);
+//		window.setLocation(100, 50);
+//		window.setMinimumSize(new Dimension(600, 400));
+//		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		window.setResizable(true);
 
-		JFrame window = (JFrame) canvas.getFrame();
-		window.setSize(1200, 800);
-		window.setLocation(100, 50);
-		window.setMinimumSize(new Dimension(600, 400));
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setResizable(true);
-
-		window.setVisible(true);
+//		window.setVisible(true);
 
 		player = new Player();
 		map = new StandardMap();
@@ -75,7 +76,6 @@ public class GamePanel extends PApplet implements NetworkListener {
 		ranger = new Rectangle(320, 100, 100, 100);
 		won = false;
 		gameEnded = false;
-
 	}
 
 	/**
@@ -368,5 +368,6 @@ public class GamePanel extends PApplet implements NetworkListener {
 		super.sketchPath();
 		super.initSurface();
 		super.surface.startThread();
+		System.out.println("init");
 	}	
 }
