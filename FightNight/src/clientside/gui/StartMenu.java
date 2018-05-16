@@ -50,7 +50,10 @@ public class StartMenu extends JPanel{
 
 
 	private CardLayout c1 = new CardLayout();
-
+	/**
+	 * 
+	 * @param game : A instance of the game panel class. This is what the start menu is connected to. 
+	 */
 	public StartMenu(GamePanel game) {
 		
 		this.game = game;
@@ -231,10 +234,6 @@ public class StartMenu extends JPanel{
 		frame.setVisible(true);
 
 	}
-	public void mouseClicked(MouseEvent me) {
-
-	}
-	
 	public CardLayout getCardLayout() {
 		return c1;
 	}
