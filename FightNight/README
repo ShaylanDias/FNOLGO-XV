@@ -106,7 +106,7 @@ networking
 
 Responsibilities: 
 Shaylan Dias: Networking, Projectile Game Mechanics, Game Manager, Brute class and abilities, GamePanel, Parsing Sent/Received Data
-Ben Gu: Character movement, Character movement animation. 
+Ben Gu: Character movement, Brute walking and death animations, Mage walking and death animations
 Jason Zhu: Character dashing, Map Design, object collision, start menu. 
 Mr. Shelby APCSDemo: ServerNetworking
 

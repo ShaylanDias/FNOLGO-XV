@@ -106,10 +106,24 @@ public class Mage extends Avatar {
 		}
 	}
 
-	// Fire eruption. circular bust in an area that does dmg to anyone in them.
+	// Fire eruption. circular burst in an area that does dmg to anyone in them.
 	@Override
 	public Attack[] abilityOne(String player, double angle) {
-		return null;
+		currentAttack = AttackType.A1;
+
+		a1CDStart = System.currentTimeMillis();
+		timeActionStarted = a1CDStart;
+
+		// int x, int y, String playerAddress, double dir, String imageKey, double
+		// range, double speed, int w, int h, double delay
+
+		Attack[] attack = new Attack[72];
+		
+		for (int i = 0; i < 40; i++) {
+			attack[i] = new Fireball((int) hitbox.x - 40, (int) hitbox.y - 40, player, i * 18, "Fireball1", 250, 20, 40, 40, (double) i / 50);
+		}
+
+		return attack;
 	}
 
 	// Snow Storm - slows down everybody in an area
@@ -118,10 +132,12 @@ public class Mage extends Avatar {
 		// currentlyAttacking = true;
 		// movementControlled = false;
 		currentAttack = AttackType.A2;
+
 		if (angle > 90 && angle < 270)
 			lastDir = true;
 		else
 			lastDir = false;
+
 		a2CDStart = System.currentTimeMillis();
 		timeActionStarted = a2CDStart;
 
@@ -138,12 +154,15 @@ public class Mage extends Avatar {
 		// currentlyAttacking = true;
 		// movementControlled = false;
 		currentAttack = AttackType.A3;
+
 		if (angle > 90 && angle < 270)
 			lastDir = true;
 		else
 			lastDir = false;
+
 		a3CDStart = System.currentTimeMillis();
 		timeActionStarted = a3CDStart;
+
 		double w, h;
 		h = Lightning.h;
 		w = Lightning.w;
@@ -244,7 +263,7 @@ public class Mage extends Avatar {
 		surface.popMatrix();
 		surface.popStyle();
 	}
-	
+
 	public String toString() {
 		return "Mage";
 	}
