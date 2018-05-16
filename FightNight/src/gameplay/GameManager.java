@@ -179,7 +179,7 @@ public class GameManager implements NetworkListener {
 				addCommand(ndo);
 			}
 		}
-		if (ndo.message[0] instanceof String) {
+		if (ndo.message.length > 0 && ndo.message[0] instanceof String) {
 			if (((String) ndo.message[0]).equals("INTIALIZATION")) {
 				state.addAvatar((Avatar) ndo.message[1]);
 			}

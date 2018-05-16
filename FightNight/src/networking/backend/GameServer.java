@@ -214,6 +214,7 @@ public class GameServer implements NetworkMessenger {
 			cr.stop();
 		writers.clear();
 		readers.clear();
+		shutdownServer();
 	}
 
 
@@ -224,7 +225,7 @@ public class GameServer implements NetworkMessenger {
 			try {
 				serverSocket.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 			serverSocket = null;
 		}
@@ -324,13 +325,13 @@ public class GameServer implements NetworkMessenger {
 
 
 				} catch (IOException e) {
-					e.printStackTrace();
+//					e.printStackTrace();
 				} finally {
 					if (serverSocket != null) {
 						try {
 							serverSocket.close();
 						} catch (IOException e) {
-							e.printStackTrace();
+//							e.printStackTrace();
 						}
 						serverSocket = null;
 					}
@@ -343,6 +344,10 @@ public class GameServer implements NetworkMessenger {
 
 	private void sendClientList() {
 		InetAddress[] connections = getConnectedHosts();
+		
+		if(connections.length < 1)
+			disconnectFromAllClients();
+		
 //		String[] con = new String[connections.length];
 //		for(int i = 0; i < connections.length; i++) {
 //			con[i] = connections[i] + "FNOLGO";

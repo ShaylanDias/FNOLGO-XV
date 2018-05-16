@@ -111,7 +111,7 @@ public class ClientReader implements Runnable{
                 	if (tries >= RETRY_TIMEOUT) {
                 		looping = false;
                 	}
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 } catch (ClassNotFoundException ex) {
                     ex.printStackTrace();
                     System.exit(0);

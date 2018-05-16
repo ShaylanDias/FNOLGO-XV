@@ -110,6 +110,7 @@ networking
 	backend
 		ClientReader - Reads in data collevted by a NetworkListener
 		ClientWriter - Writes data to be sent by a NetworkMessenger
+		GameClient - A NetworkMessenger to send things to the GameServer
 		GameServer - Takes in information from connected GamePanels to pass on to GameManager and sends back GameState to be drawn
 		PeerDiscovery - Performs broadcast and multicast peer detection. How well this works depends on your network configuration
 
