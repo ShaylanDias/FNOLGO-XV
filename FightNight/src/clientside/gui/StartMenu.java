@@ -152,12 +152,14 @@ public class StartMenu extends JPanel{
 		}
 
 
+		//Game Stuff Initializing
+		
 		game = new GamePanel(false);
 		game.runMe();
 		
 		JPanel mainPanel = new JPanel();
 		
-		PApplet.runSketch(new String[] { "" }, game);
+//		PApplet.runSketch(new String[] { "" }, game);
 		surf = (PSurfaceAWT) game.getSurface();
 		processingCanvas = (PSurfaceAWT.SmoothCanvas) surf.getNative();
 		processingCanvas.requestFocus();

@@ -365,8 +365,8 @@ public class GamePanel extends PApplet implements NetworkListener {
 	
 	public void runMe() {
 		super.setSize(800,600);
-		super.sketchPath();
-		super.initSurface();
+//		super.sketchPath();
+//		super.initSurface();
 		super.surface.startThread();
 		System.out.println("init");
 	}	
