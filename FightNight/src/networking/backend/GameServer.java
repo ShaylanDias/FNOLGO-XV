@@ -113,6 +113,17 @@ public class GameServer implements NetworkMessenger {
 					
 					manager.run();
 					sendMessage(NetworkDataObject.MESSAGE, new Object[] {manager.getState()});
+					
+					if(manager.isGameEnded()) {
+						sendMessage(NetworkDataObject.MESSAGE, new Object[] {"ENDED", manager.getWinner()});
+						try {
+							Thread.sleep(5000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						disconnectFromAllClients();
+					}
+					
 					try {
 						//How often the game is being updated
 						Thread.sleep(50);
@@ -332,6 +343,10 @@ public class GameServer implements NetworkMessenger {
 
 	private void sendClientList() {
 		InetAddress[] connections = getConnectedHosts();
+//		String[] con = new String[connections.length];
+//		for(int i = 0; i < connections.length; i++) {
+//			con[i] = connections[i] + "FNOLGO";
+//		}
 		Object[] message = Arrays.copyOf(connections, connections.length, Object[].class);
 		sendMessage(NetworkDataObject.CLIENT_LIST, message);
 	}

@@ -6,6 +6,7 @@ import clientside.ControlType;
 import gameplay.attacks.Attack;
 import gameplay.avatars.Avatar;
 import gameplay.avatars.Avatar.AttackType;
+import gameplay.avatars.Spectator;
 import networking.frontend.NetworkDataObject;
 import networking.frontend.NetworkListener;
 import networking.frontend.NetworkMessenger;
@@ -22,13 +23,18 @@ public class GameManager implements NetworkListener {
 
 	private GameState state;
 	private ArrayList<NetworkDataObject> commands;
+	private boolean gameEnded;
+	private String winner;
 
 	/**
 	 * Initializes a GameManager
 	 */
 	public GameManager() {
 		state = new GameState();
+		gameEnded = false;
 		commands = new ArrayList<NetworkDataObject>();
+		gameEnded = false;
+		winner = "";
 	}
 
 	/**
@@ -109,9 +115,48 @@ public class GameManager implements NetworkListener {
 					i--;
 				}
 			}
-			for (Avatar x : state.getAvatars()) {
+			for (int i = 0; i < state.getAvatars().size(); i++) {
+				Avatar x = state.getAvatars().get(i);
+				if(x.isEliminated() && !(x instanceof Spectator)) {
+					state.getAvatars().remove(x);
+					Avatar y = new Spectator();
+					y.setPlayer(x.getPlayer());
+					state.addAvatar(y);
+				}
 				x.act(state.getMap());
 			}
+			
+			Avatar av = null;
+			if(state.getAvatars().size() > 1) {
+				int spectators = 0;
+				for(Avatar x : state.getAvatars()) {
+					if(x instanceof Spectator) {
+						spectators++;
+					} else
+						av = x;
+				}
+				if(spectators >= state.getAvatars().size()-1) {
+					winner = av.getPlayer();
+					gameEnded = true;
+				}
+			}
+			
+//			int x = state.getAvatars().size();
+//			int spectators = 0;
+//			for(Avatar a : state.getAvatars()) {
+//				if(a instanceof Spectator)
+//					x--;
+//				spectators ++;
+//			}
+//			if(x > 1 && total > state.getAvatars().size() - 1 - spectators) {
+//				 for(int i = 0; i < state.getAvatars().size(); i++) {
+//					 if(!(state.getAvatars().get(i) instanceof Spectator) && !state.getAvatars().get(i).isEliminated()) {
+//						 winner = state.getAttacks().get(i).getPlayer();
+//						 break;
+//					 }
+//				 }
+//				gameEnded = true;
+//			}
 
 		}
 
@@ -151,4 +196,12 @@ public class GameManager implements NetworkListener {
 		}
 	}
 
+	public String getWinner() {
+		return winner;
+	}
+	
+	public boolean isGameEnded() {
+		return gameEnded;
+	}
+	
 }

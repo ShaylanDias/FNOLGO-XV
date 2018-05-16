@@ -43,6 +43,8 @@ public class GamePanel extends PApplet implements NetworkListener {
 	private Map map; 
 	private NetworkMessenger nm;
 	private boolean connected;
+	private boolean gameEnded;
+	private boolean won;
 
 	private Rectangle brute, ranger, mage;
 
@@ -53,6 +55,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 	 */
 	public GamePanel(boolean isHost) {
 		// Setting up the window
+		super();
 		PApplet.runSketch(new String[] { "" }, this);
 		PSurfaceAWT surf = (PSurfaceAWT) this.getSurface();
 		PSurfaceAWT.SmoothCanvas canvas = (PSurfaceAWT.SmoothCanvas) surf.getNative();
@@ -63,7 +66,6 @@ public class GamePanel extends PApplet implements NetworkListener {
 		window.setMinimumSize(new Dimension(600, 400));
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(true);
-
 		window.setVisible(true);
 
 		player = new Player();
@@ -71,7 +73,8 @@ public class GamePanel extends PApplet implements NetworkListener {
 		brute = new Rectangle(100, 100, 100, 100);
 		mage = new Rectangle(210, 100, 100, 100);
 		ranger = new Rectangle(320, 100, 100, 100);
-
+		won = false;
+		gameEnded = false;
 	}
 
 	/**
@@ -90,16 +93,40 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 		if(!connected) {
 
-			rectMode(CORNER);
-			textAlign(CENTER);
-			fill(255);
-			rect(brute.x, brute.y, brute.width, brute.height);
-			rect(mage.x, mage.y, mage.width, mage.height);
-			rect(ranger.x, ranger.y, ranger.width, ranger.height);
-			fill(0);
-			text("Brute", brute.x + brute.width/2, brute.y + brute.y/2);
-			text("Mage", mage.x + mage.width/2, mage.y + mage.height/2);
-			text("Ranger", ranger.x + ranger.width/2, ranger.y + ranger.height/2);
+			if(!gameEnded) {
+				
+				fill(255);
+				textAlign(CENTER);
+				textSize(40);
+				text("Waiting For Connection", width/2, height/2);
+				
+				//Move all of these around to be right and have a background image and a title
+				//Make a way to switch to instructions screen
+				//Make buttons change color to indicate which character you selected
+//				rectMode(CORNER);
+//				textAlign(CENTER);
+//				fill(255);
+//				rect(brute.x, brute.y, brute.width, brute.height);
+//				rect(mage.x, mage.y, mage.width, mage.height);
+//				rect(ranger.x, ranger.y, ranger.width, ranger.height);
+//				//Make this button change color if it was selected
+//				fill(0);
+//				text("Brute", brute.x + brute.width/2, brute.y + brute.y/2);
+//				text("Mage", mage.x + mage.width/2, mage.y + mage.height/2);
+//				text("Ranger", ranger.x + ranger.width/2, ranger.y + ranger.height/2);
+			} else {
+				
+				//I guess this version of the menu is not working
+				
+				//Provide a button to click to send you back to the title screen (change gameEnded to false)
+				if(won) {
+					//What to draw if this player won
+					//Probably a picture of their avatar and say won
+				} else {
+					//What to draw if this player lost
+					//Probably avatar dead and say you lost
+				}
+			}
 
 		} else {
 
@@ -120,7 +147,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 					
 				}
 
-				currentState.draw(this, av, width, height);
+				currentState.draw(this, av, width, height, player.getPlayerAddress());
 				drawCooldowns(this, av);
 				popMatrix();
 			}
@@ -141,13 +168,13 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 		if(!connected) {
 
-			if(brute.contains(new Point(mouseX, mouseY))) {
-				player.setAvatar(new Brute());
-			}
-			else if(mage.contains(new Point(mouseX, mouseY)))
-					player.setAvatar(new Mage());
-			else if(ranger.contains(new Point(mouseX, mouseY)))
-					player.setAvatar(new Ranger());
+//			if(brute.contains(new Point(mouseX, mouseY))) {
+//				player.setAvatar(new Brute());
+//			}
+//			else if(mage.contains(new Point(mouseX, mouseY)))
+//					player.setAvatar(new Mage());
+//			else if(ranger.contains(new Point(mouseX, mouseY)))
+//					player.setAvatar(new Ranger());
 			
 		} else {
 
@@ -231,6 +258,8 @@ public class GamePanel extends PApplet implements NetworkListener {
 	@Override
 	public void connectedToServer(NetworkMessenger nm) {
 		this.nm = nm;
+		gameEnded = false;
+		won = false;
 		player.setPlayerAddress(nm.getHost().toString());
 	}
 
@@ -240,10 +269,14 @@ public class GamePanel extends PApplet implements NetworkListener {
 			if (ndo.message[0] != null) {
 				if (ndo.message[0] instanceof GameState) {
 					currentState = (GameState) ndo.message[0];
+				} else if(ndo.message[0] instanceof String) {
+					if(ndo.message[0].equals("ENDED")) {
+						gameEnded = true;
+						if(player.getPlayerAddress().equals(ndo.message[1])) {
+							won = true;
+						}
+					}
 				}
-				// if (ndo.message[0] instanceof String) {
-				//
-				// }
 			}
 
 		} else if (ndo.messageType.equals(NetworkDataObject.HANDSHAKE)) {
@@ -336,5 +369,16 @@ public class GamePanel extends PApplet implements NetworkListener {
 		surface.text(name, (float)x, (float)(y+6));
 
 	}
-
+	
+	public Player getPlayer() {
+		return player;
+	}
+	
+//	public void runMe() {
+//		super.setSize(800,600);
+////		super.sketchPath();
+////		super.initSurface();
+////		super.surface.startThread();
+////		System.out.println("init");
+//	}	
 }

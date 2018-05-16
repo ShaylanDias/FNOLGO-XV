@@ -10,7 +10,7 @@ public class Lightning extends Attack{
 	
 	private double delay;
 	private Lightning attached;
-	public static final int w = 80, h = 80, damage = 40;
+	public static final int w = 80, h = 80, damage = 5;
 	private boolean dead;
 	
 	public Lightning(String imageKey, int x, int y, String playerAddress, double dir, double delay, Lightning attached) {
@@ -24,7 +24,7 @@ public class Lightning extends Attack{
 //		}
 		this.delay = delay;
 		this.attached = attached;
-		duration = 2;
+		duration = 0.5;
 		dead = false;
 	}
 
@@ -33,6 +33,8 @@ public class Lightning extends Attack{
 		
 		if(System.currentTimeMillis() > super.getStartTime() + delay * 1000)
 			super.setActive(true);
+		else
+			return true;
 		
 		if (checkEnd()) {
 			return false;

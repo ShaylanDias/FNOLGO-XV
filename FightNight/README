@@ -41,15 +41,15 @@ Must Haves
 	Single map, GUI with basic character models that move - DONE
 	Basic movement and combat abilities w/ effects - DONE
 	Block and roll defensive mechanics - DONE
-	Win/Loss mechanic (battle royale)
-	3 classes/characters 
-		Brute, mage, ranger 
+	Win/Loss mechanic (battle royale) - DONE
+	3 classes/characters  - PARTLY DONE
+		Brute, mage, ranger
 		Brute is focused more on melee, Mage and Ranger are focused on projectile attacks
 	Cooldown System - DONE
 Want to Haves
 	Powerups
 	Speed-booster, heal (minor, major), no-depletion stamina, shield. 
-	Spectator Mode
+	Spectator Mode - DONE
 	Weapons pickups: Crossbow, Bomb, Mine
 	Arena obstacles/Effects
 	Multiple classes/types of characters 
@@ -60,7 +60,7 @@ Want to Haves
 		Fighter, mage, ranger, ninja, sumo, soldier
 Stretches 
 	Multiple Maps
-	Team games/Multiple game modes (Deathmatch, Duel, 
+	Team games/Multiple game modes (Deathmatch, Duel, Capture the Flag)
 	Progression from wins -> Customizable abilities by class (upgrades/perk tree)’
 
 ------------------------------------------------------------------------------------------------------------------------------------------
@@ -107,11 +107,16 @@ networking
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 Responsibilities: 
-Shaylan Dias: Networking, Projectile Game Mechanics, Game Manager, Brute class and abilities, GamePanel, Method of sending data
-Ben Gu: Character movement, Character movement
-Jason Zhu: Character dashing, Map, Art
+Shaylan Dias: Networking, Projectile Game Mechanics, Game Manager, Brute class and abilities, GamePanel, Parsing Sent/Received Data
+Ben Gu: Character movement, Character movement animation. 
+Jason Zhu: Character dashing, Map Design, object collision, start menu. 
 Mr. Shelby APCSDemo: ServerNetworking
+
 PokerPhaze: tree texture
+Cyrus Annihilator (Sprites Unlimited): Ranger and Mage Sprite	
+Boo.: Werewolf Sprite
+menos_grante: Wolf Howl Sprite
+Cosmix (PixelArtMaker): Shield Sprite
 
 
 Feedback by: Warren, Kush, Sepehr
