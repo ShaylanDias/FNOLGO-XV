@@ -187,6 +187,29 @@ public class GamePanel extends PApplet implements NetworkListener {
 			}
 		}
 	}
+	
+	public void mouseDragged() {
+		if (!connected) {
+
+			// if(brute.contains(new Point(mouseX, mouseY))) {
+			// player.setAvatar(new Brute());
+			// }
+			// else if(mage.contains(new Point(mouseX, mouseY)))
+			// player.setAvatar(new Mage());
+			// else if(ranger.contains(new Point(mouseX, mouseY)))
+			// player.setAvatar(new Ranger());
+
+		} else {
+
+			if (nm != null) {
+				if (mouseButton == LEFT)
+					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.BASIC, getAngleToMouse());
+				else if (mouseButton == RIGHT) {
+					nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.ATTACK, AttackType.RANGED, getAngleToMouse());
+				}
+			}
+		}
+	}
 
 	/**
 	 * Detects key presses to control the character, does not work properly on Mac

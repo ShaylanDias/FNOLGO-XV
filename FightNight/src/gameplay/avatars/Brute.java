@@ -183,6 +183,7 @@ public class Brute extends Avatar {
 	// Throws a slow moving projectile (Rock)
 	@Override
 	public Attack[] rangedAttack(String player, double angle) {
+		double damage = 35;
 		if (System.currentTimeMillis() > super.rangedCDStart + super.rangedCD * 1000 && !dashing && !blocking) {
 			super.rangedCDStart = System.currentTimeMillis();
 			currentlyAttacking = true;
@@ -192,7 +193,7 @@ public class Brute extends Avatar {
 				lastDir = true;
 			else
 				lastDir = false;
-			return new Attack[] {new Fireball((int) hitbox.x, (int) hitbox.y, player, angle, "Rock", 400, 22)};
+			return new Attack[] {new Fireball((int) hitbox.x, (int) hitbox.y, player, angle, "Rock", 400, 22, 35)};
 		} else {
 			return null;
 		}

@@ -358,7 +358,10 @@ public abstract class Avatar implements Serializable {
 				}
 			}
 			if (!superArmor) {
-				status = attack.getEffect();
+				if(attack.getEffect().getEffect().equals(Effect.STUNNED))
+					status = attack.getEffect();
+				else if(!status.getEffect().equals(Effect.STUNNED))
+					status = attack.getEffect();
 			}
 			health -= attack.getDamage();
 			if (health <= 0 && !dead) {
