@@ -298,7 +298,6 @@ public class Mage extends Avatar {
 
 	private void actRanged() {
 		if(System.currentTimeMillis() > timeActionStarted + 0.12*1000) {
-			System.out.println("true");
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}
