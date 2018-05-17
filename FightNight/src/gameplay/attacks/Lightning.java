@@ -2,6 +2,7 @@ package gameplay.attacks;
 
 import java.util.ArrayList;
 
+import gameplay.GameState;
 import gameplay.attacks.StatusEffect.Effect;
 import gameplay.avatars.Avatar;
 import processing.core.PApplet;
@@ -31,7 +32,7 @@ public class Lightning extends Attack{
 	
 	public boolean act(ArrayList<Avatar> avatars) {
 		
-		if(System.currentTimeMillis() > super.getStartTime() + delay * 1000)
+		if(GameState.getGameTime() > super.getStartTime() + delay * 1000)
 			super.setActive(true);
 		else
 			return true;
@@ -53,7 +54,7 @@ public class Lightning extends Attack{
 	}
 	
 	protected boolean checkEnd() {
-		if (System.currentTimeMillis() > super.getStartTime() + duration * 1000) {
+		if (GameState.getGameTime() > super.getStartTime() + duration * 1000) {
 			end();
 			return true;
 		} else if(attached != null && attached.isDead()) {
@@ -70,7 +71,7 @@ public class Lightning extends Attack{
 	}
 	
 	public void draw(PApplet surface) {
-		if(System.currentTimeMillis() > super.getStartTime() + delay * 1000)
+		if(GameState.getGameTime() > super.getStartTime() + delay * 1000)
 			super.draw(surface);
 	}
 	

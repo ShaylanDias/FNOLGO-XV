@@ -3,6 +3,7 @@ package gameplay.avatars;
 import java.awt.Rectangle;
 
 import clientside.gui.GamePanel;
+import gameplay.GameState;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Fireball;
 import gameplay.attacks.Lightning;
@@ -10,7 +11,6 @@ import gameplay.attacks.MeleeAttack;
 import gameplay.attacks.SnowField;
 import gameplay.attacks.StatusEffect;
 import gameplay.attacks.StatusEffect.Effect;
-import gameplay.avatars.Avatar.AttackType;
 import gameplay.maps.Map;
 import processing.core.PApplet;
 
@@ -72,11 +72,11 @@ public class Mage extends Avatar {
 	// Creates a small damaging orb
 	@Override
 	public Attack[] basicAttack(String player, double angle) {
-		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000 && !dashing && !blocking) {
+		if (GameState.getGameTime() > super.basicCDStart + super.basicCD * 1000 && !dashing && !blocking) {
 			currentlyAttacking = true;
-			basicCDStart = System.currentTimeMillis();
+			basicCDStart = GameState.getGameTime();
 			currentAttack = AttackType.BASIC;
-			timeActionStarted = System.currentTimeMillis();
+			timeActionStarted = GameState.getGameTime();
 			if (angle > 90 && angle < 270)
 				lastDir = true;
 			else
@@ -91,8 +91,8 @@ public class Mage extends Avatar {
 
 	//	@Override
 	//	public void dash(Double mouseAngle) {
-	//		if (System.currentTimeMillis() > super.dashCDStart + super.dashCD * 1000) {
-	//			super.dashCDStart = System.currentTimeMillis();
+	//		if (GameState.getGameTime() > super.dashCDStart + super.dashCD * 1000) {
+	//			super.dashCDStart = GameState.getGameTime();
 	//			super.dash(mouseAngle);
 	//		}
 	//	}
@@ -102,7 +102,7 @@ public class Mage extends Avatar {
 	public Attack[] rangedAttack(String player, double angle) {
 		currentAttack = AttackType.RANGED;
 		currentlyAttacking = true;
-		super.rangedCDStart = System.currentTimeMillis();
+		super.rangedCDStart = GameState.getGameTime();
 		timeActionStarted = rangedCDStart;
 		double damage = 25;
 		if (angle > 90 && angle < 270) {
@@ -119,7 +119,7 @@ public class Mage extends Avatar {
 	public Attack[] abilityOne(String player, double angle) {
 		currentAttack = AttackType.A1;
 		currentlyAttacking = true;
-		a1CDStart = System.currentTimeMillis();
+		a1CDStart = GameState.getGameTime();
 		timeActionStarted = a1CDStart;
 
 		Attack[] attack = new Attack[40];
@@ -142,7 +142,7 @@ public class Mage extends Avatar {
 		else
 			lastDir = false;
 
-		a2CDStart = System.currentTimeMillis();
+		a2CDStart = GameState.getGameTime();
 		timeActionStarted = a2CDStart;
 
 		angle = 360 - angle;
@@ -163,7 +163,7 @@ public class Mage extends Avatar {
 		else
 			lastDir = false;
 
-		a3CDStart = System.currentTimeMillis();
+		a3CDStart = GameState.getGameTime();
 		timeActionStarted = a3CDStart;
 
 		double w, h;
@@ -239,7 +239,7 @@ public class Mage extends Avatar {
 
 			surface.imageMode(PApplet.CENTER);
 
-			if(System.currentTimeMillis() < dashTime + 300) {
+			if(GameState.getGameTime() < dashTime + 300) {
 				surface.image(GamePanel.resources.getImage("Smoke"), (float) hitbox.x, (float) hitbox.y);
 				surface.popMatrix();
 				surface.popStyle();
@@ -266,13 +266,13 @@ public class Mage extends Avatar {
 			}
 			surface.popMatrix();
 			if (blocking) {
-				if (System.currentTimeMillis() / 250 % 5 == 0) {
+				if (GameState.getGameTime() / 250 % 5 == 0) {
 					surface.tint(140);
-				} else if (System.currentTimeMillis() / 250 % 5 == 1) {
+				} else if (GameState.getGameTime() / 250 % 5 == 1) {
 					surface.tint(170);
-				} else if (System.currentTimeMillis() / 250 % 5 == 2) {
+				} else if (GameState.getGameTime() / 250 % 5 == 2) {
 					surface.tint(200);
-				} else if (System.currentTimeMillis() / 250 % 5 == 3) {
+				} else if (GameState.getGameTime() / 250 % 5 == 3) {
 					surface.tint(240);
 				}
 				surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
@@ -315,21 +315,21 @@ public class Mage extends Avatar {
 	}
 
 	private void actBasic() {
-		if(System.currentTimeMillis() > timeActionStarted + 0.07*1000) {
+		if(GameState.getGameTime() > timeActionStarted + 0.07*1000) {
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}
 	}
 
 	private void actRanged() {
-		if(System.currentTimeMillis() > timeActionStarted + 0.12*1000) {
+		if(GameState.getGameTime() > timeActionStarted + 0.12*1000) {
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}
 	}
 
 	private void actFireEruption() {
-		if(System.currentTimeMillis() > timeActionStarted + 0.8*1000) {
+		if(GameState.getGameTime() > timeActionStarted + 0.8*1000) {
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}
@@ -337,21 +337,21 @@ public class Mage extends Avatar {
 
 	@Override
 	public void dash() {
-		if(System.currentTimeMillis() > dashTime + dashCD * 1000) {
-			dashTime = System.currentTimeMillis();
+		if(GameState.getGameTime() > dashTime + dashCD * 1000) {
+			dashTime = GameState.getGameTime();
 			super.dash();
 		}
 	}
 
 	private void actSnowField() {
-		if(System.currentTimeMillis() > timeActionStarted + 0.15*1000) {
+		if(GameState.getGameTime() > timeActionStarted + 0.15*1000) {
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}
 	}
 
 	private void actLightning() {
-		if(System.currentTimeMillis() > timeActionStarted + 0.3*1000) {
+		if (GameState.getGameTime() > timeActionStarted + 0.3*1000) {
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}

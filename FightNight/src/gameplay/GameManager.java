@@ -56,6 +56,9 @@ public class GameManager implements NetworkListener {
 	 */
 	public void run() {
 
+		if(state != null)
+			GameState.setGameTime(System.currentTimeMillis());
+		
 		synchronized (commands) {
 			for (NetworkDataObject ndo : commands) {
 				if (ndo.message[0] instanceof ControlType) {

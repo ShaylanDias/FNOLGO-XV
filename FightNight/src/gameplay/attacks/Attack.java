@@ -5,6 +5,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import clientside.gui.GamePanel;
+import gameplay.GameState;
 import gameplay.avatars.Avatar;
 import processing.core.PApplet;
 
@@ -76,7 +77,7 @@ public class Attack extends MovingSprite {
 		active = true;
 		this.effect = effect;
 		this.shieldBreaker = shieldBreaker;
-		startTime = System.currentTimeMillis();
+		startTime = GameState.getGameTime();
 	}
 
 	/**
@@ -122,7 +123,7 @@ public class Attack extends MovingSprite {
 	protected boolean checkEnd() {
 		if (!active)
 			return true;
-		if (System.currentTimeMillis() > startTime + duration * 1000) {
+		if (GameState.getGameTime() > startTime + duration * 1000) {
 			end();
 			return true;
 		} else

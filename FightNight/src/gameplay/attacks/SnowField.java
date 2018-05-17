@@ -2,6 +2,7 @@ package gameplay.attacks;
 
 import java.util.ArrayList;
 
+import gameplay.GameState;
 import gameplay.attacks.StatusEffect.Effect;
 import gameplay.avatars.Avatar;
 
@@ -44,7 +45,7 @@ public class SnowField extends Attack{
 	protected boolean checkEnd() {
 		if (!super.isActive())
 			return true;
-		if (System.currentTimeMillis() > super.getStartTime() + duration * 1000) {
+		if (GameState.getGameTime() > super.getStartTime() + duration * 1000) {
 			end();
 			return true;
 		} else

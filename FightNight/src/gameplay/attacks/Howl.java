@@ -2,6 +2,7 @@ package gameplay.attacks;
 
 import java.util.ArrayList;
 
+import gameplay.GameState;
 import gameplay.attacks.StatusEffect.Effect;
 import gameplay.avatars.Avatar;
 
@@ -25,11 +26,11 @@ public class Howl extends Attack{
 			}
 		}
 		
-		if(System.currentTimeMillis() > super.getStartTime() + super.duration * 1000) {
+		if(GameState.getGameTime() > super.getStartTime() + super.duration * 1000) {
 			super.checkEnd();
 		}
 		
-		if(System.currentTimeMillis() <= super.getStartTime() + 1000) {
+		if(GameState.getGameTime() <= super.getStartTime() + 1000) {
 			super.width += 6;
 			super.height += 6;
 		} else {

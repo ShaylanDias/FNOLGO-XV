@@ -2,6 +2,7 @@ package gameplay.attacks;
 
 import java.util.ArrayList;
 
+import gameplay.GameState;
 import gameplay.avatars.Avatar;
 import gameplay.avatars.Brute;
 import processing.core.PApplet;
@@ -27,7 +28,7 @@ public class Lunge extends Attack{
 
 		//		surface.pushMatrix();
 
-		if(System.currentTimeMillis() > super.getStartTime() + 300) {
+		if(GameState.getGameTime() > super.getStartTime() + 300) {
 			super.draw(surface);
 			//			surface.rectMode(PApplet.CENTER);
 			//			 surface.noFill();
@@ -40,7 +41,7 @@ public class Lunge extends Attack{
 
 	@Override
 	public boolean act(ArrayList<Avatar> avatars) {
-		if(System.currentTimeMillis() < super.getStartTime() + (duration-stopMoving) * 1000) {
+		if(GameState.getGameTime() < super.getStartTime() + (duration-stopMoving) * 1000) {
 			x = attacker.getX() + 100 * Math.cos(Math.toRadians(dir));
 			y = attacker.getY() - 60 * Math.sin(Math.toRadians(dir));
 		}
@@ -51,7 +52,7 @@ public class Lunge extends Attack{
 	protected boolean checkEnd() {
 		if (!super.isActive())
 			return true;
-		if (System.currentTimeMillis() > super.getStartTime() + duration * 1000) {
+		if (GameState.getGameTime() > super.getStartTime() + duration * 1000) {
 			end();
 			return true;
 		} else

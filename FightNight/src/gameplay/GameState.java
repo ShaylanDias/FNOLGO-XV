@@ -21,6 +21,8 @@ public class GameState implements Serializable {
 
 	private static final long serialVersionUID = 2671962781505513505L;
 
+	private static long gameTime;
+	
 	private ArrayList<Avatar> avatars;
 	private ArrayList<Attack> attacks;
 	private Map map;
@@ -124,6 +126,14 @@ public class GameState implements Serializable {
 		return map;
 	}
 
+	public static long getGameTime() {
+		return gameTime;
+	}
+	
+	public static void setGameTime(long time) {
+		gameTime = time;
+	}
+	
 	public String toString() {
 		return avatars.get(0).getX() + "";
 	}

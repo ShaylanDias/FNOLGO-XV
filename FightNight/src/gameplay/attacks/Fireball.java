@@ -2,6 +2,7 @@ package gameplay.attacks;
 
 import java.util.ArrayList;
 
+import gameplay.GameState;
 import gameplay.attacks.StatusEffect.Effect;
 import gameplay.avatars.Avatar;
 import processing.core.PApplet;
@@ -51,20 +52,20 @@ public class Fireball extends Projectile {
 	public Fireball(int x, int y, String playerAddress, double dir, String imageKey, double range, double speed, int w, int h, double delay, double dmg) {
 		super(imageKey, x, y, w, h, playerAddress, dmg, SHIELD_BREAKER, EFFECT, dir, range, speed);
 		this.delay = delay;
-		this.startTime = System.currentTimeMillis();
+		this.startTime = GameState.getGameTime();
 	}
 	
 	public Fireball(int x, int y, String playerAddress, double dir, String imageKey, double range, double speed, int w, int h, double delay, boolean drawDelay, double dmg) {
 		super(imageKey, x, y, w, h, playerAddress, dmg, SHIELD_BREAKER, EFFECT, dir, range, speed);
 		this.delay = delay;
 		this.drawDelay = drawDelay;
-		this.startTime = System.currentTimeMillis();
+		this.startTime = GameState.getGameTime();
 	}
 	
 	@Override
 	public void draw(PApplet surface) {
 		if(drawDelay) {
-			if(System.currentTimeMillis() > startTime + delay * 1000)
+			if(GameState.getGameTime() > startTime + delay * 1000)
 				super.draw(surface);
 		} else
 			super.draw(surface);
@@ -72,7 +73,7 @@ public class Fireball extends Projectile {
 	
 	@Override
 	public boolean act(ArrayList<Avatar> avatars) {
-		if(System.currentTimeMillis() > startTime + delay * 1000)
+		if(GameState.getGameTime() > startTime + delay * 1000)
 			return super.act(avatars);
 		else
 			return true;

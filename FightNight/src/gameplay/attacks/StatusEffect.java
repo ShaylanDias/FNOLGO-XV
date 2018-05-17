@@ -2,6 +2,8 @@ package gameplay.attacks;
 
 import java.io.Serializable;
 
+import gameplay.GameState;
+
 /**
  * 
  * Represents a possible StatusEffect for an Attack to apply to an Avatar
@@ -56,7 +58,7 @@ public class StatusEffect implements Serializable {
 	 * Starts the timer on the status effect
 	 */
 	public void startEffect() {
-		startTime = System.currentTimeMillis();
+		startTime = GameState.getGameTime();
 	}
 
 	/**
@@ -68,7 +70,7 @@ public class StatusEffect implements Serializable {
 	public boolean isFinished() {
 		if (startTime <= 0.001)
 			return false;
-		else if (System.currentTimeMillis() > startTime + effectTime * 1000)
+		else if (GameState.getGameTime() > startTime + effectTime * 1000)
 			return true;
 		else
 			return false;

@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import clientside.gui.GamePanel;
+import gameplay.GameState;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Attack.AttackResult;
 import gameplay.attacks.StatusEffect;
@@ -95,7 +96,7 @@ public abstract class Avatar implements Serializable {
 		lives = 4;
 		sprites = new Rectangle[] { new Rectangle(100, 100, 200, 200) };
 		hitbox = new Rectangle2D.Double(-1000, -1000, 200, 200);
-		timeActionStarted = System.currentTimeMillis();
+		timeActionStarted = GameState.getGameTime();
 		blocking = false;
 		superArmor = false;
 		numOfSpriteWalk = 5;
@@ -201,7 +202,7 @@ public abstract class Avatar implements Serializable {
 				walk(numOfSpriteWalk, spriteSpeedWalk);
 			}
 		} else {
-			if (dead && System.currentTimeMillis() > deathTime + 6 * 1000) {
+			if (dead && GameState.getGameTime() > deathTime + 6 * 1000) {
 				spawn(map);
 			}
 		}
@@ -250,13 +251,13 @@ public abstract class Avatar implements Serializable {
 		}
 		surface.popMatrix();
 		if (blocking) {
-			if (System.currentTimeMillis() / 250 % 5 == 0) {
+			if (GameState.getGameTime() / 250 % 5 == 0) {
 				surface.tint(140);
-			} else if (System.currentTimeMillis() / 250 % 5 == 1) {
+			} else if (GameState.getGameTime() / 250 % 5 == 1) {
 				surface.tint(170);
-			} else if (System.currentTimeMillis() / 250 % 5 == 2) {
+			} else if (GameState.getGameTime() / 250 % 5 == 2) {
 				surface.tint(200);
-			} else if (System.currentTimeMillis() / 250 % 5 == 3) {
+			} else if (GameState.getGameTime() / 250 % 5 == 3) {
 				surface.tint(240);
 			}
 			surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
@@ -306,22 +307,22 @@ public abstract class Avatar implements Serializable {
 	public Attack[] attack(AttackType a, String player, double angle) {
 		if (deathTime == 0 && !currentlyAttacking && movementControlled && !status.getEffect().equals(Effect.STUNNED)) {
 			if (a.equals(AttackType.A1)) {
-				if (System.currentTimeMillis() > a1CDStart + a1CD * 1000) {
+				if (GameState.getGameTime() > a1CDStart + a1CD * 1000) {
 					return abilityOne(player, angle);
 				} else
 					return null;
 			} else if (a.equals(AttackType.A2)) {
-				if (System.currentTimeMillis() > a2CDStart + a2CD * 1000) {
+				if (GameState.getGameTime() > a2CDStart + a2CD * 1000) {
 					return abilityTwo(player, angle);
 				} else
 					return null;
 			} else if (a.equals(AttackType.A3)) {
-				if (System.currentTimeMillis() > a3CDStart + a3CD * 1000) {
+				if (GameState.getGameTime() > a3CDStart + a3CD * 1000) {
 					return abilityThree(player, angle);
 				} else
 					return null;
 			} else if (a.equals(AttackType.RANGED)) {
-				if (System.currentTimeMillis() > rangedCDStart + rangedCD * 1000) {
+				if (GameState.getGameTime() > rangedCDStart + rangedCD * 1000) {
 					return rangedAttack(player, angle);
 				} else
 					return null;
@@ -379,14 +380,14 @@ public abstract class Avatar implements Serializable {
 	}
 
 	private void die() {
-		if (System.currentTimeMillis() * 1000 > this.deathTime) {
+		if (GameState.getGameTime() * 1000 > this.deathTime) {
 			//			health = 0;
 			dead = true;
 			lives--;
 
 			if (lives <= 0)
 				eliminated = true;
-			deathTime = System.currentTimeMillis();
+			deathTime = GameState.getGameTime();
 		}
 	}
 
@@ -456,7 +457,7 @@ public abstract class Avatar implements Serializable {
 
 		System.out.println("dash");
 		
-		if(System.currentTimeMillis() > dashCDStart + dashCD * 1000) {
+		if(GameState.getGameTime() > dashCDStart + dashCD * 1000) {
 
 			if (left) {
 				if (up) {
@@ -485,7 +486,7 @@ public abstract class Avatar implements Serializable {
 			dashTraveled = 0;
 			superArmor = true;
 
-			dashCDStart = System.currentTimeMillis();
+			dashCDStart = GameState.getGameTime();
 
 		}
 	}
@@ -598,7 +599,7 @@ public abstract class Avatar implements Serializable {
 		double step = deathAnimationTime/numOfSpriteDeath;
 		spriteSheetKey = getSpriteListDeath().get(getSpriteListDeath().size()-1);
 		for(int i = 1; i < numOfSpriteDeath+1; i++) {
-			if ((System.currentTimeMillis() - deathTime) <= i*step * 1000) {
+			if ((GameState.getGameTime() - deathTime) <= i*step * 1000) {
 				spriteSheetKey = getSpriteListDeath().get(i-1);
 				break;
 			}
@@ -610,7 +611,7 @@ public abstract class Avatar implements Serializable {
 	public void walk(int numOfSpriteWalk, int spriteSpeedWalk) {
 		if (!dashing && !blocking) {
 			for (int i = 0; i < numOfSpriteWalk; i++) {
-				if (System.currentTimeMillis() / spriteSpeedWalk % numOfSpriteWalk == i) {
+				if (GameState.getGameTime() / spriteSpeedWalk % numOfSpriteWalk == i) {
 					spriteSheetKey = getSpriteListWalk().get(i);
 				}
 			}
@@ -695,23 +696,23 @@ public abstract class Avatar implements Serializable {
 	}
 
 	public long getBasicCooldownLeft() {
-		return System.currentTimeMillis() - basicCDStart;
+		return GameState.getGameTime() - basicCDStart;
 	}
 
 	public long getRangedCooldownLeft() {
-		return System.currentTimeMillis() - rangedCDStart;
+		return GameState.getGameTime() - rangedCDStart;
 	}
 
 	public long getA1CooldownLeft() {
-		return System.currentTimeMillis() - a1CDStart;
+		return GameState.getGameTime() - a1CDStart;
 	}
 
 	public long getA2CooldownLeft() {
-		return System.currentTimeMillis() - a2CDStart;
+		return GameState.getGameTime() - a2CDStart;
 	}
 
 	public long getA3CooldownLeft() {
-		return System.currentTimeMillis() - a3CDStart;
+		return GameState.getGameTime() - a3CDStart;
 	}
 
 	public double getA1Cooldown() {
