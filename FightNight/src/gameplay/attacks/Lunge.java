@@ -15,20 +15,20 @@ public class Lunge extends Attack{
 	private static String imageKey = "UpperCut";
 	private double stopMoving;
 
-	public Lunge(String playerAddress, double dir, Brute attacker, int x, int y, StatusEffect status, double duration, double stopMoving) {
-		super(imageKey, x, y, 50, 100, playerAddress, damage, shieldBreaker, status, dir);
+	public Lunge(String playerAddress, double dir, Brute attacker, int x, int y, StatusEffect status, double duration, double stopMoving, long time) {
+		super(imageKey, x, y, 50, 100, playerAddress, damage, shieldBreaker, status, dir, time);
 		this.attacker = attacker;
 		this.duration = duration;
 		this.stopMoving = stopMoving;
 	}
 	
 	
-
-	public void draw(PApplet surface) {
+	@Override
+	public void draw(PApplet surface, long time) {
 
 		//		surface.pushMatrix();
 
-		if(GameState.getGameTime() > super.getStartTime() + 300) {
+		if(time > super.getStartTime() + 300) {
 			super.draw(surface);
 			//			surface.rectMode(PApplet.CENTER);
 			//			 surface.noFill();
@@ -40,19 +40,20 @@ public class Lunge extends Attack{
 	}
 
 	@Override
-	public boolean act(ArrayList<Avatar> avatars) {
-		if(GameState.getGameTime() < super.getStartTime() + (duration-stopMoving) * 1000) {
+	public boolean act(ArrayList<Avatar> avatars, long time) {
+		if(time < super.getStartTime() + (duration-stopMoving) * 1000) {
 			x = attacker.getX() + 100 * Math.cos(Math.toRadians(dir));
 			y = attacker.getY() - 60 * Math.sin(Math.toRadians(dir));
 		}
-		return !checkEnd();
+		return !checkEnd(time);
 
 	}
 
-	protected boolean checkEnd() {
+	@Override
+	protected boolean checkEnd(long time) {
 		if (!super.isActive())
 			return true;
-		if (GameState.getGameTime() > super.getStartTime() + duration * 1000) {
+		if (time > super.getStartTime() + duration * 1000) {
 			end();
 			return true;
 		} else

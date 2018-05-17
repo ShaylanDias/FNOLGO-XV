@@ -147,13 +147,13 @@ public abstract class Avatar implements Serializable {
 
 		if (status.getEffect().equals(Effect.SLOWED)) {
 			if (!status.started())
-				status.startEffect();
+				status.startEffect(time);
 			moveSpeed -= status.getValue();
 		} else if (status.getEffect().equals(Effect.STUNNED)) {
 			if (!status.started())
-				status.startEffect();
+				status.startEffect(time);
 			else {
-				if (status.isFinished()) {
+				if (status.isFinished(time)) {
 					status = new StatusEffect(Effect.NONE, 0, 0);
 				}
 				return;
@@ -178,27 +178,27 @@ public abstract class Avatar implements Serializable {
 					shieldHealth = fullShieldHealth;
 			}
 			if (dashing) {
-				dashAct(map, dashSpeed);
+				dashAct(map, dashSpeed, time);
 				return;
 			}
 			if (up) {
-				moveBy(0, -moveSpeed, map);
+				moveBy(0, -moveSpeed, map, time);
 				walk(numOfSpriteWalk, spriteSpeedWalk, time);
 			}
 			if (right) {
-				moveBy(moveSpeed, 0, map);
+				moveBy(moveSpeed, 0, map, time);
 				walk(numOfSpriteWalk, spriteSpeedWalk, time);
 				if(!currentlyAttacking)
 					lastDir = false;
 			}
 			if (left) {
-				moveBy(-moveSpeed, 0, map);
+				moveBy(-moveSpeed, 0, map, time);
 				walk(numOfSpriteWalk, spriteSpeedWalk, time);
 				if(!currentlyAttacking)
 					lastDir = true;
 			}
 			if (down) {
-				moveBy(0, moveSpeed, map);
+				moveBy(0, moveSpeed, map, time);
 				walk(numOfSpriteWalk, spriteSpeedWalk, time);
 			}
 		} else {
@@ -308,26 +308,26 @@ public abstract class Avatar implements Serializable {
 		if (deathTime == 0 && !currentlyAttacking && movementControlled && !status.getEffect().equals(Effect.STUNNED)) {
 			if (a.equals(AttackType.A1)) {
 				if (time > a1CDStart + a1CD * 1000) {
-					return abilityOne(player, angle);
+					return abilityOne(player, angle, time);
 				} else
 					return null;
 			} else if (a.equals(AttackType.A2)) {
 				if (time > a2CDStart + a2CD * 1000) {
-					return abilityTwo(player, angle);
+					return abilityTwo(player, angle, time);
 				} else
 					return null;
 			} else if (a.equals(AttackType.A3)) {
 				if (time > a3CDStart + a3CD * 1000) {
-					return abilityThree(player, angle);
+					return abilityThree(player, angle, time);
 				} else
 					return null;
 			} else if (a.equals(AttackType.RANGED)) {
 				if (time > rangedCDStart + rangedCD * 1000) {
-					return rangedAttack(player, angle);
+					return rangedAttack(player, angle, time);
 				} else
 					return null;
 			} else
-				return basicAttack(player, angle);
+				return basicAttack(player, angle, time);
 		} else
 			return null;
 	}
@@ -401,8 +401,8 @@ public abstract class Avatar implements Serializable {
 	 *            Y to move
 	 * @return True if successfully could move
 	 */
-	public boolean moveBy(double x, double y, Map map) {
-		if (!status.getEffect().equals(Effect.STUNNED) || status.isFinished()) {
+	public boolean moveBy(double x, double y, Map map, long time) {
+		if (!status.getEffect().equals(Effect.STUNNED) || status.isFinished(time)) {
 
 			if (!map.hitTree(hitbox.x + x, hitbox.y + y, hitbox.width, hitbox.height)
 					&& map.inBounds(hitbox.x + x, hitbox.y + y, hitbox.width, hitbox.height)) {
@@ -425,8 +425,8 @@ public abstract class Avatar implements Serializable {
 	 *            The angle to travel at
 	 * @return True if successful
 	 */
-	public boolean moveDistance(double dist, double angle, Map map) {
-		return moveBy(Math.cos(Math.toRadians(angle)) * dist, Math.sin(Math.toRadians(angle)) * dist, map);
+	public boolean moveDistance(double dist, double angle, Map map, long time) {
+		return moveBy(Math.cos(Math.toRadians(angle)) * dist, Math.sin(Math.toRadians(angle)) * dist, map, time);
 	}
 
 	/**
@@ -489,14 +489,14 @@ public abstract class Avatar implements Serializable {
 		}
 	}
 
-	private void dashAct(Map map, double dist) { // Where the actual Dash action occurs
+	private void dashAct(Map map, double dist, long time) { // Where the actual Dash action occurs
 		System.out.println(dist);
-		if (moveBy(Math.cos(Math.toRadians(dashAngle)) * dist, -Math.sin(Math.toRadians(dashAngle)) * dist, map))
+		if (moveBy(Math.cos(Math.toRadians(dashAngle)) * dist, -Math.sin(Math.toRadians(dashAngle)) * dist, map, time))
 			dashTraveled += dist;
 		else if(dist < 5)
 			dashTraveled = dashDistance + 1;
 		else {
-			dashAct(map, dist-10);
+			dashAct(map, dist-10, time);
 			dashTraveled = dashDistance + 1;
 		}
 

@@ -49,7 +49,7 @@ public class Spectator extends Avatar{
 	}
 	
 	@Override
-	public void dash() {
+	public void dash(long time) {
 
 	}
 	
@@ -64,36 +64,36 @@ public class Spectator extends Avatar{
 	}
 	
 	@Override
-	public AttackResult takeHit(Attack attack) {
+	public AttackResult takeHit(Attack attack, long time) {
 		return AttackResult.MISSED;
 	}
 	
 	@Override
-	public Attack[] basicAttack(String player, double angle) {
+	public Attack[] basicAttack(String player, double angle, long time) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Attack[] rangedAttack(String player, double angle) {
+	public Attack[] rangedAttack(String player, double angle, long time) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Attack[] abilityOne(String player, double angle) {
+	public Attack[] abilityOne(String player, double angle, long time) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Attack[] abilityTwo(String player, double angle) {
+	public Attack[] abilityTwo(String player, double angle, long time) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Attack[] abilityThree(String player, double angle) {
+	public Attack[] abilityThree(String player, double angle, long time) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -42,8 +42,8 @@ public abstract class Projectile extends Attack {
 	 * @param speed
 	 */
 	public Projectile(String imageKey, int x, int y, int w, int h, String playerAddress, double damage,
-			boolean shieldBreaker, StatusEffect effect, double dir, double range, double speed) {
-		super(imageKey, x + w / 2, y + h / 2, w, h, playerAddress, damage, shieldBreaker, effect, 360 - dir);
+			boolean shieldBreaker, StatusEffect effect, double dir, double range, double speed, long time) {
+		super(imageKey, x + w / 2, y + h / 2, w, h, playerAddress, damage, shieldBreaker, effect, 360 - dir, time);
 		this.range = range;
 		this.speed = speed;
 		distTraveled = 0;

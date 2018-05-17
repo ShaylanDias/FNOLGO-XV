@@ -67,19 +67,19 @@ public class Ranger extends Avatar {
 
 	// Knife, shank some fool
 	@Override
-	public Attack[] basicAttack(String player, double angle) {
-		if (GameState.getGameTime() > super.basicCDStart + super.basicCD * 1000 && !dashing && !blocking) {
+	public Attack[] basicAttack(String player, double angle, long time) {
+		if (time > super.basicCDStart + super.basicCD * 1000 && !dashing && !blocking) {
 			currentlyAttacking = true;
-			basicCDStart = GameState.getGameTime();
+			basicCDStart = time;
 			currentAttack = AttackType.BASIC;
-			timeActionStarted = GameState.getGameTime();
+			timeActionStarted = time;
 			if (angle > 90 && angle < 270)
 				lastDir = true;
 			else
 				lastDir = false;
 			return new Attack[] { new MeleeAttack("Knife", (int) (hitbox.x + 50 * Math.cos(Math.toRadians(angle))),
 					(int) (hitbox.y - 75 * Math.sin(Math.toRadians(angle))), 40, 40, player, 20, false,
-					new StatusEffect(Effect.NONE, 0, 0), angle, 0.15) };
+					new StatusEffect(Effect.NONE, 0, 0), angle, 0.15, time) };
 		} else {
 			return null;
 		}
@@ -87,10 +87,10 @@ public class Ranger extends Avatar {
 
 	// Shoot bow, arrow goes until it hits a wall
 	@Override
-	public Attack[] rangedAttack(String player, double angle) {
+	public Attack[] rangedAttack(String player, double angle, long time) {
 		currentAttack = AttackType.RANGED;
 		currentlyAttacking = true;
-		timeActionStarted = GameState.getGameTime();
+		timeActionStarted = time;
 		int damage = 15;
 		super.rangedCDStart = timeActionStarted;
 		if (angle > 90 && angle < 270) {
@@ -106,46 +106,46 @@ public class Ranger extends Avatar {
 
 	// Barrage - fire multiple arrows in an area
 	@Override
-	public Attack[] abilityOne(String player, double angle) {
+	public Attack[] abilityOne(String player, double angle, long time) {
 		currentAttack = AttackType.A1;
 		currentlyAttacking = true;
-		timeActionStarted = GameState.getGameTime();
+		timeActionStarted = time;
 		double damage = 10;
 		super.a1CDStart = timeActionStarted;
 		if (angle > 90 && angle < 270) {
 			lastDir = true;
 			return new Attack[] {
 					new Fireball((int) hitbox.x - 20, (int) hitbox.y - 10, player, angle, "Arrow", 600, 40, 60, 30, 0.3,
-							damage),
+							damage, time),
 					new Fireball((int) hitbox.x - 20, (int) hitbox.y - 10, player, angle - 10, "Arrow", 600, 40, 60, 14,
-							0.3, damage),
+							0.3, damage, time),
 					new Fireball((int) hitbox.x - 20, (int) hitbox.y - 10, player, angle - 5, "Arrow", 600, 40, 60, 14,
-							0.3, damage),
+							0.3, damage, time),
 					new Fireball((int) hitbox.x - 20, (int) hitbox.y - 10, player, angle + 5, "Arrow", 600, 40, 60, 14,
-							0.3, damage),
+							0.3, damage, time),
 					new Fireball((int) hitbox.x - 20, (int) hitbox.y - 10, player, angle + 10, "Arrow", 600, 40, 60, 14,
-							0.3, damage),
+							0.3, damage, time),
 					new Fireball((int) hitbox.x - 20, (int) hitbox.y - 10, player, angle + 15, "Arrow", 600, 40, 60, 14,
-							0.3, damage),
+							0.3, damage, time),
 					new Fireball((int) hitbox.x - 20, (int) hitbox.y - 10, player, angle - 15, "Arrow", 600, 40, 60, 14,
-							0.3, damage) };
+							0.3, damage, time) };
 		} else {
 			lastDir = false;
 			return new Attack[] {
 					new Fireball((int) hitbox.x - 30, (int) hitbox.y - 10, player, angle, "Arrow", 600, 40, 60, 14, 0.3,
-							damage),
+							damage, time),
 					new Fireball((int) hitbox.x - 30, (int) hitbox.y - 10, player, angle - 10, "Arrow", 600, 40, 60, 14,
-							0.3, damage),
+							0.3, damage, time),
 					new Fireball((int) hitbox.x - 30, (int) hitbox.y - 10, player, angle - 5, "Arrow", 600, 40, 60, 14,
-							0.3, damage),
+							0.3, damage, time),
 					new Fireball((int) hitbox.x - 30, (int) hitbox.y - 10, player, angle + 5, "Arrow", 600, 40, 60, 14,
-							0.3, damage),
+							0.3, damage, time),
 					new Fireball((int) hitbox.x - 30, (int) hitbox.y - 10, player, angle + 10, "Arrow", 600, 40, 60, 14,
-							0.3, damage),
+							0.3, damage, time),
 					new Fireball((int) hitbox.x - 30, (int) hitbox.y - 10, player, angle + 15, "Arrow", 600, 40, 60, 14,
-							0.3, damage),
+							0.3, damage, time),
 					new Fireball((int) hitbox.x - 30, (int) hitbox.y - 10, player, angle - 15, "Arrow", 600, 40, 60, 14,
-							0.3, damage) };
+							0.3, damage, time) };
 
 		}
 	}
@@ -153,10 +153,10 @@ public class Ranger extends Avatar {
 	// PlaceTrap, place an invisible trap that expires after a certain amount of
 	// time. The ranger can carry 3 at time
 	@Override
-	public Attack[] abilityTwo(String player, double angle) {
+	public Attack[] abilityTwo(String player, double angle, long time) {
 		currentAttack = AttackType.A2;
 
-		a2CDStart = GameState.getGameTime();
+		a2CDStart = time;
 		timeActionStarted = a2CDStart;
 		if (angle > 90 && angle < 270) {
 			lastDir = true;
@@ -164,14 +164,14 @@ public class Ranger extends Avatar {
 			lastDir = false;
 		}
 		return new Attack[] { new Trap("Mushroom", (int) hitbox.x, (int) hitbox.y, 50, 50, player, 10,
-				new StatusEffect(Effect.SLOWED, 4, 5), 60) };
+				new StatusEffect(Effect.SLOWED, 4, 5), 60, time) };
 	}
 
 	// Smoke Bomb - Turns you invisible to other players for a few seconds
 	@Override
-	public Attack[] abilityThree(String player, double angle) {
+	public Attack[] abilityThree(String player, double angle, long time) {
 		invisible = true;
-		invisStartTime = GameState.getGameTime();
+		invisStartTime = time;
 		a3CDStart = invisStartTime;
 		smokeTime = invisStartTime + 200;
 		return null;
@@ -182,11 +182,12 @@ public class Ranger extends Avatar {
 		return invisible;
 	}
 
-	public boolean isSmoke() {
-		return (invisible && GameState.getGameTime() < smokeTime);
+	public boolean isSmoke(long time) {
+		return (invisible && time < smokeTime);
 	}
 
-	public void draw(PApplet surface) {
+	@Override
+	public void draw(PApplet surface, long time) {
 		surface.pushMatrix();
 		surface.pushStyle();
 
@@ -197,7 +198,7 @@ public class Ranger extends Avatar {
 			sw = (int) sprites[spriteInd].getWidth();
 			sh = (int) sprites[spriteInd].getHeight();
 
-			drawDeath(numOfSpriteDeath, spriteSpeedDeath);
+			drawDeath(numOfSpriteDeath, spriteSpeedDeath, time);
 			if (lastDir) {
 				surface.scale(-1, 1);
 				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw,
@@ -225,7 +226,7 @@ public class Ranger extends Avatar {
 			surface.pushStyle();
 			float widthMod = 1f;
 
-			if (invisible && GameState.getGameTime() < smokeTime) {
+			if (invisible && time < smokeTime) {
 				surface.image(GamePanel.resources.getImage("Smoke"), (float) hitbox.x, (float) hitbox.y, sw * widthMod,
 						sh);
 			}
@@ -243,13 +244,13 @@ public class Ranger extends Avatar {
 			surface.popMatrix();
 			surface.popStyle();
 			if (blocking) {
-				if (GameState.getGameTime() / 250 % 5 == 0) {
+				if (time / 250 % 5 == 0) {
 					surface.tint(140);
-				} else if (GameState.getGameTime() / 250 % 5 == 1) {
+				} else if (time / 250 % 5 == 1) {
 					surface.tint(170);
-				} else if (GameState.getGameTime() / 250 % 5 == 2) {
+				} else if (time / 250 % 5 == 2) {
 					surface.tint(200);
-				} else if (GameState.getGameTime() / 250 % 5 == 3) {
+				} else if (time / 250 % 5 == 3) {
 					surface.tint(240);
 				}
 				surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y,
@@ -266,21 +267,21 @@ public class Ranger extends Avatar {
 		surface.popStyle();
 	}
 
-	public void act(Map map) {
+	public void act(Map map, long time) {
 
 		if (invisible) {
-			if (GameState.getGameTime() > invisStartTime + invisLength * 1000)
+			if (time > invisStartTime + invisLength * 1000)
 				invisible = false;
 		}
 
 		if (currentlyAttacking) {
 			if (currentAttack.equals(AttackType.BASIC))
-				actBasic();
+				actBasic(time);
 			else if (currentAttack.equals(AttackType.RANGED) || currentAttack.equals(AttackType.A1))
-				actRanged();
+				actRanged(time);
 			return;
 		} else {
-			super.act(map);
+			super.act(map, time);
 			if (!super.isLeft() && !super.isRight() && !super.isUp() && !super.isDown()) {
 				spriteSheetKey = "Ranger";
 			}
@@ -288,16 +289,16 @@ public class Ranger extends Avatar {
 	}
 
 	@Override
-	public AttackResult takeHit(Attack attack) {
-		AttackResult res = super.takeHit(attack);
+	public AttackResult takeHit(Attack attack, long time) {
+		AttackResult res = super.takeHit(attack, time);
 		if (res.equals(AttackResult.SUCCESS))
 			invisible = false;
 		return res;
 	}
 
 	@Override
-	public Attack[] attack(AttackType a, String player, double angle) {
-		Attack[] res = super.attack(a, player, angle);
+	public Attack[] attack(AttackType a, String player, double angle, long time) {
+		Attack[] res = super.attack(a, player, angle, time);
 		if (res != null)
 			invisible = false;
 		return res;
@@ -309,41 +310,41 @@ public class Ranger extends Avatar {
 		super.spawn(map);
 	}
 
-	private void actBasic() {
-		if (GameState.getGameTime() < timeActionStarted + 0.06 * 1000) {
+	private void actBasic(long time) {
+		if (time < timeActionStarted + 0.06 * 1000) {
 			spriteSheetKey = "RangerBasic1";
-		} else if (GameState.getGameTime() < timeActionStarted + 0.1 * 1000) {
+		} else if (time < timeActionStarted + 0.1 * 1000) {
 			spriteSheetKey = "RangerBasic2";
-		} else if (GameState.getGameTime() < timeActionStarted + 0.16 * 1000) {
+		} else if (time < timeActionStarted + 0.16 * 1000) {
 			spriteSheetKey = "RangerBasic3";
-		} else if (GameState.getGameTime() < timeActionStarted + 0.3 * 1000) {
+		} else if (time < timeActionStarted + 0.3 * 1000) {
 			spriteSheetKey = "RangerBasicEnd1";
-		} else if (GameState.getGameTime() > timeActionStarted + 0.3 * 1000) {
+		} else if (time > timeActionStarted + 0.3 * 1000) {
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}
 	}
 
-	private void actRanged() {
-		if (GameState.getGameTime() < timeActionStarted + 0.03 * 1000) {
+	private void actRanged(long time) {
+		if (time < timeActionStarted + 0.03 * 1000) {
 			spriteSheetKey = "RangerRanged0";
-		} else if (GameState.getGameTime() < timeActionStarted + 0.08 * 1000) {
+		} else if (time < timeActionStarted + 0.08 * 1000) {
 			spriteSheetKey = "RangerRanged1";
-		} else if (GameState.getGameTime() < timeActionStarted + 0.13 * 1000) {
+		} else if (time < timeActionStarted + 0.13 * 1000) {
 			spriteSheetKey = "RangerRanged2";
-		} else if (GameState.getGameTime() < timeActionStarted + 0.18 * 1000) {
+		} else if (time < timeActionStarted + 0.18 * 1000) {
 			spriteSheetKey = "RangerRanged3";
-		} else if (GameState.getGameTime() < timeActionStarted + 0.23 * 1000) {
+		} else if (time < timeActionStarted + 0.23 * 1000) {
 			spriteSheetKey = "RangerRanged4";
-		} else if (GameState.getGameTime() < timeActionStarted + 0.28 * 1000) {
+		} else if (time < timeActionStarted + 0.28 * 1000) {
 			spriteSheetKey = "RangerRanged5";
-		} else if (GameState.getGameTime() < timeActionStarted + 0.33 * 1000) {
+		} else if (time < timeActionStarted + 0.33 * 1000) {
 			spriteSheetKey = "RangerRanged7";
-		} else if (GameState.getGameTime() < timeActionStarted + 0.38 * 1000) {
+		} else if (time < timeActionStarted + 0.38 * 1000) {
 			spriteSheetKey = "RangerRanged8";
-		} else if (GameState.getGameTime() < timeActionStarted + 0.43 * 1000) {
+		} else if (time < timeActionStarted + 0.43 * 1000) {
 			spriteSheetKey = "RangerRanged9";
-		} else if (GameState.getGameTime() > timeActionStarted + 0.48 * 1000) {
+		} else if (time > timeActionStarted + 0.48 * 1000) {
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}

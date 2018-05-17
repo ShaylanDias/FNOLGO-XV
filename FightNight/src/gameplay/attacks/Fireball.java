@@ -38,43 +38,43 @@ public class Fireball extends Projectile {
 	 *            The direction of travel
 	 */
 	public Fireball(int x, int y, String playerAddress, double dir, double dmg, long time) {
-		super(imageKey, x, y, W, H, playerAddress, dmg, SHIELD_BREAKER, EFFECT, dir, RANGE, SPEED);
+		super(imageKey, x, y, W, H, playerAddress, dmg, SHIELD_BREAKER, EFFECT, dir, RANGE, SPEED, time);
 	}
 	
-	public Fireball(int x, int y, String playerAddress, double dir, String imageKey, double range, double speed, double dmg) {
-		super(imageKey, x, y, W, H, playerAddress, dmg, SHIELD_BREAKER, EFFECT, dir, range, speed);
+	public Fireball(int x, int y, String playerAddress, double dir, String imageKey, double range, double speed, double dmg, long time) {
+		super(imageKey, x, y, W, H, playerAddress, dmg, SHIELD_BREAKER, EFFECT, dir, range, speed, time);
 	}
 	
-	public Fireball(int x, int y, String playerAddress, double dir, String imageKey, double range, double speed, int w, int h, double dmg) {
-		super(imageKey, x, y, w, h, playerAddress, dmg, SHIELD_BREAKER, EFFECT, dir, range, speed);
+	public Fireball(int x, int y, String playerAddress, double dir, String imageKey, double range, double speed, int w, int h, double dmg, long time) {
+		super(imageKey, x, y, w, h, playerAddress, dmg, SHIELD_BREAKER, EFFECT, dir, range, speed, time);
 	}
 	
-	public Fireball(int x, int y, String playerAddress, double dir, String imageKey, double range, double speed, int w, int h, double delay, double dmg) {
-		super(imageKey, x, y, w, h, playerAddress, dmg, SHIELD_BREAKER, EFFECT, dir, range, speed);
+	public Fireball(int x, int y, String playerAddress, double dir, String imageKey, double range, double speed, int w, int h, double delay, double dmg, long time) {
+		super(imageKey, x, y, w, h, playerAddress, dmg, SHIELD_BREAKER, EFFECT, dir, range, speed, time);
 		this.delay = delay;
-		this.startTime = GameState.getGameTime();
+		this.startTime = time;
 	}
 	
-	public Fireball(int x, int y, String playerAddress, double dir, String imageKey, double range, double speed, int w, int h, double delay, boolean drawDelay, double dmg) {
-		super(imageKey, x, y, w, h, playerAddress, dmg, SHIELD_BREAKER, EFFECT, dir, range, speed);
+	public Fireball(int x, int y, String playerAddress, double dir, String imageKey, double range, double speed, int w, int h, double delay, boolean drawDelay, double dmg, long time) {
+		super(imageKey, x, y, w, h, playerAddress, dmg, SHIELD_BREAKER, EFFECT, dir, range, speed, time);
 		this.delay = delay;
 		this.drawDelay = drawDelay;
-		this.startTime = GameState.getGameTime();
+		this.startTime = time;
 	}
 	
 	@Override
-	public void draw(PApplet surface) {
+	public void draw(PApplet surface, long time) {
 		if(drawDelay) {
-			if(GameState.getGameTime() > startTime + delay * 1000)
+			if(time > startTime + delay * 1000)
 				super.draw(surface);
 		} else
 			super.draw(surface);
 	}
 	
 	@Override
-	public boolean act(ArrayList<Avatar> avatars) {
-		if(GameState.getGameTime() > startTime + delay * 1000)
-			return super.act(avatars);
+	public boolean act(ArrayList<Avatar> avatars, long time) {
+		if(time > startTime + delay * 1000)
+			return super.act(avatars, time);
 		else
 			return true;
 	}

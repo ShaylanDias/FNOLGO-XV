@@ -12,8 +12,8 @@ public class SnowField extends Attack{
 	private static final boolean shieldBreaker = false;
 	private int direction, direction2;
 	
-	public SnowField(int x, int y, String playerAddress, double dir) {
-		super("SnowField", x, y, w, h, playerAddress, damage, shieldBreaker, new StatusEffect(Effect.SLOWED, 1.5, 8), dir);
+	public SnowField(int x, int y, String playerAddress, double dir, long time) {
+		super("SnowField", x, y, w, h, playerAddress, damage, shieldBreaker, new StatusEffect(Effect.SLOWED, 1.5, 8), dir, time);
 	
 		direction = 1;
 		direction2 = 1;
@@ -26,10 +26,10 @@ public class SnowField extends Attack{
 	}
 	
 	@Override
-	public boolean act(ArrayList<Avatar> avatars) {
+	public boolean act(ArrayList<Avatar> avatars, long time) {
 		for (Avatar a : avatars) {
 			if (a.getHitbox().intersects(this)) {
-				AttackResult res = a.takeHit(this);
+				AttackResult res = a.takeHit(this, time);
 			}
 		}
 		
@@ -38,14 +38,15 @@ public class SnowField extends Attack{
 
 		dir += 1.5;
 		
-		return !checkEnd();
+		return !checkEnd(time);
 
 	}
 	
-	protected boolean checkEnd() {
+	@Override
+	protected boolean checkEnd(long time) {
 		if (!super.isActive())
 			return true;
-		if (GameState.getGameTime() > super.getStartTime() + duration * 1000) {
+		if (time > super.getStartTime() + duration * 1000) {
 			end();
 			return true;
 		} else

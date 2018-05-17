@@ -75,19 +75,20 @@ public class Brute extends Avatar {
 		this.hitbox.x = x;
 	}
 
-	public void act(Map map) {
+	@Override
+	public void act(Map map, long time) {
 		if (currentAttack == AttackType.A1)
-			actUpperCut(map);
+			actUpperCut(map, time);
 		else if (currentAttack == AttackType.RANGED)
-			rangedAct();
+			rangedAct(time);
 		else if (currentAttack == AttackType.BASIC)
-			basicAct();
+			basicAct(time);
 		else if (currentAttack == AttackType.A2)
-			actHowl();
+			actHowl(time);
 		else if (currentAttack == AttackType.A3)
-			actFury(map);
+			actFury(map, time);
 		else {
-			super.act(map);
+			super.act(map, time);
 			if (!super.isLeft() && !super.isRight() && !super.isUp() && !super.isDown()) {
 				spriteSheetKey = "WWDefault";
 			}
@@ -95,7 +96,8 @@ public class Brute extends Avatar {
 
 	}
 
-	public void draw(PApplet surface) {
+	@Override
+	public void draw(PApplet surface, long time) {
 		surface.pushMatrix();
 		surface.pushStyle();
 
@@ -105,7 +107,7 @@ public class Brute extends Avatar {
 			int sw, sh;
 			sw = (int) sprites[spriteInd].getWidth();
 			sh = (int) sprites[spriteInd].getHeight();
-			drawDeath(numOfSpriteDeath, spriteSpeedDeath);
+			drawDeath(numOfSpriteDeath, spriteSpeedDeath, time);
 			if (!lastDir) {
 				surface.scale(-1, 1);
 				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw,
@@ -145,13 +147,13 @@ public class Brute extends Avatar {
 			}
 			surface.popMatrix();
 			if (blocking) {
-				if (System.currentTimeMillis() / 250 % 5 == 0) {
+				if (time / 250 % 5 == 0) {
 					surface.tint(140);
-				} else if (System.currentTimeMillis() / 250 % 5 == 1) {
+				} else if (time / 250 % 5 == 1) {
 					surface.tint(170);
-				} else if (System.currentTimeMillis() / 250 % 5 == 2) {
+				} else if (time / 250 % 5 == 2) {
 					surface.tint(200);
-				} else if (System.currentTimeMillis() / 250 % 5 == 3) {
+				} else if (time / 250 % 5 == 3) {
 					surface.tint(240);
 				}
 				surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y,
@@ -170,19 +172,19 @@ public class Brute extends Avatar {
 
 	// Punch, slow but does a lot of dmg
 	@Override
-	public Attack[] basicAttack(String player, double angle) {
-		if (System.currentTimeMillis() > super.basicCDStart + super.basicCD * 1000 && !dashing && !blocking) {
+	public Attack[] basicAttack(String player, double angle, long time) {
+		if (time > super.basicCDStart + super.basicCD * 1000 && !dashing && !blocking) {
 			currentlyAttacking = true;
-			basicCDStart =GameState.getGameTime();
+			basicCDStart = time;
 			currentAttack = AttackType.BASIC;
-			timeActionStarted =GameState.getGameTime();
+			timeActionStarted = time;
 			if (angle > 90 && angle < 270)
 				lastDir = true;
 			else
 				lastDir = false;
 			return new Attack[] { new MeleeAttack("WWBasic", (int) (hitbox.x + 75 * Math.cos(Math.toRadians(angle))),
 					(int) (hitbox.y - 75 * Math.sin(Math.toRadians(angle))), 40, 40, player, 20, false,
-					new StatusEffect(Effect.NONE, 0, 0), angle, 0.15) };
+					new StatusEffect(Effect.NONE, 0, 0), angle, 0.15, time) };
 		} else {
 			return null;
 		}
@@ -190,18 +192,18 @@ public class Brute extends Avatar {
 
 	// Throws a slow moving projectile (Rock)
 	@Override
-	public Attack[] rangedAttack(String player, double angle) {
+	public Attack[] rangedAttack(String player, double angle, long time) {
 		double damage = 35;
-		if (System.currentTimeMillis() > super.rangedCDStart + super.rangedCD * 1000 && !dashing && !blocking) {
-			super.rangedCDStart =GameState.getGameTime();
+		if (time > super.rangedCDStart + super.rangedCD * 1000 && !dashing && !blocking) {
+			super.rangedCDStart = time;
 			currentlyAttacking = true;
 			currentAttack = AttackType.RANGED;
-			timeActionStarted =GameState.getGameTime();
+			timeActionStarted = time;
 			if (angle > 90 && angle < 270)
 				lastDir = true;
 			else
 				lastDir = false;
-			return new Attack[] { new Fireball((int) hitbox.x, (int) hitbox.y, player, angle, "Rock", 400, 22, 35) };
+			return new Attack[] { new Fireball((int) hitbox.x, (int) hitbox.y, player, angle, "Rock", 400, 22, 35, time) };
 		} else {
 			return null;
 		}
@@ -210,7 +212,7 @@ public class Brute extends Avatar {
 
 	// UpperCut - dashes forwards and stuns someone
 	@Override
-	public Attack[] abilityOne(String player, double angle) {
+	public Attack[] abilityOne(String player, double angle, long time) {
 		currentlyAttacking = true;
 		movementControlled = false;
 		currentAttack = AttackType.A1;
@@ -219,15 +221,15 @@ public class Brute extends Avatar {
 			lastDir = true;
 		else
 			lastDir = false;
-		a1CDStart =GameState.getGameTime();
+		a1CDStart = time;
 		timeActionStarted = a1CDStart;
 		return new Attack[] { new Lunge(this.getPlayer(), angle, this, (int) super.getX(), (int) super.getY(),
-				new StatusEffect(Effect.STUNNED, 1.5d, 1), 1.1, 0.25) };
+				new StatusEffect(Effect.STUNNED, 1.5d, 1), 1.1, 0.25, time) };
 	}
 
 	// GroundSmash, and aoe stun that does dmg
 	@Override
-	public Attack[] abilityTwo(String player, double angle) {
+	public Attack[] abilityTwo(String player, double angle, long time) {
 		currentlyAttacking = true;
 		movementControlled = false;
 		currentAttack = AttackType.A2;
@@ -235,9 +237,9 @@ public class Brute extends Avatar {
 			lastDir = true;
 		else
 			lastDir = false;
-		a2CDStart =GameState.getGameTime();
+		a2CDStart = time;
 		timeActionStarted = a2CDStart;
-		return new Attack[] { new Howl((int) super.getX(), (int) super.getY(), player) };
+		return new Attack[] { new Howl((int) super.getX(), (int) super.getY(), player, time) };
 	}
 
 	// Fury- Swipes three times as it moves
@@ -251,22 +253,22 @@ public class Brute extends Avatar {
 			lastDir = true;
 		else
 			lastDir = false;
-		a3CDStart = GameState.getGameTime();
+		a3CDStart = time;
 		timeActionStarted = a3CDStart;
 		// Change damage values over here for the 3rd ability
 		return new Attack[] {
 				new Lunge(this.getPlayer(), angle, this, (int) super.getX(), (int) super.getY(),
-						new StatusEffect(Effect.NONE, 0, 0), 0.9, 0),
+						new StatusEffect(Effect.NONE, 0, 0), 0.9, 0, time),
 				new TrailingAttack("WWBasic", 50, 50, 60, 50, player, 25, new StatusEffect(Effect.NONE, 0, 0),
-						angle + 90, 0.9, this),
+						angle + 90, 0.9, this, time),
 				new TrailingAttack("WWBasic", -50, -50, 60, 50, player, 25, new StatusEffect(Effect.NONE, 0, 0),
-						angle + 90, 0.9, this) };
+						angle + 90, 0.9, this, time) };
 	}
 
-	private void basicAct() {
-		if (System.currentTimeMillis() < timeActionStarted + 0.06 * 1000) {
+	private void basicAct(long time) {
+		if (time < timeActionStarted + 0.06 * 1000) {
 			spriteSheetKey = upperCutKeys[7];
-		} else if (System.currentTimeMillis() < timeActionStarted + 0.15 * 1000) {
+		} else if (time < timeActionStarted + 0.15 * 1000) {
 			spriteSheetKey = upperCutKeys[5];
 		} else {
 			currentlyAttacking = false;
@@ -274,10 +276,10 @@ public class Brute extends Avatar {
 		}
 	}
 
-	private void rangedAct() {
-		if (System.currentTimeMillis() < timeActionStarted + 0.2 * 1000) {
+	private void rangedAct(long time) {
+		if (time < timeActionStarted + 0.2 * 1000) {
 			spriteSheetKey = upperCutKeys[7];
-		} else if (System.currentTimeMillis() < timeActionStarted + 0.4 * 1000) {
+		} else if (time < timeActionStarted + 0.4 * 1000) {
 			spriteSheetKey = upperCutKeys[6];
 		} else {
 			currentlyAttacking = false;
@@ -286,72 +288,72 @@ public class Brute extends Avatar {
 
 	}
 
-	private void actUpperCut(Map map) {
-		if (System.currentTimeMillis() < timeActionStarted + 0.1 * 1000) {
+	private void actUpperCut(Map map, long time) {
+		if (time < timeActionStarted + 0.1 * 1000) {
 			spriteSheetKey = upperCutKeys[0];
-		} else if (System.currentTimeMillis() < timeActionStarted + 0.15 * 1000) {
+		} else if (time < timeActionStarted + 0.15 * 1000) {
 			spriteSheetKey = upperCutKeys[1];
-		} else if (System.currentTimeMillis() < timeActionStarted + 0.2 * 1000) {
+		} else if (time < timeActionStarted + 0.2 * 1000) {
 			spriteSheetKey = upperCutKeys[2];
-		} else if (System.currentTimeMillis() < timeActionStarted + 0.3 * 1000) {
+		} else if (time < timeActionStarted + 0.3 * 1000) {
 			spriteSheetKey = upperCutKeys[3];
-		} else if (System.currentTimeMillis() < timeActionStarted + 0.85 * 1000) {
+		} else if (time < timeActionStarted + 0.85 * 1000) {
 			spriteSheetKey = upperCutKeys[4];
-			super.moveDistance(30, upperCutAngle, map);
-		} else if (System.currentTimeMillis() < timeActionStarted + 0.88 * 1000) {
+			super.moveDistance(30, upperCutAngle, map, time);
+		} else if (time < timeActionStarted + 0.88 * 1000) {
 			spriteSheetKey = upperCutKeys[5];
-		} else if (System.currentTimeMillis() < timeActionStarted + 0.94 * 1000) {
+		} else if (time < timeActionStarted + 0.94 * 1000) {
 			spriteSheetKey = upperCutKeys[6];
-		} else if (System.currentTimeMillis() < timeActionStarted + 1000) {
+		} else if (time < timeActionStarted + 1000) {
 			spriteSheetKey = upperCutKeys[7];
-		} else if (System.currentTimeMillis() > timeActionStarted + 1000) {
+		} else if (time > timeActionStarted + 1000) {
 			currentAttack = AttackType.NONE;
 			movementControlled = true;
 			currentlyAttacking = false;
 		}
 	}
 
-	private void actHowl() {
-		if (System.currentTimeMillis() < timeActionStarted + 0.25 * 1000) {
+	private void actHowl(long time) {
+		if (time < timeActionStarted + 0.25 * 1000) {
 			spriteSheetKey = howlKeys[0];
-		} else if (System.currentTimeMillis() < timeActionStarted + .5 * 1000) {
+		} else if (time < timeActionStarted + .5 * 1000) {
 			spriteSheetKey = howlKeys[1];
-		} else if (System.currentTimeMillis() < timeActionStarted + 0.75 * 1000) {
+		} else if (time < timeActionStarted + 0.75 * 1000) {
 			spriteSheetKey = howlKeys[2];
-		} else if (System.currentTimeMillis() < timeActionStarted + 1.25 * 1000) {
+		} else if (time < timeActionStarted + 1.25 * 1000) {
 			spriteSheetKey = howlKeys[3];
-		} else if (System.currentTimeMillis() < timeActionStarted + 1.5 * 1000) {
+		} else if (time < timeActionStarted + 1.5 * 1000) {
 			spriteSheetKey = howlKeys[2];
-		} else if (System.currentTimeMillis() < timeActionStarted + 1.75 * 1000) {
+		} else if (time < timeActionStarted + 1.75 * 1000) {
 			spriteSheetKey = howlKeys[1];
-		} else if (System.currentTimeMillis() < timeActionStarted + 2 * 1000) {
+		} else if (time < timeActionStarted + 2 * 1000) {
 			spriteSheetKey = howlKeys[0];
-		} else if (System.currentTimeMillis() >= timeActionStarted + 2000) {
+		} else if (time >= timeActionStarted + 2000) {
 			currentAttack = AttackType.NONE;
 			movementControlled = true;
 			currentlyAttacking = false;
 		}
 	}
 
-	private void actFury(Map map) {
-		if (System.currentTimeMillis() < timeActionStarted + 0.1 * 1000) {
+	private void actFury(Map map, long time) {
+		if (time < timeActionStarted + 0.1 * 1000) {
 			spriteSheetKey = upperCutKeys[0];
-		} else if (System.currentTimeMillis() < timeActionStarted + 0.15 * 1000) {
+		} else if (time < timeActionStarted + 0.15 * 1000) {
 			spriteSheetKey = upperCutKeys[1];
-		} else if (System.currentTimeMillis() < timeActionStarted + 0.2 * 1000) {
+		} else if (time < timeActionStarted + 0.2 * 1000) {
 			spriteSheetKey = upperCutKeys[2];
-		} else if (System.currentTimeMillis() < timeActionStarted + 0.3 * 1000) {
+		} else if (time < timeActionStarted + 0.3 * 1000) {
 			spriteSheetKey = upperCutKeys[3];
-		} else if (System.currentTimeMillis() < timeActionStarted + 0.9 * 1000) {
+		} else if (time < timeActionStarted + 0.9 * 1000) {
 			spriteSheetKey = upperCutKeys[4];
-			super.moveDistance(30, upperCutAngle, map);
-		} else if (System.currentTimeMillis() < timeActionStarted + 0.88 * 1000) {
+			super.moveDistance(30, upperCutAngle, map, time);
+		} else if (time < timeActionStarted + 0.88 * 1000) {
 			spriteSheetKey = upperCutKeys[5];
-		} else if (System.currentTimeMillis() < timeActionStarted + 0.94 * 1000) {
+		} else if (time < timeActionStarted + 0.94 * 1000) {
 			spriteSheetKey = upperCutKeys[6];
-		} else if (System.currentTimeMillis() < timeActionStarted + 1000) {
+		} else if (time < timeActionStarted + 1000) {
 			spriteSheetKey = upperCutKeys[7];
-		} else if (System.currentTimeMillis() > timeActionStarted + 1000) {
+		} else if (time > timeActionStarted + 1000) {
 			currentAttack = AttackType.NONE;
 			movementControlled = true;
 			currentlyAttacking = false;

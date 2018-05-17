@@ -99,8 +99,9 @@ public class GamePanel extends PApplet implements NetworkListener {
 				textAlign(CENTER);
 				textSize(40);
 				text("Waiting For Connection", width / 2, height / 2);
-
-				System.out.println(GameState.getGameTime());
+ 
+//				if(currentState != null)
+//					System.out.println(currentState.getGameTime());
 				
 				// Move all of these around to be right and have a background image and a title
 				// Make a way to switch to instructions screen
@@ -370,11 +371,11 @@ public class GamePanel extends PApplet implements NetworkListener {
 		double refX = a.getX();
 		double refY = a.getY() + height / 2 - 60;
 
-		drawTimer(surface, refX - 200, refY, a.getBasicCooldownLeft(), a.getBasicCooldown(), "BASIC");
-		drawTimer(surface, refX - 100, refY, a.getRangedCooldownLeft(), a.getRangedCooldown(), "RANGED");
-		drawTimer(surface, refX, refY, a.getA1CooldownLeft(), a.getA1Cooldown(), "A1");
-		drawTimer(surface, refX + 100, refY, a.getA2CooldownLeft(), a.getA2Cooldown(), "A2");
-		drawTimer(surface, refX + 200, refY, a.getA3CooldownLeft(), a.getA3Cooldown(), "A3");
+		drawTimer(surface, refX - 200, refY, a.getBasicCooldownLeft(currentState.getGameTime()), a.getBasicCooldown(), "BASIC");
+		drawTimer(surface, refX - 100, refY, a.getRangedCooldownLeft(currentState.getGameTime()), a.getRangedCooldown(), "RANGED");
+		drawTimer(surface, refX, refY, a.getA1CooldownLeft(currentState.getGameTime()), a.getA1Cooldown(), "A1");
+		drawTimer(surface, refX + 100, refY, a.getA2CooldownLeft(currentState.getGameTime()), a.getA2Cooldown(), "A2");
+		drawTimer(surface, refX + 200, refY, a.getA3CooldownLeft(currentState.getGameTime()), a.getA3Cooldown(), "A3");
 
 		surface.popStyle();
 	}

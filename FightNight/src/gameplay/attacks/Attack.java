@@ -178,7 +178,7 @@ public class Attack extends MovingSprite {
 	/**
 	 * Draws this Attack
 	 */
-	public void draw(PApplet surface) {
+	public void draw(PApplet surface, long time) {
 		surface.pushMatrix();
 		surface.imageMode(PApplet.CENTER);
 		// surface.rectMode(PApplet.CENTER);

@@ -57,8 +57,8 @@ public class StatusEffect implements Serializable {
 	/**
 	 * Starts the timer on the status effect
 	 */
-	public void startEffect() {
-		startTime = GameState.getGameTime();
+	public void startEffect(long time) {
+		startTime = time;
 	}
 
 	/**
@@ -67,10 +67,10 @@ public class StatusEffect implements Serializable {
 	 * 
 	 * @return True if finished
 	 */
-	public boolean isFinished() {
+	public boolean isFinished(long time) {
 		if (startTime <= 0.001)
 			return false;
-		else if (GameState.getGameTime() > startTime + effectTime * 1000)
+		else if (time > startTime + effectTime * 1000)
 			return true;
 		else
 			return false;

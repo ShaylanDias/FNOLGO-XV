@@ -55,7 +55,7 @@ public class GameState implements Serializable {
 					if(c.getPlayer().equals(playerAddress))
 						c.draw(surface, getGameTime());
 					else {
-						if(((Ranger) c).isSmoke())
+						if(((Ranger) c).isSmoke(getGameTime()))
 							c.draw(surface, getGameTime());
 					}
 				} else

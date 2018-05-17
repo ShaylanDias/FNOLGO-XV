@@ -113,7 +113,7 @@ public class GameManager implements NetworkListener {
 		synchronized (state) {
 			for (int i = 0; i < state.getAttacks().size(); i++) {
 				Attack p = state.getAttacks().get(i);
-				if (p == null || !p.act(state.getAvatars())) {
+				if (p == null || !p.act(state.getAvatars(), state.getGameTime())) {
 					state.getAttacks().remove(i);
 					i--;
 				}

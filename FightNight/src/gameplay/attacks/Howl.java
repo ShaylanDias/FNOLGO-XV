@@ -11,26 +11,26 @@ public class Howl extends Attack{
 	private static final String imageKey = "Howl";
 	private static final double damage = 1.25, width = 120, height = 110;
 	
-	public Howl(int x, int y, String playerAddress) {
-		super(imageKey, x, y, (int)width, (int)height, playerAddress, damage, false, new StatusEffect(Effect.SLOWED, 1, 5), 0);
+	public Howl(int x, int y, String playerAddress, long time) {
+		super(imageKey, x, y, (int)width, (int)height, playerAddress, damage, false, new StatusEffect(Effect.SLOWED, 1, 5), 0, time);
 		duration = 2;
 	}
 	
-	public boolean act(ArrayList<Avatar> avatars) {
+	public boolean act(ArrayList<Avatar> avatars, long time) {
 		if (!super.isActive()) {
 			return false;
 		}
 		for (Avatar a : avatars) {
 			if (a.getHitbox().intersects(this)) {
-				a.takeHit(this);
+				a.takeHit(this, time);
 			}
 		}
 		
-		if(GameState.getGameTime() > super.getStartTime() + super.duration * 1000) {
-			super.checkEnd();
+		if(time> super.getStartTime() + super.duration * 1000) {
+			super.checkEnd(time);
 		}
 		
-		if(GameState.getGameTime() <= super.getStartTime() + 1000) {
+		if(time <= super.getStartTime() + 1000) {
 			super.width += 6;
 			super.height += 6;
 		} else {

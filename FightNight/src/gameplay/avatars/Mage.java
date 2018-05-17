@@ -71,19 +71,19 @@ public class Mage extends Avatar {
 
 	// Creates a small damaging orb
 	@Override
-	public Attack[] basicAttack(String player, double angle) {
-		if (GameState.getGameTime() > super.basicCDStart + super.basicCD * 1000 && !dashing && !blocking) {
+	public Attack[] basicAttack(String player, double angle, long time) {
+		if (time > super.basicCDStart + super.basicCD * 1000 && !dashing && !blocking) {
 			currentlyAttacking = true;
-			basicCDStart = GameState.getGameTime();
+			basicCDStart = time;
 			currentAttack = AttackType.BASIC;
-			timeActionStarted = GameState.getGameTime();
+			timeActionStarted = time;
 			if (angle > 90 && angle < 270)
 				lastDir = true;
 			else
 				lastDir = false;
 			return new Attack[] { new MeleeAttack("MageBasic", (int) (hitbox.x + 50 * Math.cos(Math.toRadians(angle))),
 					(int) (hitbox.y - 75 * Math.sin(Math.toRadians(angle))), 40, 40, player, 20, false,
-					new StatusEffect(Effect.NONE, 0, 0), angle, 0.15) };
+					new StatusEffect(Effect.NONE, 0, 0), angle, 0.15, time) };
 		} else {
 			return null;
 		}
@@ -99,33 +99,33 @@ public class Mage extends Avatar {
 
 	// Fireball, slow moving, and does a bunch of dmg, goes until it hits a wall.
 	@Override
-	public Attack[] rangedAttack(String player, double angle) {
+	public Attack[] rangedAttack(String player, double angle, long time) {
 		currentAttack = AttackType.RANGED;
 		currentlyAttacking = true;
-		super.rangedCDStart = GameState.getGameTime();
+		super.rangedCDStart = time;
 		timeActionStarted = rangedCDStart;
 		double damage = 25;
 		if (angle > 90 && angle < 270) {
 			lastDir = true;
-			return new Attack[] { new Fireball((int) hitbox.x - 40, (int) hitbox.y - 40, player, angle,damage) };
+			return new Attack[] { new Fireball((int) hitbox.x - 40, (int) hitbox.y - 40, player, angle,damage, time) };
 		} else {
 			lastDir = false;
-			return new Attack[] { new Fireball((int) hitbox.x + 10, (int) hitbox.y - 43, player, angle,damage) };
+			return new Attack[] { new Fireball((int) hitbox.x + 10, (int) hitbox.y - 43, player, angle,damage, time) };
 		}
 	}
 
 	// Fire eruption. circular burst in an area that does dmg to anyone in them.
 	@Override
-	public Attack[] abilityOne(String player, double angle) {
+	public Attack[] abilityOne(String player, double angle, long time) {
 		currentAttack = AttackType.A1;
 		currentlyAttacking = true;
-		a1CDStart = GameState.getGameTime();
+		a1CDStart = time;
 		timeActionStarted = a1CDStart;
 
 		Attack[] attack = new Attack[40];
 		double damage = 12.5;
 		for (int i = 0; i < 40; i++) {
-			attack[i] = new Fireball((int) hitbox.x - 40, (int) hitbox.y - 40, player, i * 18, "Fireball1", 250, 20, 40, 40, (double) i / 50, true,damage);
+			attack[i] = new Fireball((int) hitbox.x - 40, (int) hitbox.y - 40, player, i * 18, "Fireball1", 250, 20, 40, 40, (double) i / 50, true,damage, time);
 		}
 
 		return attack;
@@ -133,7 +133,7 @@ public class Mage extends Avatar {
 
 	// Snow Storm - slows down everybody in an area and does a ton of damage 
 	@Override
-	public Attack[] abilityTwo(String player, double angle) {
+	public Attack[] abilityTwo(String player, double angle, long time) {
 		currentlyAttacking = true;
 		currentAttack = AttackType.A2;
 
@@ -142,19 +142,19 @@ public class Mage extends Avatar {
 		else
 			lastDir = false;
 
-		a2CDStart = GameState.getGameTime();
+		a2CDStart = time;
 		timeActionStarted = a2CDStart;
 
 		angle = 360 - angle;
 		double x = super.getX() + 180 * Math.cos(Math.toRadians(angle));
 		double y = super.getY() + 180 * Math.sin(Math.toRadians(angle));
 
-		return new Attack[] { new SnowField((int) x, (int) y, player, angle) };
+		return new Attack[] { new SnowField((int) x, (int) y, player, angle, time) };
 	}
 
 	// Lightning blast, stands still and charges a kamehameha.
 	@Override
-	public Attack[] abilityThree(String player, double angle) {
+	public Attack[] abilityThree(String player, double angle, long time) {
 		currentlyAttacking = true;
 		currentAttack = AttackType.A3;
 
@@ -163,7 +163,7 @@ public class Mage extends Avatar {
 		else
 			lastDir = false;
 
-		a3CDStart = GameState.getGameTime();
+		a3CDStart = time;
 		timeActionStarted = a3CDStart;
 
 		double w, h;
@@ -180,27 +180,27 @@ public class Mage extends Avatar {
 			x += 80;
 
 		Lightning l1 = new Lightning("Lightning", (int) (x), (int) (y), player, randomLightningAngle(angle), 0.05,
-				null);
+				null, time);
 		angle = randomLightningAngle(angle);
 		x += w * Math.cos(Math.toRadians(angle));
 		y += h * Math.sin(Math.toRadians(angle));
-		Lightning l2 = new Lightning("Lightning1", (int) (x), (int) (y), player, randomLightningAngle(angle), 0.1, l1);
+		Lightning l2 = new Lightning("Lightning1", (int) (x), (int) (y), player, randomLightningAngle(angle), 0.1, l1, time);
 		angle = randomLightningAngle(angle);
 		x += w * Math.cos(Math.toRadians(angle));
 		y += h * Math.sin(Math.toRadians(angle));
-		Lightning l3 = new Lightning("Lightning2", (int) (x), (int) (y), player, randomLightningAngle(angle), 0.15, l2);
+		Lightning l3 = new Lightning("Lightning2", (int) (x), (int) (y), player, randomLightningAngle(angle), 0.15, l2, time);
 		angle = randomLightningAngle(angle);
 		x += w * Math.cos(Math.toRadians(angle));
 		y += h * Math.sin(Math.toRadians(angle));
-		Lightning l4 = new Lightning("Lightning3", (int) (x), (int) (y), player, randomLightningAngle(angle), 0.2, l3);
+		Lightning l4 = new Lightning("Lightning3", (int) (x), (int) (y), player, randomLightningAngle(angle), 0.2, l3, time);
 		angle = randomLightningAngle(angle);
 		x += w * Math.cos(Math.toRadians(angle));
 		y += h * Math.sin(Math.toRadians(angle));
-		Lightning l5 = new Lightning("Lightning4", (int) (x), (int) (y), player, randomLightningAngle(angle), 0.25, l4);
+		Lightning l5 = new Lightning("Lightning4", (int) (x), (int) (y), player, randomLightningAngle(angle), 0.25, l4, time);
 		angle = randomLightningAngle(angle);
 		x += w * Math.cos(Math.toRadians(angle));
 		y += h * Math.sin(Math.toRadians(angle));
-		Lightning l6 = new Lightning("Lightning5", (int) (x), (int) (y), player, randomLightningAngle(angle), 0.3, l5);
+		Lightning l6 = new Lightning("Lightning5", (int) (x), (int) (y), player, randomLightningAngle(angle), 0.3, l5, time);
 		return new Attack[] { l6, l5, l4, l3, l2, l1 };
 	}
 
@@ -215,7 +215,8 @@ public class Mage extends Avatar {
 		return angle + diff;
 	}
 
-	public void draw(PApplet surface) {
+	@Override
+	public void draw(PApplet surface, long time) {
 		surface.pushMatrix();
 		surface.pushStyle();
 
@@ -224,7 +225,7 @@ public class Mage extends Avatar {
 			sw = (int) sprites[spriteInd].getWidth();
 			sh = (int) sprites[spriteInd].getHeight();
 
-			drawDeath(numOfSpriteDeath, spriteSpeedDeath);
+			drawDeath(numOfSpriteDeath, spriteSpeedDeath, time);
 			if (!lastDir) {
 				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
 
@@ -239,7 +240,7 @@ public class Mage extends Avatar {
 
 			surface.imageMode(PApplet.CENTER);
 
-			if(GameState.getGameTime() < dashTime + 300) {
+			if(time < dashTime + 300) {
 				surface.image(GamePanel.resources.getImage("Smoke"), (float) hitbox.x, (float) hitbox.y);
 				surface.popMatrix();
 				surface.popStyle();
@@ -266,13 +267,13 @@ public class Mage extends Avatar {
 			}
 			surface.popMatrix();
 			if (blocking) {
-				if (GameState.getGameTime() / 250 % 5 == 0) {
+				if (time / 250 % 5 == 0) {
 					surface.tint(140);
-				} else if (GameState.getGameTime() / 250 % 5 == 1) {
+				} else if (time / 250 % 5 == 1) {
 					surface.tint(170);
-				} else if (GameState.getGameTime() / 250 % 5 == 2) {
+				} else if (time / 250 % 5 == 2) {
 					surface.tint(200);
-				} else if (GameState.getGameTime() / 250 % 5 == 3) {
+				} else if (time / 250 % 5 == 3) {
 					surface.tint(240);
 				}
 				surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
@@ -292,66 +293,67 @@ public class Mage extends Avatar {
 		return "Mage";
 	}
 
-	public void act(Map map) {
+	@Override
+	public void act(Map map, long time) {
 
 		if(currentlyAttacking) {
 			if(currentAttack.equals(AttackType.RANGED))
-				actRanged();
+				actRanged(time);
 			else if(currentAttack.equals(AttackType.BASIC))
-				actBasic();
+				actBasic(time);
 			else if(currentAttack.equals(AttackType.A1))
-				actFireEruption();
+				actFireEruption(time);
 			else if(currentAttack.equals(AttackType.A2))
-				actSnowField();
+				actSnowField(time);
 			else if(currentAttack.equals(AttackType.A3))
-				actLightning();
+				actLightning(time);
 
 		} else {
-			super.act(map);
+			super.act(map, time);
 			if (!super.isLeft() && !super.isRight() && !super.isUp() && !super.isDown() && !super.isDead()) {
 				spriteSheetKey = "Mage";
 			}
 		}
 	}
 
-	private void actBasic() {
-		if(GameState.getGameTime() > timeActionStarted + 0.07*1000) {
+	private void actBasic(long time) {
+		if(time > timeActionStarted + 0.07*1000) {
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}
 	}
 
-	private void actRanged() {
-		if(GameState.getGameTime() > timeActionStarted + 0.12*1000) {
+	private void actRanged(long time) {
+		if(time > timeActionStarted + 0.12*1000) {
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}
 	}
 
-	private void actFireEruption() {
-		if(GameState.getGameTime() > timeActionStarted + 0.8*1000) {
+	private void actFireEruption(long time) {
+		if(time > timeActionStarted + 0.8*1000) {
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}
 	}
 
 	@Override
-	public void dash() {
-		if(GameState.getGameTime() > dashTime + dashCD * 1000) {
-			dashTime = GameState.getGameTime();
-			super.dash();
+	public void dash(long time) {
+		if(time > dashTime + dashCD * 1000) {
+			dashTime = time;
+			super.dash(time);
 		}
 	}
 
-	private void actSnowField() {
-		if(GameState.getGameTime() > timeActionStarted + 0.15*1000) {
+	private void actSnowField(long time) {
+		if(time > timeActionStarted + 0.15*1000) {
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}
 	}
 
-	private void actLightning() {
-		if (GameState.getGameTime() > timeActionStarted + 0.3*1000) {
+	private void actLightning(long time) {
+		if (time > timeActionStarted + 0.3*1000) {
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}
