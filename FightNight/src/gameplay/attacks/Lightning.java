@@ -71,7 +71,7 @@ public class Lightning extends Attack{
 	
 	public void draw(PApplet surface, long time) {
 		if(time > super.getStartTime() + delay * 1000)
-			super.draw(surface);
+			super.draw(surface, time);
 	}
 	
 	public boolean isDead() {

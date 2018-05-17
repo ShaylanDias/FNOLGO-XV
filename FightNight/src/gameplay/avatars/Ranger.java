@@ -95,12 +95,10 @@ public class Ranger extends Avatar {
 		super.rangedCDStart = timeActionStarted;
 		if (angle > 90 && angle < 270) {
 			lastDir = true;
-			return new Attack[] { new Fireball((int) hitbox.x - 20, (int) hitbox.y - 10, player, angle, "Arrow", 600,
-					40, 60, 14, 0.45, damage) };
+			return new Attack[] { new Fireball((int) hitbox.x - 20, (int) hitbox.y - 10, player, angle, "Arrow", 600d, 40, 60, 14, 0.45, damage, time) };
 		} else {
 			lastDir = false;
-			return new Attack[] { new Fireball((int) hitbox.x - 30, (int) hitbox.y - 10, player, angle, "Arrow", 600,
-					40, 60, 14, 0.45, damage) };
+			return new Attack[] { new Fireball((int) hitbox.x - 20, (int) hitbox.y - 10, player, angle, "Arrow", 600d, 40, 60, 14, 0.45, damage, time) };
 		}
 	}
 

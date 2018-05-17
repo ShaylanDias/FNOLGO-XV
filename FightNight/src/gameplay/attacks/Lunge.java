@@ -29,7 +29,7 @@ public class Lunge extends Attack{
 		//		surface.pushMatrix();
 
 		if(time > super.getStartTime() + 300) {
-			super.draw(surface);
+			super.draw(surface, time);
 			//			surface.rectMode(PApplet.CENTER);
 			//			 surface.noFill();
 			//			 surface.rect((float)(getHitbox().x), (float)(getHitbox().y),

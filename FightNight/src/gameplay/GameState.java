@@ -46,7 +46,7 @@ public class GameState implements Serializable {
 	 * @param av The Avatar to draw with respect to           
 	 *  
 	 */
-	public void draw(PApplet surface, Avatar av, float width, float height, String playerAddress) {
+	public void draw(PApplet surface, Avatar av, float width, float height, String playerAddress, long time) {
 		surface.translate((float) (-av.getX() + width / 2), (float) -av.getY() + height / 2);
 		map.draw(surface);
 		for (Avatar c : avatars) {
@@ -64,7 +64,7 @@ public class GameState implements Serializable {
 				c.draw(surface, getGameTime());
 		}
 		for (Attack a : attacks)
-			a.draw(surface);
+			a.draw(surface, time);
 	}
 
 	//	public void drawMap() {

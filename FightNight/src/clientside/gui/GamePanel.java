@@ -151,7 +151,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 				}
 
-				currentState.draw(this, av, width, height, player.getPlayerAddress());
+				currentState.draw(this, av, width, height, player.getPlayerAddress(), currentState.getGameTime());
 				drawCooldowns(this, av);
 				popMatrix();
 			}
