@@ -45,7 +45,7 @@ public class Ranger extends Avatar {
 		for(int i = 1; i < 11; i++) {
 			getSpriteListWalk().add("Ranger"+i);
 		}
-		
+
 		getSpriteListDeath().add("Ranger");
 
 	}
@@ -90,11 +90,11 @@ public class Ranger extends Avatar {
 		super.rangedCDStart = timeActionStarted;
 		if(angle > 90 && angle < 270) {
 			lastDir = true;
-			return new Attack[] {new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle, "Arrow", 600, 40, 60, 14, 0.3,damage)};
+			return new Attack[] {new Fireball((int) hitbox.x-20, (int) hitbox.y-10, player, angle, "Arrow", 600, 40, 60, 14, 0.45,damage)};
 		}
 		else {
 			lastDir = false;
-			return new Attack[] {new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle, "Arrow", 600, 40, 60, 14, 0.3,damage)};
+			return new Attack[] {new Fireball((int) hitbox.x-30, (int) hitbox.y-10, player, angle, "Arrow", 600, 40, 60, 14, 0.45,damage)};
 		}
 	}
 
@@ -176,7 +176,7 @@ public class Ranger extends Avatar {
 			int sw, sh;
 			sw = (int) sprites[spriteInd].getWidth();
 			sh = (int) sprites[spriteInd].getHeight();
-			
+
 			drawDeath(numOfSpriteDeath, spriteSpeedDeath);
 			if (lastDir) {
 				surface.scale(-1, 1);
@@ -190,53 +190,49 @@ public class Ranger extends Avatar {
 			return;
 		}
 		else {
-		int sw, sh;
-		sw = (int) sprites[spriteInd].getWidth();
-		sh = (int) sprites[spriteInd].getHeight();
+			int sw, sh;
+			sw = (int) sprites[spriteInd].getWidth();
+			sh = (int) sprites[spriteInd].getHeight();
 
-		surface.imageMode(PApplet.CENTER);
+			surface.imageMode(PApplet.CENTER);
 
 
 
-		if (super.getStatus().getEffect().equals(Effect.STUNNED)) {
-			surface.image(GamePanel.resources.getImage("Stun"), (float)hitbox.x, (float)(hitbox.y - hitbox.height * 1.1), 30, 30);
-		}
+			if (super.getStatus().getEffect().equals(Effect.STUNNED)) {
+				surface.image(GamePanel.resources.getImage("Stun"), (float)hitbox.x, (float)(hitbox.y - hitbox.height * 1.1), 30, 30);
+			}
 
-		surface.pushMatrix();
-		surface.pushStyle();
-		float widthMod = 1f;
-		if(currentlyAttacking) {
-			if(currentAttack.equals(AttackType.BASIC) && System.currentTimeMillis() > timeActionStarted +  0.25 * 1000 )
-				widthMod = 1.2f;
-		} else {
+			surface.pushMatrix();
+			surface.pushStyle();
+			float widthMod = 1f;
 
-		if(invisible && System.currentTimeMillis() < smokeTime) {
-			surface.image(GamePanel.resources.getImage("Smoke"), (float) hitbox.x, (float) hitbox.y, sw * widthMod, sh);
-		}
+			if(invisible && System.currentTimeMillis() < smokeTime) {
+				surface.image(GamePanel.resources.getImage("Smoke"), (float) hitbox.x, (float) hitbox.y, sw * widthMod, sh);
+			}
 			if(invisible)
 				surface.tint(10);
+			System.out.println(spriteSheetKey);
 			if (lastDir) {
 				surface.scale(-1, 1);
 				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y, -sw * widthMod, sh);
 			} else {
 				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw * widthMod, sh);
 			}
-		}
-		surface.popMatrix();
-		surface.popStyle();
-		if (blocking) {
-			if (System.currentTimeMillis() / 250 % 5 == 0) {
-				surface.tint(140);
-			} else if (System.currentTimeMillis() / 250 % 5 == 1) {
-				surface.tint(170);
-			} else if (System.currentTimeMillis() / 250 % 5 == 2) {
-				surface.tint(200);
-			} else if (System.currentTimeMillis() / 250 % 5 == 3) {
-				surface.tint(240);
+			surface.popMatrix();
+			surface.popStyle();
+			if (blocking) {
+				if (System.currentTimeMillis() / 250 % 5 == 0) {
+					surface.tint(140);
+				} else if (System.currentTimeMillis() / 250 % 5 == 1) {
+					surface.tint(170);
+				} else if (System.currentTimeMillis() / 250 % 5 == 2) {
+					surface.tint(200);
+				} else if (System.currentTimeMillis() / 250 % 5 == 3) {
+					surface.tint(240);
+				}
+				surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
+						1.5f * sh);
 			}
-			surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
-					1.5f * sh);
-		}
 		}
 
 		// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
@@ -250,6 +246,11 @@ public class Ranger extends Avatar {
 
 	public void act(Map map) {
 
+		if(invisible) {
+			if(System.currentTimeMillis() > invisStartTime + invisLength * 1000)
+				invisible = false;
+		}
+
 		if(currentlyAttacking) {
 			if(currentAttack.equals(AttackType.BASIC))
 				actBasic();
@@ -259,18 +260,8 @@ public class Ranger extends Avatar {
 		} else {
 			super.act(map);
 			if (!super.isLeft() && !super.isRight() && !super.isUp() && !super.isDown()) {
-				spriteSheetKey = "WWDefault";
+				spriteSheetKey = "Ranger";
 			}		
-		}
-
-
-		if(invisible) {
-			if(System.currentTimeMillis() > invisStartTime + invisLength * 1000)
-				invisible = false;
-		}
-
-		if (!super.isLeft() && !super.isRight() && !super.isUp() && !super.isDown()) {
-			spriteSheetKey = "Ranger";
 		}
 	}
 	@Override
@@ -280,7 +271,7 @@ public class Ranger extends Avatar {
 			invisible = false;
 		return res;
 	}
-	
+
 	@Override
 	public Attack[] attack(AttackType a, String player, double angle) {
 		Attack[] res = super.attack(a, player, angle);
@@ -313,25 +304,23 @@ public class Ranger extends Avatar {
 	private void actRanged() {
 		if(System.currentTimeMillis() < timeActionStarted + 0.03 * 1000) {
 			spriteSheetKey = "RangerRanged0";
-		} else if(System.currentTimeMillis() < timeActionStarted +  0.06 * 1000 ) {
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.08 * 1000 ) {
 			spriteSheetKey = "RangerRanged1";
-		} else if(System.currentTimeMillis() < timeActionStarted +  0.09 * 1000 ) {
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.13 * 1000 ) {
 			spriteSheetKey = "RangerRanged2";
-		} else if(System.currentTimeMillis() < timeActionStarted +  0.12 * 1000 ) {
-			spriteSheetKey = "RangerRanged3";
-		} else if(System.currentTimeMillis() < timeActionStarted +  0.15 * 1000 ) {
-			spriteSheetKey = "RangerRanged4";
 		} else if(System.currentTimeMillis() < timeActionStarted +  0.18 * 1000 ) {
+			spriteSheetKey = "RangerRanged3";
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.23 * 1000 ) {
+			spriteSheetKey = "RangerRanged4";
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.28 * 1000 ) {
 			spriteSheetKey = "RangerRanged5";
-		} else if(System.currentTimeMillis() < timeActionStarted +  0.21 * 1000 ) {
-			spriteSheetKey = "RangerRanged6";
-		} else if(System.currentTimeMillis() < timeActionStarted +  0.24 * 1000 ) {
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.33 * 1000 ) {
 			spriteSheetKey = "RangerRanged7";
-		} else if(System.currentTimeMillis() < timeActionStarted +  0.27 * 1000 ) {
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.38 * 1000 ) {
 			spriteSheetKey = "RangerRanged8";
-		} else if(System.currentTimeMillis() < timeActionStarted +  0.30 * 1000 ) {
+		} else if(System.currentTimeMillis() < timeActionStarted +  0.43 * 1000 ) {
 			spriteSheetKey = "RangerRanged9";
-		} else if(System.currentTimeMillis() > timeActionStarted +  0.31 * 1000 ){
+		} else if(System.currentTimeMillis() > timeActionStarted +  0.48 * 1000 ){
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
 		}

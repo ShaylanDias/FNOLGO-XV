@@ -187,12 +187,14 @@ public abstract class Avatar implements Serializable {
 			if (right) {
 				moveBy(moveSpeed, 0, map);
 				walk(numOfSpriteWalk, spriteSpeedWalk);
-				lastDir = false;
+				if(!currentlyAttacking)
+					lastDir = false;
 			}
 			if (left) {
 				moveBy(-moveSpeed, 0, map);
 				walk(numOfSpriteWalk, spriteSpeedWalk);
-				lastDir = true;
+				if(!currentlyAttacking)
+					lastDir = true;
 			}
 			if (down) {
 				moveBy(0, moveSpeed, map);
@@ -630,7 +632,7 @@ public abstract class Avatar implements Serializable {
 
 	public void setLeft(boolean left) {
 		this.left = left;
-		if (left)
+		if (left && !currentlyAttacking)
 			lastDir = true;
 	}
 
@@ -640,7 +642,7 @@ public abstract class Avatar implements Serializable {
 
 	public void setRight(boolean right) {
 		this.right = right;
-		if (right)
+		if (right && !currentlyAttacking)
 			lastDir = false;
 	}
 
