@@ -45,7 +45,7 @@ public class Lunge extends Attack{
 			x = attacker.getX() + 100 * Math.cos(Math.toRadians(dir));
 			y = attacker.getY() - 60 * Math.sin(Math.toRadians(dir));
 		}
-		return !checkEnd(time);
+		return super.act(avatars, time);
 
 	}
 
