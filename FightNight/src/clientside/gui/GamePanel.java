@@ -94,7 +94,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		if (!connected) {
 
 			if (!gameEnded) {
-
+				System.out.println("draw called: " + System.currentTimeMillis());
 				fill(255);
 				textAlign(CENTER);
 				textSize(40);
@@ -296,6 +296,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		if (ndo.messageType.equals(NetworkDataObject.MESSAGE)) {
 			if (ndo.message[0] != null) {
 				if (ndo.message[0] instanceof GameState) {
+					System.out.println("gamestate received: " + System.currentTimeMillis());
 					currentState = (GameState) ndo.message[0];
 				} else if (ndo.message[0] instanceof String) {
 					if (ndo.message[0].equals("ENDED")) {
