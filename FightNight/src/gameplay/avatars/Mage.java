@@ -23,6 +23,7 @@ import processing.core.PApplet;
 public class Mage extends Avatar {
 
 	private AttackType currentAttack;
+	private long dashTime;
 
 	/**
 	 * Instantiates a Mage
@@ -36,11 +37,13 @@ public class Mage extends Avatar {
 		a3CD = 6;
 		a2CD = 8;
 		a1CD = 6;
-		dashCD = 2.5;
+		dashCD = 0.5;
 		rangedCD = 0.5;
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
-		dashCD = 2.0;
+		dashDistance = 200;
+		dashSpeed = 200;
+		dashCD = 3;
 		numOfSpriteWalk = 8;
 		for (int i = 1; i < 9; i++) {
 			getSpriteListWalk().add("Mage" + i);
@@ -215,12 +218,12 @@ public class Mage extends Avatar {
 	public void draw(PApplet surface) {
 		surface.pushMatrix();
 		surface.pushStyle();
-		
+
 		if (super.isDead()) {
 			int sw, sh;
 			sw = (int) sprites[spriteInd].getWidth();
 			sh = (int) sprites[spriteInd].getHeight();
-			
+
 			drawDeath(numOfSpriteDeath, spriteSpeedDeath);
 			if (!lastDir) {
 				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) hitbox.x, (float) hitbox.y, sw, sh);
@@ -235,6 +238,13 @@ public class Mage extends Avatar {
 			drawHealthBar(surface);
 
 			surface.imageMode(PApplet.CENTER);
+
+			if(System.currentTimeMillis() < dashTime + 300) {
+				surface.image(GamePanel.resources.getImage("Smoke"), (float) hitbox.x, (float) hitbox.y);
+				surface.popMatrix();
+				surface.popStyle();
+				return;
+			}
 
 			if (super.getStatus().getEffect().equals(Effect.STUNNED)) {
 				surface.image(GamePanel.resources.getImage("Stun"), (float) hitbox.x, (float) hitbox.y);
@@ -322,6 +332,14 @@ public class Mage extends Avatar {
 		if(System.currentTimeMillis() > timeActionStarted + 0.8*1000) {
 			currentlyAttacking = false;
 			currentAttack = AttackType.NONE;
+		}
+	}
+
+	@Override
+	public void dash() {
+		if(System.currentTimeMillis() > dashTime + dashCD * 1000) {
+			dashTime = System.currentTimeMillis();
+			super.dash();
 		}
 	}
 

@@ -177,7 +177,7 @@ public abstract class Avatar implements Serializable {
 					shieldHealth = fullShieldHealth;
 			}
 			if (dashing) {
-				dashAct(map);
+				dashAct(map, dashSpeed);
 				return;
 			}
 			if (up) {
@@ -454,6 +454,8 @@ public abstract class Avatar implements Serializable {
 	 */
 	public void dash() {
 
+		System.out.println("dash");
+		
 		if(System.currentTimeMillis() > dashCDStart + dashCD * 1000) {
 
 			if (left) {
@@ -488,12 +490,18 @@ public abstract class Avatar implements Serializable {
 		}
 	}
 
-	private void dashAct(Map map) { // Where the actual Dash action occurs
-		if (moveBy(Math.cos(Math.toRadians(dashAngle)) * dashSpeed, -Math.sin(Math.toRadians(dashAngle)) * dashSpeed,
-				map))
-			dashTraveled += dashSpeed;
-		else
+	private void dashAct(Map map, double dist) { // Where the actual Dash action occurs
+		System.out.println(dist);
+		if (moveBy(Math.cos(Math.toRadians(dashAngle)) * dist, -Math.sin(Math.toRadians(dashAngle)) * dist, map))
+			dashTraveled += dist;
+		else if(dist < 5)
 			dashTraveled = dashDistance + 1;
+		else {
+			dashAct(map, dist-10);
+			dashTraveled = dashDistance + 1;
+		}
+
+		
 		if (dashTraveled >= dashDistance) {
 			dashing = false;
 			movementControlled = true;
