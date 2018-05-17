@@ -96,7 +96,7 @@ public abstract class Avatar implements Serializable {
 		lives = 4;
 		sprites = new Rectangle[] { new Rectangle(100, 100, 200, 200) };
 		hitbox = new Rectangle2D.Double(-1000, -1000, 200, 200);
-		timeActionStarted = GameState.getGameTime();
+		timeActionStarted = 0;
 		blocking = false;
 		superArmor = false;
 		numOfSpriteWalk = 5;
@@ -141,7 +141,7 @@ public abstract class Avatar implements Serializable {
 	/**
 	 * This should be called every round of the game loop
 	 */
-	public void act(Map map) {
+	public void act(Map map, long time) {
 
 		double moveSpeed = this.moveSpeed;
 
@@ -183,26 +183,26 @@ public abstract class Avatar implements Serializable {
 			}
 			if (up) {
 				moveBy(0, -moveSpeed, map);
-				walk(numOfSpriteWalk, spriteSpeedWalk);
+				walk(numOfSpriteWalk, spriteSpeedWalk, time);
 			}
 			if (right) {
 				moveBy(moveSpeed, 0, map);
-				walk(numOfSpriteWalk, spriteSpeedWalk);
+				walk(numOfSpriteWalk, spriteSpeedWalk, time);
 				if(!currentlyAttacking)
 					lastDir = false;
 			}
 			if (left) {
 				moveBy(-moveSpeed, 0, map);
-				walk(numOfSpriteWalk, spriteSpeedWalk);
+				walk(numOfSpriteWalk, spriteSpeedWalk, time);
 				if(!currentlyAttacking)
 					lastDir = true;
 			}
 			if (down) {
 				moveBy(0, moveSpeed, map);
-				walk(numOfSpriteWalk, spriteSpeedWalk);
+				walk(numOfSpriteWalk, spriteSpeedWalk, time);
 			}
 		} else {
-			if (dead && GameState.getGameTime() > deathTime + 6 * 1000) {
+			if (dead && time > deathTime + 6 * 1000) {
 				spawn(map);
 			}
 		}
@@ -216,14 +216,14 @@ public abstract class Avatar implements Serializable {
 	 * @param surface
 	 *            PApplet to draw to
 	 */
-	public void draw(PApplet surface) {
+	public void draw(PApplet surface, long time) {
 		surface.pushMatrix();
 		surface.pushStyle();
 
 		drawHealthBar(surface);
 
 		if (dead) {
-			drawDeath(numOfSpriteDeath, spriteSpeedDeath);
+			drawDeath(numOfSpriteDeath, spriteSpeedDeath, time);
 			surface.popMatrix();
 			surface.popStyle();
 			return;
@@ -251,13 +251,13 @@ public abstract class Avatar implements Serializable {
 		}
 		surface.popMatrix();
 		if (blocking) {
-			if (GameState.getGameTime() / 250 % 5 == 0) {
+			if (time / 250 % 5 == 0) {
 				surface.tint(140);
-			} else if (GameState.getGameTime() / 250 % 5 == 1) {
+			} else if (time / 250 % 5 == 1) {
 				surface.tint(170);
-			} else if (GameState.getGameTime() / 250 % 5 == 2) {
+			} else if (time / 250 % 5 == 2) {
 				surface.tint(200);
-			} else if (GameState.getGameTime() / 250 % 5 == 3) {
+			} else if (time / 250 % 5 == 3) {
 				surface.tint(240);
 			}
 			surface.image(GamePanel.resources.getImage(blockImageKey), (float) hitbox.x, (float) hitbox.y, 1.5f * sw,
@@ -304,25 +304,25 @@ public abstract class Avatar implements Serializable {
 		}
 	}
 
-	public Attack[] attack(AttackType a, String player, double angle) {
+	public Attack[] attack(AttackType a, String player, double angle, long time) {
 		if (deathTime == 0 && !currentlyAttacking && movementControlled && !status.getEffect().equals(Effect.STUNNED)) {
 			if (a.equals(AttackType.A1)) {
-				if (GameState.getGameTime() > a1CDStart + a1CD * 1000) {
+				if (time > a1CDStart + a1CD * 1000) {
 					return abilityOne(player, angle);
 				} else
 					return null;
 			} else if (a.equals(AttackType.A2)) {
-				if (GameState.getGameTime() > a2CDStart + a2CD * 1000) {
+				if (time > a2CDStart + a2CD * 1000) {
 					return abilityTwo(player, angle);
 				} else
 					return null;
 			} else if (a.equals(AttackType.A3)) {
-				if (GameState.getGameTime() > a3CDStart + a3CD * 1000) {
+				if (time > a3CDStart + a3CD * 1000) {
 					return abilityThree(player, angle);
 				} else
 					return null;
 			} else if (a.equals(AttackType.RANGED)) {
-				if (GameState.getGameTime() > rangedCDStart + rangedCD * 1000) {
+				if (time > rangedCDStart + rangedCD * 1000) {
 					return rangedAttack(player, angle);
 				} else
 					return null;
@@ -340,7 +340,7 @@ public abstract class Avatar implements Serializable {
 	 *            The attack that hitsr
 	 * @return The result of the attack
 	 */
-	public AttackResult takeHit(Attack attack) {
+	public AttackResult takeHit(Attack attack, long time) {
 		if (!playerAddress.equals(attack.getPlayer()) && attack.isActive()) {
 			if (blocking) {
 				if (!attack.isShieldBreaker()) {
@@ -369,7 +369,7 @@ public abstract class Avatar implements Serializable {
 			}
 			health -= attack.getDamage();
 			if (health <= 0 && !dead) {
-				die();
+				die(time);
 			}
 			return AttackResult.SUCCESS;
 		} else if (playerAddress.equals(attack.getPlayer())) {
@@ -379,15 +379,15 @@ public abstract class Avatar implements Serializable {
 		}
 	}
 
-	private void die() {
-		if (GameState.getGameTime() * 1000 > this.deathTime) {
+	private void die(long time) {
+		if (time * 1000 > this.deathTime) {
 			//			health = 0;
 			dead = true;
 			lives--;
 
 			if (lives <= 0)
 				eliminated = true;
-			deathTime = GameState.getGameTime();
+			deathTime = time;
 		}
 	}
 
@@ -453,11 +453,9 @@ public abstract class Avatar implements Serializable {
 	/**
 	 * Starts the Character in a dash, enables superArmor
 	 */
-	public void dash() {
-
-		System.out.println("dash");
+	public void dash(long time) {
 		
-		if(GameState.getGameTime() > dashCDStart + dashCD * 1000) {
+		if(time> dashCDStart + dashCD * 1000) {
 
 			if (left) {
 				if (up) {
@@ -486,7 +484,7 @@ public abstract class Avatar implements Serializable {
 			dashTraveled = 0;
 			superArmor = true;
 
-			dashCDStart = GameState.getGameTime();
+			dashCDStart = time;
 
 		}
 	}
@@ -593,13 +591,13 @@ public abstract class Avatar implements Serializable {
 				(float) hitbox.width * (float) (health / fullHealth), (float) 10);
 	}
 
-	protected void drawDeath(int numOfSpriteDeath, int spriteSpeedDeath) {
+	protected void drawDeath(int numOfSpriteDeath, int spriteSpeedDeath, long time) {
 	
 		double deathAnimationTime = 1.5;
 		double step = deathAnimationTime/numOfSpriteDeath;
 		spriteSheetKey = getSpriteListDeath().get(getSpriteListDeath().size()-1);
 		for(int i = 1; i < numOfSpriteDeath+1; i++) {
-			if ((GameState.getGameTime() - deathTime) <= i*step * 1000) {
+			if ((time - deathTime) <= i*step * 1000) {
 				spriteSheetKey = getSpriteListDeath().get(i-1);
 				break;
 			}
@@ -608,10 +606,10 @@ public abstract class Avatar implements Serializable {
 		
 	}
 
-	public void walk(int numOfSpriteWalk, int spriteSpeedWalk) {
+	public void walk(int numOfSpriteWalk, int spriteSpeedWalk, long time) {
 		if (!dashing && !blocking) {
 			for (int i = 0; i < numOfSpriteWalk; i++) {
-				if (GameState.getGameTime() / spriteSpeedWalk % numOfSpriteWalk == i) {
+				if (time / spriteSpeedWalk % numOfSpriteWalk == i) {
 					spriteSheetKey = getSpriteListWalk().get(i);
 				}
 			}
@@ -695,24 +693,24 @@ public abstract class Avatar implements Serializable {
 		this.spriteListAttack = spriteListAttack;
 	}
 
-	public long getBasicCooldownLeft() {
-		return GameState.getGameTime() - basicCDStart;
+	public long getBasicCooldownLeft(long time) {
+		return time - basicCDStart;
 	}
 
-	public long getRangedCooldownLeft() {
-		return GameState.getGameTime() - rangedCDStart;
+	public long getRangedCooldownLeft(long time) {
+		return time - rangedCDStart;
 	}
 
-	public long getA1CooldownLeft() {
-		return GameState.getGameTime() - a1CDStart;
+	public long getA1CooldownLeft(long time) {
+		return time - a1CDStart;
 	}
 
-	public long getA2CooldownLeft() {
-		return GameState.getGameTime() - a2CDStart;
+	public long getA2CooldownLeft(long time) {
+		return time - a2CDStart;
 	}
 
-	public long getA3CooldownLeft() {
-		return GameState.getGameTime() - a3CDStart;
+	public long getA3CooldownLeft(long time) {
+		return time - a3CDStart;
 	}
 
 	public double getA1Cooldown() {
@@ -745,7 +743,7 @@ public abstract class Avatar implements Serializable {
 	 *            Angle of the attack
 	 * @return The Attack it performs
 	 */
-	public abstract Attack[] basicAttack(String player, double angle);
+	public abstract Attack[] basicAttack(String player, double angle, long time);
 
 	/**
 	 * 
@@ -753,7 +751,7 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * @return The Attack it performs
 	 */
-	public abstract Attack[] rangedAttack(String player, double angle);
+	public abstract Attack[] rangedAttack(String player, double angle, long time);
 
 	/**
 	 * 
@@ -761,7 +759,7 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * @return The Attack it performs
 	 */
-	public abstract Attack[] abilityOne(String player, double angle);
+	public abstract Attack[] abilityOne(String player, double angle, long time);
 
 	/**
 	 * 
@@ -769,7 +767,7 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * @return The Attack it performs
 	 */
-	public abstract Attack[] abilityTwo(String player, double angle);
+	public abstract Attack[] abilityTwo(String player, double angle, long time);
 
 	/**
 	 * 
@@ -777,7 +775,7 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * @return The Attack it performs
 	 */
-	public abstract Attack[] abilityThree(String player, double angle);
+	public abstract Attack[] abilityThree(String player, double angle, long time);
 
 	/**
 	 * 

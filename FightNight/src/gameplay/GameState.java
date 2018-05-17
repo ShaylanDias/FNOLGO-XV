@@ -21,7 +21,7 @@ public class GameState implements Serializable {
 
 	private static final long serialVersionUID = 2671962781505513505L;
 
-	private static long gameTime;
+	private long gameTime;
 	
 	private ArrayList<Avatar> avatars;
 	private ArrayList<Attack> attacks;
@@ -34,6 +34,7 @@ public class GameState implements Serializable {
 		avatars = new ArrayList<Avatar>();
 		attacks = new ArrayList<Attack>();
 		map = new StandardMap();
+		gameTime = System.currentTimeMillis();
 	}
 
 	/**
@@ -52,15 +53,15 @@ public class GameState implements Serializable {
 			if(c instanceof Ranger) {
 				if(((Ranger)c).isInvisible()) {
 					if(c.getPlayer().equals(playerAddress))
-						c.draw(surface);
+						c.draw(surface, getGameTime());
 					else {
 						if(((Ranger) c).isSmoke())
-							c.draw(surface);
+							c.draw(surface, getGameTime());
 					}
 				} else
-					c.draw(surface);
+					c.draw(surface, getGameTime());
 			} else
-				c.draw(surface);
+				c.draw(surface, getGameTime());
 		}
 		for (Attack a : attacks)
 			a.draw(surface);
@@ -126,11 +127,11 @@ public class GameState implements Serializable {
 		return map;
 	}
 
-	public static long getGameTime() {
+	public long getGameTime() {
 		return gameTime;
 	}
 	
-	public static void setGameTime(long time) {
+	public void setGameTime(long time) {
 		gameTime = time;
 	}
 	

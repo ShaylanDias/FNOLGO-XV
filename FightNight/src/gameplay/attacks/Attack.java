@@ -69,7 +69,7 @@ public class Attack extends MovingSprite {
 	 *            The angle of this Attack
 	 */
 	public Attack(String imageKey, int x, int y, int w, int h, String playerAddress, double damage,
-			boolean shieldBreaker, StatusEffect effect, double dir) {
+			boolean shieldBreaker, StatusEffect effect, double dir, long time) {
 		super(imageKey, x, y, w, h);
 		this.damage = damage;
 		this.playerAddress = playerAddress;
@@ -77,7 +77,7 @@ public class Attack extends MovingSprite {
 		active = true;
 		this.effect = effect;
 		this.shieldBreaker = shieldBreaker;
-		startTime = GameState.getGameTime();
+		startTime = time;
 	}
 
 	/**
@@ -120,10 +120,10 @@ public class Attack extends MovingSprite {
 	 * 
 	 * @return True if ended
 	 */
-	protected boolean checkEnd() {
+	protected boolean checkEnd(long time) {
 		if (!active)
 			return true;
-		if (GameState.getGameTime() > startTime + duration * 1000) {
+		if (time > startTime + duration * 1000) {
 			end();
 			return true;
 		} else
@@ -147,14 +147,14 @@ public class Attack extends MovingSprite {
 	 * @return Returns true if was successful, false if the projectile is now
 	 *         inactive
 	 */
-	public boolean act(ArrayList<Avatar> avatars) {
-		if (!active || checkEnd()) {
+	public boolean act(ArrayList<Avatar> avatars, long time) {
+		if (!active || checkEnd(time)) {
 			return false;
 		}
 
 		for (Avatar a : avatars) {
 			if (a.getHitbox().intersects(this)) {
-				AttackResult res = a.takeHit(this);
+				AttackResult res = a.takeHit(this, time);
 				if (res.equals(AttackResult.BLOCKED) || res.equals(AttackResult.SUCCESS)) {
 					end();
 				}

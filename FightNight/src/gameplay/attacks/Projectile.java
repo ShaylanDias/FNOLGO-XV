@@ -72,7 +72,7 @@ public abstract class Projectile extends Attack {
 	// }
 
 	@Override
-	public boolean act(ArrayList<Avatar> avatars) {
+	public boolean act(ArrayList<Avatar> avatars, long time) {
 		boolean ended = checkEnd();
 		if (ended)
 			return false;
@@ -85,7 +85,7 @@ public abstract class Projectile extends Attack {
 			for (Avatar a : avatars) {
 
 				if (a.getHitbox().intersects(this)) {
-					AttackResult res = a.takeHit(this);
+					AttackResult res = a.takeHit(this, time);
 					if (res.equals(AttackResult.BLOCKED) || res.equals(AttackResult.SUCCESS)) {
 						end();
 					}

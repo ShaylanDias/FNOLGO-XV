@@ -242,7 +242,7 @@ public class Brute extends Avatar {
 
 	// Fury- Swipes three times as it moves
 	@Override
-	public Attack[] abilityThree(String player, double angle) {
+	public Attack[] abilityThree(String player, double angle, long time) {
 		currentlyAttacking = true;
 		movementControlled = false;
 		currentAttack = AttackType.A3;

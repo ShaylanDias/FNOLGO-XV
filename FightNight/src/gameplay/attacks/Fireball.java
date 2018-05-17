@@ -37,7 +37,7 @@ public class Fireball extends Projectile {
 	 * @param dir
 	 *            The direction of travel
 	 */
-	public Fireball(int x, int y, String playerAddress, double dir, double dmg) {
+	public Fireball(int x, int y, String playerAddress, double dir, double dmg, long time) {
 		super(imageKey, x, y, W, H, playerAddress, dmg, SHIELD_BREAKER, EFFECT, dir, RANGE, SPEED);
 	}
 	

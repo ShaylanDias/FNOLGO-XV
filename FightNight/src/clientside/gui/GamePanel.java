@@ -94,12 +94,14 @@ public class GamePanel extends PApplet implements NetworkListener {
 		if (!connected) {
 
 			if (!gameEnded) {
-				System.out.println("draw called: " + System.currentTimeMillis());
+//				System.out.println("draw called: " + System.currentTimeMillis());
 				fill(255);
 				textAlign(CENTER);
 				textSize(40);
 				text("Waiting For Connection", width / 2, height / 2);
 
+				System.out.println(GameState.getGameTime());
+				
 				// Move all of these around to be right and have a background image and a title
 				// Make a way to switch to instructions screen
 				// Make buttons change color to indicate which character you selected
@@ -296,7 +298,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		if (ndo.messageType.equals(NetworkDataObject.MESSAGE)) {
 			if (ndo.message[0] != null) {
 				if (ndo.message[0] instanceof GameState) {
-					System.out.println("gamestate received: " + System.currentTimeMillis());
+//					System.out.println("gamestate received: " + System.currentTimeMillis());
 					currentState = (GameState) ndo.message[0];
 				} else if (ndo.message[0] instanceof String) {
 					if (ndo.message[0].equals("ENDED")) {

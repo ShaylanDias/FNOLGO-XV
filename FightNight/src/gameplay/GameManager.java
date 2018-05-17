@@ -57,7 +57,7 @@ public class GameManager implements NetworkListener {
 	public void run() {
 
 		if(state != null)
-			GameState.setGameTime(System.currentTimeMillis());
+			state.setGameTime(System.currentTimeMillis());
 		
 		synchronized (commands) {
 			for (NetworkDataObject ndo : commands) {
@@ -87,19 +87,19 @@ public class GameManager implements NetworkListener {
 
 						} else if (action == ControlType.ATTACK) {
 							if (ndo.message[1] == AttackType.BASIC) {
-								state.addAttacks(avatar.attack(AttackType.BASIC, playerNum, (double) ndo.message[2]));
+								state.addAttacks(avatar.attack(AttackType.BASIC, playerNum, (double) ndo.message[2], state.getGameTime()));
 							} else if(ndo.message[1] == AttackType.A1) {
-								state.addAttacks(avatar.attack(AttackType.A1, playerNum, (double) ndo.message[2]));
+								state.addAttacks(avatar.attack(AttackType.A1, playerNum, (double) ndo.message[2], state.getGameTime()));
 							} else if(ndo.message[1] == AttackType.RANGED) {
-								state.addAttacks(avatar.attack(AttackType.RANGED, playerNum, (double) ndo.message[2]));
+								state.addAttacks(avatar.attack(AttackType.RANGED, playerNum, (double) ndo.message[2], state.getGameTime()));
 							} else if(ndo.message[1] == AttackType.A2) {
-								state.addAttacks(avatar.attack(AttackType.A2, playerNum, (double) ndo.message[2]));
+								state.addAttacks(avatar.attack(AttackType.A2, playerNum, (double) ndo.message[2], state.getGameTime()));
 							} else if(ndo.message[1] == AttackType.A3) {
-								state.addAttacks(avatar.attack(AttackType.A3, playerNum, (double) ndo.message[2]));
+								state.addAttacks(avatar.attack(AttackType.A3, playerNum, (double) ndo.message[2], state.getGameTime()));
 							}
 
 						} else if (action == ControlType.DASH) {
-							avatar.dash();
+							avatar.dash(state.getGameTime());
 						} else if (action == ControlType.BLOCK) {
 							avatar.block((boolean) ndo.message[1]);
 						}
@@ -126,7 +126,7 @@ public class GameManager implements NetworkListener {
 					y.setPlayer(x.getPlayer());
 					state.addAvatar(y);
 				}
-				x.act(state.getMap());
+				x.act(state.getMap(), state.getGameTime());
 			}
 			
 			Avatar av = null;
