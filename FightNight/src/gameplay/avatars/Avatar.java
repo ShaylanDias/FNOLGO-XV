@@ -119,7 +119,7 @@ public abstract class Avatar implements Serializable {
 		dashCD = 1;
 		eliminated = false;
 		dead = true;
-		deathTime = System.currentTimeMillis();
+		deathTime = 0;
 	}
 
 	/**

@@ -234,9 +234,6 @@ public class Mage extends Avatar {
 		} else {
 			drawHealthBar(surface);
 
-			System.out.println(super.isDead());
-
-
 			surface.imageMode(PApplet.CENTER);
 
 			if (super.getStatus().getEffect().equals(Effect.STUNNED)) {
