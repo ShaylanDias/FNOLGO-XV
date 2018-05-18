@@ -40,7 +40,8 @@ public class Spectator extends Avatar{
 		super.setDead(true);
 	}
 	
-	public void draw(PApplet surface) {
+	@Override
+	public void draw(PApplet surface, long time) {
 		surface.pushStyle();
 		surface.textAlign(PApplet.CENTER);
 		surface.fill(0);
