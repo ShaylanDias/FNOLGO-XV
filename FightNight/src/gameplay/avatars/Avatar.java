@@ -149,6 +149,9 @@ public abstract class Avatar implements Serializable {
 			if (!status.started())
 				status.startEffect(time);
 			moveSpeed -= status.getValue();
+			if (status.isFinished(time)) {
+				status = new StatusEffect(Effect.NONE, 0, 0);
+			}
 		} else if (status.getEffect().equals(Effect.STUNNED)) {
 			if (!status.started())
 				status.startEffect(time);
@@ -159,7 +162,7 @@ public abstract class Avatar implements Serializable {
 				return;
 			}
 		}
-
+		
 		if (!dead && !currentlyAttacking) {
 			if (blocking) {
 				shieldHealth -= 1;
