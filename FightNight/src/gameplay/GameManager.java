@@ -24,7 +24,6 @@ public class GameManager implements NetworkListener {
 	private GameState state;
 	private ArrayList<NetworkDataObject> commands;
 	private boolean gameEnded;
-	private String winner;
 
 	/**
 	 * Initializes a GameManager
@@ -34,7 +33,6 @@ public class GameManager implements NetworkListener {
 		gameEnded = false;
 		commands = new ArrayList<NetworkDataObject>();
 		gameEnded = false;
-		winner = "";
 	}
 
 	/**
@@ -47,18 +45,14 @@ public class GameManager implements NetworkListener {
 		return state;
 	}
 
-	// public void addPlayer() {
-	// state.addAvatar(new Brute()); // This is a placeholder for testing
-	// }
-
 	/**
 	 * Runs one step of the game mechanics
 	 */
 	public void run() {
 
-		if(state != null)
+		if (state != null)
 			state.setGameTime(System.currentTimeMillis());
-		
+
 		synchronized (commands) {
 			for (NetworkDataObject ndo : commands) {
 				if (ndo.message[0] instanceof ControlType) {
@@ -87,15 +81,20 @@ public class GameManager implements NetworkListener {
 
 						} else if (action == ControlType.ATTACK) {
 							if (ndo.message[1] == AttackType.BASIC) {
-								state.addAttacks(avatar.attack(AttackType.BASIC, playerNum, (double) ndo.message[2], state.getGameTime()));
-							} else if(ndo.message[1] == AttackType.A1) {
-								state.addAttacks(avatar.attack(AttackType.A1, playerNum, (double) ndo.message[2], state.getGameTime()));
-							} else if(ndo.message[1] == AttackType.RANGED) {
-								state.addAttacks(avatar.attack(AttackType.RANGED, playerNum, (double) ndo.message[2], state.getGameTime()));
-							} else if(ndo.message[1] == AttackType.A2) {
-								state.addAttacks(avatar.attack(AttackType.A2, playerNum, (double) ndo.message[2], state.getGameTime()));
-							} else if(ndo.message[1] == AttackType.A3) {
-								state.addAttacks(avatar.attack(AttackType.A3, playerNum, (double) ndo.message[2], state.getGameTime()));
+								state.addAttacks(avatar.attack(AttackType.BASIC, playerNum, (double) ndo.message[2],
+										state.getGameTime()));
+							} else if (ndo.message[1] == AttackType.A1) {
+								state.addAttacks(avatar.attack(AttackType.A1, playerNum, (double) ndo.message[2],
+										state.getGameTime()));
+							} else if (ndo.message[1] == AttackType.RANGED) {
+								state.addAttacks(avatar.attack(AttackType.RANGED, playerNum, (double) ndo.message[2],
+										state.getGameTime()));
+							} else if (ndo.message[1] == AttackType.A2) {
+								state.addAttacks(avatar.attack(AttackType.A2, playerNum, (double) ndo.message[2],
+										state.getGameTime()));
+							} else if (ndo.message[1] == AttackType.A3) {
+								state.addAttacks(avatar.attack(AttackType.A3, playerNum, (double) ndo.message[2],
+										state.getGameTime()));
 							}
 
 						} else if (action == ControlType.DASH) {
@@ -120,7 +119,7 @@ public class GameManager implements NetworkListener {
 			}
 			for (int i = 0; i < state.getAvatars().size(); i++) {
 				Avatar x = state.getAvatars().get(i);
-				if(x.isEliminated() && !(x instanceof Spectator)) {
+				if (x.isEliminated() && !(x instanceof Spectator)) {
 					state.getAvatars().remove(x);
 					Avatar y = new Spectator();
 					y.setPlayer(x.getPlayer());
@@ -128,38 +127,18 @@ public class GameManager implements NetworkListener {
 				}
 				x.act(state.getMap(), state.getGameTime());
 			}
-			
-			Avatar av = null;
-			if(state.getAvatars().size() > 1) {
+
+			if (state.getAvatars().size() > 1) {
 				int spectators = 0;
-				for(Avatar x : state.getAvatars()) {
-					if(x instanceof Spectator) {
+				for (Avatar x : state.getAvatars()) {
+					if (x instanceof Spectator) {
 						spectators++;
-					} else
-						av = x;
+					}
 				}
-				if(spectators >= state.getAvatars().size()-1) {
-					winner = av.getPlayer();
+				if (spectators >= state.getAvatars().size() - 1) {
 					gameEnded = true;
 				}
 			}
-			
-//			int x = state.getAvatars().size();
-//			int spectators = 0;
-//			for(Avatar a : state.getAvatars()) {
-//				if(a instanceof Spectator)
-//					x--;
-//				spectators ++;
-//			}
-//			if(x > 1 && total > state.getAvatars().size() - 1 - spectators) {
-//				 for(int i = 0; i < state.getAvatars().size(); i++) {
-//					 if(!(state.getAvatars().get(i) instanceof Spectator) && !state.getAvatars().get(i).isEliminated()) {
-//						 winner = state.getAttacks().get(i).getPlayer();
-//						 break;
-//					 }
-//				 }
-//				gameEnded = true;
-//			}
 
 		}
 
@@ -189,10 +168,6 @@ public class GameManager implements NetworkListener {
 		}
 	}
 
-	// public void addPlayer() {
-	// state.addAvatar(new Brute()); // This is a placeholder for testing
-	// }
-
 	private void addCommand(NetworkDataObject ndo) {
 		synchronized (commands) {
 			commands.add(ndo);
@@ -206,13 +181,13 @@ public class GameManager implements NetworkListener {
 	 * @return True if won
 	 */
 	public String getWinner() {
-		for(Avatar a : state.getAvatars()) {
-			if(!a.isEliminated())
+		for (Avatar a : state.getAvatars()) {
+			if (!a.isEliminated())
 				return a.getPlayer();
 		}
 		return "";
 	}
-	
+
 	/**
 	 * 
 	 * Has the game ended
@@ -222,5 +197,5 @@ public class GameManager implements NetworkListener {
 	public boolean isGameEnded() {
 		return gameEnded;
 	}
-	
+
 }

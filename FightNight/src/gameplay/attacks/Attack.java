@@ -5,7 +5,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import clientside.gui.GamePanel;
-import gameplay.GameState;
 import gameplay.avatars.Avatar;
 import processing.core.PApplet;
 
@@ -18,10 +17,10 @@ import processing.core.PApplet;
  */
 public class Attack extends MovingSprite {
 
-	/*
-	 * Act method, something to decide when it is over, GameManager removes inactive
-	 * attacks
+	/**
+	 * 
 	 */
+	private static final long serialVersionUID = -452967349757366044L;
 
 	/**
 	 * 
@@ -39,34 +38,31 @@ public class Attack extends MovingSprite {
 	private boolean shieldBreaker;
 	private double damage;
 	private long startTime;
-	// Time it lasts in seconds
+	/**
+	 * The time that this Attack takes effect for
+	 */
 	protected double duration = 1;
-	// Angle with zero facing right
+	/**
+	 * The direction this attack faces/rotates to
+	 */
 	protected double dir;
 	private boolean active;
 
 	/**
 	 * 
-	 * Creates an Attack object
+	 * Creates an Attack with the specified properties
 	 * 
-	 * @param images
-	 *            Image to use for Attack
-	 * @param x
-	 *            Starting X-Coordinate
-	 * @param y
-	 *            Starting Y-Coordinate
-	 * @param w
-	 *            Width of Attack
-	 * @param h
-	 *            Height of Attack
-	 * @param player
-	 *            The Player who created this Attack
-	 * @param damage
-	 *            The damage of this Attack
-	 * @param knockback
-	 *            The Knockback caused by this Attack
-	 * @param dir
-	 *            The angle of this Attack
+	 * @param imageKey The key leading to the image in Resources
+	 * @param x The starting x-coordinate
+	 * @param y The starting y-coordinate
+	 * @param w The width
+	 * @param h The height
+	 * @param playerAddress The IP address of the player
+	 * @param damage Damage caused by this attack
+	 * @param shieldBreaker True if this attack breaks through shields
+	 * @param effect The StatusEffect that this Attack inflicts
+	 * @param dir The direction of the Attack
+	 * @param time The time of instantiation on the server
 	 */
 	public Attack(String imageKey, int x, int y, int w, int h, String playerAddress, double damage,
 			boolean shieldBreaker, StatusEffect effect, double dir, long time) {
@@ -164,6 +160,12 @@ public class Attack extends MovingSprite {
 		return true;
 	}
 
+	/**
+	 * 
+	 * Gets the translated hitbox so it matches with the image
+	 * 
+	 * @return The Avatar's hitbox as a Rectangle
+	 */
 	protected Rectangle getHitbox() {
 		return new Rectangle((int) (x + width / 4), (int) (y + height / 4), (int) width, (int) height);
 	}
@@ -192,14 +194,32 @@ public class Attack extends MovingSprite {
 		surface.popMatrix();
 	}
 	
+	/**
+	 * 
+	 * The start time of this attack
+	 * 
+	 * @return The start time of this attack as a long
+	 */
 	public long getStartTime() {
 		return startTime;
 	}
 	
+	/**
+	 * 
+	 * Gets if this attack breaks through shields
+	 * 
+	 * @return True if shield breaker
+	 */
 	public boolean isShieldBreaker() {
 		return shieldBreaker;
 	}
 		
+	/**
+	 * 
+	 * Sets this Attack as active
+	 * 
+	 * @param b True if active, false if inactive
+	 */
 	public void setActive(boolean b) {
 		active = b;
 	}

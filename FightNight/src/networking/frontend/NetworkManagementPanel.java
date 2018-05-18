@@ -38,6 +38,10 @@ import networking.backend.PeerDiscovery;
 public class NetworkManagementPanel extends JPanel
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4355404487070452384L;
 	private static final int TCP_PORT = 4444;
 	private static final int BROADCAST_PORT = 4444;
 	

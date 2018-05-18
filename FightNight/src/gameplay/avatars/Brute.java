@@ -3,7 +3,6 @@ package gameplay.avatars;
 import java.awt.Rectangle;
 
 import clientside.gui.GamePanel;
-import gameplay.GameState;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Fireball;
 import gameplay.attacks.Howl;
@@ -23,6 +22,10 @@ import processing.core.PApplet;
  */
 public class Brute extends Avatar {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7512931045822075486L;
 	private String[] upperCutKeys;
 	private String[] howlKeys;
 	private AttackType currentAttack;
@@ -203,7 +206,7 @@ public class Brute extends Avatar {
 				lastDir = true;
 			else
 				lastDir = false;
-			return new Attack[] { new Fireball((int) hitbox.x, (int) hitbox.y, player, angle, "Rock", 400, 22, 35, time) };
+			return new Attack[] { new Fireball((int) hitbox.x, (int) hitbox.y, player, angle, "Rock", 400, 22, damage, time) };
 		} else {
 			return null;
 		}
@@ -360,6 +363,7 @@ public class Brute extends Avatar {
 		}
 	}
 
+
 	public String getSpriteSheetKey() {
 		return spriteSheetKey;
 	}
@@ -368,6 +372,7 @@ public class Brute extends Avatar {
 		this.spriteSheetKey = spriteSheetKey;
 	}
 
+	@Override
 	public String toString() {
 		return "Brute";
 	}

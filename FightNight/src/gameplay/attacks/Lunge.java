@@ -2,19 +2,36 @@ package gameplay.attacks;
 
 import java.util.ArrayList;
 
-import gameplay.GameState;
 import gameplay.avatars.Avatar;
 import gameplay.avatars.Brute;
 import processing.core.PApplet;
 
 public class Lunge extends Attack{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4689584839026758360L;
 	private static double damage = 30;
 	private static boolean shieldBreaker = true;
 	private Brute attacker;
 	private static String imageKey = "UpperCut";
 	private double stopMoving;
 
+	/**
+	 * 
+	 * Creates an Attack that moves in front of a Brute
+	 * 
+	 * @param playerAddress The player's IP address
+	 * @param dir The direction of the lunge
+	 * @param attacker The Brute that started this lunge
+	 * @param x X-position
+	 * @param y Y-position
+	 * @param status Status effect this causes
+	 * @param duration The duration of the attack
+	 * @param stopMoving When to stop moving
+	 * @param time Server time of instantiation
+	 */
 	public Lunge(String playerAddress, double dir, Brute attacker, int x, int y, StatusEffect status, double duration, double stopMoving, long time) {
 		super(imageKey, x, y, 50, 100, playerAddress, damage, shieldBreaker, status, dir, time);
 		this.attacker = attacker;
@@ -25,18 +42,9 @@ public class Lunge extends Attack{
 	
 	@Override
 	public void draw(PApplet surface, long time) {
-
-		//		surface.pushMatrix();
-
 		if(time > super.getStartTime() + 300) {
 			super.draw(surface, time);
-			//			surface.rectMode(PApplet.CENTER);
-			//			 surface.noFill();
-			//			 surface.rect((float)(getHitbox().x), (float)(getHitbox().y),
-			//			 (float)getHitbox().width, (float)getHitbox().height);
 		}
-
-		//		surface.popMatrix();
 	}
 
 	@Override

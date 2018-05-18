@@ -14,6 +14,10 @@ import gameplay.avatars.Avatar;
  */
 public abstract class Projectile extends Attack {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3028464151480348176L;
 	private double range;
 	private double speed;
 	private double distTraveled;
@@ -25,7 +29,9 @@ public abstract class Projectile extends Attack {
 	 * @param imageKey
 	 *            The Resources key to the image of this Projectile
 	 * @param x
+	 *            The x-coord
 	 * @param y
+	 *            THe y-coord
 	 * @param w
 	 *            Width
 	 * @param h
@@ -38,8 +44,13 @@ public abstract class Projectile extends Attack {
 	 * @param effect
 	 *            The StatusEffect caused by this Projectile
 	 * @param dir
+	 *            The angle
 	 * @param range
+	 *            The range
 	 * @param speed
+	 *            The speed
+	 * @param time
+	 *            The server time of instantiation
 	 */
 	public Projectile(String imageKey, int x, int y, int w, int h, String playerAddress, double damage,
 			boolean shieldBreaker, StatusEffect effect, double dir, double range, double speed, long time) {
@@ -60,16 +71,6 @@ public abstract class Projectile extends Attack {
 		} else
 			return false;
 	}
-
-	// public void draw(PApplet surface) {
-	//// surface.pushMatrix();
-	////
-	//// surface.translate((float)x, (float)y);
-	//// surface.rotate((float)Math.toRadians(dir));
-	//// surface.image(GamePanel.resources.getImage(imageKey), (int) x, (int) y,
-	// (int) width, (int) height);
-	//// surface.popMatrix();
-	// }
 
 	@Override
 	public boolean act(ArrayList<Avatar> avatars, long time) {

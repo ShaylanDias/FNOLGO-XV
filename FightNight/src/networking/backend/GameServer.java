@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import gameplay.GameManager;
-import gameplay.avatars.Avatar;
 import networking.frontend.NetworkDataObject;
 import networking.frontend.NetworkListener;
 import networking.frontend.NetworkMessenger;

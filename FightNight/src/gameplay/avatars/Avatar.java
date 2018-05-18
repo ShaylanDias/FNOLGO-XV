@@ -2,13 +2,11 @@ package gameplay.avatars;
 
 import java.awt.Color;
 import java.awt.Rectangle;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import clientside.gui.GamePanel;
-import gameplay.GameState;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Attack.AttackResult;
 import gameplay.attacks.StatusEffect;
@@ -25,10 +23,10 @@ import processing.core.PApplet;
  */
 public abstract class Avatar implements Serializable {
 
-	/*
-	 * Movement, boolean keys, act method- gets called for each character when
-	 * GameManager run is called
+	/**
+	 * 
 	 */
+	private static final long serialVersionUID = 4879807335455459574L;
 
 	/**
 	 * 
@@ -49,44 +47,86 @@ public abstract class Avatar implements Serializable {
 	 * the movement
 	 */
 	protected String spriteSheetKey;
-	/*
-	 * 
+	/**
+	 * The sprites of for this Avatar
 	 */
 	protected Rectangle[] sprites;
 	protected int spriteInd, numOfSpriteWalk, numOfSpriteDeath, spriteSpeedWalk, spriteSpeedDeath;
 	private ArrayList<String> spriteListWalk, spriteListAttack, spriteListDeath;;
 
-	protected boolean lastDir; // True if right, false if left
+	/**
+	 * Last direction this AVatar was facing, true for right
+	 */
+	protected boolean lastDir;
 
 	private boolean up, down, left, right;
 
 	private String playerAddress = "";
 
+	/**
+	 * The key for the block image
+	 */
 	protected static final String blockImageKey = "Shield";
 
-	protected Rectangle2D.Double hitbox; // The hitbox around this Avatar
+	/**
+	 * The hitbox for this Avatar
+	 */
+	protected Rectangle2D.Double hitbox;
 
+	/**
+	 * The health of this Avatar
+	 */
 	protected double health, fullHealth;
-	protected double moveSpeed = 10; // This Avatar's movement speed
+	/**
+	 * The moveSpeed of this Avatar
+	 */
+	protected double moveSpeed = 10;
 
-	protected double basicCD, rangedCD, dashCD, a1CD, a2CD, a3CD; // Cooldowns on abilities to be set by subclasses
-	protected long basicCDStart, rangedCDStart, dashCDStart, a1CDStart, a2CDStart, a3CDStart; // Time started
+	/**
+	 * The cooldowns of this Avatar's attacks
+	 */
+	protected double basicCD, rangedCD, dashCD, a1CD, a2CD, a3CD;
+	/**
+	 * Cooldown start times
+	 */
+	protected long basicCDStart, rangedCDStart, dashCDStart, a1CDStart, a2CDStart, a3CDStart;
 
 	private StatusEffect status; // Current StatusEffect applied to this Avatar
 
+	/**
+	 * If this Avatar is blocking
+	 */
 	protected boolean blocking, superArmor, dashing;
+	/**
+	 * The health of this Avatar's shield
+	 */
 	protected double shieldHealth, fullShieldHealth;
 
+	/**
+	 * Whether or not this Avatar can be controlled right now
+	 */
 	protected boolean movementControlled; // Can currently control movement (currently blocking or dashing)
 
+	/**
+	 * Dash speed and distance
+	 */
 	protected double dashSpeed = 20, dashDistance = 100; // Modifiable distance and speed of dash
 	private double dashTraveled, dashAngle; // Distance traveled so far and angle to dash
 
+	/**
+	 * If this Avatar is currently attacking
+	 */
 	protected boolean currentlyAttacking; // Means cannot move, dash, or block while executing this attack
+	/**
+	 * The time this Avatar's current animation was started
+	 */
 	protected long timeActionStarted; // Time is the time that the attack it is executing was started
 
 	private boolean dead, eliminated;
 	private int lives;
+	/**
+	 * The time this Avatar died
+	 */
 	protected long deathTime = 0;
 
 	/**
@@ -218,6 +258,7 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * @param surface
 	 *            PApplet to draw to
+	 * @param time The server time this is drawn
 	 */
 	public void draw(PApplet surface, long time) {
 		surface.pushMatrix();
@@ -307,6 +348,16 @@ public abstract class Avatar implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * Generic attack from this Avatar
+	 * 
+	 * @param a The type of Attack
+	 * @param player The player's IP address
+	 * @param angle The angle of this attack
+	 * @param time The server time this Attack was started
+	 * @return The Attacks that result, null if cannot be performed
+	 */
 	public Attack[] attack(AttackType a, String player, double angle, long time) {
 		if (deathTime == 0 && !currentlyAttacking && movementControlled && !status.getEffect().equals(Effect.STUNNED)) {
 			if (a.equals(AttackType.A1)) {
@@ -340,7 +391,8 @@ public abstract class Avatar implements Serializable {
 	 * Hits a player with an Attack
 	 * 
 	 * @param attack
-	 *            The attack that hitsr
+	 *            The attack that hits
+	 * @param time The server time this occurs
 	 * @return The result of the attack
 	 */
 	public AttackResult takeHit(Attack attack, long time) {
@@ -535,6 +587,12 @@ public abstract class Avatar implements Serializable {
 		return playerAddress;
 	}
 
+	/**
+	 * 
+	 * Sets the player controlling this Attack
+	 * 
+	 * @param address The IP address of the player
+	 */
 	public void setPlayer(String address) {
 		playerAddress = address;
 	}
@@ -570,6 +628,12 @@ public abstract class Avatar implements Serializable {
 		return movementControlled;
 	}
 
+	/**
+	 * 
+	 * Draws the health bar
+	 * 
+	 * @param surface Surface to draw to
+	 */
 	protected void drawHealthBar(PApplet surface) {
 		double shield = shieldHealth;
 		double health = this.health;
@@ -597,6 +661,14 @@ public abstract class Avatar implements Serializable {
 		surface.popStyle();
 	}
 
+	/**
+	 * 
+	 * Sets the sprite key for this Avatar's death animation
+	 * 
+	 * @param numOfSpriteDeath Number of death sprites
+	 * @param spriteSpeedDeath Speed to cycle sprites
+	 * @param time The server time of this draw
+	 */
 	protected void drawDeath(int numOfSpriteDeath, int spriteSpeedDeath, long time) {
 
 		if(getSpriteListDeath().size() > 0) {
@@ -612,6 +684,14 @@ public abstract class Avatar implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * Sets the sprite key for this Avatar's walk animation
+	 * 
+	 * @param numOfSpriteDeath Number of walk sprites
+	 * @param spriteSpeedDeath Speed to cycle sprites
+	 * @param time The server time of this draw
+	 */
 	public void walk(int numOfSpriteWalk, int spriteSpeedWalk, long time) {
 		if (!dashing && !blocking) {
 			for (int i = 0; i < numOfSpriteWalk; i++) {
@@ -665,10 +745,6 @@ public abstract class Avatar implements Serializable {
 
 	public double getHeight() {
 		return hitbox.height;
-	}
-
-	public Point2D.Double getCenter() {
-		return new Point2D.Double(hitbox.x + hitbox.width / 2, hitbox.y + hitbox.height / 2);
 	}
 
 	public Rectangle2D.Double getHitbox() {
@@ -751,10 +827,9 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * Attack bound to left click
 	 * 
-	 * @param player
-	 *            The player's IP address
-	 * @param angle
-	 *            Angle of the attack
+	 * @param player The player's IP address
+	 * @param angle The angle for this attack
+	 * @param time The server time of this attack
 	 * @return The Attack it performs
 	 */
 	public abstract Attack[] basicAttack(String player, double angle, long time);
@@ -763,6 +838,9 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * Attack bound to right click
 	 * 
+	 * @param player The player's IP address
+	 * @param angle The angle for this attack
+	 * @param time The server time of this attack
 	 * @return The Attack it performs
 	 */
 	public abstract Attack[] rangedAttack(String player, double angle, long time);
@@ -771,6 +849,9 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * Attack bound to e
 	 * 
+	 * @param player The player's IP address
+	 * @param angle The angle for this attack
+	 * @param time The server time of this attack
 	 * @return The Attack it performs
 	 */
 	public abstract Attack[] abilityOne(String player, double angle, long time);
@@ -779,6 +860,9 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * Attack bound to r
 	 * 
+	 * @param player The player's IP address
+	 * @param angle The angle for this attack
+	 * @param time The server time of this attack 
 	 * @return The Attack it performs
 	 */
 	public abstract Attack[] abilityTwo(String player, double angle, long time);
@@ -787,6 +871,9 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * Attack bound to f
 	 * 
+	 * @param player The player's IP address
+	 * @param angle The angle for this attack
+	 * @param time The server time of this attack
 	 * @return The Attack it performs
 	 */
 	public abstract Attack[] abilityThree(String player, double angle, long time);

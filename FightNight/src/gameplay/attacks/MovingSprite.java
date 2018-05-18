@@ -21,16 +21,15 @@ import processing.core.PApplet;
  */
 public class MovingSprite extends Rectangle2D.Double {
 
-	/*
-	 * Make this work with a sprite sheet instead of a single image
+	/**
+	 * 
 	 */
-
+	private static final long serialVersionUID = 3684240064305938973L;
 	// FIELDS
 	/**
 	 * The Sprites
 	 */
 	protected String imageKey;
-	private int imageIndex = 0;
 
 	/**
 	 * 
@@ -53,16 +52,43 @@ public class MovingSprite extends Rectangle2D.Double {
 	}
 
 	// METHODS
+	/**
+	 * 
+	 * Moves to a specific location
+	 * 
+	 * @param x
+	 *            The x-coordinate
+	 * @param y
+	 *            The y-coordinate
+	 */
 	public void moveToLocation(double x, double y) {
 		super.x = x;
 		super.y = y;
 	}
 
+	/**
+	 * 
+	 * Moves by an amount
+	 * 
+	 * @param x
+	 *            X to move by
+	 * @param y
+	 *            Y to move by
+	 */
 	public void moveByAmount(double x, double y) {
 		super.x += x;
 		super.y += y;
 	}
 
+	/**
+	 * 
+	 * Applies window limits
+	 * 
+	 * @param windowWidth
+	 *            Window width
+	 * @param windowHeight
+	 *            Window height
+	 */
 	public void applyWindowLimits(int windowWidth, int windowHeight) {
 		x = Math.min(x, windowWidth - width);
 		y = Math.min(y, windowHeight - height);
@@ -76,12 +102,12 @@ public class MovingSprite extends Rectangle2D.Double {
 	 * 
 	 * @param g
 	 *            The surface to draw to
+	 * @param time
+	 *            The server time of drawing
 	 */
 	public void draw(PApplet g, long time) {
 		g.pushStyle();
 		g.image(GamePanel.resources.getImage(imageKey), (int) x, (int) y, (int) width, (int) height);
-		// g.noFill();
-		// g.rect((float)x, (float)y, (float)width, (float)height);
 		g.popStyle();
 	}
 

@@ -20,9 +20,7 @@ import processing.core.PApplet;
 public class GameState implements Serializable {
 
 	private static final long serialVersionUID = 2671962781505513505L;
-
 	private long gameTime;
-	
 	private ArrayList<Avatar> avatars;
 	private ArrayList<Attack> attacks;
 	private Map map;
@@ -39,12 +37,14 @@ public class GameState implements Serializable {
 
 	/**
 	 * 
-	 * Draws the GameState to a PApplet
+	 * Draws the GameState
 	 * 
-	 * @param surface
-	 *            The PApplet to draw to
-	 * @param av The Avatar to draw with respect to           
-	 *  
+	 * @param surface Surface to draw to
+	 * @param av The Avatar this is drawing around
+	 * @param width The width of the surface
+	 * @param height The height of the surface
+	 * @param playerAddress The IP address of the player
+	 * @param time The server time of drawing
 	 */
 	public void draw(PApplet surface, Avatar av, float width, float height, String playerAddress, long time) {
 		surface.translate((float) (-av.getX() + width / 2), (float) -av.getY() + height / 2);
@@ -67,10 +67,6 @@ public class GameState implements Serializable {
 			a.draw(surface, time);
 	}
 
-	//	public void drawMap() {
-	//		
-	//	}
-	//	
 	/**
 	 * 
 	 * Gets the Avatars in the Game
@@ -127,6 +123,12 @@ public class GameState implements Serializable {
 		return map;
 	}
 
+	/**
+	 * 
+	 * Gets the server's game time
+	 * 
+	 * @return The server's game time as a long
+	 */
 	public long getGameTime() {
 		return gameTime;
 	}
@@ -135,6 +137,7 @@ public class GameState implements Serializable {
 		gameTime = time;
 	}
 	
+	@Override
 	public String toString() {
 		return avatars.get(0).getX() + "";
 	}

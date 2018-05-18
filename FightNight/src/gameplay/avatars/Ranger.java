@@ -21,6 +21,10 @@ import processing.core.PApplet;
  */
 public class Ranger extends Avatar {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 469678249508257590L;
 	private AttackType currentAttack;
 	private boolean invisible;
 	private long invisStartTime, smokeTime;
@@ -270,6 +274,7 @@ public class Ranger extends Avatar {
 		surface.popStyle();
 	}
 
+	@Override
 	public void act(Map map, long time) {
 
 		if (invisible) {
@@ -353,6 +358,7 @@ public class Ranger extends Avatar {
 		}
 	}
 
+	@Override
 	public String toString() {
 		return "Ranger";
 	}

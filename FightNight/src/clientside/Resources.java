@@ -8,7 +8,7 @@ import processing.core.PImage;
 
 /**
  * 
- * Class that stores all of the images used by this class
+ * Class that stores and preloads all of the images used by this class
  * 
  * @author shaylandias
  *
@@ -113,9 +113,6 @@ public class Resources {
 		for (ImageWrapper p : c) {
 			p.setPImage(applet.loadImage(p.getFilename()));
 		}
-
-		// System.out.println(images.get("Fighter1").getPImage().width);
-		// System.out.println(images.get("Fighter1").getPImage().height);
 
 	}
 

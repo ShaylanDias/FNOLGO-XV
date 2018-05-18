@@ -17,6 +17,14 @@ import processing.core.PApplet;
  */
 public class Spectator extends Avatar{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5806430450266637966L;
+
+	/**
+	 * Instantiates a Spectator
+	 */
 	public Spectator() {
 		super();
 		super.setLives(0);
@@ -73,34 +81,30 @@ public class Spectator extends Avatar{
 	
 	@Override
 	public Attack[] basicAttack(String player, double angle, long time) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Attack[] rangedAttack(String player, double angle, long time) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Attack[] abilityOne(String player, double angle, long time) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Attack[] abilityTwo(String player, double angle, long time) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Attack[] abilityThree(String player, double angle, long time) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
 	public String toString() {
 		return "Spectator";
 	}

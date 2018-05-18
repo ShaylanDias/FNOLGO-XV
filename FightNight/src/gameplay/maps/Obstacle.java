@@ -1,15 +1,20 @@
 package gameplay.maps;
 
 import java.io.Serializable;
-import processing.core.PApplet;
 
 /**
+ * 
  * Creates a circular obstacle
+ *
  * @author jason
  *
  */
 public abstract class Obstacle implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3507990713579919154L;
 	private double xPos, yPos, radius;
 	
 	public Obstacle(double x, double y, double radius) {
@@ -18,20 +23,12 @@ public abstract class Obstacle implements Serializable{
 		this.radius = radius*.9;
 	}
 	/**
-	 * Based on an x, y position based off of the center of the rectangle hitbox
+	 * Checks the intersections based on an x, y position based off of the center of the rectangle hitbox
 	 * @param x
 	 * @param y
 	 * @return returns true if the 2 hitboxes run into each other, false otherwise. 
 	 */
-	public boolean checkIntersection(double x, double y, double width, double height) { //Rectangle and circle
-		
-//		double xDiff = radius + width/2;
-//		double yDiff = radius + height/2;
-//		
-//		if(Math.abs(x-xPos)<xDiff && Math.abs(y-yPos) <yDiff) {
-//			return true;
-//		}
-		//*** e.James stack overflow
+	public boolean checkIntersection(double x, double y, double width, double height) {
 		double xDistance = Math.abs(xPos-x);
 		double yDistance = Math.abs(yPos-y);
 		
@@ -51,6 +48,15 @@ public abstract class Obstacle implements Serializable{
 		return (cornerDistance <= radius*radius);
 	}
 	
+	/**
+	 * 
+	 * Checks the intersection between two circles
+	 * 
+	 * @param x The x-coord
+	 * @param y The y-coord
+	 * @param r The radius
+	 * @return True if intersection
+	 */
 	public boolean checkIntersection(double x, double y, double r) { //circle and circle
 		
 		double xDiff = radius + r;

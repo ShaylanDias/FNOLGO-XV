@@ -12,11 +12,17 @@ import processing.core.PApplet;
  */
 public class StandardMap extends Map{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6466944145494309792L;
 	private static String imageKey = "FNOLGO MAP";
-	private Tree[] Tree = new Tree[100]; //optimization possiblity: arraylist instead of array, small improvement
+	private Tree[] Tree = new Tree[100];
 
 	
-	
+	/**
+	 * Instantiates the standard map
+	 */
 	public StandardMap() {
 		super();
 		for(int i = 0; i<Tree.length;i++) {
@@ -27,7 +33,6 @@ public class StandardMap extends Map{
 			else
 				i--;
 		}
-		int counter = 0;
 		
 		for(int i = 0; i<Tree.length;i++) {
 			boolean Intersected = false;
@@ -41,14 +46,13 @@ public class StandardMap extends Map{
 			}
 			if(!Intersected) {
 				Tree[i].doDraw() ;
-				counter++;
 			}
 
 		}
 	}
 	
 	
-	
+	@Override
 	public void draw(PApplet surface) {
 		super.draw(surface);
 		surface.image(GamePanel.resources.getImage(imageKey), 0, 0, (int) 3000, (int) 3000);
@@ -61,33 +65,10 @@ public class StandardMap extends Map{
 				Tree[i].draw(surface);
 			}
 		}
-		//Left quadrant tree hitboxes going top down
-//		surface.rect(-1440, -1080, 180, 180);
-//		surface.rect(-1260, -720, 120, 120);
-//		surface.rect(-1440, -540, 120, 120);
-//		surface.rect(-1080, -540, 180, 180);
-//		surface.rect(-1380, -240, 120, 120);
-//		surface.rect(-960, -240, 120, 120);
-//		surface.rect(-720, -300, 180, 180);
-//		surface.rect(-420, -60, 120, 120);
-//		surface.rect(-1140, 0, 180, 180);
-//		surface.rect(-780, 180, 120, 120);
-//		surface.rect(-1320, 360, 120, 120);
-//		surface.rect(-960, 360, 120, 120);
-//		surface.rect(-1200, 600, 120, 120);
-//		surface.rect(-1380, 780, 120, 120);
 
 	}
 	
-	/**
-	 * checks if something, namely the avatar, collides with a tree object 
-	 * 
-	 * @param x X coordinate of the character
-	 * @param y Y coordinate of the character
-	 * @param width character's width 
-	 * @param height character's height 
-	 * @return true if it does collide with a tree
-	 */
+	@Override
 	public boolean hitTree(double x, double y, double width, double height) { 
 		
 		for(int i = 0; i<Tree.length;i++) {
@@ -97,6 +78,8 @@ public class StandardMap extends Map{
 		}
 		return false;
 	}
+	
+	@Override
 	public boolean inBounds(double x, double y , double width, double height) {
 		if(x+width/2>1500 || x-width/2< -1500 || y+height/2>1500 || y-height/2< -1500)
 			return false;

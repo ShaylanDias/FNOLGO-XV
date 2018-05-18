@@ -27,67 +27,61 @@ import gameplay.avatars.Mage;
 import gameplay.avatars.Ranger;
 import networking.frontend.NetworkManagementPanel;
 import processing.awt.PSurfaceAWT;
+
 /**
- * Initiates a Start Menu. Creates a Java.awt start menu where character selection, instructions, and the server connection is located 
+ * Initiates a Start Menu. Creates a Java.awt start menu where character
+ * selection, instructions, and the server connection is located
+ * 
  * @author Jason Zhu
  *
  */
-public class StartMenu extends JPanel{
+public class StartMenu extends JPanel {
 
-	private JFrame frame  = new JFrame("FNOLGO XV");
+	private JFrame frame = new JFrame("FNOLGO XV");
 	private JPanel panelCont = new JPanel();
 	private JPanel startMenu = new JPanel();
-	private JPanel serverConnect = new JPanel();
 
-
-	private GamePanel game;  // These are PApplets - you use these to do regular processing stuff
-
-
-	private PSurfaceAWT surf;  // These are the "portals" through which the PApplets draw on the canvas
-
-
-	private PSurfaceAWT.SmoothCanvas processingCanvas;  // These are swing components (think of it as the canvas that the PApplet draws on to)
-
+	private PSurfaceAWT surf; // These are the "portals" through which the PApplets draw on the canvas
 
 	private CardLayout c1 = new CardLayout();
+
 	/**
 	 * 
-	 * @param game : A instance of the game panel class. This is what the start menu is connected to. 
+	 * @param game
+	 *            An instance of the game panel class. This is what the start menu
+	 *            is connected to in which the game runs.
 	 */
 	public StartMenu(GamePanel game) {
-		
-		this.game = game;
-		
-		//Very First Menu
+
+		// Very First Menu
 		panelCont.setLayout(c1);
 		JLabel title = new JLabel();
-		startMenu.setLayout(new BoxLayout(startMenu,BoxLayout.Y_AXIS));
+		startMenu.setLayout(new BoxLayout(startMenu, BoxLayout.Y_AXIS));
 		startMenu.setBackground(Color.black);
-		startMenu.setPreferredSize(new Dimension(1200,800));
+		startMenu.setPreferredSize(new Dimension(1200, 800));
 
-		//title
-		title.setFont(new Font("arial", Font.BOLD,100));
-		title.setSize(new Dimension(300,200));
+		// title
+		title.setFont(new Font("arial", Font.BOLD, 100));
+		title.setSize(new Dimension(300, 200));
 		title.setForeground(Color.WHITE);
 		title.setText("FNOLGO XV");
 		title.setAlignmentX(Component.CENTER_ALIGNMENT);
-		startMenu.add(title,startMenu);
-
+		startMenu.add(title, startMenu);
 
 		JButton playButton = new JButton("Play");
 		playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		playButton.setSize(new Dimension(100,50));
-		startMenu.add(playButton,startMenu);
+		playButton.setSize(new Dimension(100, 50));
+		startMenu.add(playButton, startMenu);
 
 		JButton instructionButton = new JButton("Instructions");
 		instructionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		instructionButton.setPreferredSize(new Dimension(200,100));
-		startMenu.add(instructionButton,startMenu);
+		instructionButton.setPreferredSize(new Dimension(200, 100));
+		startMenu.add(instructionButton, startMenu);
 
-		//Instructions Panel
+		// Instructions Panel
 		JPanel Instructions = new JPanel();
-		Instructions.setPreferredSize(new Dimension(1200,800));
-		Instructions.setLayout(new BoxLayout(Instructions,BoxLayout.Y_AXIS));
+		Instructions.setPreferredSize(new Dimension(1200, 800));
+		Instructions.setLayout(new BoxLayout(Instructions, BoxLayout.Y_AXIS));
 		Instructions.setBackground(Color.BLACK);
 
 		JButton iback = new JButton("Back");
@@ -97,55 +91,50 @@ public class StartMenu extends JPanel{
 		JLabel iTitle = new JLabel();
 		howToPlay.setForeground(Color.WHITE);
 		iTitle.setForeground(Color.WHITE);
-		iTitle.setFont(new Font("arial", Font.BOLD,75));
+		iTitle.setFont(new Font("arial", Font.BOLD, 75));
 		iTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
-		howToPlay.setFont(new Font("arial",Font.PLAIN,25));
+		howToPlay.setFont(new Font("arial", Font.PLAIN, 25));
 		howToPlay.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		Instructions.add(iTitle);
 		Instructions.add(howToPlay);
 		Instructions.add(iback);
 		iTitle.setText("INSTRUCTIONS:");
-		howToPlay.setText("The objective of the game is to be the last remaining Avatar on the map. You are in an arena with up to 16 \nother players, each " + 
-				"with 4 lives. Use your abilities to take down your opponents and be the last one \nstanding in this contest of champions!\n\nCONTROLS:\n"
-				+ "WASD - movement"
-				+ "\nSpace - Dash in direction of movement\n" + 
-				"Q- Shield\n" + 
-				"Mouse - Aim\n" + 
-				"Left Mouse Button - Basic Attack\n" + 
-				"Right Mouse Button - Ranged Attack\n" + 
-				"E - Ability 1\n" + 
-				"R - Ability 2\n" + 
-				"F - Ability 3");
+		howToPlay.setText(
+				"The objective of the game is to be the last remaining Avatar on the map. You are in an arena with up to 16 \nother players, each "
+						+ "with 4 lives. Use your abilities to take down your opponents and be the last one \nstanding in this contest of champions!\n\nCONTROLS:\n"
+						+ "WASD - movement" + "\nSpace - Dash in direction of movement\n" + "Q- Shield\n"
+						+ "Mouse - Aim\n" + "Left Mouse Button - Basic Attack\n"
+						+ "Right Mouse Button - Ranged Attack\n" + "E - Ability 1\n" + "R - Ability 2\n"
+						+ "F - Ability 3");
 		howToPlay.setBackground(Color.BLACK);
 		howToPlay.setSelectedTextColor(Color.WHITE);
 		howToPlay.setEditable(false);
-//		howToPlay.setText("HI");
+		// howToPlay.setText("HI");
 
 		JPanel characterSelection = new JPanel();
 		JButton characterSelectionButton = new JButton("Select Character");
 		JButton cBack = new JButton("back");
 
 		characterSelection.add(cBack);
-		characterSelection.setLayout(new BoxLayout(characterSelection,BoxLayout.Y_AXIS));
-		characterSelection.setPreferredSize(new Dimension(1200,800));
+		characterSelection.setLayout(new BoxLayout(characterSelection, BoxLayout.Y_AXIS));
+		characterSelection.setPreferredSize(new Dimension(1200, 800));
 		characterSelection.add(characterSelectionButton);
 		characterSelection.setBackground(Color.BLACK);
 
 		JLabel selected = new JLabel();
 		selected.setForeground(Color.WHITE);
-		selected.setFont(new Font("arial",Font.PLAIN,25));
+		selected.setFont(new Font("arial", Font.PLAIN, 25));
 		selected.setAlignmentX(Component.LEFT_ALIGNMENT);
 		selected.setText("Selected: " + game.getPlayer().getAvatar().toString());
-		
+
 		try {
 			Image Brute = ImageIO.read(new File("data/Brute/WW-Default.png"));
 			Image Mage = ImageIO.read(new File("data/Mage/Mage.png"));
 			Image Ranger = ImageIO.read(new File("data/Ranger/Ranger.png"));
-			Brute = Brute.getScaledInstance(100,100,Image.SCALE_DEFAULT);
-			Mage = Mage.getScaledInstance(100,100,Image.SCALE_DEFAULT);
-			Ranger = Ranger.getScaledInstance(100,100,Image.SCALE_DEFAULT);
-
+			Brute = Brute.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
+			Mage = Mage.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
+			Ranger = Ranger.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
 
 			JLabel bruteLabel = new JLabel(new ImageIcon(Brute));
 			bruteLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
@@ -166,7 +155,7 @@ public class StartMenu extends JPanel{
 					selected.setText("Selected: " + game.getPlayer().getAvatar().toString());
 				}
 			});
-			
+
 			JLabel rangerLabel = new JLabel(new ImageIcon(Ranger));
 			rangerLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
 			rangerLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -181,7 +170,7 @@ public class StartMenu extends JPanel{
 			characterSelection.add(bruteLabel);
 			characterSelection.add(mageLabel);
 			characterSelection.add(rangerLabel);
-		} catch(IOException ex) {
+		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 
@@ -190,40 +179,40 @@ public class StartMenu extends JPanel{
 
 		c1.show(panelCont, "1");
 
-		panelCont.add(startMenu,"1");
-		panelCont.add(Instructions,"1.5");
+		panelCont.add(startMenu, "1");
+		panelCont.add(Instructions, "1.5");
 		panelCont.add(characterSelection, "2");
 		panelCont.add(nmp, "3");
 
-		//Interactions when the buttons are pressed
+		// Interactions when the buttons are pressed
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				c1.show(panelCont,"2");
+				c1.show(panelCont, "2");
 			}
 		});
 		iback.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				c1.show(panelCont,"1");
+				c1.show(panelCont, "1");
 			}
 		});
 		instructionButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				c1.show(panelCont,"1.5");
+				c1.show(panelCont, "1.5");
 			}
 		});
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				c1.show(panelCont,"2");
+				c1.show(panelCont, "2");
 			}
 		});
 		cBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				c1.show(panelCont,"1");
+				c1.show(panelCont, "1");
 			}
 		});
 		characterSelectionButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				c1.show(panelCont,"3");
+				c1.show(panelCont, "3");
 			}
 		});
 
@@ -234,16 +223,17 @@ public class StartMenu extends JPanel{
 		frame.setVisible(true);
 
 	}
+
 	public CardLayout getCardLayout() {
 		return c1;
 	}
-	
+
 	public JPanel getPanel() {
 		return panelCont;
 	}
-	
+
 	public void fixProcessingPanelSizes(Component match) {
-		surf.setSize(match.getWidth(),match.getHeight());
+		surf.setSize(match.getWidth(), match.getHeight());
 	}
 
 }

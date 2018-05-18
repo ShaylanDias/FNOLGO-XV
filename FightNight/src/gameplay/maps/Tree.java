@@ -5,9 +5,22 @@ import processing.core.PApplet;
 
 public class Tree extends Obstacle{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8295756930657718993L;
 	private static String imageKey = "SmallTree";
 	private double xPos,yPos, radius;
 	private boolean canDraw;
+	
+	/**
+	 * 
+	 * Instantiates a tree
+	 * 
+	 * @param x The x-coord
+	 * @param y The y-coord
+	 * @param radius The radius of the tree
+	 */
 	public Tree(double x, double y, double radius) {
 		super(x,y,radius);
 		xPos = x;
@@ -16,9 +29,14 @@ public class Tree extends Obstacle{
 		canDraw = false;
 	}
 	
-	public void draw(PApplet tree) {
-		tree.image(GamePanel.resources.getImage(imageKey),(float) xPos,(float) yPos, (int) radius*2, (int) radius*2);
-		//tree.ellipse((float)xPos, (float)yPos,(float) radius*2, (float)radius*2);
+	/**
+	 * 
+	 * Draws the Tree
+	 * 
+	 * @param surface The surface to draw to
+	 */
+	public void draw(PApplet surface) {
+		surface.image(GamePanel.resources.getImage(imageKey),(float) xPos,(float) yPos, (int) radius*2, (int) radius*2);
 
 	}
 	

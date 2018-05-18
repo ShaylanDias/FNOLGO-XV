@@ -2,8 +2,6 @@ package clientside.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Rectangle;
 
 import javax.swing.JFrame;
 
@@ -13,11 +11,6 @@ import clientside.Resources;
 import gameplay.GameState;
 import gameplay.avatars.Avatar;
 import gameplay.avatars.Avatar.AttackType;
-import gameplay.avatars.Brute;
-import gameplay.avatars.Mage;
-import gameplay.avatars.Ranger;
-import gameplay.maps.Map;
-import gameplay.maps.StandardMap;
 import networking.frontend.NetworkDataObject;
 import networking.frontend.NetworkListener;
 import networking.frontend.NetworkMessenger;
@@ -27,7 +20,7 @@ import processing.core.PApplet;
 /**
  * This class draws the game, takes input, and communicates with the server. It
  * additionally contains a method to calculate the angle of the mouse position
- * relatvie to the avatar
+ * relative to the Avatar
  * 
  * @author shaylandias, bgu307
  *
@@ -40,19 +33,19 @@ public class GamePanel extends PApplet implements NetworkListener {
 	public static Resources resources = new Resources();
 
 	private Player player;
-	private Map map;
 	private NetworkMessenger nm;
 	private boolean connected;
 	private boolean gameEnded;
 	private boolean won;
 	private JFrame window;
 
-	private Rectangle brute, ranger, mage;
-
 	private GameState currentState = null;
 
 	/**
+	 * 
 	 * Initializes the GamePanel window
+	 * 
+	 * @param isHost True if this panel is on the same computer that is hosting the server
 	 */
 	public GamePanel(boolean isHost) {
 		// Setting up the window
@@ -69,10 +62,6 @@ public class GamePanel extends PApplet implements NetworkListener {
 		window.setResizable(true);
 		window.setVisible(true);
 		player = new Player();
-		map = new StandardMap();
-		brute = new Rectangle(100, 100, 100, 100);
-		mage = new Rectangle(210, 100, 100, 100);
-		ranger = new Rectangle(320, 100, 100, 100);
 		won = false;
 		gameEnded = false;
 	}
@@ -112,7 +101,6 @@ public class GamePanel extends PApplet implements NetworkListener {
 			if (currentState != null) { // gets the avatar information from the currentState
 				pushMatrix();
 				Avatar av = null;
-				map = currentState.getMap(); // gets the map that's made on the server.
 				for (Avatar x : currentState.getAvatars()) {
 					if (x.getPlayer().equals(player.getPlayerAddress())) {
 						av = x;
@@ -131,7 +119,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 						text = "WINNER!";
 					else
 						text = "You lost lmao";
-					text("WINNER!", (float)av.getX(), (float)av.getY() - 100f);
+					text(text, (float)av.getX(), (float)av.getY() - 100f);
 				}
 
 				
@@ -141,9 +129,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		}
 	}
 
-	/**
-	 * Detects mouse clicks to trigger abilities
-	 */
+	@Override
 	public void mouseClicked() {
 
 		if (!connected) {
@@ -168,6 +154,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		}
 	}
 
+	@Override
 	public void mouseDragged() {
 		if (!connected) {
 
@@ -191,9 +178,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		}
 	}
 
-	/**
-	 * Detects key presses to control the character, does not work properly on Mac
-	 */
+	@Override
 	public void keyPressed() {
 		/*
 		 * Send a "Message" NetworkDataObject to the server with message array in
@@ -239,9 +224,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		}
 	}
 
-	/**
-	 * Detects key releases to trigger character abilities
-	 */
+	@Override
 	public void keyReleased() {
 
 		if (currentState != null) {
@@ -309,6 +292,20 @@ public class GamePanel extends PApplet implements NetworkListener {
 		}
 	}
 
+	public void setConnected(boolean connect) {
+		connected = connect;
+	}
+
+	/**
+	 * 
+	 * Gets the Player connected with this GamePanel
+	 * 
+	 * @return The Player connected to this GamePanel
+	 */
+	public Player getPlayer() {
+		return player;
+	}
+
 	private double getAngleToMouse() {
 		double angle = 0;
 		Avatar av = null;
@@ -357,10 +354,6 @@ public class GamePanel extends PApplet implements NetworkListener {
 		surface.popStyle();
 	}
 
-	public void setConnected(boolean connect) {
-		connected = connect;
-	}
-
 	private void drawTimer(PApplet surface, double x, double y, long cdLeft, double cd, String name) {
 		if (cdLeft < cd * 1000) {
 			double percent = cdLeft / (cd * 1000);
@@ -378,20 +371,4 @@ public class GamePanel extends PApplet implements NetworkListener {
 		surface.text(name, (float) x, (float) (y + 6));
 
 	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
-	public JFrame getFrame() {
-		return window;
-	}
-
-	// public void runMe() {
-	// super.setSize(800,600);
-	//// super.sketchPath();
-	//// super.initSurface();
-	//// super.surface.startThread();
-	//// System.out.println("init");
-	// }
 }

@@ -3,7 +3,6 @@ package gameplay.avatars;
 import java.awt.Rectangle;
 
 import clientside.gui.GamePanel;
-import gameplay.GameState;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Fireball;
 import gameplay.attacks.Lightning;
@@ -22,6 +21,10 @@ import processing.core.PApplet;
  */
 public class Mage extends Avatar {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7530508986403101405L;
 	private AttackType currentAttack;
 	private long dashTime;
 
@@ -91,14 +94,6 @@ public class Mage extends Avatar {
 		}
 	}
 
-	//	@Override
-	//	public void dash(Double mouseAngle) {
-	//		if (GameState.getGameTime() > super.dashCDStart + super.dashCD * 1000) {
-	//			super.dashCDStart = GameState.getGameTime();
-	//			super.dash(mouseAngle);
-	//		}
-	//	}
-
 	// Fireball, slow moving, and does a bunch of dmg, goes until it hits a wall.
 	@Override
 	public Attack[] rangedAttack(String player, double angle, long time) {
@@ -120,10 +115,7 @@ public class Mage extends Avatar {
 	@Override
 	public Attack[] abilityOne(String player, double angle, long time) {
 		currentAttack = AttackType.A1;
-//		currentlyAttacking = true;
 		a1CDStart = time;
-//		timeActionStarted = a1CDStart;
-
 		Attack[] attack = new Attack[40];
 		double damage = 12.5;
 		for (int i = 0; i < 40; i++) {
@@ -291,6 +283,7 @@ public class Mage extends Avatar {
 		}
 	}
 
+	@Override
 	public String toString() {
 		return "Mage";
 	}
