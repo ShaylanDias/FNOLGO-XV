@@ -206,7 +206,11 @@ public class GameManager implements NetworkListener {
 	 * @return True if won
 	 */
 	public String getWinner() {
-		return winner;
+		for(Avatar a : state.getAvatars()) {
+			if(!a.isEliminated())
+				return a.getPlayer();
+		}
+		return "";
 	}
 	
 	/**
