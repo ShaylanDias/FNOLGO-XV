@@ -283,7 +283,7 @@ public abstract class Avatar implements Serializable {
 	 * @param map  The Map to draw at
 	 */
 	public void spawn(Map map) {
-		if (!eliminated || this instanceof Spectator) {
+		if (!eliminated && !(this instanceof Spectator)) {
 			double x = 1500 - Math.random() * 3000;
 			double y = 1500 - Math.random() * 3000;
 
