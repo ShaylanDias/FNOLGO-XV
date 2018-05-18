@@ -32,7 +32,6 @@ public class Resources {
 		images.put("WWWalk3", new ImageWrapper("data/Brute/WW-Walk4.png"));
 		images.put("WWDying", new ImageWrapper("data/Brute/WWDying.png"));
 		images.put("WWDead", new ImageWrapper("data/Brute/WWDead.png"));
-		images.put("WWDead", new ImageWrapper("data/Brute/WWDead.png"));
 		images.put("UpperCut", new ImageWrapper("data/Brute/UpperCut.png"));
 		images.put("UpperCut1", new ImageWrapper("data/Brute/UpperCut1.png"));
 		images.put("UpperCut2", new ImageWrapper("data/Brute/UpperCut2.png"));
@@ -86,6 +85,7 @@ public class Resources {
 		images.put("RangerBasicEnd1", new ImageWrapper("data/Ranger/BasicEnd1.png"));
 		images.put("RangerBasicEnd2", new ImageWrapper("data/Ranger/BasicEnd2.png"));
 		images.put("RangerBasicEnd3", new ImageWrapper("data/Ranger/BasicEnd3.png"));
+		
 		images.put("RangerDying1", new ImageWrapper("data/Ranger/Dying1.png"));
 		images.put("RangerDying2", new ImageWrapper("data/Ranger/Dying2.png"));
 		images.put("RangerDying3", new ImageWrapper("data/Ranger/Dying3.png"));

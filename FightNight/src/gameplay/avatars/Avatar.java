@@ -595,7 +595,7 @@ public abstract class Avatar implements Serializable {
 	}
 
 	protected void drawDeath(int numOfSpriteDeath, int spriteSpeedDeath, long time) {
-	
+
 		double deathAnimationTime = 1.5;
 		double step = deathAnimationTime/numOfSpriteDeath;
 		spriteSheetKey = getSpriteListDeath().get(getSpriteListDeath().size()-1);
