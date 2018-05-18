@@ -43,6 +43,7 @@ public class Ranger extends Avatar {
 		dashCD = 1.2;
 		rangedCD = 0.5;
 		numOfSpriteWalk = 10;
+		health = 250;
 		for (int i = 1; i < 11; i++) {
 			getSpriteListWalk().add("Ranger" + i);
 		}

@@ -10,7 +10,7 @@ public class Lightning extends Attack{
 	
 	private double delay;
 	private Lightning attached;
-	public static final int w = 80, h = 80, damage = 20;
+	public static final int w = 80, h = 80, damage = 8;
 	private boolean dead;
 	
 	public Lightning(String imageKey, int x, int y, String playerAddress, double dir, double delay, Lightning attached, long time) {
