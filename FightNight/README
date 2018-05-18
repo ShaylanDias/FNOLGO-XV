@@ -5,12 +5,12 @@ Shaylan Dias, Ben Gu, Jason Zhu
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-Description:
-In a world, where nothing seems to make sense anymore, a dark, dangerous, deadly, death match is taking place.
-The leaders of the splintered factions have placed heavy bets on their champions to succeed. They hold an annual 
-contest to determine the strongest faction of them all to lead their people and rule over all the land. Targeted towards 
-battle-royale fanatics of all ages, whose faction are YOU a part of? In this revolutionary, top down, fifteenth edition 
-game, YOU will take control of a championand fight to rule over this mysterious new world.
+Introduction:
+In a world where nothing seems to make sense anymore, a dark, dangerous, deadly, death match is taking place.
+The leaders of the splintered factions of the free world have placed heavy bets on their champions to succeed. They hold an annual 
+contest to determine the strongest faction of them all to lead their people and rule over all the land. Which race will YOU choose?
+Targeted to battle-royale fanatics of all ages, this game will excite any gamer. In this revolutionary, top down, fifteenth edition 
+game, YOU will take control of a champion and fight to rule over this mysterious new world.
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -18,7 +18,9 @@ Instructions:
 The Objective of the game is to be the last remaining Avatar on the map. You are in an arena with up to 16 other players, each 
 with 4 lives. Use your abilities to take down your opponents and be the last one standing in this contest of champions!
 
-Controls:
+Click start game, select an Avatar, and either start or join a server from the menu.
+
+In-game Controls:
 W-A-S-D - Movement
 Space - Dash in direction of movement
 Mouse - Aim
@@ -34,8 +36,8 @@ F - Ability 3
 Feature List:
 Must Haves
 	Server Networking - DONE
+		Select server - DONE
 	Menu - DONE
-	Select server - DONE
 	Single map, GUI with basic character models that move - DONE
 	Basic movement and combat abilities w/ effects - DONE
 	Block and roll defensive mechanics - DONE
@@ -49,17 +51,16 @@ Want to Haves
 		Speed-booster, heal (minor, major), no-depletion stamina, shield. 
 	Spectator Mode - DONE
 	Weapons pickups: Crossbow, Bomb, Mine
-	Arena obstacles/Effects
-	Multiple classes/types of characters 
+	Arena obstacles/Effects - PARTIALLY DONE
 	More advanced abilities (Ultimate ability?)
-	Some Overwatch style ultimate ability build up or something like a Smash Ball 
+		Some Overwatch style ultimate ability build up or something like a Smash Ball 
 	The server would be able to handle more than 2 people (Free-for-all) - DONE
 	6 classes/characters
 		Fighter, mage, ranger, ninja, sumo, soldier
 Stretches 
 	Multiple Maps
 	Team games/Multiple game modes (Deathmatch, Duel, Capture the Flag)
-	Progression from wins -> Customizable abilities by class (upgrades/perk tree)’
+	Progression from wins -> Customizable abilities by class (upgrades/perk tree)
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -119,7 +120,7 @@ networking
 Responsibilities: 
 Shaylan Dias: Networking, Attack Game Mechanics, Game Manager, Most of the abilities, GamePanel, Player HUD, Parsing Sent/Received Data
 Ben Gu: Character movement, Brute walking and death animations, Mage walking and death animations
-Jason Zhu: Character dashing, Map Design and build, Objects, start menu. 
+Jason Zhu: Character dashing, Map Design and build, Obstacles, start menu, game balance. 
 Mr. Shelby APCSDemo: ServerNetworking
 
 http://pyromancers.com/dungeon-painter-online/: Map creation website

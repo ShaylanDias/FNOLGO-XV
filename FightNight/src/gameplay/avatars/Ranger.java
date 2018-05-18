@@ -51,7 +51,7 @@ public class Ranger extends Avatar {
 		getSpriteListDeath().add("RangerDying2");
 		getSpriteListDeath().add("RangerDying3");
 		getSpriteListDeath().add("RangerDead");
-		deathTime = System.currentTimeMillis() + 6000;
+		deathTime = 0;
 
 	}
 
