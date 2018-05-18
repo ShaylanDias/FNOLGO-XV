@@ -9,7 +9,7 @@ import gameplay.avatars.Avatar;
 public class Howl extends Attack{
 
 	private static final String imageKey = "Howl";
-	private static final double damage = 1.5, width = 120, height = 110;
+	private static final double damage = 1.5, width = 240, height = 230;
 	
 	public Howl(int x, int y, String playerAddress, long time) {
 		super(imageKey, x, y, (int)width, (int)height, playerAddress, damage, false, new StatusEffect(Effect.SLOWED, 1, 7), 0, time);
