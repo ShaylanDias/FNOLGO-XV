@@ -221,7 +221,7 @@ public abstract class Avatar implements Serializable {
 		surface.pushStyle();
 		
 		drawHealthBar(surface);
-
+		
 		if (dead) {
 			drawDeath(numOfSpriteDeath, spriteSpeedDeath, time);
 			surface.popMatrix();
@@ -605,8 +605,6 @@ public abstract class Avatar implements Serializable {
 				break;
 			}
 		}
-
-		
 	}
 
 	public void walk(int numOfSpriteWalk, int spriteSpeedWalk, long time) {

@@ -41,14 +41,14 @@ public class Brute extends Avatar {
 		dashDistance = 120;
 		dashSpeed = 60;
 		moveSpeed = 12;
-		a1CD = 7;
+		a1CD = 10;
 		basicCD = 0.3;
-		a2CD = 10;
+		a2CD = 25;
 		super.basicCD = 0.2;
 		rangedCDStart = 0;
 		rangedCD = 3;
 		currentAttack = AttackType.NONE;
-		a3CD = 10;
+		a3CD = 20;
 		getSpriteListDeath().add("WWDying");
 		getSpriteListDeath().add("WWDead");
 		upperCutKeys = new String[] { "UpperCut1", "UpperCut2", "UpperCut3", "UpperCut4", "UpperCut5", "UpperCut6",
@@ -60,7 +60,7 @@ public class Brute extends Avatar {
 		getSpriteListWalk().add("WWWalk3");
 		numOfSpriteWalk = 4;
 		numOfSpriteDeath = 2;
-		health = 600;
+		health = 550;
 	}
 
 	/**
