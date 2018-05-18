@@ -94,46 +94,16 @@ public class GamePanel extends PApplet implements NetworkListener {
 		if (!connected) {
 
 			if (!gameEnded) {
-//				System.out.println("draw called: " + System.currentTimeMillis());
+				//				System.out.println("draw called: " + System.currentTimeMillis());
 				fill(255);
 				textAlign(CENTER);
 				textSize(40);
 				text("Waiting For Connection", width / 2, height / 2);
- 
-//				if(currentState != null)
-//					System.out.println(currentState.getGameTime());
-				
-				// Move all of these around to be right and have a background image and a title
-				// Make a way to switch to instructions screen
-				// Make buttons change color to indicate which character you selected
-				// rectMode(CORNER);
-				// textAlign(CENTER);
-				// fill(255);
-				// rect(brute.x, brute.y, brute.width, brute.height);
-				// rect(mage.x, mage.y, mage.width, mage.height);
-				// rect(ranger.x, ranger.y, ranger.width, ranger.height);
-				// //Make this button change color if it was selected
-				// fill(0);
-				// text("Brute", brute.x + brute.width/2, brute.y + brute.y/2);
-				// text("Mage", mage.x + mage.width/2, mage.y + mage.height/2);
-				// text("Ranger", ranger.x + ranger.width/2, ranger.y + ranger.height/2);
-			} else {
-
-				// I guess this version of the menu is not working
-
-				// Provide a button to click to send you back to the title screen (change
-				// gameEnded to false)
-				if (won) {
-					// What to draw if this player won
-					// Probably a picture of their avatar and say won
-				} else {
-					// What to draw if this player lost
-					// Probably avatar dead and say you lost
-				}
 			}
 
-		} else {
 
+		} else {
+			
 			imageMode(CENTER);
 			background(Color.BLACK.getRGB());
 
@@ -152,16 +122,23 @@ public class GamePanel extends PApplet implements NetworkListener {
 				}
 
 				currentState.draw(this, av, width, height, player.getPlayerAddress(), currentState.getGameTime());
+				
+
+				
+				if(gameEnded) {
+					String text;
+					if(won)
+						text = "WINNER!";
+					else
+						text = "You lost lmao";
+					text("WINNER!", (float)av.getX(), (float)av.getY() - 100f);
+				}
+
+				
 				drawCooldowns(this, av);
 				popMatrix();
 			}
-
-			// Starting Setup
-			stroke(0, 0, 0);
-
-			mousePressed();
 		}
-
 	}
 
 	/**
@@ -190,7 +167,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 			}
 		}
 	}
-	
+
 	public void mouseDragged() {
 		if (!connected) {
 
@@ -299,7 +276,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		if (ndo.messageType.equals(NetworkDataObject.MESSAGE)) {
 			if (ndo.message[0] != null) {
 				if (ndo.message[0] instanceof GameState) {
-//					System.out.println("gamestate received: " + System.currentTimeMillis());
+					//					System.out.println("gamestate received: " + System.currentTimeMillis());
 					currentState = (GameState) ndo.message[0];
 				} else if (ndo.message[0] instanceof String) {
 					if (ndo.message[0].equals("ENDED")) {

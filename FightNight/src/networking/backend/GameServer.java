@@ -116,12 +116,12 @@ public class GameServer implements NetworkMessenger {
 					
 					if(manager.isGameEnded()) {
 						sendMessage(NetworkDataObject.MESSAGE, new Object[] {"ENDED", manager.getWinner()});
-						try {
-							Thread.sleep(5000);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						disconnectFromAllClients();
+//						try {
+//							Thread.sleep(5000);
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
+//						disconnectFromAllClients();
 					}
 					
 					try {

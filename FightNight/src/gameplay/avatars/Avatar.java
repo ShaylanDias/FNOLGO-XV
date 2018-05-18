@@ -577,7 +577,6 @@ public abstract class Avatar implements Serializable {
 			shield = 0;
 
 		surface.rectMode(PApplet.CENTER);
-		surface.fill(Color.BLACK.getRGB());
 		surface.rect((float) (hitbox.x), (float) (hitbox.y - hitbox.height * 3 / 4 - 10), (float) hitbox.width,
 				(float) 8);
 		surface.fill(Color.CYAN.getRGB());
@@ -589,6 +588,11 @@ public abstract class Avatar implements Serializable {
 		surface.fill(Color.GREEN.getRGB());
 		surface.rect((float) (hitbox.x), (float) (hitbox.y - hitbox.height * 3 / 4 - 2),
 				(float) hitbox.width * (float) (health / fullHealth), (float) 10);
+		surface.fill(Color.BLACK.getRGB());
+		surface.pushStyle();
+		surface.textSize(18);
+		surface.text(lives+"", (float)(hitbox.x-hitbox.width/2-10), (float)(hitbox.y - hitbox.height * 3 / 4));
+		surface.popStyle();
 	}
 
 	protected void drawDeath(int numOfSpriteDeath, int spriteSpeedDeath, long time) {

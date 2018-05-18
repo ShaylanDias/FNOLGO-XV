@@ -43,8 +43,8 @@ public class Spectator extends Avatar{
 		surface.pushStyle();
 		surface.textAlign(PApplet.CENTER);
 		surface.fill(0);
-		surface.textSize(30);
-		surface.text("Spectating", (float)(hitbox.x), (float)(hitbox.y - 250));
+		surface.textSize(18);
+		surface.text("Spectator", (float)(hitbox.x), (float)(hitbox.y - 250));
 		surface.popStyle();
 	}
 	
