@@ -24,7 +24,7 @@ public class Ranger extends Avatar {
 	private AttackType currentAttack;
 	private boolean invisible;
 	private long invisStartTime, smokeTime;
-	private final double invisLength = 3.5;
+	private final double invisLength = 4.25;
 
 	/**
 	 * Instantiates a Ranger
@@ -33,9 +33,9 @@ public class Ranger extends Avatar {
 		super();
 		super.basicCD = 0.5;
 		moveSpeed = 8;
-		a2CD = 10;
-		a1CD = 6;
-		a3CD = 8;
+		a2CD = 15;
+		a1CD = 10;
+		a3CD = 15;
 		spriteSheetKey = "Ranger";
 		sprites = new Rectangle[] { new Rectangle(92, 94, 52, 88) };
 		hitbox.height = sprites[0].height;
@@ -95,7 +95,7 @@ public class Ranger extends Avatar {
 		currentAttack = AttackType.RANGED;
 		currentlyAttacking = true;
 		timeActionStarted = time;
-		int damage = 15;
+		int damage = 30;
 		super.rangedCDStart = timeActionStarted;
 		if (angle > 90 && angle < 270) {
 			lastDir = true;
@@ -157,6 +157,7 @@ public class Ranger extends Avatar {
 	@Override
 	public Attack[] abilityTwo(String player, double angle, long time) {
 		currentAttack = AttackType.A2;
+		double damage = 25;
 
 		a2CDStart = time;
 		timeActionStarted = a2CDStart;
@@ -165,7 +166,7 @@ public class Ranger extends Avatar {
 		} else {
 			lastDir = false;
 		}
-		return new Attack[] { new Trap("Mushroom", (int) hitbox.x, (int) hitbox.y, 50, 50, player, 10,
+		return new Attack[] { new Trap("Mushroom", (int) hitbox.x, (int) hitbox.y, 50, 50, player, damage,
 				new StatusEffect(Effect.SLOWED, 4, 5), 60, time) };
 	}
 
