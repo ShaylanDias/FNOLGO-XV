@@ -18,7 +18,7 @@ public class Tree extends Obstacle{
 	
 	public void draw(PApplet tree) {
 		tree.image(GamePanel.resources.getImage(imageKey),(float) xPos,(float) yPos, (int) radius*2, (int) radius*2);
-		tree.ellipse((float)xPos, (float)yPos,(float) radius*2, (float)radius*2);
+		//tree.ellipse((float)xPos, (float)yPos,(float) radius*2, (float)radius*2);
 
 	}
 	

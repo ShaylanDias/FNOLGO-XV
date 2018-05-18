@@ -15,7 +15,7 @@ public abstract class Obstacle implements Serializable{
 	public Obstacle(double x, double y, double radius) {
 		xPos = x;
 		yPos =y;
-		this.radius = radius;
+		this.radius = radius*.9;
 	}
 	/**
 	 * Based on an x, y position based off of the center of the rectangle hitbox
