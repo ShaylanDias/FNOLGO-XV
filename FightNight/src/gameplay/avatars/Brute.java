@@ -37,9 +37,9 @@ public class Brute extends Avatar {
 		sprites = new Rectangle[] { new Rectangle(62, 94, 85, 65) };
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
-		dashCD = 1.7;
-		dashDistance = 140;
-		dashSpeed = 50;
+		dashCD = 1.25;
+		dashDistance = 120;
+		dashSpeed = 60;
 		moveSpeed = 12;
 		a1CD = 7;
 		basicCD = 0.3;
@@ -60,7 +60,7 @@ public class Brute extends Avatar {
 		getSpriteListWalk().add("WWWalk3");
 		numOfSpriteWalk = 4;
 		numOfSpriteDeath = 2;
-		health = 550;
+		health = 600;
 	}
 
 	/**
