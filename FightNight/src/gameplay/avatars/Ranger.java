@@ -47,12 +47,13 @@ public class Ranger extends Avatar {
 			getSpriteListWalk().add("Ranger" + i);
 		}
 
+		getSpriteListDeath().clear();
 		getSpriteListDeath().add("RangerDying1");
 		getSpriteListDeath().add("RangerDying2");
 		getSpriteListDeath().add("RangerDying3");
 		getSpriteListDeath().add("RangerDead");
 		deathTime = 0;
-
+		numOfSpriteDeath = getSpriteListDeath().size();
 	}
 
 	/**
@@ -193,7 +194,7 @@ public class Ranger extends Avatar {
 		surface.pushStyle();
 
 		drawHealthBar(surface);
-
+		
 		if (super.isDead()) {
 			int sw, sh;
 			sw = (int) sprites[spriteInd].getWidth();

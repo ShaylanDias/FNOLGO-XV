@@ -61,6 +61,7 @@ public class Brute extends Avatar {
 		numOfSpriteWalk = 4;
 		numOfSpriteDeath = 2;
 		health = 600;
+		numOfSpriteDeath = getSpriteListDeath().size();
 	}
 
 	/**

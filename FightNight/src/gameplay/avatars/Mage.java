@@ -53,6 +53,8 @@ public class Mage extends Avatar {
 		}
 
 		spriteSpeedDeath = 150;
+		numOfSpriteDeath = getSpriteListDeath().size();
+
 	}
 
 	/**
