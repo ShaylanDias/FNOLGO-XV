@@ -127,7 +127,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 				
 				if(gameEnded) {
-					String text;
+					String text = "";
 					if(won)
 						text = "WINNER!";
 					else

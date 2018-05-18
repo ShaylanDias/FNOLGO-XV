@@ -186,10 +186,8 @@ public class Attack extends MovingSprite {
 		// surface.noFill();
 		// surface.rect((float)(getHitbox().x), (float)(getHitbox().y),
 		// (float)getHitbox().width, (float)getHitbox().height);
-		System.out.println("attack");
 		surface.translate((float) x, (float) y);
 		surface.rotate((PApplet.radians((float) (dir))));
-		System.out.println(dir);
 		surface.image(GamePanel.resources.getImage(imageKey), 0, 0, (int) width, (int) height);
 		surface.popMatrix();
 	}
