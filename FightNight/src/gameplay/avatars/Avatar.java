@@ -162,7 +162,7 @@ public abstract class Avatar implements Serializable {
 				return;
 			}
 		}
-		
+
 		if (!dead && !currentlyAttacking) {
 			if (blocking) {
 				shieldHealth -= 1;
@@ -222,9 +222,9 @@ public abstract class Avatar implements Serializable {
 	public void draw(PApplet surface, long time) {
 		surface.pushMatrix();
 		surface.pushStyle();
-		
+
 		drawHealthBar(surface);
-		
+
 		if (dead) {
 			drawDeath(numOfSpriteDeath, spriteSpeedDeath, time);
 			surface.popMatrix();
@@ -283,7 +283,7 @@ public abstract class Avatar implements Serializable {
 	 * @param map  The Map to draw at
 	 */
 	public void spawn(Map map) {
-		if (!eliminated && !(this instanceof Spectator)) {
+		if (!eliminated) {
 			double x = 1500 - Math.random() * 3000;
 			double y = 1500 - Math.random() * 3000;
 
@@ -340,7 +340,7 @@ public abstract class Avatar implements Serializable {
 	 * Hits a player with an Attack
 	 * 
 	 * @param attack
-	 *            The attack that hitsr
+	 *            The attack that hits
 	 * @return The result of the attack
 	 */
 	public AttackResult takeHit(Attack attack, long time) {
@@ -457,7 +457,7 @@ public abstract class Avatar implements Serializable {
 	 * Starts the Character in a dash, enables superArmor
 	 */
 	public void dash(long time) {
-		
+
 		if(time> dashCDStart + dashCD * 1000) {
 
 			if (left) {
@@ -502,7 +502,7 @@ public abstract class Avatar implements Serializable {
 			dashTraveled = dashDistance + 1;
 		}
 
-		
+
 		if (dashTraveled >= dashDistance) {
 			dashing = false;
 			movementControlled = true;
@@ -598,14 +598,16 @@ public abstract class Avatar implements Serializable {
 	}
 
 	protected void drawDeath(int numOfSpriteDeath, int spriteSpeedDeath, long time) {
-	
-		double deathAnimationTime = 1.5;
-		double step = deathAnimationTime/numOfSpriteDeath;
-		spriteSheetKey = getSpriteListDeath().get(getSpriteListDeath().size()-1);
-		for(int i = 1; i < numOfSpriteDeath+1; i++) {
-			if ((time - deathTime) <= i*step * 1000) {
-				spriteSheetKey = getSpriteListDeath().get(i-1);
-				break;
+
+		if(getSpriteListDeath().size() > 0) {
+			double deathAnimationTime = 1.5;
+			double step = deathAnimationTime/numOfSpriteDeath;
+			spriteSheetKey = getSpriteListDeath().get(getSpriteListDeath().size()-1);
+			for(int i = 1; i < numOfSpriteDeath+1; i++) {
+				if ((time - deathTime) <= i*step * 1000) {
+					spriteSheetKey = getSpriteListDeath().get(i-1);
+					break;
+				}
 			}
 		}
 	}
@@ -700,7 +702,7 @@ public abstract class Avatar implements Serializable {
 	public double getDashCooldown() {
 		return dashCD;
 	}
-	
+
 	public long getBasicCooldownLeft(long time) {
 		return time - basicCDStart;
 	}
@@ -720,7 +722,7 @@ public abstract class Avatar implements Serializable {
 	public long getA3CooldownLeft(long time) {
 		return time - a3CDStart;
 	}
-	
+
 	public long getDashCooldownLeft(long time) {
 		return time - dashCDStart;
 	}
