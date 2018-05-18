@@ -64,7 +64,6 @@ public class Fireball extends Projectile {
 	
 	@Override
 	public void draw(PApplet surface, long time) {
-		System.out.println("draw");
 		if(drawDelay) {
 			if(time > startTime + delay * 1000)
 				super.draw(surface, time);

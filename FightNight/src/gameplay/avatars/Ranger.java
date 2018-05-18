@@ -233,7 +233,6 @@ public class Ranger extends Avatar {
 			}
 			if (invisible)
 				surface.tint(10);
-			System.out.println(spriteSheetKey);
 			if (lastDir) {
 				surface.scale(-1, 1);
 				surface.image(GamePanel.resources.getImage(spriteSheetKey), (float) -hitbox.x, (float) hitbox.y,

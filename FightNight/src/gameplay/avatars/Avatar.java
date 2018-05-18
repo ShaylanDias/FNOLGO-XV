@@ -490,7 +490,6 @@ public abstract class Avatar implements Serializable {
 	}
 
 	private void dashAct(Map map, double dist, long time) { // Where the actual Dash action occurs
-		System.out.println(dist);
 		if (moveBy(Math.cos(Math.toRadians(dashAngle)) * dist, -Math.sin(Math.toRadians(dashAngle)) * dist, map, time))
 			dashTraveled += dist;
 		else if(dist < 5)
