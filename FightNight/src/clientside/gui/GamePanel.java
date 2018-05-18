@@ -348,12 +348,12 @@ public class GamePanel extends PApplet implements NetworkListener {
 		double refX = a.getX();
 		double refY = a.getY() + height / 2 - 60;
 
-		drawTimer(surface, refX - 300, refY, a.getDashCooldownLeft(currentState.getGameTime()), a.getDashCooldown(), "DASH");
-		drawTimer(surface, refX - 200, refY, a.getBasicCooldownLeft(currentState.getGameTime()), a.getBasicCooldown(), "BASIC");
-		drawTimer(surface, refX - 100, refY, a.getRangedCooldownLeft(currentState.getGameTime()), a.getRangedCooldown(), "RANGED");
-		drawTimer(surface, refX, refY, a.getA1CooldownLeft(currentState.getGameTime()), a.getA1Cooldown(), "E");
-		drawTimer(surface, refX + 100, refY, a.getA2CooldownLeft(currentState.getGameTime()), a.getA2Cooldown(), "R");
-		drawTimer(surface, refX + 200, refY, a.getA3CooldownLeft(currentState.getGameTime()), a.getA3Cooldown(), "F");
+		drawTimer(surface, refX - 250, refY, a.getDashCooldownLeft(currentState.getGameTime()), a.getDashCooldown(), "DASH");
+		drawTimer(surface, refX - 150, refY, a.getBasicCooldownLeft(currentState.getGameTime()), a.getBasicCooldown(), "BASIC");
+		drawTimer(surface, refX - 50, refY, a.getRangedCooldownLeft(currentState.getGameTime()), a.getRangedCooldown(), "RANGED");
+		drawTimer(surface, refX + 50, refY, a.getA1CooldownLeft(currentState.getGameTime()), a.getA1Cooldown(), "E");
+		drawTimer(surface, refX + 150, refY, a.getA2CooldownLeft(currentState.getGameTime()), a.getA2Cooldown(), "R");
+		drawTimer(surface, refX + 250, refY, a.getA3CooldownLeft(currentState.getGameTime()), a.getA3Cooldown(), "F");
 
 		surface.popStyle();
 	}
