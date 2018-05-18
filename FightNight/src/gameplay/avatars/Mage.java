@@ -37,13 +37,12 @@ public class Mage extends Avatar {
 		a3CD = 8;
 		a2CD = 10;
 		a1CD = 8;
-		dashCD = 0.5;
 		rangedCD = 0.5;
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
-		dashDistance = 200;
-		dashSpeed = 200;
-		dashCD = 3;
+		dashDistance = 300;
+		dashSpeed = 300;
+		dashCD = 8;
 		numOfSpriteWalk = 8;
 		for (int i = 1; i < 9; i++) {
 			getSpriteListWalk().add("Mage" + i);
