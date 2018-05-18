@@ -55,7 +55,8 @@ public class Spectator extends Avatar{
 
 	}
 	
-	public boolean moveBy(double x, double y, Map map) {
+	@Override
+	public boolean moveBy(double x, double y, Map map, long time) {
 		if(map.inBounds(hitbox.x + x, hitbox.y + y, hitbox.width, hitbox.height)) {
 			hitbox.x += x;
 			hitbox.y += y;
