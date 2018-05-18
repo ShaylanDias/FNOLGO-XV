@@ -149,6 +149,9 @@ public abstract class Avatar implements Serializable {
 			if (!status.started())
 				status.startEffect(time);
 			moveSpeed -= status.getValue();
+			if (status.isFinished(time)) {
+				status = new StatusEffect(Effect.NONE, 0, 0);
+			}
 		} else if (status.getEffect().equals(Effect.STUNNED)) {
 			if (!status.started())
 				status.startEffect(time);
@@ -159,7 +162,7 @@ public abstract class Avatar implements Serializable {
 				return;
 			}
 		}
-
+		
 		if (!dead && !currentlyAttacking) {
 			if (blocking) {
 				shieldHealth -= 1;
@@ -280,7 +283,7 @@ public abstract class Avatar implements Serializable {
 	 * @param map  The Map to draw at
 	 */
 	public void spawn(Map map) {
-		if (!eliminated || this instanceof Spectator) {
+		if (!eliminated && !(this instanceof Spectator)) {
 			double x = 1500 - Math.random() * 3000;
 			double y = 1500 - Math.random() * 3000;
 

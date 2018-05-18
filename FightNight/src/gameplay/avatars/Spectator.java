@@ -36,6 +36,7 @@ public class Spectator extends Avatar{
 		numOfSpriteWalk = 0;
 		movementControlled = true;
 		dashCD = 1;
+		spriteSheetKey = "Fireball";
 		super.setDead(true);
 	}
 	
