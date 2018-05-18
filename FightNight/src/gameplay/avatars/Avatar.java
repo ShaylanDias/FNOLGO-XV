@@ -697,6 +697,10 @@ public abstract class Avatar implements Serializable {
 		this.spriteListAttack = spriteListAttack;
 	}
 
+	public double getDashCooldown() {
+		return dashCD;
+	}
+	
 	public long getBasicCooldownLeft(long time) {
 		return time - basicCDStart;
 	}
@@ -715,6 +719,10 @@ public abstract class Avatar implements Serializable {
 
 	public long getA3CooldownLeft(long time) {
 		return time - a3CDStart;
+	}
+	
+	public long getDashCooldownLeft(long time) {
+		return time - dashCDStart;
 	}
 
 	public double getA1Cooldown() {

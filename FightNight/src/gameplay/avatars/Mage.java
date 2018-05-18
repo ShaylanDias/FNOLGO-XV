@@ -118,9 +118,9 @@ public class Mage extends Avatar {
 	@Override
 	public Attack[] abilityOne(String player, double angle, long time) {
 		currentAttack = AttackType.A1;
-		currentlyAttacking = true;
+//		currentlyAttacking = true;
 		a1CDStart = time;
-		timeActionStarted = a1CDStart;
+//		timeActionStarted = a1CDStart;
 
 		Attack[] attack = new Attack[40];
 		double damage = 12.5;
