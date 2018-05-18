@@ -3,7 +3,6 @@ package gameplay.avatars;
 import java.awt.Rectangle;
 
 import clientside.gui.GamePanel;
-import gameplay.GameState;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Attack.AttackResult;
 import gameplay.attacks.Fireball;
@@ -48,7 +47,11 @@ public class Ranger extends Avatar {
 			getSpriteListWalk().add("Ranger" + i);
 		}
 
-		getSpriteListDeath().add("Ranger");
+		getSpriteListDeath().add("RangerDying1");
+		getSpriteListDeath().add("RangerDying2");
+		getSpriteListDeath().add("RangerDying3");
+		getSpriteListDeath().add("RangerDead");
+		deathTime = System.currentTimeMillis() + 6000;
 
 	}
 
@@ -256,10 +259,10 @@ public class Ranger extends Avatar {
 			}
 		}
 
-		// surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
-		// surface.fill(Color.RED.getRGB());
-		// surface.ellipseMode(PApplet.CENTER);
-		// surface.ellipse((float)(hitbox.x), (float)(hitbox.y), 5f, 5f);
+//		 surface.rect((float)hitbox.x, (float)hitbox.y, (float)sw, (float)sh);
+//		 surface.fill(Color.RED.getRGB());
+//		 surface.ellipseMode(PApplet.CENTER);
+//		 surface.ellipse((float)(hitbox.x), (float)(hitbox.y), 5f, 5f);
 
 		surface.popMatrix();
 		surface.popStyle();

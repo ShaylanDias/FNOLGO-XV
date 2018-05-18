@@ -219,7 +219,7 @@ public abstract class Avatar implements Serializable {
 	public void draw(PApplet surface, long time) {
 		surface.pushMatrix();
 		surface.pushStyle();
-
+		
 		drawHealthBar(surface);
 
 		if (dead) {
