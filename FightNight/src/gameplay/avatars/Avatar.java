@@ -93,7 +93,7 @@ public abstract class Avatar implements Serializable {
 	 * Initializes a Character with default values
 	 */
 	public Avatar() {
-		lives = 1;
+		lives = 3;
 		sprites = new Rectangle[] { new Rectangle(100, 100, 200, 200) };
 		hitbox = new Rectangle2D.Double(-1000, -1000, 200, 200);
 		timeActionStarted = 0;
