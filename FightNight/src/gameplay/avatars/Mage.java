@@ -34,9 +34,9 @@ public class Mage extends Avatar {
 		moveSpeed = 7;
 		spriteSheetKey = "Mage";
 		sprites = new Rectangle[] { new Rectangle(70, 94, 60, 90) };
-		a3CD = 10;
-		a2CD = 10;
-		a1CD = 8;
+		a3CD = 14;
+		a2CD = 20;
+		a1CD = 17;
 		rangedCD = 0.5;
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
@@ -44,6 +44,7 @@ public class Mage extends Avatar {
 		dashSpeed = 300;
 		dashCD = 10;
 		numOfSpriteWalk = 8;
+		health = 250;
 		for (int i = 1; i < 9; i++) {
 			getSpriteListWalk().add("Mage" + i);
 		}
