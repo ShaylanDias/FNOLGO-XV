@@ -83,6 +83,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 	public void setup() {
 		// We are gonna load images before doing anything else on the clientside
 		resources.loadImages(this);
+		frameRate(20);
 	}
 
 	/**
@@ -102,9 +103,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 
 
 		} else {
-			
-			System.out.println("draw called: " + System.currentTimeMillis());
-			
+						
 			imageMode(CENTER);
 			background(Color.BLACK.getRGB());
 
@@ -277,7 +276,6 @@ public class GamePanel extends PApplet implements NetworkListener {
 		if (ndo.messageType.equals(NetworkDataObject.MESSAGE)) {
 			if (ndo.message[0] != null) {
 				if (ndo.message[0] instanceof GameState) {
-					System.out.println("gamestate received: " + System.currentTimeMillis());
 					currentState = (GameState) ndo.message[0];
 				} else if (ndo.message[0] instanceof String) {
 					if (ndo.message[0].equals("ENDED")) {
