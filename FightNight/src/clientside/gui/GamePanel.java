@@ -2,6 +2,7 @@ package clientside.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 
@@ -16,6 +17,7 @@ import networking.frontend.NetworkListener;
 import networking.frontend.NetworkMessenger;
 import processing.awt.PSurfaceAWT;
 import processing.core.PApplet;
+import processing.core.PFont;
 
 /**
  * This class draws the game, takes input, and communicates with the server. It
@@ -53,7 +55,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		PApplet.runSketch(new String[] { "" }, this);
 		PSurfaceAWT surf = (PSurfaceAWT) this.getSurface();
 		PSurfaceAWT.SmoothCanvas canvas = (PSurfaceAWT.SmoothCanvas) surf.getNative();
-
+		
 		window = (JFrame) canvas.getFrame();
 		window.setSize(1200, 800);
 		window.setLocation(100, 50);
@@ -80,6 +82,8 @@ public class GamePanel extends PApplet implements NetworkListener {
 	 */
 	public void draw() {
 		clear();
+		
+		textFont(new PFont(new Font("gabriola", Font.PLAIN, 25), true));
 
 		if (!connected) {
 

@@ -97,7 +97,8 @@ public class Resources {
 		images.put("FNOLGO MAP", new ImageWrapper("data/Map/map50x50.png"));
 		images.put("SmallTree", new ImageWrapper("data/Map/SmallTree.png"));
 		
-		images.put("Spectator", new ImageWrapper("data/spectator.png"));
+		images.put("Spectator", new ImageWrapper("data/Spectator.png"));
+		images.put("Background", new ImageWrapper("data/Background.jpg"));
 
 	}
 

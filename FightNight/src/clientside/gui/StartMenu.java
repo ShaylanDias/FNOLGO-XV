@@ -61,11 +61,17 @@ public class StartMenu extends JPanel {
 		panelCont.setLayout(c1);
 		JLabel title = new JLabel();
 		startMenu.setLayout(new BoxLayout(startMenu, BoxLayout.Y_AXIS));
-		startMenu.setBackground(Color.black);
+		//startMenu.setBackground(Color.black);
 		startMenu.setPreferredSize(new Dimension(1200, 800));
+		
+		ImageIcon backgroundImage = new ImageIcon("Background"); 
+		JLabel background = new JLabel();
+	
+		background.setIcon(backgroundImage);	System.out.println(background);
+		startMenu.add(background);
 
 		// title
-		title.setFont(new Font("arial", Font.BOLD, 100));
+		title.setFont(new Font("gabriola", Font.BOLD, 100));
 		title.setSize(new Dimension(300, 200));
 		title.setForeground(Color.WHITE);
 		title.setText("FNOLGO XV");
@@ -73,13 +79,19 @@ public class StartMenu extends JPanel {
 		startMenu.add(title, startMenu);
 
 		JButton playButton = new JButton("Play");
+		playButton.setFont(new Font("gabriola", Font.BOLD, 25));
 		playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		playButton.setSize(new Dimension(100, 50));
+		//playButton.setSize(new Dimension(100, 50));
 		startMenu.add(playButton, startMenu);
 
 		JButton instructionButton = new JButton("Instructions");
+		instructionButton.setFont(new Font("gabriola", Font.BOLD, 25));
 		instructionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		instructionButton.setPreferredSize(new Dimension(200, 100));
+		//instructionButton.setForeground(Color.);
+		instructionButton.setOpaque(false);
+		instructionButton.setContentAreaFilled(false);
+		instructionButton.setBorderPainted(true);
+		//instructionButton.setPreferredSize(new Dimension(200, 100));
 		startMenu.add(instructionButton, startMenu);
 
 		// Instructions Panel
@@ -95,9 +107,9 @@ public class StartMenu extends JPanel {
 		JLabel iTitle = new JLabel();
 		howToPlay.setForeground(Color.WHITE);
 		iTitle.setForeground(Color.WHITE);
-		iTitle.setFont(new Font("arial", Font.BOLD, 75));
+		iTitle.setFont(new Font("gabriola", Font.BOLD, 75));
 		iTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
-		howToPlay.setFont(new Font("arial", Font.PLAIN, 25));
+		howToPlay.setFont(new Font("gabriola", Font.PLAIN, 25));
 		howToPlay.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		Instructions.add(iTitle);
@@ -128,7 +140,7 @@ public class StartMenu extends JPanel {
 
 		JLabel selected = new JLabel();
 		selected.setForeground(Color.WHITE);
-		selected.setFont(new Font("arial", Font.PLAIN, 25));
+		selected.setFont(new Font("gabriola", Font.PLAIN, 25));
 		selected.setAlignmentX(Component.LEFT_ALIGNMENT);
 		selected.setText("Selected: " + game.getPlayer().getAvatar().toString());
 
