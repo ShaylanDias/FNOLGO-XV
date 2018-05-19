@@ -45,7 +45,7 @@ public class NetworkManagementPanel extends JPanel
 	private static final int TCP_PORT = 4444;
 	private static final int BROADCAST_PORT = 4444;
 	
-	private static final int DISCOVERY_TIMEOUT = 15;
+	private static final int DISCOVERY_TIMEOUT = 3;
 
 	private JTextArea statusText;
 	private JList<InetAddress> hostList, connectedList;
