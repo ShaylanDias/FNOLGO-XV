@@ -85,5 +85,25 @@ public class Player {
 	public String getPlayerAddress() {
 		return playerAddress;
 	}
+	
+	/**
+	 * 
+	 * Sets this Player's username
+	 * 
+	 * @param username New username
+	 */
+	public void setUsername(String username) {
+		this.avatar.setUsername(username);
+	}
 
+	/**
+	 * 
+	 * Gets this Player's username
+	 * 
+	 * @return The new username
+	 */
+	public String getUsername() {
+		return avatar.getUsername();
+	}
+	
 }

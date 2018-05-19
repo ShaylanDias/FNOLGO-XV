@@ -199,7 +199,10 @@ public class Ranger extends Avatar {
 		surface.pushMatrix();
 		surface.pushStyle();
 
-		drawHealthBar(surface);
+		surface.textSize(14);
+		surface.fill(255);
+		surface.textAlign(PApplet.CENTER);
+		surface.text(super.getUsername(), (float)hitbox.x, (float)(hitbox.y - hitbox.height + 4));
 		
 		if (super.isDead()) {
 			int sw, sh;
@@ -219,6 +222,7 @@ public class Ranger extends Avatar {
 			surface.popStyle();
 			return;
 		} else {
+			drawHealthBar(surface);
 			int sw, sh;
 			sw = (int) sprites[spriteInd].getWidth();
 			sh = (int) sprites[spriteInd].getHeight();
