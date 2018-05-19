@@ -213,6 +213,7 @@ public class StartMenu extends JPanel {
 
 			JPanel nameSelection = new JPanel();
 			JTextField nameSelect = new JTextField(12);
+			nameSelect.setHorizontalAlignment(JTextField.CENTER);
 			characterSelectionButton.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent ae){
 					game.getPlayer().setUsername(nameSelect.getText());

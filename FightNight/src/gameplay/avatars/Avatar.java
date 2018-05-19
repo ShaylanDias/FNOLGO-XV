@@ -272,7 +272,7 @@ public abstract class Avatar implements Serializable {
 		surface.textSize(14);
 		surface.fill(255);
 		surface.textAlign(PApplet.CENTER);
-		surface.text(getUsername(), (float)hitbox.x, (float)(hitbox.y - hitbox.height + 4));
+		surface.text(getUsername(), (float)hitbox.x, (float)(hitbox.y - hitbox.height + 12));
 		
 		if (dead) {
 			drawDeath(numOfSpriteDeath, spriteSpeedDeath, time);
