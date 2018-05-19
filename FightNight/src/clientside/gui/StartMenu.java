@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +16,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -49,6 +51,8 @@ public class StartMenu extends JPanel {
 
 	private CardLayout c1 = new CardLayout();
 
+	private Image backgroundImage;
+
 	/**
 	 * 
 	 * @param game
@@ -57,20 +61,14 @@ public class StartMenu extends JPanel {
 	 */
 	public StartMenu(GamePanel game) {
 
-		// Very First Menu
+		// FIRST SCREEN
 		panelCont.setLayout(c1);
 		JLabel title = new JLabel();
 		startMenu.setLayout(new BoxLayout(startMenu, BoxLayout.Y_AXIS));
-		//startMenu.setBackground(Color.black);
+		// startMenu.setBackground(Color.black);
 		startMenu.setPreferredSize(new Dimension(1200, 800));
-		
-		ImageIcon backgroundImage = new ImageIcon("Background"); 
-		JLabel background = new JLabel();
-	
-		background.setIcon(backgroundImage);	System.out.println(background);
-		startMenu.add(background);
 
-		// title
+		// TITLE LABEL
 		title.setFont(new Font("gabriola", Font.BOLD, 100));
 		title.setSize(new Dimension(300, 200));
 		title.setForeground(Color.WHITE);
@@ -78,44 +76,55 @@ public class StartMenu extends JPanel {
 		title.setAlignmentX(Component.CENTER_ALIGNMENT);
 		startMenu.add(title, startMenu);
 
+		// PLAY BUTTON
 		JButton playButton = new JButton("Play");
 		playButton.setFont(new Font("gabriola", Font.BOLD, 25));
 		playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		//playButton.setSize(new Dimension(100, 50));
+		// playButton.setSize(new Dimension(100, 50));
 		startMenu.add(playButton, startMenu);
 
+		// INSTRUCTION BUTTON
 		JButton instructionButton = new JButton("Instructions");
 		instructionButton.setFont(new Font("gabriola", Font.BOLD, 25));
 		instructionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		//instructionButton.setForeground(Color.);
+		// instructionButton.setForeground(Color.);
 		instructionButton.setOpaque(false);
 		instructionButton.setContentAreaFilled(false);
 		instructionButton.setBorderPainted(true);
-		//instructionButton.setPreferredSize(new Dimension(200, 100));
+		// instructionButton.setPreferredSize(new Dimension(200, 100));
 		startMenu.add(instructionButton, startMenu);
 
+		// BACKGROUND IMAGE
+		try {
+			backgroundImage = ImageIO.read(new File("data/Background.jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		JLabel background = new JLabel();
+		background.setIcon(new ImageIcon(backgroundImage));
+
+		System.out.println(background.getHorizontalAlignment());
+
+		// startMenu.add(background);
+
+		// ------------------
 		// Instructions Panel
+		// ------------------
 		JPanel Instructions = new JPanel();
 		Instructions.setPreferredSize(new Dimension(1200, 800));
 		Instructions.setLayout(new BoxLayout(Instructions, BoxLayout.Y_AXIS));
 		Instructions.setBackground(Color.BLACK);
 
+		// BACK BUTTON
 		JButton iback = new JButton("Back");
 		iback.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+		// INSTRUCTIONS TEXT
 		JTextArea howToPlay = new JTextArea();
-		JLabel iTitle = new JLabel();
 		howToPlay.setForeground(Color.WHITE);
-		iTitle.setForeground(Color.WHITE);
-		iTitle.setFont(new Font("gabriola", Font.BOLD, 75));
-		iTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
 		howToPlay.setFont(new Font("gabriola", Font.PLAIN, 25));
 		howToPlay.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-		Instructions.add(iTitle);
-		Instructions.add(howToPlay);
-		Instructions.add(iback);
-		iTitle.setText("INSTRUCTIONS:");
 		howToPlay.setText(
 				"The objective of the game is to be the last remaining Avatar on the map. You are in an arena with up to 16 \nother players, each "
 						+ "with 4 lives. Use your abilities to take down your opponents and be the last one \nstanding in this contest of champions!\n\nCONTROLS:\n"
@@ -128,15 +137,27 @@ public class StartMenu extends JPanel {
 		howToPlay.setEditable(false);
 		// howToPlay.setText("HI");
 
+		// TITLE LABEL
+		JLabel iTitle = new JLabel();
+		iTitle.setForeground(Color.WHITE);
+		iTitle.setFont(new Font("gabriola", Font.BOLD, 75));
+		iTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
+		iTitle.setText("INSTRUCTIONS:");
+
+		Instructions.add(iTitle);
+		Instructions.add(howToPlay);
+		Instructions.add(iback);
+
+		// ------------------------
+		// CHARACTER SELECTION PANEL
+		// -------------------------
 		JPanel characterSelection = new JPanel();
 		JButton characterSelectionButton = new JButton("Select Character");
-		JButton cBack = new JButton("back");
-
-		characterSelection.add(cBack);
 		characterSelection.setLayout(new BoxLayout(characterSelection, BoxLayout.Y_AXIS));
 		characterSelection.setPreferredSize(new Dimension(1200, 800));
-		characterSelection.add(characterSelectionButton);
 		characterSelection.setBackground(Color.BLACK);
+
+		JButton cBack = new JButton("Back");
 
 		JLabel selected = new JLabel();
 		selected.setForeground(Color.WHITE);
@@ -182,10 +203,13 @@ public class StartMenu extends JPanel {
 				}
 			});
 
+			characterSelection.add(cBack);
+			characterSelection.add(characterSelectionButton);
 			characterSelection.add(selected);
 			characterSelection.add(bruteLabel);
 			characterSelection.add(mageLabel);
 			characterSelection.add(rangerLabel);
+
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
