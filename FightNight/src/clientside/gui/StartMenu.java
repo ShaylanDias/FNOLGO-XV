@@ -4,21 +4,17 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -53,8 +49,6 @@ public class StartMenu extends JPanel {
 	private PSurfaceAWT surf; // These are the "portals" through which the PApplets draw on the canvas
 
 	private CardLayout c1 = new CardLayout();
-
-	private Image backgroundImage;
 
 	/**
 	 * 
@@ -213,9 +207,13 @@ public class StartMenu extends JPanel {
 
 			JPanel nameSelection = new JPanel();
 			JTextField nameSelect = new JTextField(12);
+			nameSelect.setText("Enter Username");
 			characterSelectionButton.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent ae){
-					game.getPlayer().setUsername(nameSelect.getText());
+					if(!nameSelect.getText().equals("Enter Username"))
+						game.getPlayer().setUsername(nameSelect.getText());
+					else
+						game.getPlayer().setUsername("");
 				}
 			});
 			
@@ -223,7 +221,7 @@ public class StartMenu extends JPanel {
 			nameSelection.add(characterSelectionButton);
 			nameSelection.setBackground(Color.BLACK);
 			
-			nameSelect.setMaximumSize(new Dimension(200, 30));
+			nameSelect.setMaximumSize(new Dimension(150, 30));
 			
 			characterSelection.add(cBack);
 			characterSelection.add(characterSelectionButton);
