@@ -39,6 +39,7 @@ public abstract class Projectile extends Attack {
 	 * @param playerAddress
 	 *            The IP Address of the Player who launched this
 	 * @param damage
+	 *            The damage caused by this Projectile
 	 * @param shieldBreaker
 	 *            True if this Projectile breaks through shields
 	 * @param effect
@@ -62,6 +63,8 @@ public abstract class Projectile extends Attack {
 
 	/**
 	 * Checks if this Projectile has ended its path
+	 * 
+	 * @return True if ended, false if not
 	 */
 	protected boolean checkEnd() {
 		if (!super.isActive())

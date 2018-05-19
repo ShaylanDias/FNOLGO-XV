@@ -25,12 +25,9 @@ public class Trap extends Attack {
 	 *            The IP address of the player
 	 * @param damage
 	 *            Damage caused by this attack
-	 * @param shieldBreaker
-	 *            True if this attack breaks through shields
 	 * @param effect
 	 *            The StatusEffect that this Attack inflicts
-	 * @param dir
-	 *            The direction of the Attack
+	 * @param duration The time this trap lasts for in seconds
 	 * @param time
 	 *            The time of instantiation on the server
 	 */

@@ -180,6 +180,9 @@ public abstract class Avatar implements Serializable {
 
 	/**
 	 * This should be called every round of the game loop
+	 * 
+	 * @param map The current Map of the game to move in reference to
+	 * @param time The current server time of the game
 	 */
 	public void act(Map map, long time) {
 
@@ -451,9 +454,11 @@ public abstract class Avatar implements Serializable {
 	 * Moves the Avatar by the input x and y values
 	 * 
 	 * @param x
-	 *            X to move
+	 *            X to move by
 	 * @param y
-	 *            Y to move
+	 *            Y to move by
+	 * @param map The current map of the game to move in reference to
+	 * @param time The current server time 
 	 * @return True if successfully could move
 	 */
 	public boolean moveBy(double x, double y, Map map, long time) {
@@ -478,6 +483,8 @@ public abstract class Avatar implements Serializable {
 	 *            The distance to travel
 	 * @param angle
 	 *            The angle to travel at
+	 * @param map The current map of the game to move in reference to
+	 * @param time The current server time 
 	 * @return True if successful
 	 */
 	public boolean moveDistance(double dist, double angle, Map map, long time) {
@@ -507,6 +514,8 @@ public abstract class Avatar implements Serializable {
 
 	/**
 	 * Starts the Character in a dash, enables superArmor
+	 * 
+	 * @param time The current server time
 	 */
 	public void dash(long time) {
 		
@@ -564,7 +573,9 @@ public abstract class Avatar implements Serializable {
 	}
 
 	/**
-	 * Starts an Avatar's block
+	 * Sets an Avatar to blocking or not blocking
+	 * 
+	 * @param block True for blocking, false for not blocking
 	 */
 	public void block(boolean block) {
 		if (shieldHealth > 0 && !status.getEffect().equals(Effect.STUNNED)) {
@@ -622,7 +633,7 @@ public abstract class Avatar implements Serializable {
 	 * Gets if the player can control movement right now, no if dashing, blocking,
 	 * attack windup
 	 * 
-	 * @return
+	 * @return True if movement controlled
 	 */
 	public boolean movementControlled() {
 		return movementControlled;
@@ -688,8 +699,8 @@ public abstract class Avatar implements Serializable {
 	 * 
 	 * Sets the sprite key for this Avatar's walk animation
 	 * 
-	 * @param numOfSpriteDeath Number of walk sprites
-	 * @param spriteSpeedDeath Speed to cycle sprites
+	 * @param numOfSpriteWalk Number of walk sprites
+	 * @param spriteSpeedWalk Speed to cycle sprites
 	 * @param time The server time of this draw
 	 */
 	public void walk(int numOfSpriteWalk, int spriteSpeedWalk, long time) {

@@ -39,6 +39,7 @@ public class Fireball extends Projectile {
 	 *            The Avatar's Player's IP address
 	 * @param dir
 	 *            The direction of travel
+	 * @param dmg The damage of this Fireball
 	 * @param time The server time of instantiation 
 	 */
 	public Fireball(int x, int y, String playerAddress, double dir, double dmg, long time) {

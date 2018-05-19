@@ -82,7 +82,7 @@ public class NetworkManagementPanel extends JPanel
 	 * @param programID A String containing a unique ID for the program. Servers will reject clients with different programIDs.
 	 * @param maxPerServer The maximum number of connections a server should accept.
 	 * @param nl The listener to be notified of network events.
-	 * @param StartMenu menu The StartMenu that this panel is linked to
+	 * @param menu The StartMenu that this panel is linked to
 	 */
 	public NetworkManagementPanel (String programID, int maxPerServer, NetworkListener nl, StartMenu menu) {
 		ActionHandler actionEventHandler = new ActionHandler();

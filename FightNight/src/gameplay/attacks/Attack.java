@@ -114,6 +114,7 @@ public class Attack extends MovingSprite {
 	 * Checks if the Attack's end condition has been reached and sets it to inactive
 	 * if it has
 	 * 
+	 * @param time The current server time
 	 * @return True if ended
 	 */
 	protected boolean checkEnd(long time) {
@@ -140,6 +141,9 @@ public class Attack extends MovingSprite {
 	 * 
 	 * What this Attack should do each time the game loop moves forward
 	 * 
+	 * 
+	 * @param avatars The Avatars that this Attack could possibly hit
+	 * @param time The current server time
 	 * @return Returns true if was successful, false if the projectile is now
 	 *         inactive
 	 */

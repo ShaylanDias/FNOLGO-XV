@@ -66,18 +66,6 @@ public class Brute extends Avatar {
 		health = 550;
 	}
 
-	/**
-	 * 
-	 * Creates a Brute at this x,y
-	 * 
-	 * @param x
-	 * @param y
-	 */
-	public Brute(double x, double y) {
-		this();
-		this.hitbox.x = x;
-	}
-
 	@Override
 	public void act(Map map, long time) {
 		if (currentAttack == AttackType.A1)

@@ -40,6 +40,7 @@ public class StatusEffect implements Serializable {
 	 *            The type of Effect
 	 * @param value
 	 *            The value of the Effect
+	 * @param time The current server time
 	 */
 	public StatusEffect(Effect effect, double value, double time) {
 		this.effect = effect;
@@ -68,6 +69,7 @@ public class StatusEffect implements Serializable {
 	 * 
 	 * Returns true if the status effect has been started and has completed
 	 * 
+	 * @param time The current server time
 	 * @return True if finished
 	 */
 	public boolean isFinished(long time) {

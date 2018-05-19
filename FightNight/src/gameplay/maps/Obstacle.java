@@ -24,8 +24,10 @@ public abstract class Obstacle implements Serializable{
 	}
 	/**
 	 * Checks the intersections based on an x, y position based off of the center of the rectangle hitbox
-	 * @param x
-	 * @param y
+	 * @param x The x-coordinate
+	 * @param y The y-coordinate
+	 * @param width The width of the obstacle
+	 * @param height The height of the obstacle
 	 * @return returns true if the 2 hitboxes run into each other, false otherwise. 
 	 */
 	public boolean checkIntersection(double x, double y, double width, double height) {
