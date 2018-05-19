@@ -37,6 +37,10 @@ import processing.awt.PSurfaceAWT;
  */
 public class StartMenu extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8716227526013378891L;
 	private JFrame frame = new JFrame("FNOLGO XV");
 	private JPanel panelCont = new JPanel();
 	private JPanel startMenu = new JPanel();

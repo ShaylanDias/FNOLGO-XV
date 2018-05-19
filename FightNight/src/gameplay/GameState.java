@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import gameplay.attacks.Attack;
 import gameplay.avatars.Avatar;
 import gameplay.avatars.Ranger;
+import gameplay.avatars.Spectator;
 import gameplay.maps.Map;
 import gameplay.maps.StandardMap;
 import processing.core.PApplet;

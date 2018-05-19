@@ -3,6 +3,7 @@ package gameplay.avatars;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
+import clientside.gui.GamePanel;
 import gameplay.attacks.Attack;
 import gameplay.attacks.Attack.AttackResult;
 import gameplay.maps.Map;
@@ -54,7 +55,9 @@ public class Spectator extends Avatar{
 		surface.textAlign(PApplet.CENTER);
 		surface.fill(0);
 		surface.textSize(18);
-		surface.text("Spectator", (float)(hitbox.x), (float)(hitbox.y - 250));
+		surface.tint(255, 50);
+		surface.text("Spectator", (float)(hitbox.x), (float)(hitbox.y - 55));
+		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float)hitbox.x, (float)hitbox.y, 50, 50);
 		surface.popStyle();
 	}
 	

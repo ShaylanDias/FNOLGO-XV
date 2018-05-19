@@ -66,6 +66,25 @@ public class Fireball extends Projectile {
 	
 	/**
 	 * 
+	 * Creates a Fireball with a specified speed, image, ranger, and effect
+	 * 
+	 * @param x The starting x-pos
+	 * @param y The starting y-pos
+	 * @param playerAddress The Avatar's Player's IP address
+	 * @param dir The direction of travel
+	 * @param imageKey The Resources image key
+	 * @param range The range of this Attack
+	 * @param speed The speed of movement
+	 * @param dmg The damage of this Attack
+	 * @param time The server time of instantiation 
+	 * @param effect The StatusEffect this Fireball inflicts
+	 */
+	public Fireball(int x, int y, String playerAddress, double dir, String imageKey, double range, double speed, double dmg, long time, StatusEffect effect) {
+		super(imageKey, x, y, W, H, playerAddress, dmg, SHIELD_BREAKER, effect, dir, range, speed, time);
+	}
+	
+	/**
+	 * 
 	 * Creates a Fireball with a specific width and height
 	 * 
 	 * @param x The starting x-pos

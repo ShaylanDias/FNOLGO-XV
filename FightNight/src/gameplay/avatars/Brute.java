@@ -194,7 +194,7 @@ public class Brute extends Avatar {
 				lastDir = true;
 			else
 				lastDir = false;
-			return new Attack[] { new Fireball((int) hitbox.x, (int) hitbox.y, player, angle, "Rock", 400, 22, damage, time) };
+			return new Attack[] { new Fireball((int) hitbox.x, (int) hitbox.y, player, angle, "Rock", 400, 22, damage, time, new StatusEffect(Effect.STUNNED, 1, 0.8)) };
 		} else {
 			return null;
 		}
