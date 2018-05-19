@@ -61,7 +61,7 @@ public abstract class Avatar implements Serializable {
 
 	private boolean up, down, left, right;
 
-	private String playerAddress = "";
+	private String playerAddress = "", username = "test";
 
 	/**
 	 * The key for the block image
@@ -269,6 +269,11 @@ public abstract class Avatar implements Serializable {
 		
 		drawHealthBar(surface);
 		
+		surface.textSize(14);
+		surface.fill(255);
+		surface.textAlign(PApplet.CENTER);
+		surface.text(getUsername(), (float)hitbox.x, (float)(hitbox.y - hitbox.height + 4));
+		
 		if (dead) {
 			drawDeath(numOfSpriteDeath, spriteSpeedDeath, time);
 			surface.popMatrix();
@@ -283,8 +288,6 @@ public abstract class Avatar implements Serializable {
 		}
 
 		int sw, sh;
-		// sx = (int) sprites[spriteInd].getX();
-		// sy = (int) sprites[spriteInd].getY();
 		sw = (int) sprites[spriteInd].getWidth();
 		sh = (int) sprites[spriteInd].getHeight();
 
@@ -665,7 +668,7 @@ public abstract class Avatar implements Serializable {
 		surface.fill(Color.GREEN.getRGB());
 		surface.rect((float) (hitbox.x), (float) (hitbox.y - hitbox.height * 3 / 4 - 2),
 				(float) hitbox.width * (float) (health / fullHealth), (float) 10);
-		surface.fill(Color.BLACK.getRGB());
+		surface.fill(Color.WHITE.getRGB());
 		surface.pushStyle();
 		surface.textSize(18);
 		surface.text(lives+"", (float)(hitbox.x-hitbox.width/2-10), (float)(hitbox.y - hitbox.height * 3 / 4));
@@ -953,4 +956,24 @@ public abstract class Avatar implements Serializable {
 		this.spriteListDeath = spriteListDeath;
 	}
 
+	/**
+	 * 
+	 * Sets this Avatar's username
+	 * 
+	 * @param username New username
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	/**
+	 * 
+	 * Gets this Avatar's username
+	 * 
+	 * @return The new username
+	 */
+	public String getUsername() {
+		return username;
+	}
+	
 }

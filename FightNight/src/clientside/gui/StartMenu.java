@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -21,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import gameplay.avatars.Brute;
 import gameplay.avatars.Mage;
@@ -63,10 +65,10 @@ public class StartMenu extends JPanel {
 		startMenu.setLayout(new BoxLayout(startMenu, BoxLayout.Y_AXIS));
 		//startMenu.setBackground(Color.black);
 		startMenu.setPreferredSize(new Dimension(1200, 800));
-		
+
 		ImageIcon backgroundImage = new ImageIcon("Background"); 
 		JLabel background = new JLabel();
-	
+
 		background.setIcon(backgroundImage);	System.out.println(background);
 		startMenu.add(background);
 
@@ -133,7 +135,7 @@ public class StartMenu extends JPanel {
 		JButton cBack = new JButton("back");
 
 		characterSelection.add(cBack);
-		characterSelection.setLayout(new BoxLayout(characterSelection, BoxLayout.Y_AXIS));
+		characterSelection.setLayout(new FlowLayout());
 		characterSelection.setPreferredSize(new Dimension(1200, 800));
 		characterSelection.add(characterSelectionButton);
 		characterSelection.setBackground(Color.BLACK);
@@ -182,10 +184,25 @@ public class StartMenu extends JPanel {
 				}
 			});
 
+			JPanel nameSelection = new JPanel();
+			JTextField nameSelect = new JTextField(12);
+			characterSelectionButton.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent ae){
+					game.getPlayer().setUsername(nameSelect.getText());
+				}
+			});
+			
+			nameSelection.setPreferredSize(new Dimension(1200, 800));
+			nameSelection.add(characterSelectionButton);
+			nameSelection.setBackground(Color.BLACK);
+			
+			nameSelect.setMaximumSize(new Dimension(200, 30));
 			characterSelection.add(selected);
 			characterSelection.add(bruteLabel);
 			characterSelection.add(mageLabel);
 			characterSelection.add(rangerLabel);
+			nameSelection.add(nameSelect);
+			characterSelection.add(nameSelection);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
