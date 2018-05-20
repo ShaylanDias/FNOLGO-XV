@@ -5,21 +5,17 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -55,7 +51,10 @@ public class StartMenu extends JPanel {
 
 	private CardLayout c1 = new CardLayout();
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 24d33d02f8b9970a4935a73c0a79d217241d4160
 	/**
 	 * 
 	 * @param game
@@ -213,15 +212,23 @@ public class StartMenu extends JPanel {
 			JPanel nameSelection = new JPanel();
 			nameSelection.setLayout(new BoxLayout(nameSelection, BoxLayout.Y_AXIS));
 			JTextField nameSelect = new JTextField(12);
+<<<<<<< HEAD
 			JLabel username = new JLabel();
 			username.setFont(new Font("gabriola", Font.PLAIN, 16));
 			username.setText("Username");
 			username.setForeground(Color.WHITE);
 			nameSelect.setAlignmentX(Component.LEFT_ALIGNMENT);
 			nameSelect.setHorizontalAlignment(JTextField.CENTER);
+=======
+			nameSelect.setText("Username");
+			
+>>>>>>> 24d33d02f8b9970a4935a73c0a79d217241d4160
 			characterSelectionButton.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent ae){
-					game.getPlayer().setUsername(nameSelect.getText());
+					if(!nameSelect.getText().equals("Username"))
+						game.getPlayer().setUsername(nameSelect.getText());
+					else
+						game.getPlayer().setUsername("");
 				}
 			});
 			
@@ -230,7 +237,7 @@ public class StartMenu extends JPanel {
 			nameSelection.add(characterSelectionButton);
 			nameSelection.setBackground(Color.BLACK);
 			
-			nameSelect.setMaximumSize(new Dimension(200, 30));
+			nameSelect.setMaximumSize(new Dimension(150, 30));
 			
 			characterSelection.add(cBack);
 			characterSelection.add(characterSelectionButton);
