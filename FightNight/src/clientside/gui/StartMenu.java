@@ -207,10 +207,11 @@ public class StartMenu extends JPanel {
 
 			JPanel nameSelection = new JPanel();
 			JTextField nameSelect = new JTextField(12);
-			nameSelect.setText("Enter Username");
+			nameSelect.setText("Username");
+			
 			characterSelectionButton.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent ae){
-					if(!nameSelect.getText().equals("Enter Username"))
+					if(!nameSelect.getText().equals("Username"))
 						game.getPlayer().setUsername(nameSelect.getText());
 					else
 						game.getPlayer().setUsername("");

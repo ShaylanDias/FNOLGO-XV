@@ -264,6 +264,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 			if (ndo.message[0] != null) {
 				if (ndo.message[0] instanceof GameState) {
 					currentState = (GameState) ndo.message[0];
+					this.loop();
 				} else if (ndo.message[0] instanceof String) {
 					if (ndo.message[0].equals("ENDED")) {
 						gameEnded = true;
