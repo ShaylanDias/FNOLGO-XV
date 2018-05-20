@@ -1,5 +1,6 @@
 package clientside.gui;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -54,7 +55,6 @@ public class StartMenu extends JPanel {
 
 	private CardLayout c1 = new CardLayout();
 
-	private Image backgroundImage;
 
 	/**
 	 * 
@@ -71,12 +71,12 @@ public class StartMenu extends JPanel {
 		// startMenu.setBackground(Color.black);
 		startMenu.setPreferredSize(new Dimension(1200, 800));
 
-
-		ImageIcon backgroundImage = new ImageIcon("Background"); 
-		JLabel background = new JLabel();
-
-		background.setIcon(backgroundImage);	System.out.println(background);
-		startMenu.add(background);
+//
+//		ImageIcon backgroundImage = new ImageIcon("Background"); 
+//		JLabel background = new JLabel();
+//
+//		background.setIcon(backgroundImage);	System.out.println(background);
+//		startMenu.add(background);
 
 		// TITLE LABEL
 		title.setFont(new Font("gabriola", Font.BOLD, 100));
@@ -84,14 +84,12 @@ public class StartMenu extends JPanel {
 		title.setForeground(Color.WHITE);
 		title.setText("FNOLGO XV");
 		title.setAlignmentX(Component.CENTER_ALIGNMENT);
-		startMenu.add(title, startMenu);
 
 		// PLAY BUTTON
 		JButton playButton = new JButton("Play");
 		playButton.setFont(new Font("gabriola", Font.BOLD, 25));
 		playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		// playButton.setSize(new Dimension(100, 50));
-		startMenu.add(playButton, startMenu);
 
 		// INSTRUCTION BUTTON
 		JButton instructionButton = new JButton("Instructions");
@@ -102,19 +100,20 @@ public class StartMenu extends JPanel {
 		instructionButton.setContentAreaFilled(false);
 		instructionButton.setBorderPainted(true);
 		// instructionButton.setPreferredSize(new Dimension(200, 100));
-		startMenu.add(instructionButton, startMenu);
 
 		// BACKGROUND IMAGE
 //		try {
-//			backgroundImage = ImageIO.read(new File("data/Background.jpg"));
+//			backgroundImage = backgroundImage.getScaledInstance(1200, 800, Image.SCALE_DEFAULT);
+//			JLabel background = new JLabel(new ImageIcon(backgroundImage));
+//			
 //		} catch (IOException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-//		JLabel background = new JLabel();
-//		background.setIcon(new ImageIcon(backgroundImage));
+		startMenu.add(title, startMenu);
+		startMenu.add(playButton, startMenu);
+		startMenu.add(instructionButton, startMenu);
 
-		// startMenu.add(background);
 
 		// ------------------
 		// Instructions Panel
@@ -212,7 +211,13 @@ public class StartMenu extends JPanel {
 			});
 
 			JPanel nameSelection = new JPanel();
+			nameSelection.setLayout(new BoxLayout(nameSelection, BoxLayout.Y_AXIS));
 			JTextField nameSelect = new JTextField(12);
+			JLabel username = new JLabel();
+			username.setFont(new Font("gabriola", Font.PLAIN, 16));
+			username.setText("Username");
+			username.setForeground(Color.WHITE);
+			nameSelect.setAlignmentX(Component.LEFT_ALIGNMENT);
 			nameSelect.setHorizontalAlignment(JTextField.CENTER);
 			characterSelectionButton.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent ae){
@@ -221,6 +226,7 @@ public class StartMenu extends JPanel {
 			});
 			
 			nameSelection.setPreferredSize(new Dimension(1200, 800));
+			nameSelection.add(username);
 			nameSelection.add(characterSelectionButton);
 			nameSelection.setBackground(Color.BLACK);
 			
@@ -300,5 +306,20 @@ public class StartMenu extends JPanel {
 	public void fixProcessingPanelSizes(Component match) {
 		surf.setSize(match.getWidth(), match.getHeight());
 	}
+	@Override
+	 protected void paintComponent(Graphics g) {
+
+	    super.paintComponent(g);
+			Image backgroundImage;
+			try {
+				backgroundImage = ImageIO.read(new File("data/Background.jpg"));
+		        g.drawImage(backgroundImage, 0, 0, null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+	}
+
 
 }
