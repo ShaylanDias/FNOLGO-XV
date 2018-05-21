@@ -1,11 +1,11 @@
 package clientside.gui;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -220,18 +220,15 @@ public class StartMenu extends JPanel {
 			JTextField nameSelect = new JTextField(12);
 			JLabel username = new JLabel();
 			username.setFont(new Font("gabriola", Font.PLAIN, 16));
-			username.setText("Username");
+			username.setText("Username:");
 			username.setForeground(Color.WHITE);
 			nameSelect.setAlignmentX(Component.LEFT_ALIGNMENT);
 			nameSelect.setHorizontalAlignment(JTextField.CENTER);
-			nameSelect.setText("Username");
+			nameSelect.setText("");
 			
 			characterSelectionButton.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent ae){
-					if(!nameSelect.getText().equals("Username"))
-						game.getPlayer().setUsername(nameSelect.getText());
-					else
-						game.getPlayer().setUsername("");
+					game.getPlayer().setUsername(nameSelect.getText());
 				}
 			});
 			
