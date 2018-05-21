@@ -1,5 +1,6 @@
 package clientside.gui;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -20,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -65,7 +67,7 @@ public class StartMenu extends JPanel {
 		panelCont.setLayout(c1);
 		JLabel title = new JLabel();
 		startMenu.setLayout(new BoxLayout(startMenu, BoxLayout.Y_AXIS));
-		startMenu.setOpaque(false);
+		startMenu.setBackground(Color.BLACK);
 		startMenu.setPreferredSize(new Dimension(1200, 800));
 
 //
@@ -86,6 +88,8 @@ public class StartMenu extends JPanel {
 		JButton playButton = new JButton("Play");
 		playButton.setFont(new Font("gabriola", Font.BOLD, 25));
 		playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		playButton.setBorderPainted(true);
+
 		// playButton.setSize(new Dimension(100, 50));
 
 		// INSTRUCTION BUTTON
@@ -93,31 +97,13 @@ public class StartMenu extends JPanel {
 		instructionButton.setFont(new Font("gabriola", Font.BOLD, 25));
 		instructionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		// instructionButton.setForeground(Color.);
-		instructionButton.setOpaque(false);
-		instructionButton.setContentAreaFilled(false);
+		//instructionButton.setContentAreaFilled(false);
 		instructionButton.setBorderPainted(true);
 		// instructionButton.setPreferredSize(new Dimension(200, 100));
 
 		startMenu.add(title, startMenu);
 		startMenu.add(playButton, startMenu);
 		startMenu.add(instructionButton, startMenu);
-		
-		// BACKGROUND IMAGE
-		JPanel backgroundPanel = new JPanel();
-		backgroundPanel.setLayout(new OverlayLayout(backgroundPanel));
-		backgroundPanel.setMaximumSize(new Dimension(1200,800));
-		
-		try {
-			Image backgroundImage = ImageIO.read(new File("data/Background.jpg"));
-			//backgroundImage = backgroundImage.getScaledInstance(1200, 800, Image.SCALE_DEFAULT);
-			JLabel background = new JLabel(new ImageIcon(backgroundImage));
-			backgroundPanel.add(startMenu);
-			backgroundPanel.add(background);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 
 
 		// ------------------
@@ -257,7 +243,7 @@ public class StartMenu extends JPanel {
 
 		c1.show(panelCont, "1");
 
-		panelCont.add(backgroundPanel, "1");
+		panelCont.add(startMenu, "1");
 		panelCont.add(Instructions, "1.5");
 		panelCont.add(characterSelection, "2");
 		panelCont.add(nmp, "3");
