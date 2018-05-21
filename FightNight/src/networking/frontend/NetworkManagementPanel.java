@@ -161,6 +161,8 @@ public class NetworkManagementPanel extends JPanel
 		ePanel.add(disconnectAllButton);
 		ePanel.add(serverButton);
 
+		disconnectAllButton.setEnabled(false);
+		
 		discoveryProcess = new JProgressBar();
 		bPanel.add(ePanel);
 		bPanel.add(discoveryProcess);
@@ -208,6 +210,7 @@ public class NetworkManagementPanel extends JPanel
 		connectButton.setEnabled(x);
 		connectCustomButton.setEnabled(x);
 		serverButton.setEnabled(x);
+		disconnectButton.setEnabled(x);
 		backButton.setEnabled(x);
 	}
 	
@@ -311,6 +314,7 @@ public class NetworkManagementPanel extends JPanel
 				}
 			} else if (source == serverButton) {
 				gs = new GameServer(programID, myIP);
+				disconnectAllButton.setEnabled(true);
 				gs.setMaxConnections(maxPerServer);
 				gs.waitForConnections(TCP_PORT);
 				statusText.append("\nTCP server running on " + TCP_PORT);
