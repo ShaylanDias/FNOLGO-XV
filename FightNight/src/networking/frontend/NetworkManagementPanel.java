@@ -210,7 +210,7 @@ public class NetworkManagementPanel extends JPanel
 		connectButton.setEnabled(x);
 		connectCustomButton.setEnabled(x);
 		serverButton.setEnabled(x);
-		disconnectButton.setEnabled(x);
+		disconnectButton.setEnabled(!x);
 		backButton.setEnabled(x);
 	}
 	
