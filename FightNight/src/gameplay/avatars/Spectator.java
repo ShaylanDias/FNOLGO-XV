@@ -56,7 +56,6 @@ public class Spectator extends Avatar{
 		surface.fill(0);
 		surface.textSize(18);
 		surface.tint(255, 50);
-		surface.text("Spectator", (float)(hitbox.x), (float)(hitbox.y - 55));
 		surface.image(GamePanel.resources.getImage(spriteSheetKey), (float)hitbox.x, (float)hitbox.y, 50, 50);
 		surface.popStyle();
 	}

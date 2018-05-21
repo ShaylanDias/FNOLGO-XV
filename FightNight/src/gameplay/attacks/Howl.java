@@ -78,11 +78,11 @@ public class Howl extends Attack{
 		surface.imageMode(PApplet.CORNER);
 		surface.rectMode(PApplet.CENTER);
 		// surface.noFill();
-		surface.rect((float)(getHitbox().x), (float)(getHitbox().y),
-				(float)getHitbox().width, (float)getHitbox().height);
+//		surface.rect((float)(getHitbox().x), (float)(getHitbox().y),
+//				(float)getHitbox().width, (float)getHitbox().height);
 		surface.translate((float) x, (float) y);
 		surface.rotate((PApplet.radians((float) (dir))));
-		surface.image(GamePanel.resources.getImage(imageKey), 0, 0, (int) width, (int) height);
+		surface.image(GamePanel.resources.getImage(imageKey), 0, 0, (int) super.width, (int) super.height);
 		surface.popMatrix();
 	}
 	
