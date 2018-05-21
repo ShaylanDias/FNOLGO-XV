@@ -188,10 +188,10 @@ public class Attack extends MovingSprite {
 	public void draw(PApplet surface, long time) {
 		surface.pushMatrix();
 		surface.imageMode(PApplet.CENTER);
-		// surface.rectMode(PApplet.CENTER);
+		 surface.rectMode(PApplet.CENTER);
 		// surface.noFill();
-		// surface.rect((float)(getHitbox().x), (float)(getHitbox().y),
-		// (float)getHitbox().width, (float)getHitbox().height);
+		surface.rect((float)(getHitbox().x), (float)(getHitbox().y),
+		 (float)getHitbox().width, (float)getHitbox().height);
 		surface.translate((float) x, (float) y);
 		surface.rotate((PApplet.radians((float) (dir))));
 		surface.image(GamePanel.resources.getImage(imageKey), 0, 0, (int) width, (int) height);
