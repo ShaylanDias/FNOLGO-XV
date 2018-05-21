@@ -23,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.OverlayLayout;
 
 import gameplay.avatars.Brute;
 import gameplay.avatars.Mage;
@@ -51,10 +52,7 @@ public class StartMenu extends JPanel {
 
 	private CardLayout c1 = new CardLayout();
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 24d33d02f8b9970a4935a73c0a79d217241d4160
 	/**
 	 * 
 	 * @param game
@@ -67,7 +65,7 @@ public class StartMenu extends JPanel {
 		panelCont.setLayout(c1);
 		JLabel title = new JLabel();
 		startMenu.setLayout(new BoxLayout(startMenu, BoxLayout.Y_AXIS));
-		// startMenu.setBackground(Color.black);
+		startMenu.setOpaque(false);
 		startMenu.setPreferredSize(new Dimension(1200, 800));
 
 //
@@ -100,18 +98,26 @@ public class StartMenu extends JPanel {
 		instructionButton.setBorderPainted(true);
 		// instructionButton.setPreferredSize(new Dimension(200, 100));
 
-		// BACKGROUND IMAGE
-//		try {
-//			backgroundImage = backgroundImage.getScaledInstance(1200, 800, Image.SCALE_DEFAULT);
-//			JLabel background = new JLabel(new ImageIcon(backgroundImage));
-//			
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		startMenu.add(title, startMenu);
 		startMenu.add(playButton, startMenu);
 		startMenu.add(instructionButton, startMenu);
+		
+		// BACKGROUND IMAGE
+		JPanel backgroundPanel = new JPanel();
+		backgroundPanel.setLayout(new OverlayLayout(backgroundPanel));
+		backgroundPanel.setMaximumSize(new Dimension(1200,800));
+		
+		try {
+			Image backgroundImage = ImageIO.read(new File("data/Background.jpg"));
+			//backgroundImage = backgroundImage.getScaledInstance(1200, 800, Image.SCALE_DEFAULT);
+			JLabel background = new JLabel(new ImageIcon(backgroundImage));
+			backgroundPanel.add(startMenu);
+			backgroundPanel.add(background);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 
 		// ------------------
@@ -212,17 +218,14 @@ public class StartMenu extends JPanel {
 			JPanel nameSelection = new JPanel();
 			nameSelection.setLayout(new BoxLayout(nameSelection, BoxLayout.Y_AXIS));
 			JTextField nameSelect = new JTextField(12);
-<<<<<<< HEAD
 			JLabel username = new JLabel();
 			username.setFont(new Font("gabriola", Font.PLAIN, 16));
 			username.setText("Username");
 			username.setForeground(Color.WHITE);
 			nameSelect.setAlignmentX(Component.LEFT_ALIGNMENT);
 			nameSelect.setHorizontalAlignment(JTextField.CENTER);
-=======
 			nameSelect.setText("Username");
 			
->>>>>>> 24d33d02f8b9970a4935a73c0a79d217241d4160
 			characterSelectionButton.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent ae){
 					if(!nameSelect.getText().equals("Username"))
@@ -257,7 +260,7 @@ public class StartMenu extends JPanel {
 
 		c1.show(panelCont, "1");
 
-		panelCont.add(startMenu, "1");
+		panelCont.add(backgroundPanel, "1");
 		panelCont.add(Instructions, "1.5");
 		panelCont.add(characterSelection, "2");
 		panelCont.add(nmp, "3");
@@ -312,20 +315,6 @@ public class StartMenu extends JPanel {
 
 	public void fixProcessingPanelSizes(Component match) {
 		surf.setSize(match.getWidth(), match.getHeight());
-	}
-	@Override
-	 protected void paintComponent(Graphics g) {
-
-	    super.paintComponent(g);
-			Image backgroundImage;
-			try {
-				backgroundImage = ImageIO.read(new File("data/Background.jpg"));
-		        g.drawImage(backgroundImage, 0, 0, null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
 	}
 
 
