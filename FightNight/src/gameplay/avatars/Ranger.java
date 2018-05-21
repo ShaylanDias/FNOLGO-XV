@@ -118,7 +118,7 @@ public class Ranger extends Avatar {
 		currentAttack = AttackType.A1;
 		currentlyAttacking = true;
 		timeActionStarted = time;
-		double damage = 15;
+		double damage = 10;
 		super.a1CDStart = timeActionStarted;
 		if (angle > 90 && angle < 270) {
 			lastDir = true;
