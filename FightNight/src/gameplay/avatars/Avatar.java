@@ -412,6 +412,7 @@ public abstract class Avatar implements Serializable {
 							shieldHealth = 0;
 							blocking = false;
 						}
+						//System.out.println("BLOCKED");
 						return AttackResult.BLOCKED;
 					}
 				} else {
@@ -432,6 +433,7 @@ public abstract class Avatar implements Serializable {
 			if (health <= 0 && !dead) {
 				die(time);
 			}
+			//System.out.println("Success");
 			return AttackResult.SUCCESS;
 		} else if (playerAddress.equals(attack.getPlayer())) {
 			return AttackResult.SAME_AVATAR;
