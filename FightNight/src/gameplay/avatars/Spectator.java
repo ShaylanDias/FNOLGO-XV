@@ -46,11 +46,12 @@ public class Spectator extends Avatar{
 		movementControlled = true;
 		dashCD = 1;
 		spriteSheetKey = "Spectator";
-		super.setDead(true);
+		super.setDead(false);
 	}
 	
 	@Override
 	public void draw(PApplet surface, long time) {
+		System.out.println(super.getPlayer());
 		surface.pushStyle();
 		surface.textAlign(PApplet.CENTER);
 		surface.fill(0);

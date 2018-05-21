@@ -195,8 +195,7 @@ public class GameManager implements NetworkListener {
 	 * @return True if ended
 	 */
 	public boolean isGameEnded() {
-		return false;
-//		return gameEnded;
+		return gameEnded;
 	}
 
 	public void removeAvatar(String player) {
