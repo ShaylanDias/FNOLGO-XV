@@ -36,8 +36,8 @@ public class Ranger extends Avatar {
 	public Ranger() {
 		super();
 		super.basicCD = 0.5;
-		a2CD = 10;
-		a1CD = 10;
+		a2CD = 8;
+		a1CD = 8;
 		a3CD = 15;
 		spriteSheetKey = "Ranger";
 		sprites = new Rectangle[] { new Rectangle(92, 94, 52, 88) };
@@ -101,7 +101,7 @@ public class Ranger extends Avatar {
 		currentAttack = AttackType.RANGED;
 		currentlyAttacking = true;
 		timeActionStarted = time;
-		int damage = 20;
+		int damage = 25;
 		super.rangedCDStart = timeActionStarted;
 		if (angle > 90 && angle < 270) {
 			lastDir = true;
@@ -118,7 +118,7 @@ public class Ranger extends Avatar {
 		currentAttack = AttackType.A1;
 		currentlyAttacking = true;
 		timeActionStarted = time;
-		double damage = 10;
+		double damage = 12;
 		super.a1CDStart = timeActionStarted;
 		if (angle > 90 && angle < 270) {
 			lastDir = true;
@@ -163,7 +163,7 @@ public class Ranger extends Avatar {
 	@Override
 	public Attack[] abilityTwo(String player, double angle, long time) {
 		currentAttack = AttackType.A2;
-		double damage = 30;
+		double damage = 35;
 
 		a2CDStart = time;
 		timeActionStarted = a2CDStart;
