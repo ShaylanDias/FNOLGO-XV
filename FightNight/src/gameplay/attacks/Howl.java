@@ -24,7 +24,7 @@ public class Howl extends Attack{
 	 * @param time The server time of instantiation
 	 */
 	public Howl(int x, int y, String playerAddress, long time) {
-		super(imageKey,(int)( x - width/2), (int)(y - height/2), (int)width, (int)height, playerAddress, damage, false, new StatusEffect(Effect.SLOWED, 1, 7), 0, time);
+		super(imageKey,(int)( x), (int)(y), (int)width, (int)height, playerAddress, damage, false, new StatusEffect(Effect.SLOWED, 1, 7), 0, time);
 		duration = 2;
 	}
 	
