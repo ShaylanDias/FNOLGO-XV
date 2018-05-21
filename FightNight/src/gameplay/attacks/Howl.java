@@ -37,7 +37,7 @@ public class Howl extends Attack{
 	 * @return The Avatar's hitbox as a Rectangle
 	 */
 	protected Rectangle getHitbox() {
-		return new Rectangle((int) (x - super.width), (int) (y - super.height), (int) super.width, (int) super.height);
+		return new Rectangle((int) (x - super.width), (int) (y + super.height), (int) super.width, (int) super.height);
 	}
 	
 	@Override
@@ -46,7 +46,7 @@ public class Howl extends Attack{
 			return false;
 		}
 		for (Avatar a : avatars) {
-			if (a.getHitbox().intersects(this)) {
+			if (a.getHitbox().intersects(getHitbox())) {
 				System.out.println("Intesects");
 				a.takeHit(this, time);
 			}
