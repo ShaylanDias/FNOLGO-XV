@@ -36,7 +36,7 @@ public class Ranger extends Avatar {
 	public Ranger() {
 		super();
 		super.basicCD = 0.5;
-		a2CD = 15;
+		a2CD = 10;
 		a1CD = 10;
 		a3CD = 15;
 		spriteSheetKey = "Ranger";
