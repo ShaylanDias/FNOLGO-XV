@@ -189,6 +189,8 @@ public class GamePanel extends PApplet implements NetworkListener {
 		 * format: [ControlType, arg, arg, ...]
 		 */
 
+		key = Character.toLowerCase(key);
+		
 		if (currentState != null) {
 			if (key == CODED) {
 
@@ -231,6 +233,9 @@ public class GamePanel extends PApplet implements NetworkListener {
 	@Override
 	public void keyReleased() {
 
+		key = Character.toLowerCase(key);
+
+		
 		if (currentState != null) {
 			if (key == 'a') { // Set boolean in character to true
 				nm.sendMessage(NetworkDataObject.MESSAGE, ControlType.MOVEMENT, 'a', false);

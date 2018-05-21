@@ -54,8 +54,9 @@ public class NetworkManagementPanel extends JPanel
 
 	private JButton connectButton;
 	private JButton serverButton;
-	private JButton discoverButton;
 	private JButton disconnectButton;
+	private JButton discoverButton;
+	private JButton disconnectAllButton;
 	private JButton connectCustomButton;
 	
 	//I ADDED THIS
@@ -141,8 +142,10 @@ public class NetworkManagementPanel extends JPanel
 		discoverButton.addActionListener(actionEventHandler);
 		connectButton = new JButton("Connect to Selected");
 		connectButton.addActionListener(actionEventHandler);
-		disconnectButton = new JButton("Disconnect All");
+		disconnectButton = new JButton("Disconnect");
 		disconnectButton.addActionListener(actionEventHandler);
+		disconnectAllButton = new JButton("Disconnect All");
+		disconnectAllButton.addActionListener(actionEventHandler);
 		connectCustomButton = new JButton("Connect to Custom IP");
 		connectCustomButton.addActionListener(actionEventHandler);
 		backButton = new JButton("Character Select");
@@ -155,6 +158,7 @@ public class NetworkManagementPanel extends JPanel
 		ePanel.add(connectButton);
 		ePanel.add(connectCustomButton);
 		ePanel.add(disconnectButton);
+		ePanel.add(disconnectAllButton);
 		ePanel.add(serverButton);
 
 		discoveryProcess = new JProgressBar();
@@ -291,12 +295,18 @@ public class NetworkManagementPanel extends JPanel
 			} else if (source == connectCustomButton) {
 				String host = JOptionPane.showInputDialog("What IP?");
 				connect(host);
-			} else if (source == disconnectButton) {
+			} else if (source == disconnectAllButton) {
 				disconnect();
 				if (gs != null) {
 					gs.disconnectFromAllClients();
 					gs.shutdownServer();
 					gs = null;
+
+				}
+			} else if (source == disconnectButton) {
+				disconnect();
+				if (gs != null) {
+					gs.disconnectFromClient(gc.getHost());
 
 				}
 			} else if (source == serverButton) {
