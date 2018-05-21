@@ -117,7 +117,7 @@ public class Mage extends Avatar {
 		currentAttack = AttackType.A1;
 		a1CDStart = time;
 		Attack[] attack = new Attack[40];
-		double damage = 12.5;
+		double damage = 8;
 		for (int i = 0; i < 40; i++) {
 			attack[i] = new Fireball((int) hitbox.x - 40, (int) hitbox.y - 40, player, angle + i * 18, "Fireball1", 250, 20, 40, 40, (double) i / 50, true,damage, time);
 		}

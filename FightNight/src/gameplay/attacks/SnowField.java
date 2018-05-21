@@ -11,7 +11,7 @@ public class SnowField extends Attack {
 	 * 
 	 */
 	private static final long serialVersionUID = -5003972346228271366L;
-	private static final int w = 200, h = 200, damage = 3;
+	private static final int w = 200, h = 200, damage = 2;
 	private static final boolean shieldBreaker = false;
 	private int direction, direction2;
 

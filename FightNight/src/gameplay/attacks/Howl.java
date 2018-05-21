@@ -12,7 +12,7 @@ public class Howl extends Attack{
 	 */
 	private static final long serialVersionUID = -4225007198557429236L;
 	private static final String imageKey = "Howl";
-	private static final double damage = 2.5, width = 150, height = 140;
+	private static final double damage = 2.5, width = 200, height = 200;
 	
 	/**
 	 * 
@@ -44,8 +44,8 @@ public class Howl extends Attack{
 		}
 		
 		if(time <= super.getStartTime() + 1000) {
-			super.width += 6;
-			super.height += 6;
+			super.width += 10;
+			super.height += 10;
 		} else {
 			super.width -= 4;
 			super.height -= 4;

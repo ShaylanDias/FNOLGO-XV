@@ -188,7 +188,7 @@ public class Brute extends Avatar {
 	// Throws a slow moving projectile (Rock)
 	@Override
 	public Attack[] rangedAttack(String player, double angle, long time) {
-		double damage = 35;
+		double damage = 30;
 		if (time > super.rangedCDStart + super.rangedCD * 1000 && !dashing && !blocking) {
 			super.rangedCDStart = time;
 			currentlyAttacking = true;
@@ -251,12 +251,13 @@ public class Brute extends Avatar {
 		a3CDStart = time;
 		timeActionStarted = a3CDStart;
 		// Change damage values over here for the 3rd ability
+		double damage = 10;
 		return new Attack[] {
 				new Lunge(this.getPlayer(), angle, this, (int) super.getX(), (int) super.getY(),
 						new StatusEffect(Effect.NONE, 0, 0), 0.9, 0, time),
-				new TrailingAttack("WWBasic", 50, 50, 60, 50, player, 15, new StatusEffect(Effect.NONE, 0, 0),
+				new TrailingAttack("WWBasic", 50, 50, 60, 50, player, damage, new StatusEffect(Effect.NONE, 0, 0),
 						angle + 90, 0.9, this, time),
-				new TrailingAttack("WWBasic", -50, -50, 60, 50, player, 15, new StatusEffect(Effect.NONE, 0, 0),
+				new TrailingAttack("WWBasic", -50, -50, 60, 50, player, damage, new StatusEffect(Effect.NONE, 0, 0),
 						angle + 90, 0.9, this, time) };
 	}
 
