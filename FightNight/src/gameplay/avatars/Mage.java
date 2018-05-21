@@ -37,9 +37,9 @@ public class Mage extends Avatar {
 		moveSpeed = 8;
 		spriteSheetKey = "Mage";
 		sprites = new Rectangle[] { new Rectangle(70, 94, 60, 90) };
-		a3CD = 20;
-		a2CD = 25;
-		a1CD = 20;
+		a3CD = 15;
+		a2CD = 14;
+		a1CD = 10;
 		rangedCD = 0.9;
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;

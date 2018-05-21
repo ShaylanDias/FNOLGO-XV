@@ -46,12 +46,12 @@ public class Brute extends Avatar {
 		moveSpeed = 12;
 		a1CD = 10;
 		basicCD = 0.5;
-		a2CD = 3; //25
+		a2CD = 15; //25
 		super.basicCD = 0.2;
 		rangedCDStart = 0;
 		rangedCD = 3;
 		currentAttack = AttackType.NONE;
-		a3CD = 20;
+		a3CD = 8;
 		getSpriteListDeath().add("WWDying");
 		getSpriteListDeath().add("WWDead");
 		upperCutKeys = new String[] { "UpperCut1", "UpperCut2", "UpperCut3", "UpperCut4", "UpperCut5", "UpperCut6",
@@ -198,7 +198,7 @@ public class Brute extends Avatar {
 				lastDir = true;
 			else
 				lastDir = false;
-			return new Attack[] { new Fireball((int) hitbox.x, (int) hitbox.y, player, angle, "Rock", 400, 22, damage, time, new StatusEffect(Effect.STUNNED, 1, 0.8)) };
+			return new Attack[] { new Fireball((int) hitbox.x, (int) hitbox.y, player, angle, "Rock", 450, 25, damage, time, new StatusEffect(Effect.STUNNED, 1, 0.8)) };
 		} else {
 			return null;
 		}
