@@ -1,5 +1,6 @@
 package gameplay.attacks;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import gameplay.attacks.StatusEffect.Effect;
