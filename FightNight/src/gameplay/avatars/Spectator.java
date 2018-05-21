@@ -51,7 +51,6 @@ public class Spectator extends Avatar{
 	
 	@Override
 	public void draw(PApplet surface, long time) {
-		System.out.println(super.getPlayer());
 		surface.pushStyle();
 		surface.textAlign(PApplet.CENTER);
 		surface.fill(0);
