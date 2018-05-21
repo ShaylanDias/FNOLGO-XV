@@ -3,8 +3,10 @@ package gameplay.attacks;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import clientside.gui.GamePanel;
 import gameplay.attacks.StatusEffect.Effect;
 import gameplay.avatars.Avatar;
+import processing.core.PApplet;
 
 public class Howl extends Attack{
 
@@ -67,4 +69,21 @@ public class Howl extends Attack{
 		return true;
 	}
 
+	/**
+	 * Draws this Attack
+	 */
+	@Override
+	public void draw(PApplet surface, long time) {
+		surface.pushMatrix();
+		surface.imageMode(PApplet.CORNER);
+		surface.rectMode(PApplet.CENTER);
+		// surface.noFill();
+		surface.rect((float)(getHitbox().x), (float)(getHitbox().y),
+				(float)getHitbox().width, (float)getHitbox().height);
+		surface.translate((float) x, (float) y);
+		surface.rotate((PApplet.radians((float) (dir))));
+		surface.image(GamePanel.resources.getImage(imageKey), 0, 0, (int) width, (int) height);
+		surface.popMatrix();
+	}
+	
 }
