@@ -171,7 +171,7 @@ public class Attack extends MovingSprite {
 	 * @return The Avatar's hitbox as a Rectangle
 	 */
 	protected Rectangle getHitbox() {
-		return new Rectangle((int) (x + width / 4), (int) (y + height / 4), (int) width, (int) height);
+		return new Rectangle((int) (x), (int) (y), (int) super.width, (int) super.height);
 	}
 
 	/**
