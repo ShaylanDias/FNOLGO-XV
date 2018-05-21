@@ -36,7 +36,6 @@ public class Ranger extends Avatar {
 	public Ranger() {
 		super();
 		super.basicCD = 0.5;
-		moveSpeed = 8;
 		a2CD = 15;
 		a1CD = 10;
 		a3CD = 15;
@@ -45,6 +44,8 @@ public class Ranger extends Avatar {
 		hitbox.height = sprites[0].height;
 		hitbox.width = sprites[0].width;
 		dashCD = 1.2;
+		dashSpeed = 40;
+		
 		rangedCD = 0.75;
 		numOfSpriteWalk = 10;
 		health = 250;
