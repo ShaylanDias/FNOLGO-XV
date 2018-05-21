@@ -46,7 +46,7 @@ public class Brute extends Avatar {
 		moveSpeed = 12;
 		a1CD = 10;
 		basicCD = 0.3;
-		a2CD = 25;
+		a2CD = 3; //25
 		super.basicCD = 0.2;
 		rangedCDStart = 0;
 		rangedCD = 3;
