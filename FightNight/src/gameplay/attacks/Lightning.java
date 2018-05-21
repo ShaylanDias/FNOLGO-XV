@@ -17,7 +17,7 @@ public class Lightning extends Attack{
 	/**
 	 * Lightning standard width, height, and damage
 	 */
-	public static final int w = 80, h = 80, damage = 2;
+	public static final int w = 80, h = 80, damage = 3;
 	private boolean dead;
 	
 	/**

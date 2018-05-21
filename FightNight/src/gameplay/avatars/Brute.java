@@ -251,7 +251,7 @@ public class Brute extends Avatar {
 		a3CDStart = time;
 		timeActionStarted = a3CDStart;
 		// Change damage values over here for the 3rd ability
-		double damage = 10;
+		double damage = 5;
 		return new Attack[] {
 				new Lunge(this.getPlayer(), angle, this, (int) super.getX(), (int) super.getY(),
 						new StatusEffect(Effect.NONE, 0, 0), 0.9, 0, time),

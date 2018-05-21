@@ -12,7 +12,7 @@ public class Howl extends Attack{
 	 */
 	private static final long serialVersionUID = -4225007198557429236L;
 	private static final String imageKey = "Howl";
-	private static final double damage = 2.5, width = 200, height = 200;
+	private static final double damage = 2.5, width = 150, height = 150;
 	
 	/**
 	 * 
@@ -35,6 +35,7 @@ public class Howl extends Attack{
 		}
 		for (Avatar a : avatars) {
 			if (a.getHitbox().intersects(this)) {
+				System.out.println("intersects");
 				a.takeHit(this, time);
 			}
 		}

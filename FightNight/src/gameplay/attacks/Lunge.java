@@ -12,7 +12,7 @@ public class Lunge extends Attack{
 	 * 
 	 */
 	private static final long serialVersionUID = -4689584839026758360L;
-	private static double damage = 30;
+	private static double damage = 20;
 	private static boolean shieldBreaker = true;
 	private Brute attacker;
 	private static String imageKey = "UpperCut";
