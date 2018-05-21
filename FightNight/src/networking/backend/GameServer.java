@@ -75,6 +75,7 @@ public class GameServer implements NetworkMessenger {
 
 								for (int i = writers.size()-1; i >= 0; i--) {	
 									if (writers.get(i).getHost().equals(address))
+										manager.removeAvatar(ndo.getSourceIP());
 										writers.remove(i).stop();
 								}
 								for (int i = readers.size()-1; i >= 0; i--) {
@@ -344,8 +345,8 @@ public class GameServer implements NetworkMessenger {
 	private void sendClientList() {
 		InetAddress[] connections = getConnectedHosts();
 		
-		if(connections.length < 1)
-			disconnectFromAllClients();
+//		if(connections.length < 1)
+//			disconnectFromAllClients();
 		
 //		String[] con = new String[connections.length];
 //		for(int i = 0; i < connections.length; i++) {

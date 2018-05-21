@@ -198,4 +198,13 @@ public class GameManager implements NetworkListener {
 		return gameEnded;
 	}
 
+	public void removeAvatar(String player) {
+		for(int i = 0; i < state.getAvatars().size(); i++) {
+			if(state.getAvatars().get(i).getPlayer().equals(player)) {
+				state.getAvatars().remove(i);
+				break;
+			}
+		}
+	}
+	
 }
