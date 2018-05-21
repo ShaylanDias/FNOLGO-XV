@@ -49,7 +49,6 @@ public class Howl extends Attack{
 		}
 		for (Avatar a : avatars) {
 			if (a.getHitbox().intersects(this)) {
-				System.out.println("Intesects");
 				a.takeHit(this, time);
 			}
 		}

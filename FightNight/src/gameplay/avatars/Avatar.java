@@ -431,13 +431,10 @@ public abstract class Avatar implements Serializable {
 			if (health <= 0 && !dead) {
 				die(time);
 			}
-			System.out.println("Success");
 			return AttackResult.SUCCESS;
 		} else if (playerAddress.equals(attack.getPlayer())) {
-			System.out.println("sameAvatar");
 			return AttackResult.SAME_AVATAR;
 		} else {
-			System.out.println("Missed");
 			return AttackResult.MISSED;
 		}
 	}
