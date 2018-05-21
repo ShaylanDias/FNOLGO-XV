@@ -345,8 +345,8 @@ public class GameServer implements NetworkMessenger {
 	private void sendClientList() {
 		InetAddress[] connections = getConnectedHosts();
 		
-//		if(connections.length < 1)
-//			disconnectFromAllClients();
+		if(connections.length < 1)
+			disconnectFromAllClients();
 		
 //		String[] con = new String[connections.length];
 //		for(int i = 0; i < connections.length; i++) {

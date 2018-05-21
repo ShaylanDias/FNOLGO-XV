@@ -202,7 +202,7 @@ public class Ranger extends Avatar {
 		surface.textSize(14);
 		surface.fill(255);
 		surface.textAlign(PApplet.CENTER);
-		surface.text(super.getUsername(), (float)hitbox.x, (float)(hitbox.y - hitbox.height + 4));
+		surface.text(getUsername(), (float)hitbox.x, (float)(hitbox.y - hitbox.height));
 		
 		if (super.isDead()) {
 			int sw, sh;
