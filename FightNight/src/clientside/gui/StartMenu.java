@@ -1,11 +1,11 @@
 package clientside.gui;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -51,10 +51,6 @@ public class StartMenu extends JPanel {
 
 	private CardLayout c1 = new CardLayout();
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 24d33d02f8b9970a4935a73c0a79d217241d4160
 	/**
 	 * 
 	 * @param game
@@ -212,23 +208,17 @@ public class StartMenu extends JPanel {
 			JPanel nameSelection = new JPanel();
 			nameSelection.setLayout(new BoxLayout(nameSelection, BoxLayout.Y_AXIS));
 			JTextField nameSelect = new JTextField(12);
-<<<<<<< HEAD
 			JLabel username = new JLabel();
 			username.setFont(new Font("gabriola", Font.PLAIN, 16));
-			username.setText("Username");
+			username.setText("Username:");
 			username.setForeground(Color.WHITE);
 			nameSelect.setAlignmentX(Component.LEFT_ALIGNMENT);
 			nameSelect.setHorizontalAlignment(JTextField.CENTER);
-=======
-			nameSelect.setText("Username");
+			nameSelect.setText("");
 			
->>>>>>> 24d33d02f8b9970a4935a73c0a79d217241d4160
 			characterSelectionButton.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent ae){
-					if(!nameSelect.getText().equals("Username"))
-						game.getPlayer().setUsername(nameSelect.getText());
-					else
-						game.getPlayer().setUsername("");
+					game.getPlayer().setUsername(nameSelect.getText());
 				}
 			});
 			
