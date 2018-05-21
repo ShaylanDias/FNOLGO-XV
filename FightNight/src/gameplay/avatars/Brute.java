@@ -91,8 +91,7 @@ public class Brute extends Avatar {
 	public void draw(PApplet surface, long time) {
 		surface.pushMatrix();
 		surface.pushStyle();
-
-		surface.textSize(14);
+		surface.textSize(18);
 		surface.fill(255);
 		surface.textAlign(PApplet.CENTER);
 		surface.text(getUsername(), (float)hitbox.x, (float)(hitbox.y - hitbox.height - 1));

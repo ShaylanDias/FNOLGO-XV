@@ -214,7 +214,7 @@ public class Mage extends Avatar {
 		surface.pushMatrix();
 		surface.pushStyle();
 
-		surface.textSize(14);
+		surface.textSize(18);
 		surface.fill(255);
 		surface.textAlign(PApplet.CENTER);
 		surface.text(getUsername(), (float)hitbox.x, (float)(hitbox.y - hitbox.height + 2));
