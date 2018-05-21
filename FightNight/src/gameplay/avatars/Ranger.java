@@ -100,7 +100,7 @@ public class Ranger extends Avatar {
 		currentAttack = AttackType.RANGED;
 		currentlyAttacking = true;
 		timeActionStarted = time;
-		int damage = 30;
+		int damage = 20;
 		super.rangedCDStart = timeActionStarted;
 		if (angle > 90 && angle < 270) {
 			lastDir = true;
@@ -117,7 +117,7 @@ public class Ranger extends Avatar {
 		currentAttack = AttackType.A1;
 		currentlyAttacking = true;
 		timeActionStarted = time;
-		double damage = 10;
+		double damage = 15;
 		super.a1CDStart = timeActionStarted;
 		if (angle > 90 && angle < 270) {
 			lastDir = true;
@@ -162,7 +162,7 @@ public class Ranger extends Avatar {
 	@Override
 	public Attack[] abilityTwo(String player, double angle, long time) {
 		currentAttack = AttackType.A2;
-		double damage = 25;
+		double damage = 30;
 
 		a2CDStart = time;
 		timeActionStarted = a2CDStart;
