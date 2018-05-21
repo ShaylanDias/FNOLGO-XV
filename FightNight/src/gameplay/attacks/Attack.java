@@ -153,7 +153,7 @@ public class Attack extends MovingSprite {
 		}
 
 		for (Avatar a : avatars) {
-			if (a.getHitbox().intersects(this)) {
+			if (a.getHitbox().intersects(getHitbox())) {
 				AttackResult res = a.takeHit(this, time);
 				if (res.equals(AttackResult.BLOCKED) || res.equals(AttackResult.SUCCESS)) {
 					end();
@@ -171,7 +171,7 @@ public class Attack extends MovingSprite {
 	 * @return The Avatar's hitbox as a Rectangle
 	 */
 	protected Rectangle getHitbox() {
-		return new Rectangle((int) (x - super.width/2), (int) (y - super.height/2), (int) super.width, (int) super.height);
+		return new Rectangle((int) (x), (int) (y - super.height/2), (int) super.width, (int) super.height);
 	}
 
 	/**

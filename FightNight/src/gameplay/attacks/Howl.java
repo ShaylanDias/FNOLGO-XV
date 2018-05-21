@@ -29,6 +29,17 @@ public class Howl extends Attack{
 		duration = 2;
 	}
 	
+	
+	/**
+	 * 
+	 * Gets the translated hitbox so it matches with the image
+	 * 
+	 * @return The Avatar's hitbox as a Rectangle
+	 */
+	protected Rectangle getHitbox() {
+		return new Rectangle((int) (x - super.width), (int) (y - super.height), (int) super.width, (int) super.height);
+	}
+	
 	@Override
 	public boolean act(ArrayList<Avatar> avatars, long time) {
 		if (!super.isActive()) {
