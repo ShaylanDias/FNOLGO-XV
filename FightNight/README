@@ -85,7 +85,7 @@ gameplay
 		Lightning- An attack that chains with itself to create a long chain of Attacks that depend on each other
 		Lunge - An Attack that moves in front of the Avatar
 		TrailingAttack - An Attack that follows the Avatar
-		SnowField - An Attack that moves in a circular pattern
+		SnowField - An Attack that moves in a circular pattern and slows
 		MeleeAttack - A short ranged, stationary, short lasting Attack meant for the Avatar basicAttack()
 		Trap- An Attack that stays on the ground for a long time and changes looks when activated
 		MovingSprite - superclass for Attack

@@ -18,9 +18,13 @@ public abstract class Map implements Serializable{
 	 */
 	private static final long serialVersionUID = 1577851729546186971L;
 	
-	public void draw(PApplet surface) {
-
-	}
+	/**
+	 * 
+	 * Draws the Map
+	 * 
+	 * @param surface The PApplet to draw to
+	 */
+	public abstract void draw(PApplet surface);
 
 	/**
 	 * Checks if something, namely the Avatar, collides with a tree object 

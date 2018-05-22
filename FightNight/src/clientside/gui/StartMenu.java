@@ -1,12 +1,10 @@
 package clientside.gui;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,17 +19,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.OverlayLayout;
 
 import gameplay.avatars.Brute;
 import gameplay.avatars.Mage;
 import gameplay.avatars.Ranger;
 import networking.frontend.NetworkManagementPanel;
-import processing.awt.PSurfaceAWT;
 
 /**
  * Initiates a Start Menu. Creates a Java.awt start menu where character
@@ -50,12 +45,13 @@ public class StartMenu extends JPanel {
 	private JPanel panelCont = new JPanel();
 	private JPanel startMenu = new JPanel();
 
-	private PSurfaceAWT surf; // These are the "portals" through which the PApplets draw on the canvas
 
 	private CardLayout c1 = new CardLayout();
 
 
 	/**
+	 * 
+	 * Instantiates the StartMenu
 	 * 
 	 * @param game
 	 *            An instance of the game panel class. This is what the start menu
@@ -69,13 +65,6 @@ public class StartMenu extends JPanel {
 		startMenu.setLayout(new BoxLayout(startMenu, BoxLayout.Y_AXIS));
 		startMenu.setBackground(Color.BLACK);
 		startMenu.setPreferredSize(new Dimension(1200, 800));
-
-//
-//		ImageIcon backgroundImage = new ImageIcon("Background"); 
-//		JLabel background = new JLabel();
-//
-//		background.setIcon(backgroundImage);	System.out.println(background);
-//		startMenu.add(background);
 
 		// TITLE LABEL
 		title.setFont(new Font("gabriola", Font.BOLD, 100));
@@ -288,17 +277,25 @@ public class StartMenu extends JPanel {
 
 	}
 
+	/**
+	 * 
+	 * Gets the CardLayout used by the StartMenu
+	 * 
+	 * @return The CardLayout
+	 */
 	public CardLayout getCardLayout() {
 		return c1;
 	}
 
+	/**
+	 * 
+	 * Gets the JPanel that holds everything on the StartMenu
+	 * 
+	 * @return The StartMenu JPanel
+	 */
 	public JPanel getPanel() {
 		return panelCont;
 	}
-
-	public void fixProcessingPanelSizes(Component match) {
-		surf.setSize(match.getWidth(), match.getHeight());
-	}
-
+	
 
 }

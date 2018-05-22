@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * 
- * Creates a circular obstacle
+ * Abstract Representation of a circular object on the Map that can be interacted with
  *
  * @author jason
  *

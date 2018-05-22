@@ -3,6 +3,13 @@ package gameplay.maps;
 import clientside.gui.GamePanel;
 import processing.core.PApplet;
 
+/**
+ * 
+ * A Tree that shows up on the Map
+ * 
+ * @author jasonzhu
+ *
+ */
 public class Tree extends Obstacle{
 	
 	/**

@@ -190,7 +190,7 @@ public class GameManager implements NetworkListener {
 
 	/**
 	 * 
-	 * Has the game ended
+	 * Has the game ended (only one player is still alive)
 	 * 
 	 * @return True if ended
 	 */
@@ -198,6 +198,12 @@ public class GameManager implements NetworkListener {
 		return gameEnded;
 	}
 
+	/**
+	 * 
+	 * Removes an Avatar from the game
+	 * 
+	 * @param player The IP address of the Avatar's player as a String
+	 */
 	public void removeAvatar(String player) {
 		for(int i = 0; i < state.getAvatars().size(); i++) {
 			if(state.getAvatars().get(i).getPlayer().equals(player)) {

@@ -7,7 +7,7 @@ import processing.core.PApplet;
  * 
  * The base Map
  * 
- * @author Jason Zhu
+ * @author jasonzu
  *
  */
 public class StandardMap extends Map{
@@ -54,7 +54,6 @@ public class StandardMap extends Map{
 	
 	@Override
 	public void draw(PApplet surface) {
-		super.draw(surface);
 		surface.image(GamePanel.resources.getImage(imageKey), 0, 0, (int) 3000, (int) 3000);
 		surface.noFill();
 		surface.rectMode(PApplet.CORNER);

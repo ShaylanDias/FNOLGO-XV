@@ -133,6 +133,13 @@ public class GameState implements Serializable {
 		return gameTime;
 	}
 	
+
+	/**
+	 * 
+	 * Sets the time of the game used by the server
+	 * 
+	 * @param time The new server game time as a long
+	 */
 	public void setGameTime(long time) {
 		gameTime = time;
 	}
