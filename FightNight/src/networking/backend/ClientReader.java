@@ -85,7 +85,7 @@ public class ClientReader implements Runnable{
         try {
         	int tries = 0;
             while(looping) {
-
+            	
                 try {
                 	Serializable data = (Serializable) in.readObject();
                 	if (data instanceof NetworkDataObject) {
@@ -111,30 +111,30 @@ public class ClientReader implements Runnable{
                 	if (tries >= RETRY_TIMEOUT) {
                 		looping = false;
                 	}
-//                    e.printStackTrace();
+                    e.printStackTrace();
                 } catch (ClassNotFoundException ex) {
                     ex.printStackTrace();
                     System.exit(0);
                 }
 
             }
-            if (listeners != null) {
-            	synchronized(listeners) {
-            		for (NetworkListener nl : listeners) {
-            			SwingUtilities.invokeLater(new Runnable() {
-            				public void run() {
-            					NetworkDataObject ndo = new NetworkDataObject();
-            					ndo.dataSource = host;
-            					ndo.serverHost = host;
-            					ndo.messageType = NetworkDataObject.DISCONNECT;
-            					ndo.message = new Object[]{};
-            					
-            					nl.networkMessageReceived(ndo);
-            				}
-            			});
-            		}
-            	}
-            }
+//            if (listeners != null) {
+//            	synchronized(listeners) {
+//            		for (NetworkListener nl : listeners) {
+//            			SwingUtilities.invokeLater(new Runnable() {
+//            				public void run() {
+//            					NetworkDataObject ndo = new NetworkDataObject();
+//            					ndo.dataSource = host;
+//            					ndo.serverHost = host;
+//            					ndo.messageType = NetworkDataObject.DISCONNECT;
+//            					ndo.message = new Object[]{};
+//            					
+//            					nl.networkMessageReceived(ndo);
+//            				}
+//            			});
+//            		}
+//            	}
+//            }
             
 
         } finally {
