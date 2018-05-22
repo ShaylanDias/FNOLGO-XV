@@ -188,6 +188,12 @@ public abstract class Avatar implements Serializable {
 
 		double moveSpeed = this.moveSpeed;
 
+		if(!dead) {
+			health += 0.1;
+			if(health > fullHealth)
+				health = fullHealth;
+		}
+		
 		if (status.getEffect().equals(Effect.SLOWED)) {
 			if (!status.started())
 				status.startEffect(time);
@@ -350,6 +356,7 @@ public abstract class Avatar implements Serializable {
 			deathTime = 0;
 			stop();
 			dead = false;
+			health = 5;
 		}
 	}
 
