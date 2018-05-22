@@ -148,7 +148,7 @@ public class NetworkManagementPanel extends JPanel
 		disconnectAllButton.addActionListener(actionEventHandler);
 		connectCustomButton = new JButton("Connect to Custom IP");
 		connectCustomButton.addActionListener(actionEventHandler);
-		backButton = new JButton("Character Select");
+		backButton = new JButton("Back");
 		backButton.addActionListener(actionEventHandler);
 		serverButton = new JButton("Start a Server");
 		serverButton.addActionListener(actionEventHandler);
