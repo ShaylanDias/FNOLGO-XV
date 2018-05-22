@@ -283,7 +283,7 @@ public class GamePanel extends PApplet implements NetworkListener {
 		} else if (ndo.messageType.equals(NetworkDataObject.HANDSHAKE)) {
 			System.out.println("\n" + ndo.dataSource + " connected. ");
 			setConnected(true);
-		} else if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
+		} else if (ndo.messageType.equals(NetworkDataObject.DISCONNECT) && ((String)ndo.message[0]).equals(getPlayer().getPlayerAddress())) {
 			if (ndo.dataSource.equals(ndo.serverHost)) {
 				System.out.println("Disconnected from server " + ndo.serverHost);
 			} else {

@@ -67,12 +67,12 @@ public class GameServer implements NetworkMessenger {
 					public void run() {
 
 						InetAddress address = ndo.dataSource;
-
-						repeatMessage(ndo);
-
+						
 						if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
 							synchronized(GameServer.this) {
 
+								sendMessage(ndo.messageType, ndo.getSourceIP());
+								
 								for (int i = writers.size()-1; i >= 0; i--) {	
 									if (writers.get(i).getHost().equals(address)) {
 										manager.removeAvatar(ndo.getSourceIP());
@@ -86,7 +86,9 @@ public class GameServer implements NetworkMessenger {
 
 								sendClientList();
 							}
-						} 
+						} else {
+							repeatMessage(ndo);
+						}
 					}
 
 				}).start();
@@ -117,12 +119,6 @@ public class GameServer implements NetworkMessenger {
 
 					if(manager.isGameEnded()) {
 						sendMessage(NetworkDataObject.MESSAGE, new Object[] {"ENDED", manager.getWinner()});
-						//						try {
-						//							Thread.sleep(5000);
-						//						} catch (InterruptedException e) {
-						//							e.printStackTrace();
-						//						}
-						//						disconnectFromAllClients();
 					}
 
 					try {
@@ -148,6 +144,13 @@ public class GameServer implements NetworkMessenger {
 		ndo.dataSource = myIP;
 		ndo.messageType = messageType;
 		ndo.message = message;
+		
+		if(messageType.equals(NetworkDataObject.DISCONNECT)) {
+			System.out.println(myIP);
+			System.out.println(messageType);
+			System.out.println(message);
+		}
+		
 		for (ClientWriter cw: writers) {
 			cw.sendMessage(ndo);
 		}
@@ -345,9 +348,10 @@ public class GameServer implements NetworkMessenger {
 
 	private void sendClientList() {
 		InetAddress[] connections = getConnectedHosts();
-
-		if(connections.length < 1)
+		System.out.println(connections.length);
+		if(connections.length < 1) {
 			disconnectFromAllClients();
+		}
 		Object[] message = Arrays.copyOf(connections, connections.length, Object[].class);
 		sendMessage(NetworkDataObject.CLIENT_LIST, message);
 	}
