@@ -49,14 +49,14 @@ public class GameServer implements NetworkMessenger {
 		this.programID = programID;
 		this.myIP = myIP;
 		manager = new GameManager();
-		
+
 		listening = false;
 		this.writers = new ArrayList<ClientWriter>();
 		this.readers = new ArrayList<ClientReader>();
 		listeners = new ArrayList<NetworkListener>();
 		listeners.add(manager); //Manager is a listener so now it gets updates from each client
 
-		
+
 		addNetworkListener(new NetworkListener() {
 			@Override
 			public void networkMessageReceived(NetworkDataObject ndo) {
@@ -74,9 +74,10 @@ public class GameServer implements NetworkMessenger {
 							synchronized(GameServer.this) {
 
 								for (int i = writers.size()-1; i >= 0; i--) {	
-									if (writers.get(i).getHost().equals(address))
+									if (writers.get(i).getHost().equals(address)) {
 										manager.removeAvatar(ndo.getSourceIP());
 										writers.remove(i).stop();
+									}
 								}
 								for (int i = readers.size()-1; i >= 0; i--) {
 									if (readers.get(i).getHost().equals(address))
@@ -89,7 +90,7 @@ public class GameServer implements NetworkMessenger {
 					}
 
 				}).start();
-				
+
 			}
 
 			@Override
@@ -98,7 +99,7 @@ public class GameServer implements NetworkMessenger {
 
 			}
 		});
-		
+
 		/*
 		 * This Thread runs the server by updating the manager and sending out the game state to the clients 
 		 */
@@ -110,20 +111,20 @@ public class GameServer implements NetworkMessenger {
 				boolean looping = true;
 
 				while(looping) {
-					
+
 					manager.run();
 					sendMessage(NetworkDataObject.MESSAGE, new Object[] {manager.getState()});
-					
+
 					if(manager.isGameEnded()) {
 						sendMessage(NetworkDataObject.MESSAGE, new Object[] {"ENDED", manager.getWinner()});
-//						try {
-//							Thread.sleep(5000);
-//						} catch (InterruptedException e) {
-//							e.printStackTrace();
-//						}
-//						disconnectFromAllClients();
+						//						try {
+						//							Thread.sleep(5000);
+						//						} catch (InterruptedException e) {
+						//							e.printStackTrace();
+						//						}
+						//						disconnectFromAllClients();
 					}
-					
+
 					try {
 						//How often the game is being updated
 						Thread.sleep(50);
@@ -132,9 +133,9 @@ public class GameServer implements NetworkMessenger {
 					}
 				}
 			}
-			
+
 		}).start();
-		
+
 	}
 
 	public void setMaxConnections(int max) {
@@ -225,7 +226,7 @@ public class GameServer implements NetworkMessenger {
 			try {
 				serverSocket.close();
 			} catch (IOException e) {
-//				e.printStackTrace();
+				//				e.printStackTrace();
 			}
 			serverSocket = null;
 		}
@@ -325,13 +326,13 @@ public class GameServer implements NetworkMessenger {
 
 
 				} catch (IOException e) {
-//					e.printStackTrace();
+					//					e.printStackTrace();
 				} finally {
 					if (serverSocket != null) {
 						try {
 							serverSocket.close();
 						} catch (IOException e) {
-//							e.printStackTrace();
+							//							e.printStackTrace();
 						}
 						serverSocket = null;
 					}
@@ -344,14 +345,9 @@ public class GameServer implements NetworkMessenger {
 
 	private void sendClientList() {
 		InetAddress[] connections = getConnectedHosts();
-		
+
 		if(connections.length < 1)
 			disconnectFromAllClients();
-		
-//		String[] con = new String[connections.length];
-//		for(int i = 0; i < connections.length; i++) {
-//			con[i] = connections[i] + "FNOLGO";
-//		}
 		Object[] message = Arrays.copyOf(connections, connections.length, Object[].class);
 		sendMessage(NetworkDataObject.CLIENT_LIST, message);
 	}

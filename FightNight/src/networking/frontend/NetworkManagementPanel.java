@@ -304,14 +304,13 @@ public class NetworkManagementPanel extends JPanel
 					gs.disconnectFromAllClients();
 					gs.shutdownServer();
 					gs = null;
-
 				}
 			} else if (source == disconnectButton) {
 				disconnect();
-				if (gs != null) {
+				if (gs != null && gc != null) {
 					gs.disconnectFromClient(gc.getHost());
-
 				}
+				disconnectAllButton.setEnabled(false);
 			} else if (source == serverButton) {
 				gs = new GameServer(programID, myIP);
 				disconnectAllButton.setEnabled(true);
