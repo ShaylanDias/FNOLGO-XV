@@ -356,7 +356,6 @@ public abstract class Avatar implements Serializable {
 			deathTime = 0;
 			stop();
 			dead = false;
-			health = 5;
 		}
 	}
 
