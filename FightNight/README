@@ -118,9 +118,9 @@ networking
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 Responsibilities: 
-Shaylan Dias: Networking, Attack Game Mechanics, Game Manager, Most of the abilities, GamePanel, Player HUD, Parsing Sent/Received Data
+Shaylan Dias: Networking, Attack Game Mechanics, Game Manager, Most of the abilities, GamePanel, Player HUD, Parsing Sent/Received Data, Ranger animations
 Ben Gu: Character movement, Brute walking and death animations, Mage walking and death animations
-Jason Zhu: Character dashing, Map Design and build, Obstacles, start menu, game balance. 
+Jason Zhu: Character dashing, Map Design and build, Obstacles, start menu, game balance, Ability concepts. 
 Mr. Shelby APCSDemo: ServerNetworking
 
 http://pyromancers.com/dungeon-painter-online/: Map creation website
