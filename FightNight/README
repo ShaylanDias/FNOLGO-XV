@@ -119,7 +119,7 @@ networking
 
 Responsibilities: 
 Shaylan Dias: Adapting Networking Code, Attack Game Mechanics, Game Manager, Most of the abilities, GamePanel, Player HUD, Parsing Sent/Received Data, Ranger animations
-Ben Gu: Character movement, Brute walking and death animations, Mage walking and death animations, a few abilities
+Ben Gu: Character movement, Brute walking and death animations, Mage walking and death animations, a mage ability
 Jason Zhu: Character dashing, Map Design and build, Obstacles, start menu, game balance, Ability concepts. 
 Mr. Shelby APCSDemo: ServerNetworking
 
