@@ -49,7 +49,7 @@ public class GameState implements Serializable {
 	 */
 	public void draw(PApplet surface, Avatar av, float width, float height, String playerAddress, long time) {
 
-		Rectangle2D.Double window = new Rectangle2D.Double(av.getX() - width/2, av.getY() - height/2, width, height);
+		Rectangle2D.Double window = new Rectangle2D.Double(av.getX() - width/2 - 15, av.getY() - height/2 - 15, width + 30, height + 30);
 
 		surface.translate((float) (-av.getX() + width / 2), (float) -av.getY() + height / 2);
 		map.draw(surface);
