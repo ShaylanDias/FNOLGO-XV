@@ -1,5 +1,6 @@
 package gameplay;
 
+import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -47,24 +48,33 @@ public class GameState implements Serializable {
 	 * @param time The server time of drawing
 	 */
 	public void draw(PApplet surface, Avatar av, float width, float height, String playerAddress, long time) {
+
+		Rectangle2D.Double window = new Rectangle2D.Double(av.getX() - width/2, av.getY() - height/2, width, height);
+
 		surface.translate((float) (-av.getX() + width / 2), (float) -av.getY() + height / 2);
 		map.draw(surface);
 		for (Avatar c : avatars) {
-			if(c instanceof Ranger) {
-				if(((Ranger)c).isInvisible()) {
-					if(c.getPlayer().equals(playerAddress))
-						c.draw(surface, getGameTime());
-					else {
-						if(((Ranger) c).isSmoke(getGameTime()))
+
+			if(c.getHitbox().intersects(window)) {
+
+				if(c instanceof Ranger) {
+					if(((Ranger)c).isInvisible()) {
+						if(c.getPlayer().equals(playerAddress))
 							c.draw(surface, getGameTime());
-					}
+						else {
+							if(((Ranger) c).isSmoke(getGameTime()))
+								c.draw(surface, getGameTime());
+						}
+					} else
+						c.draw(surface, getGameTime());
 				} else
 					c.draw(surface, getGameTime());
-			} else
-				c.draw(surface, getGameTime());
+			}
 		}
-		for (Attack a : attacks)
-			a.draw(surface, time);
+		for (Attack a : attacks) {
+			if(a.intersects(window))
+				a.draw(surface, time);
+		}
 	}
 
 	/**
@@ -132,7 +142,7 @@ public class GameState implements Serializable {
 	public long getGameTime() {
 		return gameTime;
 	}
-	
+
 
 	/**
 	 * 
@@ -143,7 +153,7 @@ public class GameState implements Serializable {
 	public void setGameTime(long time) {
 		gameTime = time;
 	}
-	
+
 	@Override
 	public String toString() {
 		return avatars.get(0).getX() + "";
