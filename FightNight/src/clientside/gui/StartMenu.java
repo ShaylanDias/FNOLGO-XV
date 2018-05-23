@@ -1,5 +1,6 @@
 package clientside.gui;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -103,9 +104,7 @@ public class StartMenu extends JPanel {
 		Instructions.setLayout(new BoxLayout(Instructions, BoxLayout.Y_AXIS));
 		Instructions.setBackground(Color.BLACK);
 
-		// BACK BUTTON
-		JButton iback = new JButton("Back");
-		iback.setAlignmentX(Component.LEFT_ALIGNMENT);
+
 
 		// INSTRUCTIONS TEXT
 		JTextArea howToPlay = new JTextArea();
@@ -114,7 +113,7 @@ public class StartMenu extends JPanel {
 		howToPlay.setAlignmentX(Component.LEFT_ALIGNMENT);
 		howToPlay.setText(
 				"The objective of the game is to be the last remaining Avatar on the map. You are in an arena with up to 16 \nother players, each "
-						+ "with 4 lives. Use your abilities to take down your opponents and be the last one \nstanding in this contest of champions!\n\nCONTROLS:\n"
+						+ "with 4 lives. Use your abilities to take down your opponents and be the last one \nstanding in this contest of champions!\nCONTROLS:\n"
 						+ "WASD - movement" + "\nSpace - Dash in direction of movement\n" + "Q- Shield\n"
 						+ "Mouse - Aim\n" + "Left Mouse Button - Basic Attack\n"
 						+ "Right Mouse Button - Ranged Attack\n" + "E - Ability 1\n" + "R - Ability 2\n"
@@ -122,7 +121,7 @@ public class StartMenu extends JPanel {
 		howToPlay.setBackground(Color.BLACK);
 		howToPlay.setSelectedTextColor(Color.WHITE);
 		howToPlay.setEditable(false);
-		// howToPlay.setText("HI");
+
 
 		// TITLE LABEL
 		JLabel iTitle = new JLabel();
@@ -130,10 +129,15 @@ public class StartMenu extends JPanel {
 		iTitle.setFont(new Font("gabriola", Font.BOLD, 75));
 		iTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
 		iTitle.setText("INSTRUCTIONS:");
-
+		
+		// BACK BUTTON
+		JButton iback = new JButton("Back");
+		iback.setAlignmentX(Component.LEFT_ALIGNMENT);
+	
+		Instructions.add(iback);
 		Instructions.add(iTitle);
 		Instructions.add(howToPlay);
-		Instructions.add(iback);
+		
 
 		// ------------------------
 		// CHARACTER SELECTION PANEL
