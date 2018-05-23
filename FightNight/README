@@ -1,7 +1,7 @@
 Fite-Nite Of Legends: Global Offensive XV
 FNOLGO XV
 Shaylan Dias, Ben Gu, Jason Zhu
-5/9/18
+5/22/18
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -10,7 +10,8 @@ In a world where nothing seems to make sense anymore, a dark, dangerous, deadly,
 The leaders of the splintered factions of the free world have placed heavy bets on their champions to succeed. They hold an annual 
 contest to determine the strongest faction of them all to lead their people and rule over all the land. Which race will YOU choose?
 Targeted to battle-royale fanatics of all ages, this game will excite any gamer. In this revolutionary, top down, fifteenth edition 
-game, YOU will take control of a champion and fight to rule over this mysterious new world.
+game, YOU will take control of a champion and fight to rule over this mysterious new world. Pick from three classes and fight to 
+the death in the arena to win fame and glory.
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -88,7 +89,7 @@ gameplay
 		SnowField - An Attack that moves in a circular pattern and slows
 		MeleeAttack - A short ranged, stationary, short lasting Attack meant for the Avatar basicAttack()
 		Trap- An Attack that stays on the ground for a long time and changes looks when activated
-		MovingSprite - superclass for Attack
+		MovingSprite - superclass for Attack extending Rectangle2D.Double with basic movement capability
 		Projectile - Abstract class representing an Attack that moves on its own
 		StatusEffect - Stuns and slows, stuff that inhibits avatar movement
 	avatars
@@ -118,10 +119,10 @@ networking
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 Responsibilities: 
-Shaylan Dias: Networking, Attack Game Mechanics, Game Manager, Most of the abilities, GamePanel, Player HUD, Parsing Sent/Received Data, Ranger animations
-Ben Gu: Character movement, Brute walking and death animations, Mage walking and death animations
+Shaylan Dias: Adapting Networking Code, Attack Game Mechanics, Game Manager, Most of the abilities, GamePanel, Player HUD, Parsing Sent/Received Data, Ranger animations
+Ben Gu: Character movement, Brute walking and death animations, Mage walking and death animations, a few abilities
 Jason Zhu: Character dashing, Map Design and build, Obstacles, start menu, game balance, Ability concepts. 
-Mr. Shelby APCSDemo: ServerNetworking
+Mr. Shelby APCSDemo: Server Networking, MovingSprite
 
 http://pyromancers.com/dungeon-painter-online/: Map creation website
 PokerPhaze: tree texture
